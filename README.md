@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/sphereio/sphere-sunrise.png?label=ready&title=Ready)](https://waffle.io/sphereio/sphere-sunrise)
 ![SPHERE.IO icon](https://admin.sphere.io/assets/images/sphere_logo_rgb_long.png)
 
 sphere-sunrise
