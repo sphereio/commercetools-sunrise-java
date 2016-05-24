@@ -6,14 +6,21 @@ cache:
 language: scala
 scala:
 - 2.11.7
+before_script:
+- docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
 script:
 - "./sbt test it:test pt:test unidoc"
 - rm conf/dev.conf
 - if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then sbt
   "gitPublish target/javaunidoc https://$GH_TOKEN:x-oauth-basic@github.com/$TRAVIS_REPO_SLUG.git
   javadoc sphere-oss automation@commercetools.de"; fi
+- ./travis-build.sh
+after_script:
+- docker logout
 jdk:
 - oraclejdk8
+services:
+- docker
 env:
   matrix:
   - SBT_OPTS="-XX:PermSize=512M -XX:MaxPermSize=1024M"
