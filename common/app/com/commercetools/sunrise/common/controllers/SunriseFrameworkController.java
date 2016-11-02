@@ -32,6 +32,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import play.data.Form;
 import play.data.FormFactory;
+import play.filters.csrf.CSRF;
 import play.libs.concurrent.HttpExecution;
 import play.mvc.*;
 import play.twirl.api.Html;
@@ -140,6 +141,13 @@ public abstract class SunriseFrameworkController extends Controller {
         return injector;
     }
 
+    /**
+     * Returns the CSRF Token associated with this request.
+     * @param session current HTTP session
+     * @return CSRF Token to use for this request
+     * @deprecated use {@link CSRF} instead (e.g. {@code CSRF.getToken(request)}
+     */
+    @Deprecated
     @Nullable
     public static String getCsrfToken(final Http.Session session) {
         return session.get("csrfToken");
