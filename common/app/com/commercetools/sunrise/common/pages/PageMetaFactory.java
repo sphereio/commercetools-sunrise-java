@@ -37,7 +37,7 @@ public class PageMetaFactory extends Base {
         fillCsrfToken(bean);
         fillHomePageUrl(bean);
         fillSelfPageUrl(bean);
-        fillNewProductsUrl();
+        fillNewProductsUrl(bean);
     }
 
     protected void fillCsrfToken(final PageMeta bean) {
@@ -72,7 +72,7 @@ public class PageMetaFactory extends Base {
         bean.addHalLinkOfHrefAndRel(httpContext.request().uri(), "self");
     }
 
-    protected void fillNewProductsUrl() {
+    protected void fillNewProductsUrl(final PageMeta bean) {
         //TODO framework migration
 //        newCategory().flatMap(nc -> reverseRouter.showCategory(userContext.locale(), nc))
 //                .ifPresent(call -> pageMeta.addHalLink(call, "newProducts"));

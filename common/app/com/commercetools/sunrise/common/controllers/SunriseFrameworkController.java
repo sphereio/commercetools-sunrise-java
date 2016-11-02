@@ -81,8 +81,6 @@ public abstract class SunriseFrameworkController extends Controller {
     @Inject
     private TemplateEngine templateEngine;
     @Inject
-    private PageMetaFactory pageMetaFactory;
-    @Inject
     private I18nResolver i18nResolver;
     private final Deque<ErrorHandler> errorHandlers = new LinkedList<>();
 
@@ -186,7 +184,7 @@ public abstract class SunriseFrameworkController extends Controller {
         pageData.setHeader(new PageHeader(pageContent.getTitle()));
         pageData.setContent(pageContent);
         pageData.setFooter(new PageFooter());
-        pageData.setMeta(pageMetaFactory.create());
+        pageData.setMeta(injector().getInstance(PageMetaFactory.class).create());
         return pageData;
     }
 
