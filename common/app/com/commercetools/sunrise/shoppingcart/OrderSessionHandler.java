@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.shoppingcart;
 
-import com.commercetools.sunrise.common.sessions.SessionHandlerBase;
+import com.commercetools.sunrise.common.sessions.AbstractSessionHandler;
 import io.sphere.sdk.orders.Order;
 import play.Configuration;
 import play.mvc.Http;
@@ -10,7 +10,7 @@ import javax.inject.Singleton;
 import java.util.Optional;
 
 @Singleton
-public class OrderSessionHandler extends SessionHandlerBase<Order> {
+public class OrderSessionHandler extends AbstractSessionHandler<Order> {
 
     private static final String DEFAULT_LAST_ORDER_ID_SESSION_KEY = "sunrise-last-order-id";
     private final String lastOrderIdSessionKey;
@@ -26,11 +26,11 @@ public class OrderSessionHandler extends SessionHandlerBase<Order> {
 
     @Override
     protected void overwriteRelatedValuesInSession(final Http.Session session, final Order order) {
-        overwriteStringValueByKey(session, lastOrderIdSessionKey, order.getId());
+        overwriteValueByKey(session, lastOrderIdSessionKey, order.getId());
     }
 
     @Override
     protected void removeRelatedValuesFromSession(final Http.Session session) {
-        removeValuesByKey(session, lastOrderIdSessionKey);
+        removeValueByKey(session, lastOrderIdSessionKey);
     }
 }
