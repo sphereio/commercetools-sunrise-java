@@ -14,8 +14,9 @@ public interface SessionHandler<T> {
 
     /**
      * Replaces all the information related to the object in session with the given value.
+     * If the value is {@code null}, it removes all data from session instead.
      * @param session the HTTP session to be updated
-     * @param value the instance of the object used to update the session
+     * @param value the instance of the object used to update the session, or {@code null} to remove all data
      */
     void overwriteInSession(final Http.Session session, @Nullable final T value);
 

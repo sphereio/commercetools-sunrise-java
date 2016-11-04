@@ -17,6 +17,20 @@ public abstract class AbstractSessionHandler<T> implements SessionHandler<T> {
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
+    @Override
+    public void overwriteInSession(final Http.Session session, @Nullable final T value) {
+        if (value != null) {
+            overwriteRelatedValuesInSession(session, value);
+        } else {
+            removeRelatedValuesFromSession(session);
+        }
+    }
+
+    @Override
+    public void removeFromSession(final Http.Session session) {
+        removeRelatedValuesFromSession(session);
+    }
+
     /**
      * Takes care of overwriting all related values to this object.
      * For example, in the case of the cart, those might be overwriting the cart ID value, the mini cart instance, etc.
@@ -32,20 +46,12 @@ public abstract class AbstractSessionHandler<T> implements SessionHandler<T> {
      */
     protected abstract void removeRelatedValuesFromSession(final Http.Session session);
 
-    @Override
-    public void overwriteInSession(final Http.Session session, @Nullable final T value) {
-        if (value != null) {
-            overwriteRelatedValuesInSession(session, value);
-        } else {
-            removeRelatedValuesFromSession(session);
-        }
-    }
-
-    @Override
-    public void removeFromSession(final Http.Session session) {
-        removeRelatedValuesFromSession(session);
-    }
-
+    /**
+     * Finds the value in session for the given key.
+     * @param session the HTTP session
+     * @param sessionKey the session key
+     * @return the value for that session key, or empty if it could not be found
+     */
     protected Optional<String> findValueByKey(final Http.Session session, final String sessionKey) {
         final Optional<String> value = Optional.ofNullable(session.get(sessionKey));
         if (value.isPresent()) {
@@ -56,24 +62,35 @@ public abstract class AbstractSessionHandler<T> implements SessionHandler<T> {
         return value;
     }
 
+    /**
+     * Overwrites the key in the session with the given value.
+     * @param session the HTTP session
+     * @param sessionKey the session key
+     * @param value the value to be set in session
+     */
     protected void overwriteValueByKey(final Http.Session session, final String sessionKey, final String value) {
         session.put(sessionKey, value);
         logger.debug("Saved in session \"{}\" = {}", sessionKey, value);
     }
 
     /**
-     * Remove a list of keys from the session
+     * Removes keys from the session.
      * @param session the HTTP session
-     * @param sessionKeys a list of the keys to be removed from session
+     * @param sessionKey the session key to be removed from session
+     */
+    protected void removeValueByKey(final Http.Session session, final String sessionKey) {
+        final String oldValue = session.remove(sessionKey);
+        logger.debug("Removed from session \"{}\" = {}", sessionKey, oldValue);
+    }
+
+    /**
+     * Removes a list of keys from the session.
+     * @param session the HTTP session
+     * @param sessionKeys the list of session keys to be removed from session
      * @deprecated use {@link #removeValueByKey(Http.Session, String)} instead
      */
     @Deprecated
     protected void removeValueByKey(final Http.Session session, final List<String> sessionKeys) {
         sessionKeys.forEach(key -> removeValueByKey(session, key));
-    }
-
-    protected void removeValueByKey(final Http.Session session, final String sessionKey) {
-        final String oldValue = session.remove(sessionKey);
-        logger.debug("Removed from session \"{}\" = {}", sessionKey, oldValue);
     }
 }
