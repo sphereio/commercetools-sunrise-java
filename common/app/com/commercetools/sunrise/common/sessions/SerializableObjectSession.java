@@ -1,5 +1,6 @@
 package com.commercetools.sunrise.common.sessions;
 
+import com.commercetools.sunrise.common.contexts.RequestScoped;
 import com.fasterxml.jackson.databind.JsonNode;
 import play.libs.Json;
 import play.mvc.Http;
@@ -7,15 +8,16 @@ import play.mvc.Http;
 import javax.inject.Inject;
 import java.util.Optional;
 
-public abstract class AbstractSerializedObjectInSession<T> extends AbstractObjectInSession<T> {
+@RequestScoped
+public class SerializableObjectSession extends PlaySession implements ObjectSession {
 
     @Inject
-    protected AbstractSerializedObjectInSession(final Http.Session session) {
+    public SerializableObjectSession(final Http.Session session) {
         super(session);
     }
 
     @Override
-    protected final <U> Optional<U> findObjectByKey(final String sessionKey, final Class<U> clazz) {
+    public <U> Optional<U> findObjectByKey(final String sessionKey, final Class<U> clazz) {
         return findValueByKey(sessionKey)
                 .flatMap(valueAsJson -> {
                     try {
@@ -30,14 +32,14 @@ public abstract class AbstractSerializedObjectInSession<T> extends AbstractObjec
     }
 
     @Override
-    protected final <U> void overwriteObjectByKey(final String key, final U value) {
+    public <U> void overwriteObjectByKey(final String key, final U value) {
         final JsonNode jsonNode = Json.toJson(value);
         final String valueAsJson = Json.stringify(jsonNode);
         overwriteValueByKey(key, valueAsJson);
     }
 
     @Override
-    protected void removeObjectByKey(final String sessionKey) {
+    public void removeObjectByKey(final String sessionKey) {
         removeValueByKey(sessionKey);
     }
 }
