@@ -36,6 +36,7 @@ public class SunriseHomeControllerTest extends WithSunriseApplication {
                 bind(WebJarAssetsReverseRouter.class).toInstance(reverseRouter);
                 bind(HomeReverseRouter.class).toInstance(reverseRouter);
                 bind(Http.Context.class).toInstance(Http.Context.current());
+                bind(Http.Session.class).toInstance(Http.Context.current().session());
                 bindScope(RequestScoped.class, new RequestScope());
             }
         };
