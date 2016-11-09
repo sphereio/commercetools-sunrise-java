@@ -9,10 +9,10 @@ import javax.inject.Inject;
 import java.util.Optional;
 
 @RequestScoped
-public class SerializableObjectSession extends PlaySession implements ObjectSession {
+public class SerializableObjectHttpSessionStrategy extends PlayHttpSessionStrategy implements ObjectHttpSessionStrategy {
 
     @Inject
-    public SerializableObjectSession(final Http.Session session) {
+    public SerializableObjectHttpSessionStrategy(final Http.Session session) {
         super(session);
     }
 

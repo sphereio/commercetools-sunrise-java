@@ -4,8 +4,8 @@ import com.google.inject.ImplementedBy;
 
 import java.util.Optional;
 
-@ImplementedBy(SerializableObjectSession.class)
-public interface ObjectSession extends SimpleSession {
+@ImplementedBy(SerializableObjectHttpSessionStrategy.class)
+public interface ObjectHttpSessionStrategy extends HttpSessionStrategy {
 
     <U> Optional<U> findObjectByKey(final String sessionKey, final Class<U> clazz);
 

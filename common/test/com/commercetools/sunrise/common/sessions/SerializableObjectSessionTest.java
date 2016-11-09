@@ -71,8 +71,8 @@ public class SerializableObjectSessionTest {
         });
     }
 
-    private void testSession(final Http.Session session, final Consumer<SerializableObjectSession> test) {
-        final SerializableObjectSession serializableObjectSession = new SerializableObjectSession(session);
+    private void testSession(final Http.Session session, final Consumer<SerializableObjectHttpSessionStrategy> test) {
+        final SerializableObjectHttpSessionStrategy serializableObjectSession = new SerializableObjectHttpSessionStrategy(session);
         test.accept(serializableObjectSession);
     }
 

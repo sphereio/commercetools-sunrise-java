@@ -119,9 +119,9 @@ public class CachableObjectSessionTest {
     }
 
     private void testSession(final Http.Session session, final CacheApi cacheApi,
-                             final Consumer<CachableObjectSession> test) {
+                             final Consumer<CachableObjectHttpSessionStrategy> test) {
         final Configuration config = new Configuration(emptyMap());
-        final CachableObjectSession cachableObjectSession = new CachableObjectSession(session, cacheApi, config);
+        final CachableObjectHttpSessionStrategy cachableObjectSession = new CachableObjectHttpSessionStrategy(session, cacheApi, config);
         test.accept(cachableObjectSession);
     }
 

@@ -10,7 +10,7 @@ import java.util.function.Consumer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class RelatedValuesSessionWriterTest {
+public class AssociatedDataResourceStateWriterTest {
 
     @Test
     public void overwritesRelatedValues() throws Exception {
@@ -39,8 +39,8 @@ public class RelatedValuesSessionWriterTest {
         });
     }
 
-    private void testInitializedSession(final Consumer<TestableStringInSession> test) {
-        final TestableStringInSession stringInSession = new TestableStringInSession();
+    private void testInitializedSession(final Consumer<TestableStringInResourceState> test) {
+        final TestableStringInResourceState stringInSession = new TestableStringInResourceState();
         stringInSession.overwrite("some-value");
 
         assertThat(stringInSession.findValue())
@@ -53,11 +53,11 @@ public class RelatedValuesSessionWriterTest {
         test.accept(stringInSession);
     }
 
-    private static class TestableStringInSession extends RelatedValuesSessionWriter<String> {
+    private static class TestableStringInResourceState extends AssociatedDataResourceStateWriter<String> {
 
         private final Map<String, String> session;
 
-        TestableStringInSession() {
+        TestableStringInResourceState() {
             this.session = new HashMap<>();
         }
 
@@ -70,13 +70,13 @@ public class RelatedValuesSessionWriterTest {
         }
 
         @Override
-        protected void overwriteRelatedValuesInSession(@NotNull final String value) {
+        protected void overwriteAssociatedDataInSession(@NotNull final String value) {
             session.put("some-key", value);
             session.put("some-other-key", String.valueOf(value.length())); // size of value
         }
 
         @Override
-        protected void removeRelatedValuesFromSession() {
+        protected void removeAssociatedDataFromSession() {
             session.remove("some-key");
             session.remove("some-other-key");
         }

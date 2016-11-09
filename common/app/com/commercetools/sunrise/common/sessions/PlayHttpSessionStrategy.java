@@ -13,50 +13,50 @@ import java.util.Optional;
  * It is not defined how this object is represented in session (the entire object, only specific parts...).
  */
 @RequestScoped
-public class PlaySession implements SimpleSession {
+public class PlayHttpSessionStrategy implements HttpSessionStrategy {
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());
     private final Http.Session session;
 
     @Inject
-    public PlaySession(final Http.Session session) {
+    public PlayHttpSessionStrategy(final Http.Session session) {
         this.session = session;
     }
 
     /**
      * Finds the value in session for the given key.
-     * @param sessionKey the session key
+     * @param key the session key
      * @return the value for that session key, or empty if it could not be found
      */
     @Override
-    public Optional<String> findValueByKey(final String sessionKey) {
-        final Optional<String> value = Optional.ofNullable(session.get(sessionKey));
+    public Optional<String> findValueByKey(final String key) {
+        final Optional<String> value = Optional.ofNullable(session.get(key));
         if (value.isPresent()) {
-            logger.debug("Loaded from session \"{}\" = {}", sessionKey, value.get());
+            logger.debug("Loaded from session \"{}\" = {}", key, value.get());
         } else {
-            logger.debug("Not found in session \"{}\"", sessionKey);
+            logger.debug("Not found in session \"{}\"", key);
         }
         return value;
     }
 
     /**
      * Overwrites the key in the session with the given value.
-     * @param sessionKey the session key
+     * @param key the session key
      * @param value the value to be set in session
      */
     @Override
-    public void overwriteValueByKey(final String sessionKey, final String value) {
-        session.put(sessionKey, value);
-        logger.debug("Saved in session \"{}\" = {}", sessionKey, value);
+    public void overwriteValueByKey(final String key, final String value) {
+        session.put(key, value);
+        logger.debug("Saved in session \"{}\" = {}", key, value);
     }
 
     /**
      * Removes the key from the session.
-     * @param sessionKey the session key to be removed from session
+     * @param key the session key to be removed from session
      */
     @Override
-    public void removeValueByKey(final String sessionKey) {
-        final String oldValue = session.remove(sessionKey);
-        logger.debug("Removed from session \"{}\" = {}", sessionKey, oldValue);
+    public void removeValueByKey(final String key) {
+        final String oldValue = session.remove(key);
+        logger.debug("Removed from session \"{}\" = {}", key, oldValue);
     }
 }

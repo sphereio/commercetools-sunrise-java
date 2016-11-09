@@ -15,14 +15,14 @@ import java.util.UUID;
  * information in session, taking care of keeping it up to date and remove it when it's needed.
  */
 @RequestScoped
-public class CachableObjectSession extends PlaySession implements ObjectSession {
+public class CachableObjectHttpSessionStrategy extends PlayHttpSessionStrategy implements ObjectHttpSessionStrategy {
 
     private static final String DEFAULT_SESSION_ID_KEY = "sunrise-session-id";
     private final String sessionIdKey;
     private final CacheApi cacheApi;
 
     @Inject
-    public CachableObjectSession(final Http.Session session, final CacheApi cacheApi, final Configuration configuration) {
+    public CachableObjectHttpSessionStrategy(final Http.Session session, final CacheApi cacheApi, final Configuration configuration) {
         super(session);
         this.cacheApi = cacheApi;
         this.sessionIdKey = configuration.getString("session.id", DEFAULT_SESSION_ID_KEY);
