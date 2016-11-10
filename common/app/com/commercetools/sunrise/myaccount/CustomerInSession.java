@@ -10,6 +10,9 @@ import play.Configuration;
 import javax.inject.Inject;
 import java.util.Optional;
 
+/**
+ * Keeps some parts from the customer in session, such as customer ID, email and some general info.
+ */
 @RequestScoped
 public class CustomerInSession extends StorableDataFromResource<Customer> {
 

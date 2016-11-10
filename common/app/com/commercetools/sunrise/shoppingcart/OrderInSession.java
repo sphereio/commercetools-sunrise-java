@@ -9,6 +9,9 @@ import play.Configuration;
 import javax.inject.Inject;
 import java.util.Optional;
 
+/**
+ * Keeps the order ID in session.
+ */
 @RequestScoped
 public class OrderInSession extends StorableDataFromResource<Order> {
 
