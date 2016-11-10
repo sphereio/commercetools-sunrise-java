@@ -51,8 +51,8 @@ public class SunriseModule extends AbstractModule {
 
     @Provides
     @RequestScoped
-    public Http.Session httpSession(final Http.Context httpContext) {
-        return httpContext.session();
+    public Http.Session httpSession() {
+        return httpContext().session();
     }
 
     private void applyJavaMoneyHack() {
