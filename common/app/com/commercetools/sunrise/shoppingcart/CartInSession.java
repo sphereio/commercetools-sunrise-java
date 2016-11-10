@@ -18,6 +18,7 @@ public class CartInSession extends StorableDataFromResource<Cart> {
 
     private static final String DEFAULT_CART_ID_SESSION_KEY = "sunrise-cart-id";
     private static final String DEFAULT_MINI_CART_SESSION_KEY = "sunrise-mini-cart";
+    private static final int LINE_ITEMS_LIMIT = 5;
     private final String cartIdSessionKey;
     private final String miniCartSessionKey;
     private final TypedSessionStrategy session;
@@ -41,8 +42,7 @@ public class CartInSession extends StorableDataFromResource<Cart> {
 
     @Override
     protected void writeAssociatedData(final Cart cart) {
-        final MiniCartBean miniCartBean = injector.getInstance(MiniCartBeanFactory.class).create(cart);
-        session.overwriteObjectByKey(miniCartSessionKey, miniCartBean);
+        session.overwriteObjectByKey(miniCartSessionKey, createMiniCart(cart));
         session.overwriteValueByKey(cartIdSessionKey, cart.getId());
     }
 
@@ -50,5 +50,9 @@ public class CartInSession extends StorableDataFromResource<Cart> {
     protected void removeAssociatedData() {
         session.removeObjectByKey(miniCartSessionKey);
         session.removeValueByKey(cartIdSessionKey);
+    }
+
+    protected MiniCartBean createMiniCart(final Cart cart) {
+        return injector.getInstance(TruncatedMiniCartBeanFactory.class).create(cart, LINE_ITEMS_LIMIT);
     }
 }

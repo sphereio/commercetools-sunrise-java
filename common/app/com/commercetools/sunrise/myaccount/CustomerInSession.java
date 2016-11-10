@@ -45,8 +45,7 @@ public class CustomerInSession extends StorableDataFromResource<Customer> {
 
     @Override
     protected void writeAssociatedData(final Customer customer) {
-        final UserInfoBean userInfoBean = injector.getInstance(UserInfoBeanFactory.class).create(customer);
-        session.overwriteObjectByKey(userInfoSessionKey, userInfoBean);
+        session.overwriteObjectByKey(userInfoSessionKey, createUserInfo(customer));
         session.overwriteValueByKey(customerIdSessionKey, customer.getId());
         session.overwriteValueByKey(customerEmailSessionKey, customer.getEmail());
     }
@@ -56,5 +55,9 @@ public class CustomerInSession extends StorableDataFromResource<Customer> {
         session.removeObjectByKey(userInfoSessionKey);
         session.removeValueByKey(customerIdSessionKey);
         session.removeValueByKey(customerEmailSessionKey);
+    }
+
+    protected UserInfoBean createUserInfo(final Customer customer) {
+        return injector.getInstance(UserInfoBeanFactory.class).create(customer);
     }
 }
