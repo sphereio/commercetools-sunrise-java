@@ -16,7 +16,7 @@ import static java.util.Collections.emptyMap;
 import static java.util.Collections.singletonMap;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CachableObjectSessionTest {
+public class CacheableSessionCookieStrategyTest {
 
     private static final SomeObject SOME_OBJECT = new SomeObject("hello", 2);
     private static final SomeObject SOME_OTHER_OBJECT = new SomeObject("world", 4);
@@ -57,8 +57,10 @@ public class CachableObjectSessionTest {
     public void doesNotFindDifferentClassFound() throws Exception {
         final Http.Session playSession = buildPlayHttpSession(singletonMap("some-key", "some-cache-key"));
         final CacheApi cache = buildCache(singletonMap("some-cache-key", SOME_OBJECT));
-        testSession(playSession, cache, session ->
-                assertThat(session.findObjectByKey("some-key", Long.class)).isEmpty());
+        testSession(playSession, cache, session -> {
+            final Optional<Long> objectByKey = session.findObjectByKey("some-key", Long.class);
+            assertThat(objectByKey).isEmpty();
+        });
     }
 
     @Test
@@ -119,9 +121,9 @@ public class CachableObjectSessionTest {
     }
 
     private void testSession(final Http.Session session, final CacheApi cacheApi,
-                             final Consumer<CachableObjectHttpSessionStrategy> test) {
+                             final Consumer<CacheableSessionCookieStrategy> test) {
         final Configuration config = new Configuration(emptyMap());
-        final CachableObjectHttpSessionStrategy cachableObjectSession = new CachableObjectHttpSessionStrategy(session, cacheApi, config);
+        final CacheableSessionCookieStrategy cachableObjectSession = new CacheableSessionCookieStrategy(session, cacheApi, config);
         test.accept(cachableObjectSession);
     }
 

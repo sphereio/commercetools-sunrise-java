@@ -112,7 +112,7 @@ public abstract class SunriseCheckoutConfirmationController extends SunriseFrame
         final OrderFromCartDraft orderDraft = OrderFromCartDraft.of(cart, orderNumber, orderInitialPaymentState(cart));
         return sphere().execute(OrderFromCartCreateCommand.of(orderDraft))
                 .thenApplyAsync(order -> {
-                    injector().getInstance(OrderInSession.class).overwrite(order);
+                    injector().getInstance(OrderInSession.class).write(order);
                     injector().getInstance(CartInSession.class).remove();
                     return order;
                 }, defaultContext());

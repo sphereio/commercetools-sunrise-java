@@ -10,12 +10,12 @@ import java.util.function.Consumer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class AssociatedDataResourceStateWriterTest {
+public class DivisibleStorableResourceTest {
 
     @Test
     public void overwritesRelatedValues() throws Exception {
         testInitializedSession(stringInSession -> {
-            stringInSession.overwrite("some-other-value");
+            stringInSession.write("some-other-value");
             assertThat(stringInSession.findValue()).contains("some-other-value");
             assertThat(stringInSession.findOtherValue()).contains("16");
         });
@@ -33,15 +33,15 @@ public class AssociatedDataResourceStateWriterTest {
     @Test
     public void removesRelatedValuesOnNullParameter() throws Exception {
         testInitializedSession(stringInSession -> {
-            stringInSession.overwrite(null);
+            stringInSession.write(null);
             assertThat(stringInSession.findValue()).isEmpty();
             assertThat(stringInSession.findOtherValue()).isEmpty();
         });
     }
 
-    private void testInitializedSession(final Consumer<TestableStringInResourceState> test) {
-        final TestableStringInResourceState stringInSession = new TestableStringInResourceState();
-        stringInSession.overwrite("some-value");
+    private void testInitializedSession(final Consumer<TestableStringInStorableDataFromResourceStore> test) {
+        final TestableStringInStorableDataFromResourceStore stringInSession = new TestableStringInStorableDataFromResourceStore();
+        stringInSession.write("some-value");
 
         assertThat(stringInSession.findValue())
                 .as("Direct value is correctly initialized")
@@ -53,11 +53,11 @@ public class AssociatedDataResourceStateWriterTest {
         test.accept(stringInSession);
     }
 
-    private static class TestableStringInResourceState extends AssociatedDataResourceStateWriter<String> {
+    private static class TestableStringInStorableDataFromResourceStore extends StorableDataFromResource<String> {
 
         private final Map<String, String> session;
 
-        TestableStringInResourceState() {
+        TestableStringInStorableDataFromResourceStore() {
             this.session = new HashMap<>();
         }
 
@@ -70,13 +70,13 @@ public class AssociatedDataResourceStateWriterTest {
         }
 
         @Override
-        protected void overwriteAssociatedDataInSession(@NotNull final String value) {
+        protected void writeAssociatedData(@NotNull final String value) {
             session.put("some-key", value);
             session.put("some-other-key", String.valueOf(value.length())); // size of value
         }
 
         @Override
-        protected void removeAssociatedDataFromSession() {
+        protected void removeAssociatedData() {
             session.remove("some-key");
             session.remove("some-other-key");
         }

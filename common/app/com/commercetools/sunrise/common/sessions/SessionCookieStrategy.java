@@ -9,24 +9,21 @@ import javax.inject.Inject;
 import java.util.Optional;
 
 /**
- * Enables a particular object to be kept in session.
- * It is not defined how this object is represented in session (the entire object, only specific parts...).
+ * Uses a session cookie to store information about the user.
  */
 @RequestScoped
-public class PlayHttpSessionStrategy implements HttpSessionStrategy {
+public class SessionCookieStrategy implements SessionStrategy {
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());
     private final Http.Session session;
 
     @Inject
-    public PlayHttpSessionStrategy(final Http.Session session) {
+    public SessionCookieStrategy(final Http.Session session) {
         this.session = session;
     }
 
     /**
-     * Finds the value in session for the given key.
-     * @param key the session key
-     * @return the value for that session key, or empty if it could not be found
+     * {@inheritDoc}
      */
     @Override
     public Optional<String> findValueByKey(final String key) {
@@ -40,9 +37,7 @@ public class PlayHttpSessionStrategy implements HttpSessionStrategy {
     }
 
     /**
-     * Overwrites the key in the session with the given value.
-     * @param key the session key
-     * @param value the value to be set in session
+     * {@inheritDoc}
      */
     @Override
     public void overwriteValueByKey(final String key, final String value) {
@@ -51,8 +46,7 @@ public class PlayHttpSessionStrategy implements HttpSessionStrategy {
     }
 
     /**
-     * Removes the key from the session.
-     * @param key the session key to be removed from session
+     * {@inheritDoc}
      */
     @Override
     public void removeValueByKey(final String key) {
