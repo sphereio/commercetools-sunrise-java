@@ -37,12 +37,12 @@ public class CartDetailController extends SunriseCartDetailController {
   // here you can register components or override methods to change behaviour
 }
 ```
-Then we only need to associate our Controller to a route with the desired pattern in `conf/routes`:
+Then we only need to associate our `CartDetailController` to a route with the desired pattern in `conf/routes`:
 ```scala
 # Shows the details of the cart belonging to the current session
 GET  /:languageTag/cart       @shoppingcart.CartDetailController.show(languageTag: String)
 ```
-If we then access [http://localhost:9000/en/cart](http://localhost:9000/en/cart) we should be able to see the contents of our cart.
+Accessing [http://localhost:9000/en/cart](http://localhost:9000/en/cart) should now allow us to see the contents of our cart.
 
 Check [Sunrise Starter Project](https://github.com/commercetools/commercetools-sunrise-java-starter) to adjust any other required configuration.
 
