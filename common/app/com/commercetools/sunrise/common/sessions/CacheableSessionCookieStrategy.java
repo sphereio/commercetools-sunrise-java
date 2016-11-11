@@ -25,7 +25,7 @@ public class CacheableSessionCookieStrategy extends SessionCookieStrategy implem
     public CacheableSessionCookieStrategy(final Http.Session session, final CacheApi cacheApi, final Configuration configuration) {
         super(session);
         this.cacheApi = cacheApi;
-        this.sessionIdKey = configuration.getString("session.id", DEFAULT_SESSION_ID_KEY);
+        this.sessionIdKey = configuration.getString("session.idKey", DEFAULT_SESSION_ID_KEY);
     }
 
     /**
