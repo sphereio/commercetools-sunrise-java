@@ -1,12 +1,13 @@
 package com.commercetools.sunrise.shoppingcart;
 
 import com.commercetools.sunrise.common.contexts.RequestScoped;
-import com.commercetools.sunrise.common.sessions.StorableDataFromResource;
-import com.commercetools.sunrise.common.sessions.TypedSessionStrategy;
+import com.commercetools.sunrise.common.sessions.DataFromResourceStoringOperations;
+import com.commercetools.sunrise.common.sessions.ObjectStoringSessionStrategy;
 import com.google.inject.Injector;
 import io.sphere.sdk.carts.Cart;
 import play.Configuration;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import java.util.Optional;
 
@@ -14,19 +15,19 @@ import java.util.Optional;
  * Keeps some parts from the cart in session, such as cart ID and mini cart.
  */
 @RequestScoped
-public class CartInSession extends StorableDataFromResource<Cart> {
+public class CartInSession extends DataFromResourceStoringOperations<Cart> {
 
     private static final String DEFAULT_CART_ID_SESSION_KEY = "sunrise-cart-id";
     private static final String DEFAULT_MINI_CART_SESSION_KEY = "sunrise-mini-cart";
     private static final int LINE_ITEMS_LIMIT = 5;
     private final String cartIdSessionKey;
     private final String miniCartSessionKey;
-    private final TypedSessionStrategy session;
+    private final ObjectStoringSessionStrategy session;
     @Inject
     private Injector injector;
 
     @Inject
-    public CartInSession(final TypedSessionStrategy session, final Configuration configuration) {
+    public CartInSession(final ObjectStoringSessionStrategy session, final Configuration configuration) {
         this.cartIdSessionKey = configuration.getString("session.cart.cartId", DEFAULT_CART_ID_SESSION_KEY);
         this.miniCartSessionKey = configuration.getString("session.cart.miniCart", DEFAULT_MINI_CART_SESSION_KEY);
         this.session = session;
@@ -41,7 +42,17 @@ public class CartInSession extends StorableDataFromResource<Cart> {
     }
 
     @Override
-    protected void writeAssociatedData(final Cart cart) {
+    public void store(@Nullable final Cart value) {
+        super.store(value);
+    }
+
+    @Override
+    public void remove() {
+        super.remove();
+    }
+
+    @Override
+    protected void storeAssociatedData(final Cart cart) {
         session.overwriteObjectByKey(miniCartSessionKey, createMiniCart(cart));
         session.overwriteValueByKey(cartIdSessionKey, cart.getId());
     }

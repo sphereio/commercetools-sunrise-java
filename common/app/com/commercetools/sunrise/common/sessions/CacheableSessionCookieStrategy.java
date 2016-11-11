@@ -15,7 +15,7 @@ import java.util.UUID;
  * For more information: <a href="https://www.playframework.com/documentation/2.5.x/JavaSessionFlash">Session in Play Framework</a>
  */
 @RequestScoped
-public class CacheableSessionCookieStrategy extends SessionCookieStrategy implements TypedSessionStrategy {
+public class CacheableSessionCookieStrategy extends SessionCookieStrategy implements ObjectStoringSessionStrategy {
 
     private static final String DEFAULT_SESSION_ID_KEY = "sunrise-session-id";
     private final String sessionIdKey;

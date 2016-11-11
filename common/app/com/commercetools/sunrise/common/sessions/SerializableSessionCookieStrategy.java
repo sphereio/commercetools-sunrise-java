@@ -14,7 +14,7 @@ import java.util.Optional;
  * Notice that cookies have a very limited space, so do not use this strategy to store a large amount of data.
  */
 @RequestScoped
-public class SerializableSessionCookieStrategy extends SessionCookieStrategy implements TypedSessionStrategy {
+public class SerializableSessionCookieStrategy extends SessionCookieStrategy implements ObjectStoringSessionStrategy {
 
     @Inject
     public SerializableSessionCookieStrategy(final Http.Session session) {

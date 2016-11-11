@@ -1,8 +1,8 @@
 package com.commercetools.sunrise.myaccount;
 
 import com.commercetools.sunrise.common.contexts.RequestScoped;
-import com.commercetools.sunrise.common.sessions.StorableDataFromResource;
-import com.commercetools.sunrise.common.sessions.TypedSessionStrategy;
+import com.commercetools.sunrise.common.sessions.DataFromResourceStoringOperations;
+import com.commercetools.sunrise.common.sessions.ObjectStoringSessionStrategy;
 import com.google.inject.Injector;
 import io.sphere.sdk.customers.Customer;
 import play.Configuration;
@@ -14,7 +14,7 @@ import java.util.Optional;
  * Keeps some parts from the customer in session, such as customer ID, email and some general info.
  */
 @RequestScoped
-public class CustomerInSession extends StorableDataFromResource<Customer> {
+public class CustomerInSession extends DataFromResourceStoringOperations<Customer> {
 
     private static final String DEFAULT_CUSTOMER_ID_SESSION_KEY = "sunrise-customer-id";
     private static final String DEFAULT_CUSTOMER_EMAIL_SESSION_KEY = "sunrise-customer-email";
@@ -22,12 +22,12 @@ public class CustomerInSession extends StorableDataFromResource<Customer> {
     private final String customerIdSessionKey;
     private final String customerEmailSessionKey;
     private final String userInfoSessionKey;
-    private final TypedSessionStrategy session;
+    private final ObjectStoringSessionStrategy session;
     @Inject
     private Injector injector;
 
     @Inject
-    public CustomerInSession(final TypedSessionStrategy session, final Configuration configuration) {
+    public CustomerInSession(final ObjectStoringSessionStrategy session, final Configuration configuration) {
         this.customerIdSessionKey = configuration.getString("session.customer.customerId", DEFAULT_CUSTOMER_ID_SESSION_KEY);
         this.customerEmailSessionKey = configuration.getString("session.customer.customerEmail", DEFAULT_CUSTOMER_EMAIL_SESSION_KEY);
         this.userInfoSessionKey = configuration.getString("session.customer.userInfo", DEFAULT_USER_INFO_SESSION_KEY);
@@ -47,7 +47,7 @@ public class CustomerInSession extends StorableDataFromResource<Customer> {
     }
 
     @Override
-    protected void writeAssociatedData(final Customer customer) {
+    protected void storeAssociatedData(final Customer customer) {
         session.overwriteObjectByKey(userInfoSessionKey, createUserInfo(customer));
         session.overwriteValueByKey(customerIdSessionKey, customer.getId());
         session.overwriteValueByKey(customerEmailSessionKey, customer.getEmail());

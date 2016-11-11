@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
  * requires different storing strategies (e.g. save the cart ID in session and the mini cart in the session cache).
  * @param <T> Class of the stored object
  */
-public abstract class StorableDataFromResource<T> implements StorableResource<T> {
+public abstract class DataFromResourceStoringOperations<T> implements ResourceStoringOperations<T> {
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -20,9 +20,9 @@ public abstract class StorableDataFromResource<T> implements StorableResource<T>
      * {@inheritDoc}
      */
     @Override
-    public void write(@Nullable final T value) {
+    public void store(@Nullable final T value) {
         if (value != null) {
-            writeAssociatedData(value);
+            storeAssociatedData(value);
         } else {
             removeAssociatedData();
         }
@@ -40,7 +40,7 @@ public abstract class StorableDataFromResource<T> implements StorableResource<T>
      * Stores the data related to the object, replacing it if a previous version already existed.
      * @param value the instance of the object used to update the stored data
      */
-    protected abstract void writeAssociatedData(@NotNull final T value);
+    protected abstract void storeAssociatedData(@NotNull final T value);
 
     /**
      * Removes the stored data related to the object.

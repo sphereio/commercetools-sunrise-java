@@ -8,7 +8,7 @@ import java.util.Optional;
  * Represents a strategy used to read and write objects into the user's session.
  */
 @ImplementedBy(SerializableSessionCookieStrategy.class)
-public interface TypedSessionStrategy extends SessionStrategy {
+public interface ObjectStoringSessionStrategy extends SessionStrategy {
 
     /**
      * Finds the object of type {@code <U>} associated with the given key in session.

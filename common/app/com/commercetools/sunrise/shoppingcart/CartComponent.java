@@ -83,7 +83,7 @@ public class CartComponent implements ControllerComponent, CustomerSignInResultL
     }
 
     private void overwriteCartInSession(final Cart cart) {
-        injector.getInstance(CartInSession.class).write(cart);
+        injector.getInstance(CartInSession.class).store(cart);
     }
 
     /**

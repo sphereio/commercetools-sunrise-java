@@ -1,7 +1,7 @@
 package com.commercetools.sunrise.shoppingcart;
 
 import com.commercetools.sunrise.common.contexts.RequestScoped;
-import com.commercetools.sunrise.common.sessions.StorableDataFromResource;
+import com.commercetools.sunrise.common.sessions.DataFromResourceStoringOperations;
 import com.commercetools.sunrise.common.sessions.SessionStrategy;
 import io.sphere.sdk.orders.Order;
 import play.Configuration;
@@ -13,7 +13,7 @@ import java.util.Optional;
  * Keeps the order ID in session.
  */
 @RequestScoped
-public class OrderInSession extends StorableDataFromResource<Order> {
+public class OrderInSession extends DataFromResourceStoringOperations<Order> {
 
     private static final String DEFAULT_LAST_ORDER_ID_SESSION_KEY = "sunrise-last-order-id";
     private final String lastOrderIdSessionKey;
@@ -30,7 +30,7 @@ public class OrderInSession extends StorableDataFromResource<Order> {
     }
 
     @Override
-    protected void writeAssociatedData(final Order order) {
+    protected void storeAssociatedData(final Order order) {
         session.overwriteValueByKey(lastOrderIdSessionKey, order.getId());
     }
 

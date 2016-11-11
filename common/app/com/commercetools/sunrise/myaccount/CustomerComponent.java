@@ -31,6 +31,6 @@ public class CustomerComponent implements ControllerComponent, CustomerSignInRes
     }
 
     private void overwriteCustomerInSession(final Customer customer) {
-        customerInSession.write(customer);
+        customerInSession.store(customer);
     }
 }

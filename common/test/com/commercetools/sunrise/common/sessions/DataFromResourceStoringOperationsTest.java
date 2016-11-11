@@ -10,12 +10,12 @@ import java.util.function.Consumer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DivisibleStorableResourceTest {
+public class DataFromResourceStoringOperationsTest {
 
     @Test
     public void overwritesRelatedValues() throws Exception {
         testInitializedSession(stringInSession -> {
-            stringInSession.write("some-other-value");
+            stringInSession.store("some-other-value");
             assertThat(stringInSession.findValue()).contains("some-other-value");
             assertThat(stringInSession.findOtherValue()).contains("16");
         });
@@ -33,15 +33,15 @@ public class DivisibleStorableResourceTest {
     @Test
     public void removesRelatedValuesOnNullParameter() throws Exception {
         testInitializedSession(stringInSession -> {
-            stringInSession.write(null);
+            stringInSession.store(null);
             assertThat(stringInSession.findValue()).isEmpty();
             assertThat(stringInSession.findOtherValue()).isEmpty();
         });
     }
 
-    private void testInitializedSession(final Consumer<TestableStringInStorableDataFromResourceStore> test) {
-        final TestableStringInStorableDataFromResourceStore stringInSession = new TestableStringInStorableDataFromResourceStore();
-        stringInSession.write("some-value");
+    private void testInitializedSession(final Consumer<TestableStringInDataFromResourceStoringOperations> test) {
+        final TestableStringInDataFromResourceStoringOperations stringInSession = new TestableStringInDataFromResourceStoringOperations();
+        stringInSession.store("some-value");
 
         assertThat(stringInSession.findValue())
                 .as("Direct value is correctly initialized")
@@ -53,11 +53,11 @@ public class DivisibleStorableResourceTest {
         test.accept(stringInSession);
     }
 
-    private static class TestableStringInStorableDataFromResourceStore extends StorableDataFromResource<String> {
+    private static class TestableStringInDataFromResourceStoringOperations extends DataFromResourceStoringOperations<String> {
 
         private final Map<String, String> session;
 
-        TestableStringInStorableDataFromResourceStore() {
+        TestableStringInDataFromResourceStoringOperations() {
             this.session = new HashMap<>();
         }
 
@@ -70,7 +70,7 @@ public class DivisibleStorableResourceTest {
         }
 
         @Override
-        protected void writeAssociatedData(@NotNull final String value) {
+        protected void storeAssociatedData(@NotNull final String value) {
             session.put("some-key", value);
             session.put("some-other-key", String.valueOf(value.length())); // size of value
         }
