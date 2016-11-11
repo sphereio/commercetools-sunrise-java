@@ -5,8 +5,8 @@ Sunrise Java Shop Framework :sunrise:
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.commercetools.sunrise/commercetools-sunrise_2.11/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.commercetools.sunrise/commercetools-sunrise_2.11)
 
 The next generation shop framework. 
-To see it in action, check [Sunrise Starter Project](https://github.com/commercetools/commercetools-sunrise-java-starter)
 
+* [Demo](https://demo.commercetools.com)
 * [Documentation](manual/)
 * [Javadoc](https://commercetools.github.io/commercetools-sunrise-java/javadoc/index.html)
 
