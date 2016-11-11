@@ -30,7 +30,7 @@ libraryDependencies ++= Seq(
 ```
 These dependencies provide default Controllers which can be enabled by extending them into your own Controller and registering a route for it.
 
-For example, if we want to enable an endpoint to see the contents of the cart, we would simply extend the `SunriseCartDetailController`:
+For example, if we wanted to enable an endpoint to see the contents of the cart, we would simply extend the `SunriseCartDetailController`:
 ```java
 @RequestScoped
 public class CartDetailController extends SunriseCartDetailController {
