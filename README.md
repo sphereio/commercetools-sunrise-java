@@ -17,7 +17,7 @@ The recommended way to start using Sunrise is to clone the [Sunrise Starter Proj
 
 ### Starting from scratch
 Alternatively you can start your own Play Framework project and configure it yourself, using Sunrise as dependency:
-```
+```sbt
 val sunriseFrameworkVersion = "0.13.0" // replace with latest version
 libraryDependencies ++= Seq(
   // add Sunrise Framework dependencies as needed, e.g.:
@@ -34,16 +34,17 @@ For example, if we want to enable an endpoint to see the contents of the cart, w
 ```java
 @RequestScoped
 public class CartDetailController extends SunriseCartDetailController {
+  // here you can register components or override methods to change behaviour
 }
 ```
 Then we only need to associate our Controller to a route with the desired pattern in `conf/routes`:
-```
+```scala
 # Shows the details of the cart belonging to the current session
 GET  /:languageTag/cart       @shoppingcart.CartDetailController.show(languageTag: String)
 ```
-If we then access [http://localhost:9000/en/cart](http://localhost:9000/en/cart) we should see the contents of our cart.
+If we then access [http://localhost:9000/en/cart](http://localhost:9000/en/cart) we should be able to see the contents of our cart.
 
-Check [Sunrise Starter Project](https://github.com/commercetools/commercetools-sunrise-java-starter) to adjust any required configuration.
+Check [Sunrise Starter Project](https://github.com/commercetools/commercetools-sunrise-java-starter) to adjust any other required configuration.
 
 ## Integration tests against commercetools platform
 
