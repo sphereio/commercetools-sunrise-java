@@ -12,7 +12,7 @@ import static java.util.Collections.emptyMap;
 import static java.util.Collections.singletonMap;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class SerializableSessionCookieStrategyTest {
+public class SerializableObjectStoringSessionCookieStrategyTest {
 
 
     private static final SomeObject SOME_OBJECT = new SomeObject("hello", 2);
@@ -71,8 +71,8 @@ public class SerializableSessionCookieStrategyTest {
         });
     }
 
-    private void testSession(final Http.Session session, final Consumer<SerializableSessionCookieStrategy> test) {
-        final SerializableSessionCookieStrategy serializableObjectSession = new SerializableSessionCookieStrategy(session);
+    private void testSession(final Http.Session session, final Consumer<SerializableObjectStoringSessionCookieStrategy> test) {
+        final SerializableObjectStoringSessionCookieStrategy serializableObjectSession = new SerializableObjectStoringSessionCookieStrategy(session);
         test.accept(serializableObjectSession);
     }
 

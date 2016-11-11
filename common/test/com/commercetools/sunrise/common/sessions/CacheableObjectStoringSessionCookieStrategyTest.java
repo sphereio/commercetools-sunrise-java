@@ -16,7 +16,7 @@ import static java.util.Collections.emptyMap;
 import static java.util.Collections.singletonMap;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CacheableSessionCookieStrategyTest {
+public class CacheableObjectStoringSessionCookieStrategyTest {
 
     private static final SomeObject SOME_OBJECT = new SomeObject("hello", 2);
     private static final SomeObject SOME_OTHER_OBJECT = new SomeObject("world", 4);
@@ -121,9 +121,9 @@ public class CacheableSessionCookieStrategyTest {
     }
 
     private void testSession(final Http.Session session, final CacheApi cacheApi,
-                             final Consumer<CacheableSessionCookieStrategy> test) {
+                             final Consumer<CacheableObjectStoringSessionCookieStrategy> test) {
         final Configuration config = new Configuration(emptyMap());
-        final CacheableSessionCookieStrategy cachableObjectSession = new CacheableSessionCookieStrategy(session, cacheApi, config);
+        final CacheableObjectStoringSessionCookieStrategy cachableObjectSession = new CacheableObjectStoringSessionCookieStrategy(session, cacheApi, config);
         test.accept(cachableObjectSession);
     }
 
