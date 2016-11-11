@@ -13,7 +13,7 @@ The next generation shop framework.
 ## Installation
 
 ### Sunrise Starter Project
-The recommended way to start using Sunrise is to clone the [Sunrise Starter Project](https://github.com/commercetools/commercetools-sunrise-java-starter) and use it as a template project. It already contains all dependencies and configurations needed to run your Sunrise-based project.
+The recommended way to start using Sunrise is to clone the [Sunrise Starter Project](https://github.com/commercetools/commercetools-sunrise-java-starter) and use it as a template project. It already contains all dependencies (i.e. Sunrise Framework and Theme) and configurations needed to run your Sunrise-based project.
 
 ### Starting from scratch
 Alternatively you can start your own Play Framework project and configure it yourself, using Sunrise as dependency:
