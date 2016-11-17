@@ -20,7 +20,11 @@ public class WebjarsFilesCopierTest {
     @Before
     @After
     public void setUp() throws Exception {
-        FileUtils.cleanDirectory(new File(DEST_PATH));
+        final File directory = new File(DEST_PATH);
+        //FileUtils.cleanDirectory would delete also the test class
+        for (final File unwantedFolder : directory.listFiles((dir, name) -> name.startsWith("folder"))) {
+            FileUtils.deleteDirectory(unwantedFolder);
+        }
     }
 
     @Test
@@ -54,6 +58,11 @@ public class WebjarsFilesCopierTest {
                 copiedFiles.forEach(copiedFile -> assertThat(copiedFile).exists()));
     }
 
+    @Test
+    public void honorsFolderNamesWithSpaces() throws Exception {
+        testCopy("folder/folder/evil & folder/folder 5/file", copiedFile -> assertThat(copiedFile).exists().hasContent("level 5"));
+    }
+
     private void testCopy(final String originPath, final Consumer<File> test) {
         test.accept(copyFiles(singletonList(originPath)).get(0));
     }
@@ -65,7 +74,7 @@ public class WebjarsFilesCopierTest {
     private static List<File> copyFiles(final List<String> originPaths) {
         WebjarsFilesCopier.copyTemplateFiles(DEST_PATH, originPaths);
         return originPaths.stream()
-                .map(originPath -> new File(DEST_PATH + "/" + originPath))
+                .map(originPath -> new File(DEST_PATH + File.separator + originPath))
                 .collect(toList());
     }
 }
