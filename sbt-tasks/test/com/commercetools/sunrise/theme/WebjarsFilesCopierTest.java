@@ -1,8 +1,8 @@
 package com.commercetools.sunrise.theme;
 
 import org.apache.commons.io.FileUtils;
-import org.junit.Before;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
@@ -15,15 +15,15 @@ import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class WebjarsFilesCopierTest {
-    private static final String DEST_PATH = WebjarsFilesCopierTest.class.getClass().getResource("/com/commercetools/sunrise/theme").getPath();
+
+    private static final String DEST_PATH = WebjarsFilesCopierTest.class.getClass().getResource("/").getPath() + "files";
 
     @Before
     @After
     public void setUp() throws Exception {
         final File directory = new File(DEST_PATH);
-        //FileUtils.cleanDirectory would delete also the test class
-        for (final File unwantedFolder : directory.listFiles((dir, name) -> name.startsWith("folder"))) {
-            FileUtils.deleteDirectory(unwantedFolder);
+        if (directory.exists()) {
+            FileUtils.cleanDirectory(directory);
         }
     }
 
