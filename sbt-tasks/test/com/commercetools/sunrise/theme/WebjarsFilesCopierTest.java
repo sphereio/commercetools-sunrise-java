@@ -16,14 +16,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class WebjarsFilesCopierTest {
 
-    private static final String DEST_PATH = WebjarsFilesCopierTest.class.getClass().getResource("/").getPath() + "files";
+    private static final String DEST_PATH = WebjarsFilesCopierTest.class.getClass().getResource("/").getPath() + "webjarsFilesCopierDestFolder";
 
     @Before
     @After
-    public void setUp() throws Exception {
+    public void deleteFolderWithAllCopiedFiles() throws Exception {
         final File directory = new File(DEST_PATH);
         if (directory.exists()) {
             FileUtils.cleanDirectory(directory);
+            if (!directory.delete()) {
+                throw new RuntimeException("Could not delete folder " + DEST_PATH);
+            }
         }
     }
 
