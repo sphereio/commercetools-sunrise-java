@@ -7,12 +7,9 @@ import io.sphere.sdk.search.model.RangeTermFacetedSearchSearchModel;
 
 import javax.annotation.Nullable;
 
-public final class RangeFacetBuilder<T> extends FacetBuilder<RangeFacetBuilder<T>> implements Builder<RangeFacet<T>> {
+public final class RangeBucketFacetBuilder<T> extends FacetBuilder<RangeBucketFacetBuilder<T>> implements Builder<RangeBucketFacet<T>> {
 
     private FacetedSearchSearchModel<T> facetedSearchSearchModel;
-    @Nullable private Long threshold = 1L;
-    @Nullable private Long limit = null;
-    @Nullable private FacetOptionMapper mapper = null;
     @Nullable private RangeFacetResult facetResult = null;
     private RangeTermFacetedSearchSearchModel rangeTermFacetedSearchSearchModel;
 
@@ -41,21 +38,6 @@ public final class RangeFacetBuilder<T> extends FacetBuilder<RangeFacetBuilder<T
 
     public RangeFacetBuilder<T> facetResult(@Nullable final RangeFacetResult facetResult) {
         this.facetResult = facetResult;
-        return this;
-    }
-
-    public RangeFacetBuilder<T> threshold(@Nullable final Long threshold) {
-        this.threshold = threshold;
-        return this;
-    }
-
-    public RangeFacetBuilder<T> mapper(@Nullable final FacetOptionMapper mapper) {
-        this.mapper = mapper;
-        return this;
-    }
-
-    public RangeFacetBuilder<T> limit(@Nullable final Long limit) {
-        this.limit = limit;
         return this;
     }
 

@@ -3,6 +3,7 @@ package io.sphere.sdk.facets;
 import io.sphere.sdk.search.FacetedSearchExpression;
 import io.sphere.sdk.search.PagedSearchResult;
 import io.sphere.sdk.search.RangeFacetResult;
+import io.sphere.sdk.search.model.FacetRange;
 import io.sphere.sdk.search.model.FacetedSearchSearchModel;
 import io.sphere.sdk.search.model.RangeTermFacetedSearchSearchModel;
 
@@ -13,52 +14,25 @@ import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
-public class RangeFacetImpl<T> extends BaseFacet<T> implements RangeFacet<T> {
+public class RangeBucketFacetImpl<T> extends BaseFacet<T> implements RangeBucketFacet<T> {
 
-    private final List<String> selectedValues;
+    private final List<FacetRange> selectedValues;
     @Nullable private final RangeFacetResult facetResult;
-    @Nullable private final Long threshold;
-    @Nullable private final Long limit;
-    @Nullable private final FacetOptionMapper mapper;
     private final List<FacetOption> facetOptions;
-    private final RangeTermFacetedSearchSearchModel rangeTermFacetedSearchSearchModel;
+//    private final RangeTermFacetedSearchSearchModel rangeTermFacetedSearchSearchModel;
 
-    protected RangeFacetImpl(final String key, final String label, final boolean countHidden, final FacetType type,
-                             final FacetedSearchSearchModel<T> searchModel, final List<String> selectedValues,
-                             @Nullable final RangeFacetResult facetResult, @Nullable final Long threshold,
-                             @Nullable final Long limit, @Nullable final FacetOptionMapper mapper, RangeTermFacetedSearchSearchModel rangeTermFacetedSearchSearchModel) {
+    protected RangeBucketFacetImpl(final String key, final String label, final boolean countHidden, final FacetType type,
+                             final FacetedSearchSearchModel<T> searchModel, final List<FacetRange> selectedValues,
+                             @Nullable final RangeFacetResult facetResult, RangeTermFacetedSearchSearchModel rangeTermFacetedSearchSearchModel) {
         super(key, type, countHidden, label, searchModel);
-        if (threshold != null && limit != null && threshold > limit) {
-            throw new InvalidSelectFacetConstraintsException(threshold, limit);
-        }
         this.selectedValues = selectedValues;
         this.facetResult = facetResult;
-        this.threshold = threshold;
-        this.mapper = mapper;
-        this.facetOptions = initializeOptions(selectedValues, facetResult, mapper);
-        this.limit = limit;
-        this.rangeTermFacetedSearchSearchModel = rangeTermFacetedSearchSearchModel;
+        this.facetOptions = null;
+//        this.rangeTermFacetedSearchSearchModel = rangeTermFacetedSearchSearchModel;
     }
 
     @Override
-    public boolean isAvailable() {
-        return Optional.ofNullable(threshold).map(threshold -> facetOptions.size() >= threshold).orElse(true);
-    }
-
-    @Override
-    public List<FacetOption> getAllOptions() {
-        return facetOptions;
-    }
-
-    @Override
-    public List<FacetOption> getLimitedOptions() {
-        return Optional.ofNullable(limit)
-                .map(limit -> facetOptions.stream().limit(limit).collect(toList()))
-                .orElse(facetOptions);
-    }
-
-    @Override
-    public List<String> getSelectedValues() {
+    public List<FacetRange> getSelectedRange() {
         return selectedValues;
     }
 
