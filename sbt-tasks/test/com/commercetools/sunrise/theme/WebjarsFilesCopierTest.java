@@ -22,12 +22,7 @@ public class WebjarsFilesCopierTest {
     @After
     public void deleteFolderWithAllCopiedFiles() throws Exception {
         final File directory = new File(DEST_PATH);
-        if (directory.exists()) {
-            FileUtils.cleanDirectory(directory);
-            if (!directory.delete()) {
-                throw new RuntimeException("Could not delete folder " + DEST_PATH);
-            }
-        }
+        FileUtils.deleteDirectory(directory);
     }
 
     @Test
