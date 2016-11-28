@@ -46,6 +46,11 @@ public class RangeBucketFacetImpl<T> extends BaseFacet<T> implements RangeBucket
     }
 
     @Override
+    public List<RangeBucketOption> getFacetOptions() {
+        return facetOptions;
+    }
+
+    @Override
     public List<String> getSelectedValues() {
         return null;
     }
@@ -56,7 +61,11 @@ public class RangeBucketFacetImpl<T> extends BaseFacet<T> implements RangeBucket
         if (selectedRanges.isEmpty()) {
             facetedSearchExpr = rangeTermFacetedSearchSearchModel.allRanges();
         } else {
-            facetedSearchExpr = rangeTermFacetedSearchSearchModel.containsAny(selectedRanges);
+            facetedSearchExpr = rangeTermFacetedSearchSearchModel.isBetweenAny(
+                    selectedRanges.stream()
+                        .map(facetRange -> FilterRange.of(facetRange.lowerEndpoint().toString(), facetRange.upperEndpoint().toString()))
+                        .collect(toList())
+            );
         }
         return facetedSearchExpr;
     }
@@ -96,12 +105,11 @@ public class RangeBucketFacetImpl<T> extends BaseFacet<T> implements RangeBucket
     }
 
     private Boolean checkIfSelected(RangeStats rangeTermStats, List<FacetRange> selectedValue) {
-        return selectedValue.contains(FacetRange.of(rangeTermStats.getLowerEndpoint(), rangeTermStats.getUpperEndpoint()));
+        return selectedValue.contains(FacetRange.of(Integer.parseInt(rangeTermStats.getLowerEndpoint()), (Integer.parseInt(rangeTermStats.getUpperEndpoint()))));
     }
 
     public RangeTermFacetedSearchSearchModel<T> getRangeFacetedSearchSearchModel() {
         return rangeTermFacetedSearchSearchModel;
     }
-
 
 }

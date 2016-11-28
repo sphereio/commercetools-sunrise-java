@@ -23,6 +23,8 @@ public interface RangeBucketFacet<T> extends Facet<T> {
 
     List<FacetRange> getSelectedRanges();
 
+    List<RangeBucketOption> getFacetOptions();
+
     RangeTermFacetedSearchSearchModel<T> getRangeFacetedSearchSearchModel();
 
     RangeBucketFacet<T> withSearchResult(final PagedSearchResult<T> searchResult);

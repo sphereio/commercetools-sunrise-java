@@ -1,6 +1,8 @@
 package io.sphere.sdk.facets;
 
-public class RangeBucketOptionImpl implements RangeBucketOption{
+import io.sphere.sdk.models.Base;
+
+public class RangeBucketOptionImpl extends Base implements RangeBucketOption{
 
     private final String lowerEndpoint;
     private final String upperEndpoint;
