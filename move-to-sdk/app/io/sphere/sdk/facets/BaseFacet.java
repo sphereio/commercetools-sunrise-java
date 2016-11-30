@@ -10,15 +10,12 @@ abstract class BaseFacet<T> extends Base implements Facet<T> {
     private final FacetType type;
     private final String label;
     private final boolean countHidden;
-    protected final FacetedSearchSearchModel<T> facetedSearchSearchModel;
 
-    protected BaseFacet(final String key, final FacetType type, final boolean countHidden, @Nullable final String label,
-                        final FacetedSearchSearchModel<T> facetedSearchSearchModel) {
+    protected BaseFacet(final String key, final FacetType type, final boolean countHidden, @Nullable final String label) {
         this.key = key;
         this.type = type;
         this.label = label;
         this.countHidden = countHidden;
-        this.facetedSearchSearchModel = facetedSearchSearchModel;
     }
 
     @Override
@@ -40,11 +37,6 @@ abstract class BaseFacet<T> extends Base implements Facet<T> {
     @Override
     public boolean isCountHidden() {
         return countHidden;
-    }
-
-    @Override
-    public FacetedSearchSearchModel<T> getFacetedSearchSearchModel() {
-        return facetedSearchSearchModel;
     }
 
 }

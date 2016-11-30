@@ -3,6 +3,7 @@ package io.sphere.sdk.facets;
 import io.sphere.sdk.search.PagedSearchResult;
 import io.sphere.sdk.search.RangeFacetResult;
 import io.sphere.sdk.search.model.FacetRange;
+import io.sphere.sdk.search.model.FilterRange;
 import io.sphere.sdk.search.model.RangeTermFacetedSearchSearchModel;
 
 import javax.annotation.Nullable;
@@ -12,7 +13,7 @@ import java.util.List;
  * Facet that contains a list of range bucket options.
  * @param <T> type of the resource for this facet (e.g. ProductProjection)
  */
-public interface RangeBucketFacet<T> extends Facet<T> {
+public interface BucketRangeFacet<T> extends Facet<T> {
 
     /**
      * Gets the associated range facet result for this range facet.
@@ -21,13 +22,18 @@ public interface RangeBucketFacet<T> extends Facet<T> {
     @Nullable
     RangeFacetResult getFacetResult();
 
-    List<FacetRange> getSelectedRanges();
+    List<FacetRange<String>> getInitialRanges();
 
-    List<RangeBucketOption> getFacetOptions();
+    List<FilterRange<String>> getSelectedRanges();
+
+    List<BucketRangeOption> getOptions();
 
     RangeTermFacetedSearchSearchModel<T> getRangeFacetedSearchSearchModel();
 
-    RangeBucketFacet<T> withSearchResult(final PagedSearchResult<T> searchResult);
+    @Override
+    BucketRangeFacet<T> withSearchResult(final PagedSearchResult<T> searchResult);
 
-    RangeBucketFacet<T> withSelectedRanges(final List<FacetRange> selectedRanges);
+    BucketRangeFacet<T> withSelectedRanges(final List<FilterRange<String>> selectedRanges);
+
+    BucketRangeFacet<T> withInitialRanges(final List<FacetRange<String>> initialRanges);
 }
