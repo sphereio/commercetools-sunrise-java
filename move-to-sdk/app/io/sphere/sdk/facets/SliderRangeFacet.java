@@ -3,20 +3,21 @@ package io.sphere.sdk.facets;
 import io.sphere.sdk.search.PagedSearchResult;
 import io.sphere.sdk.search.RangeFacetResult;
 import io.sphere.sdk.search.model.FacetRange;
+import io.sphere.sdk.search.model.FilterRange;
 import io.sphere.sdk.search.model.RangeTermFacetedSearchSearchModel;
 
 import javax.annotation.Nullable;
 
-public interface RangeSliderFacet<T> extends Facet<T> {
+public interface SliderRangeFacet<T> extends Facet<T> {
 
     @Nullable
     RangeFacetResult getFacetResult();
 
-    FacetRange getSelectedRange();
+    FilterRange<String> getSelectedRange();
 
     RangeTermFacetedSearchSearchModel<T> getRangeFacetedSearchSearchModel();
 
-    RangeSliderFacet<T> withSearchResult(final PagedSearchResult<T> searchResult);
+    SliderRangeFacet<T> withSearchResult(final PagedSearchResult<T> searchResult);
 
-    RangeSliderFacet<T> withSelectedRange(final FacetRange selectedRange);
+    SliderRangeFacet<T> withSelectedRange(final FilterRange<String> selectedRange);
 }
