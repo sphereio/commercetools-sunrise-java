@@ -24,26 +24,28 @@ public class HandlebarsContextFactory extends Base {
     private ErrorFormatter errorFormatter;
 
     public Context create(final Handlebars handlebars, final String templateName, final TemplateContext templateContext) {
-        final List<ValueResolver> valueResolvers = valueResolvers(templateContext);
-        final Context context = Context.newBuilder(templateContext.pageData())
-                .resolver(valueResolvers.toArray(new ValueResolver[valueResolvers.size()]))
-                .build();
-        fillContext(context, templateContext);
-        return context;
+        final Context context = createContextBuilder(templateContext).build();
+        return createContext(context, templateContext);
     }
 
-    protected void fillContext(final Context context, final TemplateContext templateContext) {
-        fillLocale(context, templateContext);
-        fillCmsPage(context, templateContext);
+    protected final Context.Builder createContextBuilder(final TemplateContext templateContext) {
+        final Context.Builder contextBuilder = Context.newBuilder(templateContext.pageData());
+        return contextBuilderWithValueResolvers(contextBuilder, templateContext);
     }
 
-    protected void fillCmsPage(final Context context, final TemplateContext templateContext) {
-        templateContext.cmsPage()
-                .ifPresent(cmsPage -> context.data(CMS_PAGE_IN_CONTEXT_KEY, cmsPage));
+    protected final Context createContext(final Context context, final TemplateContext templateContext) {
+        final Context contextWithLocale = contextWithLocale(context, templateContext);
+        return contextWithCmsPage(contextWithLocale, templateContext);
     }
 
-    protected void fillLocale(final Context context, final TemplateContext templateContext) {
-        context.data(LANGUAGE_TAGS_IN_CONTEXT_KEY, templateContext.locales().stream()
+    protected Context contextWithCmsPage(final Context context, final TemplateContext templateContext) {
+        return templateContext.cmsPage()
+                .map(cmsPage -> context.data(CMS_PAGE_IN_CONTEXT_KEY, cmsPage))
+                .orElse(context);
+    }
+
+    protected Context contextWithLocale(final Context context, final TemplateContext templateContext) {
+        return context.data(LANGUAGE_TAGS_IN_CONTEXT_KEY, templateContext.locales().stream()
                 .map(Locale::toLanguageTag)
                 .collect(toList()));
     }
@@ -53,7 +55,12 @@ public class HandlebarsContextFactory extends Base {
         return asList(MapValueResolver.INSTANCE, JavaBeanValueResolver.INSTANCE, playJavaFormResolver);
     }
 
-    protected PlayJavaFormResolver createPlayJavaFormResolver(final TemplateContext templateContext) {
+    protected final Context.Builder contextBuilderWithValueResolvers(final Context.Builder contextBuilder, final TemplateContext templateContext) {
+        final List<ValueResolver> valueResolvers = valueResolvers(templateContext);
+        return contextBuilder.resolver(valueResolvers.toArray(new ValueResolver[valueResolvers.size()]));
+    }
+
+    protected final PlayJavaFormResolver createPlayJavaFormResolver(final TemplateContext templateContext) {
         return new PlayJavaFormResolver(templateContext.locales(), errorFormatter);
     }
 }
