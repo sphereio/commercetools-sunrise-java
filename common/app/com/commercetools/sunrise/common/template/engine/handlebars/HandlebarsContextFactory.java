@@ -24,8 +24,8 @@ public class HandlebarsContextFactory extends Base {
     private ErrorFormatter errorFormatter;
 
     public Context create(final Handlebars handlebars, final String templateName, final TemplateContext templateContext) {
-        final Context context = createContextBuilder(templateContext).build();
-        return createContext(context, templateContext);
+        final Context.Builder contextBuilder = createContextBuilder(templateContext);
+        return createContext(contextBuilder, templateContext);
     }
 
     protected final Context.Builder createContextBuilder(final TemplateContext templateContext) {
@@ -33,8 +33,8 @@ public class HandlebarsContextFactory extends Base {
         return contextBuilderWithValueResolvers(contextBuilder, templateContext);
     }
 
-    protected final Context createContext(final Context context, final TemplateContext templateContext) {
-        final Context contextWithLocale = contextWithLocale(context, templateContext);
+    protected final Context createContext(final Context.Builder contextBuilder, final TemplateContext templateContext) {
+        final Context contextWithLocale = contextWithLocale(contextBuilder.build(), templateContext);
         return contextWithCmsPage(contextWithLocale, templateContext);
     }
 
