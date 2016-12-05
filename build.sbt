@@ -22,19 +22,13 @@ Heroku.deploySettings
 
 Version.generateVersionInfo
 
-lazy val sunriseThemeVersion = "0.61.1"
-
-lazy val jvmSdkVersion = "1.5.0"
-
-lazy val jacksonVersion = "2.7.5"
-
 val childProjects: List[sbt.ProjectReference] =
   List(common, `product-catalog`, `shopping-cart`, `my-account`, `move-to-sdk`, `sbt-tasks`)
 
 lazy val `commercetools-sunrise` = (project in file("."))
   .enablePlugins(PlayJava)
   .settings(javadocSettings ++ Release.disablePublish: _*)
-  .settings(sunriseDefaultThemeDependencies)
+  .settings(Dependencies.sunriseDefaultTheme)
   .aggregate(childProjects: _*)
   .dependsOn(`product-catalog`, `shopping-cart`, `my-account`)
 
@@ -42,7 +36,7 @@ lazy val common = project
   .enablePlugins(PlayJava)
   .configs(IntegrationTest, TestCommon.PlayTest)
   .settings(TestCommon.defaultSettings: _*)
-  .settings(jvmSdkDependencies ++ themeDependencies ++ sunriseModuleDependencies ++ baseDependencies: _*)
+  .settings(Dependencies.jvmSdk ++ Dependencies.sunriseTheme ++ Dependencies.sunriseModules ++ Dependencies.commonLib: _*)
   .dependsOn(`move-to-sdk`)
 
 lazy val `product-catalog` = project
@@ -66,13 +60,12 @@ lazy val `my-account` = project
 lazy val `sbt-tasks` = project
   .enablePlugins(PlayJava)
   .configs(IntegrationTest)
-  .settings(TestCommon.settingsWithoutPlayTest: _*)
-  .settings(unmanagedBase in Test := baseDirectory.value / "test" / "lib")
+  .settings(TestCommon.settingsWithoutPlayTest ++ enableLibFolderInTest: _*)
 
 lazy val `move-to-sdk` = project
   .enablePlugins(PlayJava)
   .configs(IntegrationTest)
-  .settings(TestCommon.settingsWithoutPlayTest ++ jvmSdkDependencies: _*)
+  .settings(TestCommon.settingsWithoutPlayTest ++ Dependencies.jvmSdk: _*)
 
 lazy val commonWithTests: ClasspathDep[ProjectReference] = common % "compile;test->test;it->it;pt->pt"
 
@@ -80,46 +73,4 @@ lazy val javadocSettings = javaUnidocSettings ++ Seq (
   unidocProjectFilter in (JavaUnidoc, unidoc) := inProjects(childProjects: _*)
 )
 
-lazy val jvmSdkDependencies = Seq (
-  libraryDependencies ++= Seq (
-    "com.commercetools.sdk.jvm.core" % "commercetools-models" % jvmSdkVersion,
-    "com.commercetools.sdk.jvm.core" % "commercetools-java-client" % jvmSdkVersion,
-    "com.commercetools.sdk.jvm.core" % "commercetools-convenience" % jvmSdkVersion
-  ),
-  dependencyOverrides ++= Set (
-    "com.fasterxml.jackson.core" % "jackson-annotations" % jacksonVersion,
-    "com.fasterxml.jackson.core" % "jackson-core" % jacksonVersion,
-    "com.fasterxml.jackson.core" % "jackson-databind" % jacksonVersion,
-    "com.fasterxml.jackson.module" % "jackson-module-parameter-names" % jacksonVersion,
-    "com.fasterxml.jackson.datatype" % "jackson-datatype-jsr310" % jacksonVersion
-  )
-)
-
-lazy val themeDependencies = Seq (
-  libraryDependencies ++= Seq (
-    "org.webjars" %% "webjars-play" % "2.5.0-2",
-    "com.github.jknack" % "handlebars" % "4.0.5"
-  )
-)
-
-lazy val sunriseModuleDependencies = Seq (
-  libraryDependencies ++= Seq (
-    "com.commercetools.sunrise.cms" % "cms-api" % "0.1.0"
-  )
-)
-
-lazy val baseDependencies = Seq (
-  libraryDependencies ++= Seq (
-    filters,
-    cache,
-    "commons-beanutils" % "commons-beanutils" % "1.9.2",
-    "commons-io" % "commons-io" % "2.4"
-  )
-)
-
-lazy val sunriseDefaultThemeDependencies = Seq (
-  resolvers += Resolver.bintrayRepo("commercetools", "maven"),
-  libraryDependencies ++= Seq (
-    "com.commercetools.sunrise" % "commercetools-sunrise-theme" % sunriseThemeVersion
-  )
-)
+lazy val enableLibFolderInTest = unmanagedBase in Test := baseDirectory.value / "test" / "lib"
