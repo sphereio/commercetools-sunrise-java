@@ -32,52 +32,52 @@ val childProjects: List[sbt.ProjectReference] =
   List(common, `product-catalog`, `shopping-cart`, `my-account`, `move-to-sdk`, `sbt-tasks`)
 
 lazy val `commercetools-sunrise` = (project in file("."))
-  .enablePlugins(PlayJava).configs(IntegrationTest, TestCommon.PlayTest)
-  .settings(TestCommon.defaultSettings ++ javadocSettings: _*)
-  .aggregate(childProjects: _*)
-  .dependsOn(commonWithTests, `product-catalog`, `shopping-cart`, `my-account`)
+  .enablePlugins(PlayJava)
+  .settings(javadocSettings ++ Release.disablePublish: _*)
   .settings(sunriseDefaultThemeDependencies)
+  .aggregate(childProjects: _*)
+  .dependsOn(`product-catalog`, `shopping-cart`, `my-account`)
 
 lazy val common = project
-  .enablePlugins(PlayJava).configs(IntegrationTest, TestCommon.PlayTest)
-  .settings(TestCommon.defaultSettings ++ Release.publishSettings: _*)
-  .settings(jvmSdkDependencies ++ templateDependencies ++ sunriseModuleDependencies ++ commonDependencies: _*)
+  .enablePlugins(PlayJava)
+  .configs(IntegrationTest, TestCommon.PlayTest)
+  .settings(TestCommon.defaultSettings: _*)
+  .settings(jvmSdkDependencies ++ themeDependencies ++ sunriseModuleDependencies ++ baseDependencies: _*)
   .dependsOn(`move-to-sdk`)
 
 lazy val `product-catalog` = project
-  .enablePlugins(PlayJava).configs(IntegrationTest, TestCommon.PlayTest)
-  .settings(TestCommon.defaultSettings ++ Release.publishSettings: _*)
+  .enablePlugins(PlayJava)
+  .configs(IntegrationTest, TestCommon.PlayTest)
+  .settings(TestCommon.defaultSettings: _*)
   .dependsOn(commonWithTests)
 
 lazy val `shopping-cart` = project
-  .enablePlugins(PlayJava).configs(IntegrationTest, TestCommon.PlayTest)
-  .settings(TestCommon.defaultSettings ++ Release.publishSettings: _*)
+  .enablePlugins(PlayJava)
+  .configs(IntegrationTest, TestCommon.PlayTest)
+  .settings(TestCommon.defaultSettings: _*)
   .dependsOn(commonWithTests)
 
 lazy val `my-account` = project
-  .enablePlugins(PlayJava).configs(IntegrationTest, TestCommon.PlayTest)
-  .settings(TestCommon.defaultSettings ++ Release.publishSettings: _*)
+  .enablePlugins(PlayJava)
+  .configs(IntegrationTest, TestCommon.PlayTest)
+  .settings(TestCommon.defaultSettings: _*)
   .dependsOn(commonWithTests)
 
 lazy val `sbt-tasks` = project
-  .enablePlugins(PlayJava).configs(IntegrationTest)
-  .settings(TestCommon.settingsWithoutPlayTest ++ Release.publishSettings: _*)
+  .enablePlugins(PlayJava)
+  .configs(IntegrationTest)
+  .settings(TestCommon.settingsWithoutPlayTest: _*)
   .settings(unmanagedBase in Test := baseDirectory.value / "test" / "lib")
 
 lazy val `move-to-sdk` = project
-  .enablePlugins(PlayJava).configs(IntegrationTest)
-  .settings(TestCommon.settingsWithoutPlayTest ++ jvmSdkDependencies ++ Release.publishSettings: _*)
+  .enablePlugins(PlayJava)
+  .configs(IntegrationTest)
+  .settings(TestCommon.settingsWithoutPlayTest ++ jvmSdkDependencies: _*)
 
 lazy val commonWithTests: ClasspathDep[ProjectReference] = common % "compile;test->test;it->it;pt->pt"
 
 lazy val javadocSettings = javaUnidocSettings ++ Seq (
   unidocProjectFilter in (JavaUnidoc, unidoc) := inProjects(childProjects: _*)
-)
-
-lazy val sunriseModuleDependencies = Seq (
-  libraryDependencies ++= Seq (
-    "com.commercetools.sunrise.cms" % "cms-api" % "0.1.0"
-  )
 )
 
 lazy val jvmSdkDependencies = Seq (
@@ -95,25 +95,31 @@ lazy val jvmSdkDependencies = Seq (
   )
 )
 
-lazy val sunriseDefaultThemeDependencies = Seq (
-  resolvers += Resolver.bintrayRepo("commercetools", "maven"),
-  libraryDependencies ++= Seq (
-    "com.commercetools.sunrise" % "commercetools-sunrise-theme" % sunriseThemeVersion
-  )
-)
-
-lazy val templateDependencies = Seq (
+lazy val themeDependencies = Seq (
   libraryDependencies ++= Seq (
     "org.webjars" %% "webjars-play" % "2.5.0-2",
     "com.github.jknack" % "handlebars" % "4.0.5"
   )
 )
 
-lazy val commonDependencies = Seq (
+lazy val sunriseModuleDependencies = Seq (
+  libraryDependencies ++= Seq (
+    "com.commercetools.sunrise.cms" % "cms-api" % "0.1.0"
+  )
+)
+
+lazy val baseDependencies = Seq (
   libraryDependencies ++= Seq (
     filters,
     cache,
     "commons-beanutils" % "commons-beanutils" % "1.9.2",
     "commons-io" % "commons-io" % "2.4"
+  )
+)
+
+lazy val sunriseDefaultThemeDependencies = Seq (
+  resolvers += Resolver.bintrayRepo("commercetools", "maven"),
+  libraryDependencies ++= Seq (
+    "com.commercetools.sunrise" % "commercetools-sunrise-theme" % sunriseThemeVersion
   )
 )
