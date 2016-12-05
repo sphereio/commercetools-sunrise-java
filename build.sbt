@@ -2,9 +2,9 @@ import java.text.SimpleDateFormat
 import java.util.Date
 
 import play.sbt.PlayImport
-import sbt.Keys._
+import sbt.Keys.{publishArtifact, _}
 import sbt._
-import sbt.complete.DefaultParsers._
+import UnidocKeys._
 
 import scala.util.{Success, Try}
 
@@ -23,50 +23,49 @@ lazy val jacksonVersion = "2.7.5"
  * SUB-PROJECT DEFINITIONS
  */
 
-lazy val commonWithTests: ClasspathDep[ProjectReference] = common % "compile;test->test;it->it;pt->pt"
-
 lazy val `commercetools-sunrise` = (project in file("."))
-  .enablePlugins(PlayJava, DockerPlugin).configs(IntegrationTest, PlayTest)
-  .settings(commonSettings ++ commonTestSettings ++ dockerSettings: _*)
+  .enablePlugins(PlayJava).configs(IntegrationTest, PlayTest)
+  .settings(commonSettings ++ commonTestSettings: _*)
   .dependsOn(commonWithTests, `product-catalog`, `shopping-cart`, `my-account`)
   .aggregate(common, `product-catalog`, `shopping-cart`, `my-account`, `sbt-tasks`, `move-to-sdk`)
   .settings(sunriseDefaultThemeDependencies)
+  .settings(javaUnidocSettings ++ Seq (
+    unidocProjectFilter in (JavaUnidoc, unidoc) := inProjects(common, `product-catalog`, `shopping-cart`, `my-account`, `move-to-sdk`)
+  ))
 
 lazy val common = project
   .enablePlugins(PlayJava).configs(IntegrationTest, PlayTest)
-  .settings(commonSettings ++ commonTestSettings ++ disableDockerPublish: _*)
+  .settings(commonSettings ++ commonTestSettings ++ releaseSettings: _*)
   .settings(jvmSdkDependencies ++ templateDependencies ++ sunriseModuleDependencies ++ commonDependencies: _*)
   .dependsOn(`move-to-sdk`)
 
 lazy val `product-catalog` = project
   .enablePlugins(PlayJava).configs(IntegrationTest, PlayTest)
-  .settings(commonSettings ++ commonTestSettings ++ disableDockerPublish: _*)
+  .settings(commonSettings ++ commonTestSettings ++ releaseSettings: _*)
   .dependsOn(commonWithTests)
 
 lazy val `shopping-cart` = project
   .enablePlugins(PlayJava).configs(IntegrationTest, PlayTest)
-  .settings(commonSettings ++ commonTestSettings ++ disableDockerPublish: _*)
+  .settings(commonSettings ++ commonTestSettings ++ releaseSettings: _*)
   .dependsOn(commonWithTests)
 
 lazy val `my-account` = project
   .enablePlugins(PlayJava).configs(IntegrationTest, PlayTest)
-  .settings(commonSettings ++ commonTestSettings ++ disableDockerPublish: _*)
+  .settings(commonSettings ++ commonTestSettings ++ releaseSettings: _*)
   .dependsOn(commonWithTests)
 
 lazy val `sbt-tasks` = project
   .enablePlugins(PlayJava).configs(IntegrationTest)
-  .settings(commonSettings ++ testSettingsWithoutPt ++ disableDockerPublish : _*)
+  .settings(commonSettings ++ testSettingsWithoutPt ++ releaseSettings: _*)
   .settings(unmanagedBase in Test := baseDirectory.value / "test" / "lib")
 
 lazy val `move-to-sdk` = project
   .enablePlugins(PlayJava).configs(IntegrationTest)
-  .settings(commonSettings ++ testSettingsWithoutPt ++ jvmSdkDependencies ++ disableDockerPublish: _*)
+  .settings(commonSettings ++ testSettingsWithoutPt ++ jvmSdkDependencies ++ releaseSettings: _*)
 
 /**
- * COMMON SETTINGS
+ * SETTINGS & DEPENDENCIES
  */
-
-javaUnidocSettings
 
 resolvers in ThisBuild ++= Seq (
   Resolver.sonatypeRepo("releases"),
@@ -74,9 +73,23 @@ resolvers in ThisBuild ++= Seq (
   Resolver.mavenLocal
 )
 
-lazy val commonSettings = Release.publishSettings ++ Seq (
+lazy val commonWithTests: ClasspathDep[ProjectReference] = common % "compile;test->test;it->it;pt->pt"
+
+lazy val commonSettings = Seq (
   scalaVersion := "2.11.8",
   javacOptions ++= Seq("-source", "1.8", "-target", "1.8")
+)
+
+lazy val releaseSettings = Release.publishSettings ++ Seq (
+  publishMavenStyle in ThisBuild := true,
+  publishArtifact in Test in ThisBuild := false,
+  publishTo in ThisBuild <<= version { (v: String) =>
+    val nexus = "https://oss.sonatype.org/"
+    if (v.trim.endsWith("SNAPSHOT"))
+      Some("snapshots" at nexus + "content/repositories/snapshots")
+    else
+      Some("releases" at nexus + "service/local/staging/deploy/maven2")
+  }
 )
 
 lazy val sunriseModuleDependencies = Seq (
@@ -122,31 +135,6 @@ lazy val commonDependencies = Seq (
     "commons-io" % "commons-io" % "2.4"
   )
 )
-
-lazy val dockerSettings = Seq(
-  version in Docker := Option(System.getenv("BUILD_VCS_NUMBER")).getOrElse("latest"),
-  packageName in Docker := "sunrise",
-  dockerRepository := Some("sphereio"),
-  dockerExposedPorts := Seq(9000),
-  dockerCmd := Seq("-Dconfig.resource=prod.conf", "-Dlogger.resource=logback-prod.xml")
-)
-
-lazy val disableDockerPublish = Seq(
-  publish in Docker := {},
-  publishLocal in Docker := {}
-)
-
-publishMavenStyle in ThisBuild := true
-
-publishArtifact in Test in ThisBuild := false
-
-publishTo in ThisBuild <<= version { (v: String) =>
-  val nexus = "https://oss.sonatype.org/"
-  if (v.trim.endsWith("SNAPSHOT"))
-    Some("snapshots" at nexus + "content/repositories/snapshots")
-  else
-    Some("releases" at nexus + "service/local/staging/deploy/maven2")
-}
 
 /**
  * TEST SETTINGS
@@ -225,34 +213,8 @@ stage := {
   }).foreach(f => {
     val t = f / "target"
     sbt.IO.delete(t)
-    log.info(s"Removed ${t}")
+    log.info(s"Removed $t")
   })
 
   f
-}
-
-/**
- * TEMPLATE SETTINGS
- */
-
-val copyTemplateFiles = inputKey[Unit]("Copies the provided template files into the project to enable editing, e.g.: 'copyTemplateFiles common/logo.hbs cart.hbs'")
-
-copyTemplateFiles := Def.inputTaskDyn {
-  val args: Seq[String] = spaceDelimited("<arg>").parsed
-  val templatePaths: Seq[String] = args.map(filePath => "templates/" + filePath)
-  val confFolder: String = (resourceDirectory in Compile).value.getPath
-  runMainInCompile(confFolder, templatePaths)
-}.evaluated
-
-val copyI18nFiles = inputKey[Unit]("Copies the provided i18n files into the project to enable editing, e.g.: 'copyI18nFiles en/home.yaml de/home.yaml'")
-
-copyI18nFiles := Def.inputTaskDyn {
-  val args: Seq[String] = spaceDelimited("<arg>").parsed
-  val i18nPaths: Seq[String] = args.map(filePath => "i18n/" + filePath)
-  val confFolder: String = (resourceDirectory in Compile).value.getPath
-  runMainInCompile(confFolder, i18nPaths)
-}.evaluated
-
-def runMainInCompile(dest: String, args: Seq[String]) = Def.taskDyn {
-  (runMain in Compile in `sbt-tasks`).toTask(s" com.commercetools.sunrise.theme.WebjarsFilesCopier $dest ${args.mkString(" ")}")
 }
