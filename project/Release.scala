@@ -8,7 +8,7 @@ object Release {
 
   lazy val disablePublish: Def.Setting[Boolean] = publishArtifact := false
 
-  lazy val signedSettings = Seq(
+  lazy val enableSignedRelease = Seq(
     releasePublishArtifactsAction := PgpKeys.publishSigned.value,
     PgpKeys.pgpPassphrase in Global := {
       val pgpPassphraseFile = file(pathToPgpPassphrase)

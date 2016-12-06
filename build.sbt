@@ -35,37 +35,37 @@ lazy val `commercetools-sunrise` = (project in file("."))
 lazy val common = project
   .enablePlugins(PlayJava)
   .configs(IntegrationTest, TestCommon.PlayTest)
-  .settings(Release.signedSettings ++ TestCommon.defaultSettings: _*)
+  .settings(Release.enableSignedRelease ++ TestCommon.defaultSettings: _*)
   .settings(Dependencies.jvmSdk ++ Dependencies.sunriseTheme ++ Dependencies.sunriseModules ++ Dependencies.commonLib: _*)
   .dependsOn(`move-to-sdk`)
 
 lazy val `product-catalog` = project
   .enablePlugins(PlayJava)
   .configs(IntegrationTest, TestCommon.PlayTest)
-  .settings(Release.signedSettings ++ TestCommon.defaultSettings: _*)
+  .settings(Release.enableSignedRelease ++ TestCommon.defaultSettings: _*)
   .dependsOn(commonWithTests)
 
 lazy val `shopping-cart` = project
   .enablePlugins(PlayJava)
   .configs(IntegrationTest, TestCommon.PlayTest)
-  .settings(Release.signedSettings ++ TestCommon.defaultSettings: _*)
+  .settings(Release.enableSignedRelease ++ TestCommon.defaultSettings: _*)
   .dependsOn(commonWithTests)
 
 lazy val `my-account` = project
   .enablePlugins(PlayJava)
   .configs(IntegrationTest, TestCommon.PlayTest)
-  .settings(Release.signedSettings ++ TestCommon.defaultSettings: _*)
+  .settings(Release.enableSignedRelease ++ TestCommon.defaultSettings: _*)
   .dependsOn(commonWithTests)
 
 lazy val `sbt-tasks` = project
   .enablePlugins(PlayJava)
   .configs(IntegrationTest)
-  .settings(Release.signedSettings ++ TestCommon.settingsWithoutPlayTest ++ enableLibFolderInTest: _*)
+  .settings(Release.enableSignedRelease ++ TestCommon.settingsWithoutPlayTest ++ enableLibFolderInTest: _*)
 
 lazy val `move-to-sdk` = project
   .enablePlugins(PlayJava)
   .configs(IntegrationTest)
-  .settings(Release.signedSettings ++ TestCommon.settingsWithoutPlayTest: _*)
+  .settings(Release.enableSignedRelease ++ TestCommon.settingsWithoutPlayTest: _*)
   .settings(Dependencies.jvmSdk)
 
 lazy val commonWithTests: ClasspathDep[ProjectReference] = common % "compile;test->test;it->it;pt->pt"
