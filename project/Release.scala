@@ -18,7 +18,7 @@ object Release {
     },
     publishMavenStyle in ThisBuild := true,
     publishArtifact in Test in ThisBuild := false,
-    releasePublishArtifactsAction in ThisBuild := PgpKeys.publishSigned.value,
+    releasePublishArtifactsAction := PgpKeys.publishSigned.value,
     PgpKeys.pgpPassphrase in Global := {
       val pgpPassphraseFile = file(pathToPgpPassphrase)
       if(pgpPassphraseFile.exists && pgpPassphraseFile.canRead) {
