@@ -8,6 +8,16 @@ object Release {
 
   lazy val disablePublish: Def.Setting[Boolean] = publishArtifact := false
 
+  lazy val signedSettings = Seq(
+    releasePublishArtifactsAction in ThisBuild := PgpKeys.publishSigned.value,
+    PgpKeys.pgpPassphrase in Global in ThisBuild := {
+      val pgpPassphraseFile = file(pathToPgpPassphrase)
+      if(pgpPassphraseFile.exists && pgpPassphraseFile.canRead)
+        Option(IO.read(pgpPassphraseFile).toCharArray)
+      else None
+    }
+  )
+
   lazy val publishSettings = Seq(
     publishTo in ThisBuild <<= version { (v: String) =>
       val nexus = "https://oss.sonatype.org/"
@@ -18,14 +28,6 @@ object Release {
     },
     publishMavenStyle in ThisBuild := true,
     publishArtifact in Test in ThisBuild := false,
-    releasePublishArtifactsAction in ThisBuild := PgpKeys.publishSigned.value,
-    PgpKeys.pgpPassphrase in Global in ThisBuild := {
-      val pgpPassphraseFile = file(pathToPgpPassphrase)
-      if(pgpPassphraseFile.exists && pgpPassphraseFile.canRead) {
-        Option(IO.read(pgpPassphraseFile).toCharArray)
-      } else
-        None
-    },
     licenses in ThisBuild := Seq("Apache-2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0")),
     homepage in ThisBuild := Some(url("https://github.com/commercetools/commercetools-sunrise-java")),
     pomIncludeRepository in ThisBuild := { _ => false },
