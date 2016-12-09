@@ -10,10 +10,10 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 /**
- * Facet that contains a list of range bucket options.
+ * Facet that contains a list of range  options.
  * @param <T> type of the resource for this facet (e.g. ProductProjection)
  */
-public interface BucketRangeFacet<T> extends Facet<T> {
+public interface RangeFacet<T> extends Facet<T> {
 
     /**
      * Gets the associated range facet result for this range facet.
@@ -26,14 +26,14 @@ public interface BucketRangeFacet<T> extends Facet<T> {
 
     List<FilterRange<String>> getSelectedRanges();
 
-    List<BucketRangeOption> getOptions();
+    List<RangeOption> getOptions();
 
     RangeTermFacetedSearchSearchModel<T> getRangeFacetedSearchSearchModel();
 
     @Override
-    BucketRangeFacet<T> withSearchResult(final PagedSearchResult<T> searchResult);
+    RangeFacet<T> withSearchResult(final PagedSearchResult<T> searchResult);
 
-    BucketRangeFacet<T> withSelectedRanges(final List<FilterRange<String>> selectedRanges);
+    RangeFacet<T> withSelectedRanges(final List<FilterRange<String>> selectedRanges);
 
-    BucketRangeFacet<T> withInitialRanges(final List<FacetRange<String>> initialRanges);
+    RangeFacet<T> withInitialRanges(final List<FacetRange<String>> initialRanges);
 }

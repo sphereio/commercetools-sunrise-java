@@ -10,40 +10,40 @@ import io.sphere.sdk.search.model.RangeTermFacetedSearchSearchModel;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public final class BucketRangeFacetBuilder<T> extends FacetBuilder<BucketRangeFacetBuilder<T>> implements Builder<BucketRangeFacet<T>> {
+public final class RangeFacetBuilder<T> extends FacetBuilder<RangeFacetBuilder<T>> implements Builder<RangeFacet<T>> {
 
     @Nullable private RangeFacetResult facetResult = null;
     private RangeTermFacetedSearchSearchModel<T> rangeTermFacetedSearchSearchModel;
     private List<FilterRange<String>> selectedRanges = null;
     private List<FacetRange<String>> initialRanges = null;
 
-    private BucketRangeFacetBuilder(final String key, final RangeTermFacetedSearchSearchModel rangeTermFacetedSearchSearchModel) {
+    private RangeFacetBuilder(final String key, final RangeTermFacetedSearchSearchModel rangeTermFacetedSearchSearchModel) {
         super(key);
         this.rangeTermFacetedSearchSearchModel = rangeTermFacetedSearchSearchModel;
     }
 
     @Override
-    public BucketRangeFacet<T> build() {
-        return new BucketRangeFacetImpl<>(getKey(), getLabel(), isCountHidden(), getType(), selectedRanges, initialRanges,
+    public RangeFacet<T> build() {
+        return new RangeFacetImpl<>(getKey(), getLabel(), isCountHidden(), getType(), selectedRanges, initialRanges,
                 facetResult, rangeTermFacetedSearchSearchModel);
     }
 
-    public BucketRangeFacetBuilder<T> rangeTermFacetedSearchSearchModel(final RangeTermFacetedSearchSearchModel<T> rangeTermFacetedSearchSearchModel) {
+    public RangeFacetBuilder<T> rangeTermFacetedSearchSearchModel(final RangeTermFacetedSearchSearchModel<T> rangeTermFacetedSearchSearchModel) {
         this.rangeTermFacetedSearchSearchModel = rangeTermFacetedSearchSearchModel;
         return this;
     }
 
-    public BucketRangeFacetBuilder<T> facetResult(@Nullable final RangeFacetResult facetResult) {
+    public RangeFacetBuilder<T> facetResult(@Nullable final RangeFacetResult facetResult) {
         this.facetResult = facetResult;
         return this;
     }
 
-    public BucketRangeFacetBuilder<T> selectedRanges(@Nullable final List<FilterRange<String>> selectedRanges) {
+    public RangeFacetBuilder<T> selectedRanges(@Nullable final List<FilterRange<String>> selectedRanges) {
         this.selectedRanges = selectedRanges;
         return this;
     }
 
-    public BucketRangeFacetBuilder<T> initialRanges(@Nullable final List<FacetRange<String>> initialRanges) {
+    public RangeFacetBuilder<T> initialRanges(@Nullable final List<FacetRange<String>> initialRanges) {
         this.initialRanges = initialRanges;
         return this;
     }
@@ -63,17 +63,17 @@ public final class BucketRangeFacetBuilder<T> extends FacetBuilder<BucketRangeFa
     }
 
     @Override
-    protected BucketRangeFacetBuilder<T> getThis() {
+    protected RangeFacetBuilder<T> getThis() {
         return this;
     }
 
-    public static <T> BucketRangeFacetBuilder<T> of(final String key,
+    public static <T> RangeFacetBuilder<T> of(final String key,
                                               final RangeTermFacetedSearchSearchModel rangeTermFacetedSearchSearchModel) {
-        return new BucketRangeFacetBuilder<>(key, rangeTermFacetedSearchSearchModel);
+        return new RangeFacetBuilder<>(key, rangeTermFacetedSearchSearchModel);
     }
 
-    public static <T> BucketRangeFacetBuilder<T> of(final BucketRangeFacet<T> facet) {
-        final BucketRangeFacetBuilder<T> builder = new BucketRangeFacetBuilder<>(facet.getKey(),
+    public static <T> RangeFacetBuilder<T> of(final RangeFacet<T> facet) {
+        final RangeFacetBuilder<T> builder = new RangeFacetBuilder<>(facet.getKey(),
                 facet.getRangeFacetedSearchSearchModel());
         builder.type = facet.getType();
         builder.label = facet.getLabel();
