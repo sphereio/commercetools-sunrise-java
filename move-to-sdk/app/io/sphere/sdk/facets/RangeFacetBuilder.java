@@ -68,7 +68,7 @@ public final class RangeFacetBuilder<T> extends FacetBuilder<RangeFacetBuilder<T
     }
 
     public static <T> RangeFacetBuilder<T> of(final String key,
-                                              final RangeTermFacetedSearchSearchModel rangeTermFacetedSearchSearchModel) {
+                                              final RangeTermFacetedSearchSearchModel<T> rangeTermFacetedSearchSearchModel) {
         return new RangeFacetBuilder<>(key, rangeTermFacetedSearchSearchModel);
     }
 

@@ -7,33 +7,25 @@ import java.util.List;
 public final class FacetedSearchConfigList extends Base {
 
     private final List<SelectFacetedSearchConfig> selectFacetedSearchConfigList;
-    private final List<RangeBucketFacetedSearchConfig> rangeBucketFacetedSearchConfigList;
-    private final List<RangeSliderFacetedSearchConfig> rangeSliderFacetedSearchConfigList;
+    private final List<RangeFacetedSearchConfig> rangeFacetedSearchConfigList;
 
 
     private FacetedSearchConfigList(final List<SelectFacetedSearchConfig> selectFacetedSearchConfigList,
-                                    final List<RangeBucketFacetedSearchConfig> rangeBucketFacetedSearchConfigList,
-                                    final List<RangeSliderFacetedSearchConfig> rangeSliderFacetedSearchConfigList) {
+                                    final List<RangeFacetedSearchConfig> rangeFacetedSearchConfigList) {
         this.selectFacetedSearchConfigList = selectFacetedSearchConfigList;
-        this.rangeBucketFacetedSearchConfigList = rangeBucketFacetedSearchConfigList;
-        this.rangeSliderFacetedSearchConfigList = rangeSliderFacetedSearchConfigList;
+        this.rangeFacetedSearchConfigList = rangeFacetedSearchConfigList;
     }
 
     public List<SelectFacetedSearchConfig> getSelectFacetedSearchConfigList() {
         return selectFacetedSearchConfigList;
     }
 
-    public List<RangeSliderFacetedSearchConfig> getRangeSliderFacetedSearchConfig() {
-        return rangeSliderFacetedSearchConfigList;
-    }
-
-    public List<RangeBucketFacetedSearchConfig> getRangeBucketFacetedSearchConfig() {
-        return rangeBucketFacetedSearchConfigList;
+    public List<RangeFacetedSearchConfig> getRangeFacetedSearchConfigList() {
+        return rangeFacetedSearchConfigList;
     }
 
     public static FacetedSearchConfigList of(final List<SelectFacetedSearchConfig> selectFacetConfigList,
-                                             final List<RangeBucketFacetedSearchConfig> rangeBucketFacetedSearchConfigList,
-                                             final List<RangeSliderFacetedSearchConfig> rangeSliderFacetedSearchConfigList) {
-        return new FacetedSearchConfigList(selectFacetConfigList, rangeBucketFacetedSearchConfigList, rangeSliderFacetedSearchConfigList);
+                                             final List<RangeFacetedSearchConfig> rangeFacetedSearchConfigList) {
+        return new FacetedSearchConfigList(selectFacetConfigList, rangeFacetedSearchConfigList);
     }
 }

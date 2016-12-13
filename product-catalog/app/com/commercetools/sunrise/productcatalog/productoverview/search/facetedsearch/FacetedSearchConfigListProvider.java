@@ -3,6 +3,7 @@ package com.commercetools.sunrise.productcatalog.productoverview.search.faceteds
 import com.commercetools.sunrise.common.SunriseConfigurationException;
 import io.sphere.sdk.facets.*;
 import io.sphere.sdk.products.ProductProjection;
+import io.sphere.sdk.search.model.FacetRange;
 import io.sphere.sdk.search.model.FacetedSearchSearchModel;
 import io.sphere.sdk.search.model.RangeTermFacetedSearchSearchModel;
 import io.sphere.sdk.search.model.TermFacetedSearchSearchModel;
@@ -13,10 +14,7 @@ import play.Configuration;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Provider;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.IntStream;
 
 import static java.util.Collections.emptyList;
@@ -35,6 +33,7 @@ public final class FacetedSearchConfigListProvider implements Provider<FacetedSe
     private static final String MATCHING_ALL_ATTR = "matchingAll";
     private static final String LIMIT_ATTR = "limit";
     private static final String THRESHOLD_ATTR = "threshold";
+    private static final String INITIAL_RANGES = "initialRanges";
 
     private static final String MAPPER_ATTR = "mapper";
     private static final String MAPPER_TYPE_ATTR = "type";
@@ -46,8 +45,7 @@ public final class FacetedSearchConfigListProvider implements Provider<FacetedSe
     @Override
     public FacetedSearchConfigList get() {
         final List<SelectFacetedSearchConfig> selectFacetConfigs = new ArrayList<>();
-        final List<RangeBucketFacetedSearchConfig> rangeBucketFacetConfigs = new ArrayList<>();
-        final List<RangeSliderFacetedSearchConfig> rangeSliderFacetConfigs = new ArrayList<>();
+        final List<RangeFacetedSearchConfig> rangeFacetConfigs = new ArrayList<>();
         final List<Configuration> configList = configuration.getConfigList(CONFIG_FACETS, emptyList());
         IntStream.range(0, configList.size()).forEach(i -> {
             final Configuration config = configList.get(i);
@@ -59,10 +57,8 @@ public final class FacetedSearchConfigListProvider implements Provider<FacetedSe
                     selectFacetConfigs.add(getSelectFacetConfig(type, config, i));
                     break;
                 case BUCKET_RANGE:
-                    rangeBucketFacetConfigs.add(getRangeBucketFacetConfig(type, config, i));
-                    break;
                 case SLIDER_RANGE:
-                    rangeSliderFacetConfigs.add(getRangeSliderFacetConfig(type, config, i));
+                    rangeFacetConfigs.add(getRangeFacetConfig(type, config, i));
                     break;
                 default:
                     throw new SunriseConfigurationException("Unsupported facet type \"" + type + "\"", TYPE_ATTR, CONFIG_FACETS);
@@ -71,7 +67,7 @@ public final class FacetedSearchConfigListProvider implements Provider<FacetedSe
         logger.debug("Provide SelectFacetConfigs: {}", selectFacetConfigs.stream()
                 .map(config -> config.getFacetBuilder().getKey())
                 .collect(toList()));
-        return FacetedSearchConfigList.of(selectFacetConfigs, rangeBucketFacetConfigs, rangeSliderFacetConfigs);
+        return FacetedSearchConfigList.of(selectFacetConfigs, rangeFacetConfigs);
     }
 
     private static SunriseFacetType getFacetType(final Configuration facetConfig) {
@@ -86,12 +82,8 @@ public final class FacetedSearchConfigListProvider implements Provider<FacetedSe
         return SelectFacetedSearchConfig.of(getSelectFacetBuilder(type, facetConfig), position);
     }
 
-    private static RangeBucketFacetedSearchConfig getRangeBucketFacetConfig(final FacetType type, final Configuration facetConfig, final int position) {
-        return RangeBucketFacetedSearchConfig.of(getRangeBucketFacetBuilder(type, facetConfig), position);
-    }
-
-    private static RangeSliderFacetedSearchConfig getRangeSliderFacetConfig(final FacetType type, final Configuration facetConfig, final int position) {
-        return RangeSliderFacetedSearchConfig.of(getRangeSliderFacetBuilder(type, facetConfig), position);
+    private static RangeFacetedSearchConfig getRangeFacetConfig(final FacetType type, final Configuration facetConfig, final int position) {
+        return RangeFacetedSearchConfig.of(getRangeFacetBuilder(type, facetConfig), position);
     }
 
     private static SelectFacetBuilder<ProductProjection> getSelectFacetBuilder(final FacetType type, final Configuration facetConfig) {
@@ -109,22 +101,23 @@ public final class FacetedSearchConfigListProvider implements Provider<FacetedSe
         return initializeSelectFacet(type, key, label, attrPath, countHidden, matchingAll, multiSelect, limit, threshold, mapper);
     }
 
-    private static RangeBucketFacetBuilder<ProductProjection> getRangeBucketFacetBuilder(final FacetType type, final Configuration facetConfig) {
+    private static RangeFacetBuilder<ProductProjection> getRangeFacetBuilder(final FacetType type, final Configuration facetConfig) {
         final String key = Optional.ofNullable(facetConfig.getString(KEY_ATTR))
                 .orElseThrow(() -> new SunriseConfigurationException("Missing facet key", KEY_ATTR, CONFIG_FACETS));
         final String label = facetConfig.getString(LABEL_ATTR, "");
         final String attrPath = Optional.ofNullable(facetConfig.getString(EXPR_ATTR))
                 .orElseThrow(() -> new SunriseConfigurationException("Missing facet attribute path expression", EXPR_ATTR, CONFIG_FACETS));
-        return initializeRangeBucketFacet(type, key, label, attrPath);
-    }
+        final boolean countHidden = !facetConfig.getBoolean(COUNT_ATTR, true);
+        final List<FacetRange<String>> initialFacetRanges = Collections.emptyList();
+        if (type == SunriseFacetType.BUCKET_RANGE) {
+            String initialRanges = Optional.ofNullable(facetConfig.getString(INITIAL_RANGES))
+                    .orElseThrow(() -> new SunriseConfigurationException("Missing initial ranges", INITIAL_RANGES, CONFIG_FACETS));
+            //convert (String) initialRanges to List<FacetRange<String>> and add to initialFacetRanges
+        } else {
+            initialFacetRanges.add(FacetRange.of(null, null));
+        }
 
-    private static RangeSliderFacetBuilder<ProductProjection> getRangeSliderFacetBuilder(final FacetType type, final Configuration facetConfig) {
-        final String key = Optional.ofNullable(facetConfig.getString(KEY_ATTR))
-                .orElseThrow(() -> new SunriseConfigurationException("Missing facet key", KEY_ATTR, CONFIG_FACETS));
-        final String label = facetConfig.getString(LABEL_ATTR, "");
-        final String attrPath = Optional.ofNullable(facetConfig.getString(EXPR_ATTR))
-                .orElseThrow(() -> new SunriseConfigurationException("Missing facet attribute path expression", EXPR_ATTR, CONFIG_FACETS));
-        return initializeRangeSliderFacet(type, key, label, attrPath);
+        return initializeRangeFacet(type, key, label, attrPath, countHidden, initialFacetRanges);
     }
 
     private static Optional<FacetOptionMapper> getMapper(final Configuration facetConfig) {
@@ -167,21 +160,15 @@ public final class FacetedSearchConfigListProvider implements Provider<FacetedSe
                 .mapper(mapper);
     }
 
-    private static RangeBucketFacetBuilder<ProductProjection> initializeRangeBucketFacet(final FacetType type, final String key,
-                                                                               final String label, final String attrPath) {
-        final FacetedSearchSearchModel<ProductProjection> searchModel = TermFacetedSearchSearchModel.of(attrPath);
+    private static RangeFacetBuilder<ProductProjection> initializeRangeFacet(final FacetType type, final String key,
+                                                                             final String label, final String attrPath,
+                                                                             final boolean countHidden,
+                                                                             final List<FacetRange<String>> initialFacetRanges) {
         final RangeTermFacetedSearchSearchModel<ProductProjection> rangeSearchModel = RangeTermFacetedSearchSearchModel.of(attrPath);
-        return RangeBucketFacetBuilder.of(key, searchModel, rangeSearchModel)
+        return RangeFacetBuilder.of(key, rangeSearchModel)
                 .type(type)
-                .label(label);
-    }
-
-    private static RangeSliderFacetBuilder<ProductProjection> initializeRangeSliderFacet(final FacetType type, final String key,
-                                                                               final String label, final String attrPath) {
-        final FacetedSearchSearchModel<ProductProjection> searchModel = TermFacetedSearchSearchModel.of(attrPath);
-        final RangeTermFacetedSearchSearchModel<ProductProjection> rangeSearchModel = RangeTermFacetedSearchSearchModel.of(attrPath);
-        return RangeSliderFacetBuilder.of(key, searchModel, rangeSearchModel)
-                .type(type)
-                .label(label);
+                .label(label)
+                .countHidden(countHidden)
+                .initialRanges(initialFacetRanges);
     }
 }
