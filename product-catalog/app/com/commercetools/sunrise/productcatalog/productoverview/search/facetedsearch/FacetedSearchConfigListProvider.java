@@ -108,16 +108,30 @@ public final class FacetedSearchConfigListProvider implements Provider<FacetedSe
         final String attrPath = Optional.ofNullable(facetConfig.getString(EXPR_ATTR))
                 .orElseThrow(() -> new SunriseConfigurationException("Missing facet attribute path expression", EXPR_ATTR, CONFIG_FACETS));
         final boolean countHidden = !facetConfig.getBoolean(COUNT_ATTR, true);
-        final List<FacetRange<String>> initialFacetRanges = Collections.emptyList();
+        List<FacetRange<String>> initialFacetRanges = new ArrayList<>();
         if (type == SunriseFacetType.BUCKET_RANGE) {
             String initialRanges = Optional.ofNullable(facetConfig.getString(INITIAL_RANGES))
                     .orElseThrow(() -> new SunriseConfigurationException("Missing initial ranges", INITIAL_RANGES, CONFIG_FACETS));
-            //convert (String) initialRanges to List<FacetRange<String>> and add to initialFacetRanges
+            initialFacetRanges.addAll(convertInitialRangesToFacetRanges(initialRanges));
         } else {
             initialFacetRanges.add(FacetRange.of(null, null));
         }
-
         return initializeRangeFacet(type, key, label, attrPath, countHidden, initialFacetRanges);
+    }
+
+    private static List<FacetRange<String>> convertInitialRangesToFacetRanges(String initialRanges) {
+        List<FacetRange<String>> result = new ArrayList<>();
+        for(String initialRange : initialRanges.split(",")) {
+            String[] tempArr = initialRange.split("-");
+            if(tempArr[0].equals("*")) {
+                result.add(FacetRange.lessThan(tempArr[1]));
+            } else if (tempArr[1].equals("*")){
+                result.add(FacetRange.atLeast(tempArr[0]));
+            } else {
+                result.add(FacetRange.of(tempArr[0], tempArr[1]));
+            }
+        }
+        return result;
     }
 
     private static Optional<FacetOptionMapper> getMapper(final Configuration facetConfig) {

@@ -11,7 +11,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
 
 public class RangeFacetImpl<T> extends BaseFacet<T> implements RangeFacet<T> {
@@ -50,7 +49,7 @@ public class RangeFacetImpl<T> extends BaseFacet<T> implements RangeFacet<T> {
 
     @Override
     public boolean isAvailable() {
-        return facetOptions.size()>1;
+        return true;
     }
 
     @Override
@@ -114,14 +113,23 @@ public class RangeFacetImpl<T> extends BaseFacet<T> implements RangeFacet<T> {
     private List<RangeOption> initializeOptions(final List<FilterRange<String>> selectedValue, @Nullable final RangeFacetResult facetResult) {
         return Optional.ofNullable(facetResult)
                 .map(result -> result.getRanges().stream()
-                        .map(rangeTermStats -> RangeOption.of(rangeTermStats.getLowerEndpoint(), rangeTermStats.getUpperEndpoint(), rangeTermStats.getCount() ,checkIfSelected(rangeTermStats, selectedValue)))
+                        .map(rangeTermStats -> RangeOption.of(rangeTermStats.getLowerEndpoint() != null ? rangeTermStats.getLowerEndpoint().replaceAll("\\..+","") : null,
+                                rangeTermStats.getUpperEndpoint() != null ? rangeTermStats.getUpperEndpoint().replaceAll("\\..+","") : null,
+                                rangeTermStats.getCount() , selectedValue != null ? checkIfSelected(rangeTermStats, selectedValue) : false))
                         .filter(range -> range.getCount() > 0)
                         .collect(toList()))
                 .orElseGet(Collections::emptyList);
     }
 
     private Boolean checkIfSelected(RangeStats rangeTermStats, List<FilterRange<String>> selectedValue) {
-        return selectedValue.contains(FilterRange.of(rangeTermStats.getLowerEndpoint(), rangeTermStats.getUpperEndpoint()));
+        return rangeTermStats.getUpperEndpoint() != null && rangeTermStats.getLowerEndpoint() != null ?
+                selectedValue.contains(FilterRange.of(rangeTermStats.getLowerEndpoint().replaceAll("\\..+",""),
+                rangeTermStats.getUpperEndpoint().replaceAll("\\..+",""))) : checkIfSelectedUnboundRange(rangeTermStats, selectedValue);
+    }
+
+    private Boolean checkIfSelectedUnboundRange (RangeStats rangeTermStats, List<FilterRange<String>> selectedValue) {
+        return rangeTermStats.getLowerEndpoint() == null ? selectedValue.contains(FilterRange.atMost(rangeTermStats.getUpperEndpoint().replaceAll("\\..+","")))
+                : selectedValue.contains(FilterRange.atLeast(rangeTermStats.getLowerEndpoint().replaceAll("\\..+","")));
     }
 
     @Override
