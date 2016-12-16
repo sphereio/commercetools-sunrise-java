@@ -49,7 +49,7 @@ public class RangeFacetImpl<T> extends BaseFacet<T> implements RangeFacet<T> {
 
     @Override
     public boolean isAvailable() {
-        return true;
+        return facetOptions.size() > 1;
     }
 
     @Override
