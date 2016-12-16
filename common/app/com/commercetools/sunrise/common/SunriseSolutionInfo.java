@@ -5,9 +5,9 @@ import io.sphere.sdk.meta.BuildInfo;
 
 public class SunriseSolutionInfo extends SolutionInfo {
     public SunriseSolutionInfo() {
-        setName("JVM-SDK-integration-tests");
+        setName("");
         setVersion(BuildInfo.version());
-        setWebsite("https://github.com/commercetools/commercetools-jvm-sdk");
-        setEmergencyContact("helpdesk@commercetools.com");
+        setWebsite("");
+        setEmergencyContact("");
     }
 }
