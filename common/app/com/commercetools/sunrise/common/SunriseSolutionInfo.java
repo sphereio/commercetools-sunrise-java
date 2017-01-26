@@ -5,9 +5,7 @@ import io.sphere.sdk.meta.BuildInfo;
 
 public class SunriseSolutionInfo extends SolutionInfo {
     public SunriseSolutionInfo() {
-        setName("");
+        setName("commercetools-sunrise-java");
         setVersion(BuildInfo.version());
-        setWebsite("");
-        setEmergencyContact("");
     }
 }
