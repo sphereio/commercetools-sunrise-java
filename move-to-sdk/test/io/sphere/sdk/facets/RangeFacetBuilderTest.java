@@ -16,18 +16,18 @@ public class RangeFacetBuilderTest {
     private static final String LABEL = "Select one option";
     private static final List<RangeOption> OPTIONS_THREE = asList(
             RangeOption.of("0", "50", 10L, false),
-            RangeOption.of("10", "20", 5L, true),
-            RangeOption.of("20", "30", 5L, false)
+            RangeOption.of("50", "100", 5L, true),
+            RangeOption.of("100", "200", 5L, false)
     );
     private static final TermFacetedSearchSearchModel<ProductProjection> SEARCH_MODEL = ProductProjectionSearchModel.of().facetedSearch().categories().id();
     private static final RangeTermFacetedSearchSearchModel<ProductProjection> RANGE_SEARCH_MODEL = ProductProjectionSearchModel.of().facetedSearch().createdAt();
     private static final RangeFacetResult RESULTS_THREE = RangeFacetResult.of(asList(
             RangeStats.of("0", "50", 10L, 10L, "0", "50", "250", 250.0),
-            RangeStats.of("10", "20", 5L, 5L, "50", "100", "300", 300.0),
-            RangeStats.of("20", "30", 5L, 5L, "100", "150", "450", 450.0)
+            RangeStats.of("50", "100", 5L, 5L, "50", "100", "300", 300.0),
+            RangeStats.of("100", "200", 5L, 5L, "100", "200", "450", 450.0)
     ));
     private static final List<FilterRange<String>> SELECTED_RANGES = asList(
-            FilterRange.of("10", "20")
+            FilterRange.of("0", "50")
     );
 
     @Test
