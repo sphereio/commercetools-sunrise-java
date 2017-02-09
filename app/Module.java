@@ -1,5 +1,6 @@
 import com.commercetools.sunrise.cms.CmsService;
 import com.commercetools.sunrise.common.categorytree.CategoryTreeInNewProvider;
+import com.commercetools.sunrise.common.categorytree.CategoryTreeRefresher;
 import com.commercetools.sunrise.common.categorytree.RefreshableCategoryTree;
 import com.commercetools.sunrise.common.contexts.RequestScoped;
 import com.commercetools.sunrise.common.ctp.MetricSphereClientProvider;
@@ -49,6 +50,8 @@ public class Module extends AbstractModule {
         bind(TemplateEngine.class).toProvider(HandlebarsTemplateEngineProvider.class).in(Singleton.class);
         bind(I18nResolver.class).toProvider(ConfigurableI18nResolverProvider.class).in(Singleton.class);
         bind(HttpAuthentication.class).toProvider(BasicAuthenticationProvider.class).in(Singleton.class);
+        bind(CategoryTree.class).to(RefreshableCategoryTree.class);
+        bind(CategoryTreeRefresher.class).to(RefreshableCategoryTree.class);
         bind(CategoryTree.class).annotatedWith(Names.named("new")).toProvider(CategoryTreeInNewProvider.class).in(Singleton.class);
         bind(ProductsPerPageConfig.class).toProvider(ProductsPerPageConfigProvider.class).in(Singleton.class);
         bind(SortConfig.class).toProvider(SortConfigProvider.class).in(Singleton.class);
@@ -57,7 +60,7 @@ public class Module extends AbstractModule {
 
     @Provides
     @Singleton
-    public CategoryTree provideRefreshableCategoryTree(@Named("global") final SphereClient sphereClient) {
+    public RefreshableCategoryTree provideRefreshableCategoryTree(@Named("global") final SphereClient sphereClient) {
         return RefreshableCategoryTree.of(sphereClient);
     }
 

@@ -4,26 +4,25 @@ import io.sphere.sdk.categories.Category;
 import io.sphere.sdk.categories.CategoryTree;
 import io.sphere.sdk.categories.queries.CategoryQuery;
 import io.sphere.sdk.client.SphereClient;
-import io.sphere.sdk.models.Base;
-import io.sphere.sdk.models.Identifiable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 import static io.sphere.sdk.client.SphereClientUtils.blockingWait;
 import static io.sphere.sdk.queries.QueryExecutionUtils.queryAll;
 import static java.util.stream.Collectors.toList;
 
-public final class RefreshableCategoryTree extends Base implements CategoryTree {
+/**
+ * A category tree with capabilities of refreshing contained tree and notifying subscribers when such action occurs.
+ */
+public final class RefreshableCategoryTree extends CategoryTreeWrapper implements CategoryTreeRefresher {
 
     private static final Logger logger = LoggerFactory.getLogger(RefreshableCategoryTree.class);
     private final SphereClient sphereClient;
-    private CategoryTree categoryTree;
+    private List<CategoryTreeRefreshListener> categorySubtrees = new ArrayList<>();
 
     private RefreshableCategoryTree(final SphereClient sphereClient) {
         this.sphereClient = sphereClient;
@@ -31,57 +30,8 @@ public final class RefreshableCategoryTree extends Base implements CategoryTree 
     }
 
     public synchronized void refresh() {
-        this.categoryTree = fetchFreshCategoryTree(sphereClient);
-    }
-
-    @Override
-    public List<Category> getRoots() {
-        return categoryTree.getRoots();
-    }
-
-    @Override
-    public Optional<Category> findById(final String id) {
-        return categoryTree.findById(id);
-    }
-
-    @Override
-    public Optional<Category> findByExternalId(final String externalId) {
-        return categoryTree.findByExternalId(externalId);
-    }
-
-    @Override
-    public Optional<Category> findBySlug(final Locale locale, final String slug) {
-        return categoryTree.findBySlug(locale, slug);
-    }
-
-    @Override
-    public List<Category> getAllAsFlatList() {
-        return categoryTree.getAllAsFlatList();
-    }
-
-    @Override
-    public List<Category> findChildren(final Identifiable<Category> category) {
-        return categoryTree.findChildren(category);
-    }
-
-    @Override
-    public List<Category> findSiblings(final Collection<? extends Identifiable<Category>> collection) {
-        return categoryTree.findSiblings(collection);
-    }
-
-    @Override
-    public CategoryTree getSubtree(final Collection<? extends Identifiable<Category>> collection) {
-        return categoryTree.getSubtree(collection);
-    }
-
-    @Override
-    public Category getRootAncestor(final Identifiable<Category> identifiable) {
-        return categoryTree.getRootAncestor(identifiable);
-    }
-
-    @Override
-    public List<Category> getSubtreeRoots() {
-        return categoryTree.getSubtreeRoots();
+        setCategoryTree(fetchFreshCategoryTree(sphereClient));
+        categorySubtrees.forEach(CategoryTreeRefreshListener::onRefresh);
     }
 
     public static RefreshableCategoryTree of(final SphereClient sphereClient) {
@@ -104,4 +54,10 @@ public final class RefreshableCategoryTree extends Base implements CategoryTree 
                 .sorted(new ByOrderHintCategoryComparator())
                 .collect(toList());
     }
+
+    @Override
+    public void addListener(CategoryTreeRefreshListener refreshListener) {
+        categorySubtrees.add(refreshListener);
+    }
+
 }
