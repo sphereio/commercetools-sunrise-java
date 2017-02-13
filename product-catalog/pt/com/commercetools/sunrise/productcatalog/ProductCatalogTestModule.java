@@ -1,6 +1,7 @@
 package com.commercetools.sunrise.productcatalog;
 
 import com.commercetools.sunrise.common.DefaultTestModule;
+import com.commercetools.sunrise.common.categorytree.CategoryTreeRefresher;
 import com.commercetools.sunrise.common.controllers.TestableReverseRouter;
 import com.commercetools.sunrise.common.ctp.ProductDataConfig;
 import com.commercetools.sunrise.common.reverserouter.HomeReverseRouter;
@@ -25,6 +26,7 @@ public class ProductCatalogTestModule extends DefaultTestModule {
         super.configure();
         bind(ProductDataConfig.class).toInstance(ProductDataConfig.of(null, emptyList(), emptyList(), emptyList()));
         bind(CategoryTree.class).toInstance(CategoryTree.of(emptyList()));
+        bind(CategoryTreeRefresher.class).toInstance(refreshListener -> {});
         bind(CategoryTree.class).annotatedWith(Names.named("new")).toInstance(CategoryTree.of(emptyList()));
         bind(HomeReverseRouter.class).toInstance(new TestableReverseRouter());
         bind(ProductReverseRouter.class).toInstance(new TestableReverseRouter());
