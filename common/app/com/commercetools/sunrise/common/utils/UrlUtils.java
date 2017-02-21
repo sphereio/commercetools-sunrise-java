@@ -31,7 +31,7 @@ public final class UrlUtils {
     }
 
     /**
-     * Builds an url encoded URI from the given path and the query string, of the form: path?foo=1&bar=2.
+     * Builds an url encoded URI from the given path and the query string, of the form: {@code path?foo=1&bar=2}.
      *
      * @param path the path
      * @param queryString the url encoded query string
