@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static com.commercetools.sunrise.common.utils.UrlUtils.*;
 
 /**
- * Unit tests for {@link UrlUtils}
+ * Unit tests for {@link UrlUtils}.
  */
 public class UrlUtilsTest {
 

@@ -6,10 +6,8 @@ import play.utils.UriEncoding;
 import java.io.UnsupportedEncodingException;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import static com.commercetools.sunrise.common.utils.ArrayUtils.arrayToList;
 import static java.util.stream.Collectors.joining;
@@ -21,10 +19,10 @@ public final class UrlUtils {
     }
 
     /**
-     * Builds an url encoded URI from the given path and the query string, of the form: path?foo=1&bar=2.
+     * Builds an url encoded URI from the given path and the query string map.
      *
      * @param path URI path without query string
-     * @param queryString the query string
+     * @param queryString the query string map - the values will be url encoded
      *
      * @return a URI composed by the path and query string
      */
@@ -33,12 +31,14 @@ public final class UrlUtils {
     }
 
     /**
+     * Builds an url encoded URI from the given path and the query string, of the form: path?foo=1&bar=2.
+     *
      * @param path the path
      * @param queryString the url encoded query string
      *
      * @return a URI composed by the path and query string
      */
-    private static String buildUrl(final String path, final String queryString) {
+    public static String buildUrl(final String path, final String queryString) {
         return path + (queryString.isEmpty() ? "" : "?" + queryString);
     }
 
@@ -54,26 +54,25 @@ public final class UrlUtils {
             return "";
         }
         else {
-            final String encodedKey = encode(key);
             return values.stream()
                     .map(UrlUtils::encode)
-                    .collect(joining("&" + encodedKey + "=", encodedKey + "=", ""));
+                    .collect(joining("&" + key + "=", key + "=", ""));
         }
     }
 
     /**
-     * Url encodes the given string via {@link URLEncoder#encode(String, String)}.
+     * Url encodes the given value via {@link URLEncoder#encode(String, String)}.
      *
-     * @param string the string to encode
+     * @param value the value to encode
      *
-     * @return the url encoded string
+     * @return the url encoded value
      */
-    private static String encode(String string) {
+    private static String encode(String value) {
         try {
-            final String encoded = URLEncoder.encode(string, StandardCharsets.UTF_8.name());
+            final String encoded = URLEncoder.encode(value, StandardCharsets.UTF_8.name());
             return encoded;
         } catch (UnsupportedEncodingException e) {
-            throw new IllegalArgumentException("Couldn't encode string", e);
+            throw new IllegalArgumentException("Couldn't encode value", e);
         }
     }
 
