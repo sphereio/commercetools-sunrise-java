@@ -42,7 +42,14 @@ public final class UrlUtils {
         return path + (queryString.isEmpty() ? "" : "?" + queryString);
     }
 
-    private static String buildQueryString(final Map<String, List<String>> queryString) {
+    /**
+     * Builds an url encoded query for the given query string map.
+     *
+     * @param queryString  the query string map - the values will be url encoded
+     *
+     * @return a query string with url encoded values
+     */
+    public static String buildQueryString(final Map<String, List<String>> queryString) {
         return queryString.entrySet().stream()
                 .map(parameter -> buildQueryStringOfParameter(parameter.getKey(), parameter.getValue()))
                 .filter(keyValue -> !keyValue.isEmpty())
