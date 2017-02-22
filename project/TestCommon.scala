@@ -30,7 +30,8 @@ object TestCommon {
     libraryDependencies ++= Seq (
       "org.assertj" % "assertj-core" % "3.0.0" % scopes,
       "com.commercetools.sdk.jvm.core" % "commercetools-test-lib" % "1.0.0-RC2" % scopes,
-      PlayImport.component("play-test") % scopes
+      PlayImport.component("play-test") % scopes,
+      "org.mockito" % "mockito-core" % "1.10.19"
     ),
     dependencyOverrides ++= Set (
       "junit" % "junit" % "4.12" % scopes

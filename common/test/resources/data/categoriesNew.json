@@ -16,12 +16,12 @@
             "description": {
                 "en": "<p>1st-level category</p>"
             },
-            "ancestors": [],
-            "orderHint": "0.000014482755315751697271913"
+            "ancestors": []
         },
         {
             "id": "38429a3d-0cea-4a90-9e72-60ce3681e14e",
             "version": 1,
+            "externalId": "1",
             "name": {
                 "en": "2nd Level"
             },
@@ -41,8 +41,7 @@
             "parent": {
                 "typeId": "category",
                 "id": "ebca0e07-ffc7-4a59-ba8a-57338f9d34bf"
-            },
-            "orderHint": "0.000014482755573631702989662"
+            }
         },
         {
             "id": "6043642c-2a75-4be7-9817-a611aad5711a",
@@ -70,8 +69,7 @@
             "parent": {
                 "typeId": "category",
                 "id": "38429a3d-0cea-4a90-9e72-60ce3681e14e"
-            },
-            "orderHint": "0.000014482756280411677827979"
+            }
         },
         {
             "id": "7e06b4a0-d9d9-436e-beb6-3cdaaeccdef8",
@@ -99,8 +97,7 @@
             "parent": {
                 "typeId": "category",
                 "id": "38429a3d-0cea-4a90-9e72-60ce3681e14e"
-            },
-            "orderHint": "0.000014482755893701838050132"
+            }
         }
     ]
 }
