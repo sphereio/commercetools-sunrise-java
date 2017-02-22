@@ -29,6 +29,7 @@ public final class RefreshableCategoryTree extends CategoryTreeWrapper implement
         refresh();
     }
 
+    @Override
     public synchronized void refresh() {
         setCategoryTree(fetchFreshCategoryTree(sphereClient));
         categorySubtrees.forEach(CategoryTreeRefreshListener::onRefresh);

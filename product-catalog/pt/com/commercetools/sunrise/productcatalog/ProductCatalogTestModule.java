@@ -18,6 +18,7 @@ import java.util.concurrent.CompletionStage;
 
 import static io.sphere.sdk.utils.CompletableFutureUtils.exceptionallyCompletedFuture;
 import static java.util.Collections.emptyList;
+import static org.mockito.Mockito.mock;
 
 public class ProductCatalogTestModule extends DefaultTestModule {
 
@@ -26,7 +27,7 @@ public class ProductCatalogTestModule extends DefaultTestModule {
         super.configure();
         bind(ProductDataConfig.class).toInstance(ProductDataConfig.of(null, emptyList(), emptyList(), emptyList()));
         bind(CategoryTree.class).toInstance(CategoryTree.of(emptyList()));
-        bind(CategoryTreeRefresher.class).toInstance(refreshListener -> {});
+        bind(CategoryTreeRefresher.class).toInstance(mock(CategoryTreeRefresher.class));
         bind(CategoryTree.class).annotatedWith(Names.named("new")).toInstance(CategoryTree.of(emptyList()));
         bind(HomeReverseRouter.class).toInstance(new TestableReverseRouter());
         bind(ProductReverseRouter.class).toInstance(new TestableReverseRouter());

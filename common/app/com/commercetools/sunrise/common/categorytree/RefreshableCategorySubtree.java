@@ -19,7 +19,7 @@ public class RefreshableCategorySubtree extends CategoryTreeWrapper implements C
         onRefresh();
     }
 
-    static CategoryTree of(Supplier<CategoryTree> subtreeBuildStrategy, CategoryTreeRefresher categoryTreeRefresher) {
+    static RefreshableCategorySubtree of(Supplier<CategoryTree> subtreeBuildStrategy, CategoryTreeRefresher categoryTreeRefresher) {
         return new RefreshableCategorySubtree(subtreeBuildStrategy, categoryTreeRefresher);
     }
 

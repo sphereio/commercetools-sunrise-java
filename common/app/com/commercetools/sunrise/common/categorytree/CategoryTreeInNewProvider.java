@@ -27,10 +27,10 @@ public final class CategoryTreeInNewProvider implements Provider<CategoryTree> {
 
     @Override
     public CategoryTree get() {
-        return RefreshableCategorySubtree.of(getBuildStrategy(), categoryTreeRefresher);
+        return RefreshableCategorySubtree.of(buildStrategy(), categoryTreeRefresher);
     }
 
-    private Supplier<CategoryTree> getBuildStrategy() {
+    private Supplier<CategoryTree> buildStrategy() {
         return () -> {
             final List<Category> categories = getCategoryNew(categoryTree)
                     .map(Collections::singletonList)
