@@ -6,7 +6,7 @@ import com.commercetools.sunrise.common.pages.PageContent;
 import com.commercetools.sunrise.framework.template.engine.TemplateRenderer;
 import com.commercetools.sunrise.framework.reverserouters.SunriseRoute;
 import com.commercetools.sunrise.framework.hooks.RunRequestStartedHook;
-import com.commercetools.sunrise.framework.reverserouters.shoppingcart.CheckoutReverseRouter;
+import com.commercetools.sunrise.framework.reverserouters.shoppingcart.checkout.CheckoutReverseRouter;
 import com.commercetools.sunrise.framework.checkout.thankyou.viewmodels.CheckoutThankYouPageContentFactory;
 import io.sphere.sdk.orders.Order;
 import play.mvc.Result;

@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.productcatalog;
 
-import com.commercetools.sunrise.framework.reverserouters.productcatalog.ProductReverseRouter;
+import com.commercetools.sunrise.framework.reverserouters.productcatalog.product.ProductReverseRouter;
 import com.commercetools.sunrise.test.TestableCall;
 import play.mvc.Call;
 

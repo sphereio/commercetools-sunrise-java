@@ -1,8 +1,9 @@
 package controllers.productcatalog;
 
+import com.commercetools.sunrise.framework.components.PageHeaderControllerComponentSupplier;
 import com.commercetools.sunrise.framework.controllers.cache.NoCache;
 import com.commercetools.sunrise.framework.hooks.RegisteredComponents;
-import com.commercetools.sunrise.framework.reverserouters.productcatalog.ProductReverseRouter;
+import com.commercetools.sunrise.framework.reverserouters.productcatalog.product.ProductReverseRouter;
 import com.commercetools.sunrise.framework.template.TemplateControllerComponentsSupplier;
 import com.commercetools.sunrise.framework.template.engine.TemplateRenderer;
 import com.commercetools.sunrise.productcatalog.productdetail.ProductFinder;
@@ -10,7 +11,6 @@ import com.commercetools.sunrise.productcatalog.productdetail.ProductRecommendat
 import com.commercetools.sunrise.productcatalog.productdetail.ProductVariantFinder;
 import com.commercetools.sunrise.productcatalog.productdetail.SunriseProductDetailController;
 import com.commercetools.sunrise.productcatalog.productdetail.viewmodels.ProductDetailPageContentFactory;
-import com.commercetools.sunrise.framework.components.PageHeaderControllerComponentSupplier;
 import io.sphere.sdk.products.ProductProjection;
 import play.mvc.Result;
 
@@ -52,7 +52,7 @@ public final class ProductDetailController extends SunriseProductDetailControlle
     @Override
     public CompletionStage<Result> handleNotFoundProductVariant(final ProductProjection product) {
         return productReverseRouter
-                .productDetailPageCallByProductSlugAndSku(product, product.getMasterVariant())
+                .productDetailPageCall(product, product.getMasterVariant())
                 .map(this::redirectTo)
                 .orElseGet(() -> completedFuture(notFound()));
     }

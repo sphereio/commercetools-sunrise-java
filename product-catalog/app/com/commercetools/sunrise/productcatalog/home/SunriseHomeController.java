@@ -6,7 +6,7 @@ import com.commercetools.sunrise.framework.controllers.SunriseTemplateController
 import com.commercetools.sunrise.framework.controllers.WithQueryFlow;
 import com.commercetools.sunrise.framework.hooks.RunRequestStartedHook;
 import com.commercetools.sunrise.framework.reverserouters.SunriseRoute;
-import com.commercetools.sunrise.framework.reverserouters.productcatalog.HomeReverseRouter;
+import com.commercetools.sunrise.framework.reverserouters.productcatalog.home.HomeReverseRouter;
 import com.commercetools.sunrise.productcatalog.home.viewmodels.HomePageContentFactory;
 import play.mvc.Result;
 

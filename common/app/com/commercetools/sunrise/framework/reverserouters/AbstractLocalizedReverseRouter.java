@@ -12,12 +12,8 @@ public abstract class AbstractLocalizedReverseRouter extends Base implements Loc
         this.locale = locale;
     }
 
-    public String languageTag() {
-        return locale.toLanguageTag();
-    }
-
     @Override
-    public Locale locale() {
+    public final Locale locale() {
         return locale;
     }
 }

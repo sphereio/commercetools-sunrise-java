@@ -5,7 +5,7 @@ import com.commercetools.sunrise.framework.controllers.SunriseTemplateController
 import com.commercetools.sunrise.framework.controllers.WithQueryFlow;
 import com.commercetools.sunrise.framework.hooks.RunRequestStartedHook;
 import com.commercetools.sunrise.framework.reverserouters.SunriseRoute;
-import com.commercetools.sunrise.framework.reverserouters.shoppingcart.CartReverseRouter;
+import com.commercetools.sunrise.framework.reverserouters.shoppingcart.cart.CartReverseRouter;
 import com.commercetools.sunrise.framework.template.engine.TemplateRenderer;
 import com.commercetools.sunrise.framework.CartFinder;
 import com.commercetools.sunrise.framework.WithRequiredCart;

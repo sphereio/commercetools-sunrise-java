@@ -5,7 +5,7 @@ import com.commercetools.sunrise.framework.controllers.SunriseTemplateFormContro
 import com.commercetools.sunrise.framework.controllers.WithTemplateFormFlow;
 import com.commercetools.sunrise.framework.hooks.RunRequestStartedHook;
 import com.commercetools.sunrise.framework.reverserouters.SunriseRoute;
-import com.commercetools.sunrise.framework.reverserouters.myaccount.AuthenticationReverseRouter;
+import com.commercetools.sunrise.framework.reverserouters.myaccount.authentication.AuthenticationReverseRouter;
 import com.commercetools.sunrise.framework.template.engine.TemplateRenderer;
 import com.commercetools.sunrise.myaccount.MyAccountController;
 import com.commercetools.sunrise.myaccount.authentication.login.viewmodels.LogInPageContentFactory;

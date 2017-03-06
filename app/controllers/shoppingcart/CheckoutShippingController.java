@@ -9,8 +9,8 @@ import com.commercetools.sunrise.framework.checkout.shipping.SunriseCheckoutShip
 import com.commercetools.sunrise.framework.checkout.shipping.viewmodels.CheckoutShippingPageContentFactory;
 import com.commercetools.sunrise.framework.controllers.cache.NoCache;
 import com.commercetools.sunrise.framework.hooks.RegisteredComponents;
-import com.commercetools.sunrise.framework.reverserouters.shoppingcart.CartReverseRouter;
-import com.commercetools.sunrise.framework.reverserouters.shoppingcart.CheckoutReverseRouter;
+import com.commercetools.sunrise.framework.reverserouters.shoppingcart.cart.CartReverseRouter;
+import com.commercetools.sunrise.framework.reverserouters.shoppingcart.checkout.CheckoutReverseRouter;
 import com.commercetools.sunrise.framework.template.TemplateControllerComponentsSupplier;
 import com.commercetools.sunrise.framework.template.engine.TemplateRenderer;
 import com.commercetools.sunrise.sessions.cart.CartOperationsControllerComponentSupplier;

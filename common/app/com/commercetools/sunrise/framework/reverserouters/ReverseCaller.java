@@ -7,5 +7,6 @@ import play.mvc.Call;
  */
 @FunctionalInterface
 public interface ReverseCaller {
+
     Call call(Object ... args);
 }

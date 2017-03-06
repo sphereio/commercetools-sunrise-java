@@ -1,10 +1,11 @@
 package com.commercetools.sunrise.myaccount.addressbook.addressbookdetail.viewmodels;
 
+import com.commercetools.sunrise.common.models.ViewModelFactory;
 import com.commercetools.sunrise.common.models.addresses.AddressViewModelFactory;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
-import com.commercetools.sunrise.common.models.ViewModelFactory;
-import com.commercetools.sunrise.framework.reverserouters.myaccount.AddressBookReverseRouter;
+import com.commercetools.sunrise.framework.reverserouters.myaccount.addressbook.AddressBookReverseRouter;
 import io.sphere.sdk.models.Address;
+import play.mvc.Call;
 
 import javax.inject.Inject;
 
@@ -50,10 +51,10 @@ public class EditableAddressViewModelFactory extends ViewModelFactory<EditableAd
     }
 
     protected void fillAddressEditUrl(final EditableAddressViewModel viewModel, final Address address) {
-        viewModel.setAddressEditUrl(addressBookReverseRouter.changeAddressPageCall(address.getId()).url());
+        viewModel.setAddressEditUrl(addressBookReverseRouter.changeAddressPageCall(address).map(Call::url).orElse(""));
     }
 
     protected void fillAddressDeleteUrl(final EditableAddressViewModel viewModel, final Address address) {
-        viewModel.setAddressDeleteUrl(addressBookReverseRouter.removeAddressProcessCall(address.getId()).url());
+        viewModel.setAddressDeleteUrl(addressBookReverseRouter.removeAddressProcessCall(address).map(Call::url).orElse(""));
     }
 }

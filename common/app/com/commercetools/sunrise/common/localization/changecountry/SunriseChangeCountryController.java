@@ -4,7 +4,7 @@ import com.commercetools.sunrise.framework.controllers.SunriseFormController;
 import com.commercetools.sunrise.framework.controllers.WithFormFlow;
 import com.commercetools.sunrise.framework.hooks.RunRequestStartedHook;
 import com.commercetools.sunrise.framework.reverserouters.SunriseRoute;
-import com.commercetools.sunrise.framework.reverserouters.common.LocalizationReverseRouter;
+import com.commercetools.sunrise.framework.reverserouters.common.localization.LocalizationReverseRouter;
 import play.data.FormFactory;
 import play.mvc.Result;
 

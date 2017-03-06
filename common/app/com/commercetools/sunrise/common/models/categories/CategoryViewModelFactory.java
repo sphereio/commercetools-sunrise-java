@@ -2,7 +2,7 @@ package com.commercetools.sunrise.common.models.categories;
 
 import com.commercetools.sunrise.common.models.ViewModelFactory;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
-import com.commercetools.sunrise.framework.reverserouters.productcatalog.ProductReverseRouter;
+import com.commercetools.sunrise.framework.reverserouters.productcatalog.product.ProductReverseRouter;
 import io.sphere.sdk.categories.Category;
 import io.sphere.sdk.categories.CategoryTree;
 import play.Configuration;
@@ -67,7 +67,7 @@ public class CategoryViewModelFactory extends ViewModelFactory<CategoryViewModel
 
     protected void fillUrl(final CategoryViewModel viewModel, final Category category) {
         viewModel.setUrl(productReverseRouter
-                .productOverviewPageCallByCategorySlug(category)
+                .productOverviewPageCall(category)
                 .map(Call::url)
                 .orElse(""));
     }

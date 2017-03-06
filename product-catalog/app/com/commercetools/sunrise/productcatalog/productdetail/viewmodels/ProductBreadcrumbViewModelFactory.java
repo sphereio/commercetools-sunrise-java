@@ -4,7 +4,7 @@ import com.commercetools.sunrise.common.models.AbstractBreadcrumbViewModelFactor
 import com.commercetools.sunrise.common.models.BreadcrumbLinkViewModel;
 import com.commercetools.sunrise.common.models.BreadcrumbViewModel;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
-import com.commercetools.sunrise.framework.reverserouters.productcatalog.ProductReverseRouter;
+import com.commercetools.sunrise.framework.reverserouters.productcatalog.product.ProductReverseRouter;
 import com.commercetools.sunrise.productcatalog.productdetail.ProductWithVariant;
 import io.sphere.sdk.categories.CategoryTree;
 import play.mvc.Call;
@@ -62,7 +62,7 @@ public class ProductBreadcrumbViewModelFactory extends AbstractBreadcrumbViewMod
         final BreadcrumbLinkViewModel linkViewModel = new BreadcrumbLinkViewModel();
         linkViewModel.setText(productWithVariant.getProduct().getName());
         final String productUrl = getProductReverseRouter()
-                .productDetailPageCallByProductSlugAndSku(productWithVariant.getProduct(), productWithVariant.getVariant())
+                .productDetailPageCall(productWithVariant.getProduct(), productWithVariant.getVariant())
                 .map(Call::url)
                 .orElse("");
         linkViewModel.setUrl(productUrl);

@@ -8,7 +8,7 @@ import com.commercetools.sunrise.framework.controllers.SunriseTemplateFormContro
 import com.commercetools.sunrise.framework.controllers.WithTemplateFormFlow;
 import com.commercetools.sunrise.framework.hooks.RunRequestStartedHook;
 import com.commercetools.sunrise.framework.reverserouters.SunriseRoute;
-import com.commercetools.sunrise.framework.reverserouters.shoppingcart.CheckoutReverseRouter;
+import com.commercetools.sunrise.framework.reverserouters.shoppingcart.checkout.CheckoutReverseRouter;
 import com.commercetools.sunrise.framework.template.engine.TemplateRenderer;
 import io.sphere.sdk.carts.Cart;
 import play.data.Form;

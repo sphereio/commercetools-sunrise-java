@@ -4,7 +4,7 @@ import com.commercetools.sunrise.common.localization.changelanguage.ChangeLangua
 import com.commercetools.sunrise.common.localization.changelanguage.ChangeLanguageFormData;
 import com.commercetools.sunrise.common.localization.changelanguage.SunriseChangeLanguageController;
 import com.commercetools.sunrise.framework.controllers.cache.NoCache;
-import com.commercetools.sunrise.framework.reverserouters.productcatalog.HomeReverseRouter;
+import com.commercetools.sunrise.framework.reverserouters.productcatalog.home.HomeReverseRouter;
 import io.sphere.sdk.client.ClientErrorException;
 import play.data.Form;
 import play.data.FormFactory;

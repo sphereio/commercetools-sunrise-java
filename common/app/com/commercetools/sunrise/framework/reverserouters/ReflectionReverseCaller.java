@@ -16,6 +16,10 @@ public final class ReflectionReverseCaller extends SunriseModel implements Rever
         this.object = object;
     }
 
+    public Method getMethod() {
+        return method;
+    }
+
     @Override
     public Call call(final Object... args) {
         try {

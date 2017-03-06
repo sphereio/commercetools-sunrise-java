@@ -2,10 +2,10 @@ package com.commercetools.sunrise.productcatalog.productdetail.viewmodels;
 
 import com.commercetools.sunrise.common.models.products.AbstractProductVariantViewModelFactory;
 import com.commercetools.sunrise.common.models.products.ProductVariantViewModel;
-import com.commercetools.sunrise.framework.injection.RequestScoped;
-import com.commercetools.sunrise.framework.reverserouters.productcatalog.ProductReverseRouter;
 import com.commercetools.sunrise.common.utils.PriceFormatter;
 import com.commercetools.sunrise.common.utils.ProductPriceUtils;
+import com.commercetools.sunrise.framework.injection.RequestScoped;
+import com.commercetools.sunrise.framework.reverserouters.productcatalog.product.ProductReverseRouter;
 import com.commercetools.sunrise.productcatalog.productdetail.ProductWithVariant;
 import play.mvc.Call;
 
@@ -55,7 +55,7 @@ public class ProductVariantViewModelFactory extends AbstractProductVariantViewMo
     @Override
     protected void fillUrl(final ProductVariantViewModel viewModel, final ProductWithVariant productWithVariant) {
         viewModel.setUrl(productReverseRouter
-                .productDetailPageCallByProductSlugAndSku(productWithVariant.getProduct(), productWithVariant.getVariant())
+                .productDetailPageCall(productWithVariant.getProduct(), productWithVariant.getVariant())
                 .map(Call::url)
                 .orElse(""));
     }

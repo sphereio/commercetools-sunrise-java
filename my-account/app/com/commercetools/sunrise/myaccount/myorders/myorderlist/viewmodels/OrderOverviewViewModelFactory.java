@@ -3,7 +3,7 @@ package com.commercetools.sunrise.myaccount.myorders.myorderlist.viewmodels;
 import com.commercetools.sunrise.common.models.ViewModelFactory;
 import com.commercetools.sunrise.common.utils.PriceFormatter;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
-import com.commercetools.sunrise.framework.reverserouters.myaccount.MyOrdersReverseRouter;
+import com.commercetools.sunrise.framework.reverserouters.myaccount.myorders.MyOrdersReverseRouter;
 import com.commercetools.sunrise.framework.template.i18n.I18nIdentifierResolver;
 import io.sphere.sdk.orders.Order;
 import play.mvc.Call;
@@ -69,7 +69,7 @@ public class OrderOverviewViewModelFactory extends ViewModelFactory<OrderOvervie
 
     protected void fillOrderUrl(final OrderOverviewViewModel viewModel, final Order order) {
         viewModel.setShowOrderUrl(myOrdersReverseRouter
-                .myOrderDetailPageCallByOrderNumber(order)
+                .myOrderDetailPageCall(order)
                 .map(Call::url)
                 .orElse(""));
     }
