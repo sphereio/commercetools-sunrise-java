@@ -1,9 +1,10 @@
 package com.commercetools.sunrise.productcatalog.productoverview.viewmodels;
 
-import com.commercetools.sunrise.productcatalog.TestableProductReverseRouter;
-import com.commercetools.sunrise.common.models.BreadcrumbViewModel;
 import com.commercetools.sunrise.common.models.BreadcrumbLinkViewModel;
+import com.commercetools.sunrise.common.models.BreadcrumbViewModel;
+import com.commercetools.sunrise.framework.reverserouters.productcatalog.product.ProductReverseRouter;
 import com.commercetools.sunrise.productcatalog.productoverview.ProductsWithCategory;
+import com.commercetools.sunrise.test.TestableCall;
 import io.sphere.sdk.categories.Category;
 import io.sphere.sdk.categories.CategoryTree;
 import io.sphere.sdk.categories.queries.CategoryQuery;
@@ -16,6 +17,9 @@ import java.util.function.Consumer;
 import static com.commercetools.sunrise.common.utils.JsonUtils.readCtpObject;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class CategoryBreadcrumbViewModelFactoryTest {
 
@@ -51,6 +55,11 @@ public class CategoryBreadcrumbViewModelFactoryTest {
     }
 
     private static CategoryBreadcrumbViewModelFactory createBreadcrumbFactory() {
-        return new CategoryBreadcrumbViewModelFactory(CATEGORY_TREE, new TestableProductReverseRouter());
+        final ProductReverseRouter productReverseRouter = mock(ProductReverseRouter.class);
+        when(productReverseRouter.productOverviewPageCall(any(Category.class)))
+                .then(invocation -> ((Category) invocation.getArgument(0)).getSlug()
+                        .find(Locale.ENGLISH)
+                        .map(TestableCall::new));
+        return new CategoryBreadcrumbViewModelFactory(CATEGORY_TREE, productReverseRouter);
     }
 }

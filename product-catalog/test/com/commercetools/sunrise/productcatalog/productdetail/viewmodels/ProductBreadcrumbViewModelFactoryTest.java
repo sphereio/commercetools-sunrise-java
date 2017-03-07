@@ -1,12 +1,15 @@
 package com.commercetools.sunrise.productcatalog.productdetail.viewmodels;
 
-import com.commercetools.sunrise.productcatalog.productdetail.ProductWithVariant;
-import com.commercetools.sunrise.productcatalog.TestableProductReverseRouter;
-import com.commercetools.sunrise.common.models.BreadcrumbViewModel;
 import com.commercetools.sunrise.common.models.BreadcrumbLinkViewModel;
+import com.commercetools.sunrise.common.models.BreadcrumbViewModel;
+import com.commercetools.sunrise.framework.reverserouters.productcatalog.product.ProductReverseRouter;
+import com.commercetools.sunrise.productcatalog.productdetail.ProductWithVariant;
+import com.commercetools.sunrise.test.TestableCall;
+import io.sphere.sdk.categories.Category;
 import io.sphere.sdk.categories.CategoryTree;
 import io.sphere.sdk.categories.queries.CategoryQuery;
 import io.sphere.sdk.products.ProductProjection;
+import io.sphere.sdk.products.ProductVariant;
 import org.junit.Test;
 
 import java.util.List;
@@ -16,6 +19,9 @@ import java.util.function.Consumer;
 import static com.commercetools.sunrise.common.utils.JsonUtils.readCtpObject;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class ProductBreadcrumbViewModelFactoryTest {
 
@@ -44,6 +50,16 @@ public class ProductBreadcrumbViewModelFactoryTest {
     }
 
     private static ProductBreadcrumbViewModelFactory createBreadcrumbFactory() {
-        return new ProductBreadcrumbViewModelFactory(CATEGORY_TREE, new TestableProductReverseRouter());
+        final ProductReverseRouter productReverseRouter = mock(ProductReverseRouter.class);
+        when(productReverseRouter.productOverviewPageCall(any(Category.class)))
+                .then(invocation -> ((Category) invocation.getArgument(0)).getSlug()
+                        .find(Locale.ENGLISH)
+                        .map(TestableCall::new));
+        when(productReverseRouter.productDetailPageCall(any(ProductProjection.class), any(ProductVariant.class)))
+                .then(invocation -> ((ProductProjection) invocation.getArgument(0)).getSlug()
+                    .find(Locale.ENGLISH)
+                    .map(slug -> slug + ((ProductVariant) invocation.getArgument(1)).getSku())
+                    .map(TestableCall::new));
+        return new ProductBreadcrumbViewModelFactory(CATEGORY_TREE, productReverseRouter);
     }
 }
