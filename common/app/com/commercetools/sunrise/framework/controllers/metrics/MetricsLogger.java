@@ -33,12 +33,14 @@ final class MetricsLogger extends Action.Simple {
 
     @Override
     public CompletionStage<Result> call(final Http.Context ctx) {
-        if (sphereClient instanceof SimpleMetricsSphereClient) {
-            return callWithMetrics((SimpleMetricsSphereClient) sphereClient, ctx);
-        } else {
-            LOGGER.warn("Using @LogMetrics annotation without a SimpleMetricsSphereClient");
-            return delegate.call(ctx);
+        if (LOGGER.isDebugEnabled()) {
+            if (sphereClient instanceof SimpleMetricsSphereClient) {
+                return callWithMetrics((SimpleMetricsSphereClient) sphereClient, ctx);
+            } else {
+                LOGGER.warn("Enabled logging via @LogMetrics annotation without a SimpleMetricsSphereClient");
+            }
         }
+        return delegate.call(ctx);
     }
 
     private CompletionStage<Result> callWithMetrics(final SimpleMetricsSphereClient metricsSphereClient, final Http.Context ctx) {
