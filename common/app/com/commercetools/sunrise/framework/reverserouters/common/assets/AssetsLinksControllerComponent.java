@@ -21,6 +21,6 @@ public class AssetsLinksControllerComponent extends AbstractLinksControllerCompo
 
     @Override
     protected void addLinksToPage(final PageMeta meta, final AssetsReverseRouter reverseRouter) {
-        meta.setAssetsPath(reverseRouter.webJarAssetsCall("").url());
+        meta.setAssetsPath(reverseRouter.assetCall("").url());
     }
 }
