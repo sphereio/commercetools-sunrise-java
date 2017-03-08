@@ -57,28 +57,35 @@ final class MetricsLogger extends Action.Simple {
     }
 
     private static void logRequestData(final List<ObservedTotalDuration> metrics, final Http.Context ctx, final long totalDuration) {
-        String reportPerRequest = printableReportPerRequest(metrics);
-        if (!reportPerRequest.isEmpty()) {
-            reportPerRequest = ":\n" + reportPerRequest;
+        if (LOGGER.isTraceEnabled()) {
+            logTraceRequestData(metrics);
+        } else {
+            logDebugRequestData(metrics, ctx, totalDuration);
+        }
+    }
+
+    private static void logDebugRequestData(final List<ObservedTotalDuration> metrics, final Http.Context ctx, final long totalDuration) {
+        String report = metrics.stream()
+                .map(data -> String.format("(%dms) %s",
+                        data.getDurationInMilliseconds(),
+                        LogUtils.printableRequest(data.getRequest())))
+                .collect(joining("\n"));
+        if (!report.isEmpty()) {
+            report = ":\n" + report;
         }
         LOGGER.debug("({}ms) {} used {} CTP request(s){}",
                 totalDuration,
                 ctx.request(),
                 metrics.size(),
-                reportPerRequest);
+                report);
     }
 
-    private static String printableReportPerRequest(final List<ObservedTotalDuration> metrics) {
-        if (LOGGER.isTraceEnabled()) {
-            return metrics.stream()
-                    .map(Base::toString)
-                    .collect(joining("\n"));
-        } else {
-            return metrics.stream()
-                    .map(data -> String.format("(%dms) %s",
-                            data.getDurationInMilliseconds(),
-                            LogUtils.printableRequest(data.getRequest())))
-                    .collect(joining("\n"));
+    private static void logTraceRequestData(final List<ObservedTotalDuration> metrics) {
+        final String report = metrics.stream()
+                .map(Base::toString)
+                .collect(joining("\n"));
+        if (!report.isEmpty()) {
+            LOGGER.trace(report);
         }
     }
 }
