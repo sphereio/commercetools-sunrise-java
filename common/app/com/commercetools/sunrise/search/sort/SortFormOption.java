@@ -1,19 +1,21 @@
 package com.commercetools.sunrise.search.sort;
 
 import com.commercetools.sunrise.framework.viewmodels.forms.FormOption;
-import com.commercetools.sunrise.search.SearchUtils;
-import io.sphere.sdk.products.ProductProjection;
-import io.sphere.sdk.search.SortExpression;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.function.BiFunction;
 
 import static java.util.stream.Collectors.toList;
 
-public final class SortFormOption extends FormOption<List<SortExpression<ProductProjection>>> {
+public class SortFormOption<T> extends FormOption<List<T>> {
 
-    private SortFormOption(final String fieldLabel, final String fieldValue, final List<SortExpression<ProductProjection>> expressions, final boolean isDefault) {
+    private final BiFunction<T, Locale, T> localizationMapper;
+
+    protected SortFormOption(final String fieldLabel, final String fieldValue, final List<T> expressions,
+                             final boolean isDefault, final BiFunction<T, Locale, T> localizationMapper) {
         super(fieldLabel, fieldValue, expressions, isDefault);
+        this.localizationMapper = localizationMapper;
     }
 
     @Override
@@ -32,14 +34,8 @@ public final class SortFormOption extends FormOption<List<SortExpression<Product
      * @return the sort model for this option
      */
     @Override
-    public List<SortExpression<ProductProjection>> getValue() {
+    public List<T> getValue() {
         return super.getValue();
-    }
-
-    public List<SortExpression<ProductProjection>> getLocalizedValue(final Locale locale) {
-        return getValue().stream()
-                .map(expr -> SortExpression.<ProductProjection>of(SearchUtils.localizeExpression(expr.expression(), locale)))
-                .collect(toList());
     }
 
     @Override
@@ -47,7 +43,14 @@ public final class SortFormOption extends FormOption<List<SortExpression<Product
         return super.isDefault();
     }
 
-    public static SortFormOption of(final String fieldLabel, final String fieldValue, final List<SortExpression<ProductProjection>> expressions, final boolean isDefault) {
-        return new SortFormOption(fieldLabel, fieldValue, expressions, isDefault);
+    public List<T> getLocalizedValue(final Locale locale) {
+        return getValue().stream()
+                .map(expr -> localizationMapper.apply(expr, locale))
+                .collect(toList());
+    }
+
+    public static <T> SortFormOption<T> of(final String fieldLabel, final String fieldValue, final List<T> expressions,
+                                           final boolean isDefault, final BiFunction<T, Locale, T> localizationMapper) {
+        return new SortFormOption<>(fieldLabel, fieldValue, expressions, isDefault, localizationMapper);
     }
 }

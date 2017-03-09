@@ -3,30 +3,23 @@ package com.commercetools.sunrise.search.pagination;
 import com.commercetools.sunrise.framework.viewmodels.forms.FormSettings;
 import play.Configuration;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
+public class PaginationSettings extends FormSettings<Integer> {
 
-@Singleton
-public final class PaginationSettings extends FormSettings<Integer> {
-
-    private static final String CONFIG_KEY = "pop.pagination.key";
-
-    private static final int DEFAULT_PAGE = 1;
+    private static final String CONFIG_KEY = "key";
     private static final String DEFAULT_KEY = "page";
+    private static final String CONFIG_DISPLAYED_PAGES = "displayedPages";
+    private static final int DEFAULT_DISPLAYED_PAGES = 6;
+    private static final int DEFAULT_PAGE = 1;
 
-    @Inject
-    PaginationSettings(final Configuration configuration) {
-        super(configuration.getString(CONFIG_KEY, DEFAULT_KEY), DEFAULT_PAGE);
+    private final int displayedPages;
+
+    protected PaginationSettings(final Configuration configuration) {
+        super(key(configuration), DEFAULT_PAGE);
+        this.displayedPages = configuration.getInt(CONFIG_DISPLAYED_PAGES, DEFAULT_DISPLAYED_PAGES);
     }
 
-    @Override
-    public String getFieldName() {
-        return super.getFieldName();
-    }
-
-    @Override
-    public Integer getDefaultValue() {
-        return super.getDefaultValue();
+    public int getDisplayedPages() {
+        return displayedPages;
     }
 
     @Override
@@ -41,5 +34,13 @@ public final class PaginationSettings extends FormSettings<Integer> {
     @Override
     public boolean isValidValue(final Integer value) {
         return value != null && value > 0;
+    }
+
+    public static PaginationSettings of(final Configuration configuration) {
+        return new PaginationSettings(configuration);
+    }
+
+    private static String key(final Configuration configuration) {
+        return configuration.getString(CONFIG_KEY, DEFAULT_KEY);
     }
 }

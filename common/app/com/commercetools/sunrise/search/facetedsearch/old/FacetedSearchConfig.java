@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.search.facetedsearch;
+package com.commercetools.sunrise.search.facetedsearch.old;
 
 import io.sphere.sdk.facets.FacetBuilder;
 import io.sphere.sdk.models.Base;

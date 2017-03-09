@@ -1,6 +1,8 @@
 package com.commercetools.sunrise.search.pagination;
 
 import com.commercetools.sunrise.framework.viewmodels.forms.QueryStringUtils;
+import com.commercetools.sunrise.search.pagination.products.ProductSearchPaginationSettings;
+import com.commercetools.sunrise.search.pagination.products.ProductPaginationViewModelFactory;
 import io.sphere.sdk.products.ProductProjection;
 import io.sphere.sdk.queries.PagedResult;
 import org.junit.Test;
@@ -17,7 +19,7 @@ import static java.util.Collections.singletonList;
 import static java.util.Collections.singletonMap;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class PaginationViewModelFactoryTest {
+public class ProductPaginationViewModelFactoryTest {
 
     private static final String URL_PATH = "www.url.dom/path/to/";
     private static final Long PAGE_SIZE = 9L;
@@ -99,7 +101,7 @@ public class PaginationViewModelFactoryTest {
                 .uri(QueryStringUtils.buildUri(URL_PATH, buildQueryString(currentPage)))
                 .build();
         final Configuration configuration = new Configuration(singletonMap("pop.pagination.displayedPages", displayedPages));
-        return new PaginationViewModelFactory(configuration, new PaginationSettings(configuration), request).create(searchResult);
+        return new ProductPaginationViewModelFactory(configuration, new ProductSearchPaginationSettings(configuration), request).create(searchResult);
     }
 
     private PagedResult<ProductProjection> pagedResult(final int page, final int totalPages) {

@@ -3,10 +3,10 @@ package com.commercetools.sunrise.productcatalog.productoverview.viewmodels;
 import com.commercetools.sunrise.framework.viewmodels.content.breadcrumbs.BreadcrumbViewModel;
 import com.commercetools.sunrise.framework.viewmodels.TitleDescriptionViewModel;
 import com.commercetools.sunrise.framework.viewmodels.content.PageContent;
-import com.commercetools.sunrise.search.facetedsearch.FacetSelectorListViewModel;
+import com.commercetools.sunrise.search.facetedsearch.old.FacetSelectorListViewModel;
 import com.commercetools.sunrise.search.facetedsearch.WithFacetedSearchViewModel;
 import com.commercetools.sunrise.search.pagination.PaginationViewModel;
-import com.commercetools.sunrise.search.pagination.ProductsPerPageSelectorViewModel;
+import com.commercetools.sunrise.search.pagination.EntriesPerPageSelectorViewModel;
 import com.commercetools.sunrise.search.pagination.WithPaginationViewModel;
 import com.commercetools.sunrise.search.searchbox.WithSearchBoxViewModel;
 import com.commercetools.sunrise.search.sort.SortSelectorViewModel;
@@ -22,7 +22,7 @@ public class ProductOverviewPageContent extends PageContent implements WithPagin
     private BreadcrumbViewModel breadcrumb;
     private FacetSelectorListViewModel facets;
     private PaginationViewModel pagination;
-    private ProductsPerPageSelectorViewModel displaySelector;
+    private EntriesPerPageSelectorViewModel displaySelector;
     private SortSelectorViewModel sortSelector;
     private ProductListViewModel products;
 
@@ -100,12 +100,12 @@ public class ProductOverviewPageContent extends PageContent implements WithPagin
     }
 
     @Override
-    public ProductsPerPageSelectorViewModel getDisplaySelector() {
+    public EntriesPerPageSelectorViewModel getDisplaySelector() {
         return displaySelector;
     }
 
     @Override
-    public void setDisplaySelector(final ProductsPerPageSelectorViewModel displaySelector) {
+    public void setDisplaySelector(final EntriesPerPageSelectorViewModel displaySelector) {
         this.displaySelector = displaySelector;
     }
 

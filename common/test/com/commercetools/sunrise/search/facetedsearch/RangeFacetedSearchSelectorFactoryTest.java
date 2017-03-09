@@ -1,6 +1,9 @@
 package com.commercetools.sunrise.search.facetedsearch;
 
 import com.commercetools.sunrise.framework.viewmodels.forms.QueryStringUtils;
+import com.commercetools.sunrise.search.facetedsearch.old.FacetedSearchSelector;
+import com.commercetools.sunrise.search.facetedsearch.old.RangeFacetedSearchConfig;
+import com.commercetools.sunrise.search.facetedsearch.old.RangeFacetedSearchSelectorFactory;
 import io.sphere.sdk.facets.Facet;
 import io.sphere.sdk.facets.RangeFacet;
 import io.sphere.sdk.facets.RangeFacetBuilder;

@@ -5,12 +5,12 @@ import com.commercetools.sunrise.framework.viewmodels.ViewModel;
 
 import java.util.List;
 
-public class ProductsPerPageSelectorViewModel extends ViewModel {
+public class EntriesPerPageSelectorViewModel extends ViewModel {
 
     private String key;
     private List<FormSelectableOptionViewModel> list;
 
-    public ProductsPerPageSelectorViewModel() {
+    public EntriesPerPageSelectorViewModel() {
     }
 
     public String getKey() {

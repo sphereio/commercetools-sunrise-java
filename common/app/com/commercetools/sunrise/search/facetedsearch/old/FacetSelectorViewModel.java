@@ -1,6 +1,7 @@
-package com.commercetools.sunrise.search.facetedsearch;
+package com.commercetools.sunrise.search.facetedsearch.old;
 
 import com.commercetools.sunrise.framework.viewmodels.ViewModel;
+import com.commercetools.sunrise.search.facetedsearch.SunriseFacetType;
 import io.sphere.sdk.facets.Facet;
 import io.sphere.sdk.facets.FacetType;
 

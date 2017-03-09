@@ -2,72 +2,57 @@ package com.commercetools.sunrise.search.sort;
 
 import com.commercetools.sunrise.framework.SunriseConfigurationException;
 import com.commercetools.sunrise.framework.viewmodels.forms.FormSettingsWithOptions;
-import io.sphere.sdk.products.ProductProjection;
-import io.sphere.sdk.search.SortExpression;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import play.Configuration;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 
-@Singleton
-public final class SortFormSettings extends FormSettingsWithOptions<SortFormOption> {
+public class SortFormSettings<T> extends FormSettingsWithOptions<SortFormOption<T>> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SortFormSettings.class);
+    private static final String CONFIG_KEY = "key";
+    private static final String DEFAULT_KEY = "sort";
 
-    private static final String CONFIG_KEY = "pop.sortProducts.key";
-    private static final String CONFIG_OPTIONS = "pop.sortProducts.options";
-
+    private static final String CONFIG_OPTIONS = "options";
     private static final String OPTION_LABEL_ATTR = "label";
     private static final String OPTION_VALUE_ATTR = "value";
     private static final String OPTION_EXPR_ATTR = "expr";
     private static final String OPTION_DEFAULT_ATTR = "default";
 
-    private static final String DEFAULT_KEY = "sort";
-
-    @Inject
-    SortFormSettings(final Configuration configuration) {
-        super(key(configuration), options(configuration));
-        LOGGER.debug("Provide SortConfig: {}", getOptions().stream().map(SortFormOption::getValue).collect(toList()));
+    protected SortFormSettings(final Configuration configuration, final Function<String, T> creatorMapper,
+                               final BiFunction<T, Locale, T> localizationMapper) {
+        super(key(configuration), options(configuration, creatorMapper, localizationMapper));
     }
 
-    @Override
-    public List<SortFormOption> getOptions() {
-        return super.getOptions();
-    }
-
-    @Override
-    public String getFieldName() {
-        return super.getFieldName();
-    }
-
-    @Override
-    public Optional<SortFormOption> findDefaultOption() {
-        return super.findDefaultOption();
+    public static <T> SortFormSettings<T> of(final Configuration configuration, final Function<String, T> creatorMapper,
+                                             final BiFunction<T, Locale, T> localizationMapper) {
+        return new SortFormSettings<>(configuration, creatorMapper, localizationMapper);
     }
 
     private static String key(final Configuration configuration) {
         return configuration.getString(CONFIG_KEY, DEFAULT_KEY);
     }
 
-    private static List<SortFormOption> options(final Configuration configuration) {
+    private static <T> List<SortFormOption<T>> options(final Configuration configuration, final Function<String, T> creatorMapper,
+                                                       final BiFunction<T, Locale, T> localizationMapper) {
         return configuration.getConfigList(CONFIG_OPTIONS, emptyList()).stream()
-                .map(SortFormSettings::initializeFormOption)
+                .map(config -> initializeFormOption(config, creatorMapper, localizationMapper))
                 .collect(toList());
     }
 
-    private static SortFormOption initializeFormOption(final Configuration optionConfig) {
+    private static <T> SortFormOption<T> initializeFormOption(final Configuration optionConfig, final Function<String, T> creatorMapper,
+                                                              final BiFunction<T, Locale, T> localizationMapper) {
         return SortFormOption.of(
                 extractLabel(optionConfig),
                 extractValue(optionConfig),
-                extractExpressions(optionConfig),
-                extractIsDefault(optionConfig));
+                extractExpressions(optionConfig, creatorMapper),
+                extractIsDefault(optionConfig),
+                localizationMapper);
     }
 
     private static String extractLabel(final Configuration optionConfig) {
@@ -79,10 +64,10 @@ public final class SortFormSettings extends FormSettingsWithOptions<SortFormOpti
                 .orElseThrow(() -> new SunriseConfigurationException("Missing sort value", OPTION_VALUE_ATTR, CONFIG_OPTIONS));
     }
 
-    private static List<SortExpression<ProductProjection>> extractExpressions(final Configuration optionConfig) {
+    private static <T> List<T> extractExpressions(final Configuration optionConfig, final Function<String, T> creatorMapper) {
         return optionConfig.getStringList(OPTION_EXPR_ATTR, emptyList()).stream()
                 .filter(expr -> !expr.isEmpty())
-                .map(SortExpression::<ProductProjection>of)
+                .map(creatorMapper)
                 .collect(toList());
     }
 

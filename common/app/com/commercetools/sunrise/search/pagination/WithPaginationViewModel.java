@@ -6,7 +6,7 @@ public interface WithPaginationViewModel {
 
     void setPagination(final PaginationViewModel pagination);
 
-    ProductsPerPageSelectorViewModel getDisplaySelector();
+    EntriesPerPageSelectorViewModel getDisplaySelector();
 
-    void setDisplaySelector(final ProductsPerPageSelectorViewModel displaySelector);
+    void setDisplaySelector(final EntriesPerPageSelectorViewModel displaySelector);
 }

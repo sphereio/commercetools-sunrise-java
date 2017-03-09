@@ -2,9 +2,9 @@ package com.commercetools.sunrise.search.pagination;
 
 import com.commercetools.sunrise.framework.viewmodels.forms.FormOption;
 
-public final class ProductsPerPageFormOption extends FormOption<Integer> {
+public final class EntriesPerPageFormOption extends FormOption<Integer> {
 
-    private ProductsPerPageFormOption(final String fieldLabel, final String fieldValue, final Integer value, final boolean isDefault) {
+    private EntriesPerPageFormOption(final String fieldLabel, final String fieldValue, final Integer value, final boolean isDefault) {
         super(fieldLabel, fieldValue, value, isDefault);
     }
 
@@ -28,7 +28,7 @@ public final class ProductsPerPageFormOption extends FormOption<Integer> {
         return super.isDefault();
     }
 
-    public static ProductsPerPageFormOption of(final String fieldLabel, final String fieldValue, final Integer value, final boolean isDefault) {
-        return new ProductsPerPageFormOption(fieldLabel, fieldValue, value, isDefault);
+    public static EntriesPerPageFormOption of(final String fieldLabel, final String fieldValue, final Integer value, final boolean isDefault) {
+        return new EntriesPerPageFormOption(fieldLabel, fieldValue, value, isDefault);
     }
 }

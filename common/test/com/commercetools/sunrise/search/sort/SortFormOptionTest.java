@@ -19,7 +19,7 @@ public class SortFormOptionTest {
         final String expr1 = "{{locale}}.foo.{{locale}} asc";
         final String expr2 = "foo.bar {{locale}} desc";
         final String expr3 = "foo.bar";
-        final SortFormOption formOption = sortOption(expr1, expr2, expr3);
+        final SortFormOption<ProductProjection> formOption = sortOption(expr1, expr2, expr3);
         assertThat(formOption.getValue())
                 .extracting(SearchExpression::expression)
                 .containsExactly(expr1, expr2, expr3);
@@ -28,7 +28,7 @@ public class SortFormOptionTest {
                 .containsExactly("en.foo.en asc", "foo.bar en desc", "foo.bar");
     }
 
-    private static SortFormOption sortOption(final String ... expressions) {
+    private static SortFormOption<ProductProjection> sortOption(final String ... expressions) {
         final List<SortExpression<ProductProjection>> sortExpressions = Arrays.stream(expressions)
                 .map(SortExpression::<ProductProjection>of)
                 .collect(toList());

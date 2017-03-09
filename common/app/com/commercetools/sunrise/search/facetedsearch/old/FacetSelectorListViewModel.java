@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.search.facetedsearch;
+package com.commercetools.sunrise.search.facetedsearch.old;
 
 import com.commercetools.sunrise.framework.viewmodels.ViewModel;
 

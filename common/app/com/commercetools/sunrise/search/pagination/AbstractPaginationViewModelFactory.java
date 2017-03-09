@@ -1,12 +1,9 @@
 package com.commercetools.sunrise.search.pagination;
 
-import com.commercetools.sunrise.framework.injection.RequestScoped;
 import com.commercetools.sunrise.framework.viewmodels.ViewModelFactory;
 import io.sphere.sdk.queries.PagedResult;
-import play.Configuration;
 import play.mvc.Http;
 
-import javax.inject.Inject;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.LongStream;
@@ -15,32 +12,20 @@ import static com.commercetools.sunrise.framework.viewmodels.forms.QueryStringUt
 import static java.util.Collections.singletonList;
 import static java.util.stream.Collectors.toList;
 
-@RequestScoped
-public class PaginationViewModelFactory extends ViewModelFactory<PaginationViewModel, PagedResult<?>> {
+public abstract class AbstractPaginationViewModelFactory extends ViewModelFactory<PaginationViewModel, PagedResult<?>> {
 
-    private static final String CONFIG_DISPLAYED_PAGES = "pop.pagination.displayedPages";
-    private static final int DEFAULT_DISPLAYED_PAGES = 6;
-
-    private final int currentPage;
-    private final int displayedPages;
     private final PaginationSettings settings;
+    private final int currentPage;
     private final Http.Request httpRequest;
 
-    @Inject
-    public PaginationViewModelFactory(final Configuration configuration, final PaginationSettings settings,
-                                      final Http.Request httpRequest) {
+    protected AbstractPaginationViewModelFactory(final PaginationSettings settings, final Http.Request httpRequest) {
         this.settings = settings;
         this.currentPage = findSelectedValueFromQueryString(settings, httpRequest);
-        this.displayedPages = configuration.getInt(CONFIG_DISPLAYED_PAGES, DEFAULT_DISPLAYED_PAGES);
         this.httpRequest = httpRequest;
     }
 
     protected final int getCurrentPage() {
         return currentPage;
-    }
-
-    protected final int getDisplayedPages() {
-        return displayedPages;
     }
 
     protected final PaginationSettings getSettings() {
@@ -57,7 +42,7 @@ public class PaginationViewModelFactory extends ViewModelFactory<PaginationViewM
     }
 
     @Override
-    public final PaginationViewModel create(final PagedResult<?> pagedResult) {
+    public PaginationViewModel create(final PagedResult<?> pagedResult) {
         return super.create(pagedResult);
     }
 
@@ -112,7 +97,7 @@ public class PaginationViewModelFactory extends ViewModelFactory<PaginationViewM
     }
 
     private boolean notAllPagesAreDisplayed(final long totalPages) {
-        return totalPages > displayedPages;
+        return totalPages > settings.getDisplayedPages();
     }
 
     private boolean firstPageIsDisplayed(final long totalPages) {
@@ -148,11 +133,11 @@ public class PaginationViewModelFactory extends ViewModelFactory<PaginationViewM
     }
 
     private int calculateBottomThreshold() {
-        return displayedPages - 1;
+        return settings.getDisplayedPages() - 1;
     }
 
     private long calculateTopThreshold(final long totalPages) {
-        return totalPages - displayedPages + 2;
+        return totalPages - settings.getDisplayedPages() + 2;
     }
 
     private long calculateTotalPages(final PagedResult<?> pagedResult) {

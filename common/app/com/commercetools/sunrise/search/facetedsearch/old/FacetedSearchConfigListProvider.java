@@ -1,6 +1,7 @@
-package com.commercetools.sunrise.search.facetedsearch;
+package com.commercetools.sunrise.search.facetedsearch.old;
 
 import com.commercetools.sunrise.framework.SunriseConfigurationException;
+import com.commercetools.sunrise.search.facetedsearch.SunriseFacetType;
 import io.sphere.sdk.facets.*;
 import io.sphere.sdk.products.ProductProjection;
 import io.sphere.sdk.search.model.FacetRange;

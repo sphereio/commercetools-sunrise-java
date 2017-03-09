@@ -1,6 +1,6 @@
 package controllers.productcatalog;
 
-import com.commercetools.sunrise.search.SearchControllerComponentsSupplier;
+import com.commercetools.sunrise.productcatalog.productoverview.search.ProductOverviewSearchControllerComponentsSupplier;
 import com.commercetools.sunrise.framework.controllers.cache.NoCache;
 import com.commercetools.sunrise.framework.controllers.metrics.LogMetrics;
 import com.commercetools.sunrise.framework.components.controllers.RegisteredComponents;
@@ -23,7 +23,7 @@ import static java.util.concurrent.CompletableFuture.completedFuture;
 @RegisteredComponents({
         TemplateControllerComponentsSupplier.class,
         PageHeaderControllerComponentSupplier.class,
-        SearchControllerComponentsSupplier.class
+        ProductOverviewSearchControllerComponentsSupplier.class
 })
 public final class ProductOverviewController extends SunriseProductOverviewController {
 
