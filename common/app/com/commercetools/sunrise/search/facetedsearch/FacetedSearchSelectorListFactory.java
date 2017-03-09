@@ -4,7 +4,6 @@ import com.commercetools.sunrise.framework.injection.RequestScoped;
 import io.sphere.sdk.categories.Category;
 
 import javax.inject.Inject;
-import java.util.Collections;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -13,12 +12,15 @@ import static java.util.stream.Collectors.toList;
 public class FacetedSearchSelectorListFactory {
 
     private final SelectFacetedSearchSelectorFactory selectFacetedSearchSelectorFactory;
+    private final RangeFacetedSearchSelectorFactory rangeFacetedSearchSelectorFactory;
     private final FacetedSearchConfigList facetedSearchConfigList;
 
     @Inject
     public FacetedSearchSelectorListFactory(final SelectFacetedSearchSelectorFactory selectFacetedSearchSelectorFactory,
+                                            final RangeFacetedSearchSelectorFactory rangeFacetedSearchSelectorFactory,
                                             final FacetedSearchConfigList facetedSearchConfigList) {
         this.selectFacetedSearchSelectorFactory = selectFacetedSearchSelectorFactory;
+        this.rangeFacetedSearchSelectorFactory = rangeFacetedSearchSelectorFactory;
         this.facetedSearchConfigList = facetedSearchConfigList;
     }
 
@@ -35,6 +37,8 @@ public class FacetedSearchSelectorListFactory {
     }
 
     private List<FacetedSearchSelector> createRangeFacetSelectors() {
-        return Collections.emptyList(); // missing ranges
+        return facetedSearchConfigList.getRangeFacetedSearchConfigList().stream()
+                .map(rangeFacetedSearchSelectorFactory::create)
+                .collect(toList());
     }
 }

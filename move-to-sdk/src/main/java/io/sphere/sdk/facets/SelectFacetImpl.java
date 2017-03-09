@@ -28,12 +28,13 @@ public class SelectFacetImpl<T> extends BaseFacet<T> implements SelectFacet<T> {
     @Nullable private final Long limit;
     @Nullable private final FacetOptionMapper mapper;
     private final List<FacetOption> facetOptions;
+    private final FacetedSearchSearchModel<T> facetedSearchSearchModel;
 
     protected SelectFacetImpl(final String key, final String label, final boolean countHidden, final FacetType type,
                               final FacetedSearchSearchModel<T> searchModel, final boolean multiSelect, final boolean matchingAll,
                               final List<String> selectedValues, @Nullable final TermFacetResult facetResult,
                               @Nullable final Long threshold, @Nullable final Long limit, @Nullable final FacetOptionMapper mapper) {
-        super(key, type, countHidden, label, searchModel);
+        super(key, type, countHidden, label);
         if (threshold != null && limit != null && threshold > limit) {
             throw new InvalidSelectFacetConstraintsException(threshold, limit);
         }
@@ -45,11 +46,17 @@ public class SelectFacetImpl<T> extends BaseFacet<T> implements SelectFacet<T> {
         this.limit = limit;
         this.mapper = mapper;
         this.facetOptions = initializeOptions(selectedValues, facetResult, mapper);
+        this.facetedSearchSearchModel = searchModel;
     }
 
     @Override
     public boolean isAvailable() {
         return Optional.ofNullable(threshold).map(threshold -> facetOptions.size() >= threshold).orElse(true);
+    }
+
+    @Override
+    public FacetedSearchSearchModel<T> getFacetedSearchSearchModel() {
+        return facetedSearchSearchModel;
     }
 
     @Override
