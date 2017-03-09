@@ -1,5 +1,5 @@
 import com.commercetools.sunrise.framework.injection.RequestScope;
-import com.commercetools.sunrise.framework.components.ControllerComponent;
+import com.commercetools.sunrise.framework.components.controllers.ControllerComponent;
 import com.commercetools.sunrise.framework.hooks.Hook;
 import com.commercetools.sunrise.framework.hooks.consumers.PageDataReadyHook;
 import com.commercetools.sunrise.framework.hooks.events.RequestStartedHook;

@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.framework.template.engine;
 
-import com.commercetools.sunrise.common.pages.PageContent;
+import com.commercetools.sunrise.framework.viewmodels.content.PageContent;
 import com.google.inject.ImplementedBy;
 import play.twirl.api.Content;
 

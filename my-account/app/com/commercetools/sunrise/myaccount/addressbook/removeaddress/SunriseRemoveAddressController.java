@@ -1,7 +1,7 @@
 package com.commercetools.sunrise.myaccount.addressbook.removeaddress;
 
-import com.commercetools.sunrise.common.models.AddressWithCustomer;
-import com.commercetools.sunrise.common.pages.PageContent;
+import com.commercetools.sunrise.framework.viewmodels.content.addresses.AddressWithCustomer;
+import com.commercetools.sunrise.framework.viewmodels.content.PageContent;
 import com.commercetools.sunrise.framework.controllers.SunriseTemplateFormController;
 import com.commercetools.sunrise.framework.controllers.WithTemplateFormFlow;
 import com.commercetools.sunrise.framework.hooks.RunRequestStartedHook;

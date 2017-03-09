@@ -1,8 +1,8 @@
 package com.commercetools.sunrise.framework.checkout.shipping.viewmodels;
 
 import com.commercetools.sunrise.framework.injection.RequestScoped;
-import com.commercetools.sunrise.common.forms.FormFieldWithOptions;
-import com.commercetools.sunrise.common.models.FormFieldViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.forms.FormFieldWithOptions;
+import com.commercetools.sunrise.framework.viewmodels.forms.FormFieldViewModelFactory;
 import io.sphere.sdk.shippingmethods.ShippingMethod;
 import play.data.Form;
 

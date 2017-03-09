@@ -1,7 +1,7 @@
 package com.commercetools.sunrise.framework.checkout;
 
-import com.commercetools.sunrise.common.pages.PageData;
-import com.commercetools.sunrise.framework.components.ControllerComponent;
+import com.commercetools.sunrise.framework.viewmodels.PageData;
+import com.commercetools.sunrise.framework.components.controllers.ControllerComponent;
 import com.commercetools.sunrise.framework.hooks.consumers.PageDataReadyHook;
 import com.commercetools.sunrise.framework.checkout.address.viewmodels.CheckoutAddressPageContent;
 import com.commercetools.sunrise.framework.checkout.confirmation.viewmodels.CheckoutConfirmationPageContent;

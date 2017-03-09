@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.framework.checkout.shipping;
 
-import com.commercetools.sunrise.common.models.SunriseModel;
+import com.commercetools.sunrise.framework.SunriseModel;
 import io.sphere.sdk.carts.Cart;
 import io.sphere.sdk.shippingmethods.ShippingMethod;
 

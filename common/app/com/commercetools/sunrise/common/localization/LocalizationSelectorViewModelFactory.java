@@ -1,11 +1,11 @@
 package com.commercetools.sunrise.common.localization;
 
-import com.commercetools.sunrise.common.models.LanguageFormSelectableOptionViewModel;
-import com.commercetools.sunrise.common.models.LanguageFormSelectableOptionViewModelFactory;
-import com.commercetools.sunrise.common.models.ViewModelFactory;
-import com.commercetools.sunrise.common.models.addresses.CountryFormSelectableOptionViewModel;
-import com.commercetools.sunrise.common.models.addresses.CountryFormSelectableOptionViewModelFactory;
-import com.commercetools.sunrise.contexts.ProjectContext;
+import com.commercetools.sunrise.framework.viewmodels.forms.languages.LanguageFormSelectableOptionViewModel;
+import com.commercetools.sunrise.framework.viewmodels.forms.languages.LanguageFormSelectableOptionViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.ViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.forms.countries.CountryFormSelectableOptionViewModel;
+import com.commercetools.sunrise.framework.viewmodels.forms.countries.CountryFormSelectableOptionViewModelFactory;
+import com.commercetools.sunrise.framework.localization.ProjectContext;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
 import com.neovisionaries.i18n.CountryCode;
 

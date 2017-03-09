@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.productcatalog.productdetail.viewmodels;
 
-import com.commercetools.sunrise.common.models.ViewModel;
+import com.commercetools.sunrise.framework.viewmodels.ViewModel;
 
 import javax.validation.constraints.NotNull;
 import java.util.Collection;

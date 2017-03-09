@@ -1,7 +1,7 @@
 package com.commercetools.sunrise.framework.cart.cartdetail.viewmodels;
 
-import com.commercetools.sunrise.common.models.carts.CartViewModel;
-import com.commercetools.sunrise.common.pages.PageContent;
+import com.commercetools.sunrise.framework.viewmodels.content.carts.CartViewModel;
+import com.commercetools.sunrise.framework.viewmodels.content.PageContent;
 
 public class CartDetailPageContent extends PageContent {
 

@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.productcatalog.productdetail.viewmodels;
 
-import com.commercetools.sunrise.common.models.ViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.ViewModelFactory;
 import io.sphere.sdk.products.Image;
 
 import javax.inject.Singleton;

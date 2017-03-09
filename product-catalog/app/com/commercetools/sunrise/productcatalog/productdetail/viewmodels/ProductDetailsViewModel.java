@@ -1,7 +1,7 @@
 package com.commercetools.sunrise.productcatalog.productdetail.viewmodels;
 
-import com.commercetools.sunrise.common.models.ViewModel;
-import com.commercetools.sunrise.common.models.products.ProductAttributeViewModel;
+import com.commercetools.sunrise.framework.viewmodels.ViewModel;
+import com.commercetools.sunrise.framework.viewmodels.content.products.ProductAttributeViewModel;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
 package com.commercetools.sunrise.productcatalog.home.viewmodels;
 
-import com.commercetools.sunrise.common.models.PageContentFactory;
-import com.commercetools.sunrise.common.utils.PageTitleResolver;
+import com.commercetools.sunrise.framework.viewmodels.content.PageContentFactory;
+import com.commercetools.sunrise.framework.viewmodels.PageTitleResolver;
 
 import javax.inject.Inject;
 

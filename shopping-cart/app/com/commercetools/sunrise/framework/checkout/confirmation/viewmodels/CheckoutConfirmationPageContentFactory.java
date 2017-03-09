@@ -1,8 +1,8 @@
 package com.commercetools.sunrise.framework.checkout.confirmation.viewmodels;
 
-import com.commercetools.sunrise.common.models.FormPageContentFactory;
-import com.commercetools.sunrise.common.utils.PageTitleResolver;
-import com.commercetools.sunrise.common.models.carts.CartViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.content.FormPageContentFactory;
+import com.commercetools.sunrise.framework.viewmodels.PageTitleResolver;
+import com.commercetools.sunrise.framework.viewmodels.content.carts.CartViewModelFactory;
 import com.commercetools.sunrise.framework.checkout.confirmation.CheckoutConfirmationFormData;
 import io.sphere.sdk.carts.Cart;
 import play.data.Form;

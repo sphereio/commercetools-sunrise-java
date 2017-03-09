@@ -1,7 +1,7 @@
 package com.commercetools.sunrise.sessions.customer;
 
-import com.commercetools.sunrise.common.models.customers.UserInfoViewModel;
-import com.commercetools.sunrise.common.models.customers.UserInfoViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.content.customers.UserInfoViewModel;
+import com.commercetools.sunrise.framework.viewmodels.content.customers.UserInfoViewModelFactory;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
 import com.commercetools.sunrise.sessions.DataFromResourceStoringOperations;
 import com.commercetools.sunrise.sessions.ObjectStoringSessionStrategy;

@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.productcatalog.productoverview.viewmodels;
 
-import com.commercetools.sunrise.common.models.ViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.ViewModelFactory;
 import com.commercetools.sunrise.productcatalog.productoverview.ProductsWithCategory;
 
 import javax.inject.Singleton;

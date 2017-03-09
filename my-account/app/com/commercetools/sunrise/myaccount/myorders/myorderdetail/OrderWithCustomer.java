@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.myaccount.myorders.myorderdetail;
 
-import com.commercetools.sunrise.common.models.SunriseModel;
+import com.commercetools.sunrise.framework.SunriseModel;
 import io.sphere.sdk.customers.Customer;
 import io.sphere.sdk.orders.Order;
 

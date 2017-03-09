@@ -1,7 +1,7 @@
 package com.commercetools.sunrise.framework.checkout.payment.viewmodels;
 
 import com.commercetools.sunrise.framework.injection.RequestScoped;
-import com.commercetools.sunrise.common.models.SelectableViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.forms.SelectableViewModelFactory;
 import io.sphere.sdk.payments.PaymentMethodInfo;
 
 import javax.annotation.Nullable;

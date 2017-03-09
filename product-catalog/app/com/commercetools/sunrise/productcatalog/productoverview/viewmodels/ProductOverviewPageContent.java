@@ -1,16 +1,16 @@
 package com.commercetools.sunrise.productcatalog.productoverview.viewmodels;
 
-import com.commercetools.sunrise.common.models.BreadcrumbViewModel;
-import com.commercetools.sunrise.common.models.TitleDescriptionViewModel;
-import com.commercetools.sunrise.common.pages.PageContent;
-import com.commercetools.sunrise.common.search.facetedsearch.FacetSelectorListViewModel;
-import com.commercetools.sunrise.common.search.facetedsearch.WithFacetedSearchViewModel;
-import com.commercetools.sunrise.common.search.pagination.PaginationViewModel;
-import com.commercetools.sunrise.common.search.pagination.ProductsPerPageSelectorViewModel;
-import com.commercetools.sunrise.common.search.pagination.WithPaginationViewModel;
-import com.commercetools.sunrise.common.search.searchbox.WithSearchBoxViewModel;
-import com.commercetools.sunrise.common.search.sort.SortSelectorViewModel;
-import com.commercetools.sunrise.common.search.sort.WithSortSelectorViewModel;
+import com.commercetools.sunrise.framework.viewmodels.content.breadcrumbs.BreadcrumbViewModel;
+import com.commercetools.sunrise.framework.viewmodels.TitleDescriptionViewModel;
+import com.commercetools.sunrise.framework.viewmodels.content.PageContent;
+import com.commercetools.sunrise.search.facetedsearch.FacetSelectorListViewModel;
+import com.commercetools.sunrise.search.facetedsearch.WithFacetedSearchViewModel;
+import com.commercetools.sunrise.search.pagination.PaginationViewModel;
+import com.commercetools.sunrise.search.pagination.ProductsPerPageSelectorViewModel;
+import com.commercetools.sunrise.search.pagination.WithPaginationViewModel;
+import com.commercetools.sunrise.search.searchbox.WithSearchBoxViewModel;
+import com.commercetools.sunrise.search.sort.SortSelectorViewModel;
+import com.commercetools.sunrise.search.sort.WithSortSelectorViewModel;
 
 public class ProductOverviewPageContent extends PageContent implements WithPaginationViewModel, WithSearchBoxViewModel, WithSortSelectorViewModel, WithFacetedSearchViewModel {
 

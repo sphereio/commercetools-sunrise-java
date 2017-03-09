@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.framework.checkout.payment;
 
-import com.commercetools.sunrise.common.pages.PageContent;
+import com.commercetools.sunrise.framework.viewmodels.content.PageContent;
 import com.commercetools.sunrise.framework.CartFinder;
 import com.commercetools.sunrise.framework.WithRequiredCart;
 import com.commercetools.sunrise.framework.checkout.payment.viewmodels.CheckoutPaymentPageContentFactory;

@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.framework.hooks.consumers;
 
-import com.commercetools.sunrise.common.pages.PageData;
+import com.commercetools.sunrise.framework.viewmodels.PageData;
 import com.commercetools.sunrise.framework.hooks.HookRunner;
 
 public interface PageDataReadyHook extends ConsumerHook {

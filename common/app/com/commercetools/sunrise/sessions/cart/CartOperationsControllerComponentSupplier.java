@@ -1,7 +1,7 @@
 package com.commercetools.sunrise.sessions.cart;
 
-import com.commercetools.sunrise.framework.components.AbstractControllerComponentSupplier;
-import com.commercetools.sunrise.framework.components.CartFieldsUpdaterControllerComponent;
+import com.commercetools.sunrise.framework.components.controllers.AbstractControllerComponentSupplier;
+import com.commercetools.sunrise.framework.components.controllers.CartFieldsUpdaterControllerComponent;
 
 import javax.inject.Inject;
 

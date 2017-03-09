@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.framework.checkout.payment;
 
-import com.commercetools.sunrise.contexts.ProjectContext;
+import com.commercetools.sunrise.framework.localization.ProjectContext;
 import com.commercetools.sunrise.framework.template.i18n.I18nIdentifier;
 import com.commercetools.sunrise.framework.template.i18n.I18nIdentifierFactory;
 import com.commercetools.sunrise.framework.template.i18n.I18nResolver;

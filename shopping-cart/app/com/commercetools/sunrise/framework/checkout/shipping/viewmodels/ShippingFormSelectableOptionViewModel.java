@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.framework.checkout.shipping.viewmodels;
 
-import com.commercetools.sunrise.common.models.FormSelectableOptionViewModel;
+import com.commercetools.sunrise.framework.viewmodels.forms.FormSelectableOptionViewModel;
 
 public class ShippingFormSelectableOptionViewModel extends FormSelectableOptionViewModel {
 

@@ -2,10 +2,10 @@ package com.commercetools.sunrise.framework.template.engine;
 
 import com.commercetools.sunrise.cms.CmsPage;
 import com.commercetools.sunrise.cms.CmsService;
-import com.commercetools.sunrise.contexts.UserLanguage;
-import com.commercetools.sunrise.common.pages.PageContent;
-import com.commercetools.sunrise.common.pages.PageData;
-import com.commercetools.sunrise.common.pages.PageDataFactory;
+import com.commercetools.sunrise.framework.localization.UserLanguage;
+import com.commercetools.sunrise.framework.viewmodels.content.PageContent;
+import com.commercetools.sunrise.framework.viewmodels.PageData;
+import com.commercetools.sunrise.framework.viewmodels.PageDataFactory;
 import com.commercetools.sunrise.framework.hooks.RequestHookRunner;
 import com.commercetools.sunrise.framework.hooks.consumers.PageDataReadyHook;
 import com.fasterxml.jackson.core.JsonGenerator;

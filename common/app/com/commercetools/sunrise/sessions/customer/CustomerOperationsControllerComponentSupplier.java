@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.sessions.customer;
 
-import com.commercetools.sunrise.framework.components.AbstractControllerComponentSupplier;
+import com.commercetools.sunrise.framework.components.controllers.AbstractControllerComponentSupplier;
 
 import javax.inject.Inject;
 

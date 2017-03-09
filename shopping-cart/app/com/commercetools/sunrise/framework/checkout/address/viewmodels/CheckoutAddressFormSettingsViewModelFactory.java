@@ -1,9 +1,9 @@
 package com.commercetools.sunrise.framework.checkout.address.viewmodels;
 
-import com.commercetools.sunrise.common.forms.FormFieldWithOptions;
-import com.commercetools.sunrise.common.models.FormViewModelFactory;
-import com.commercetools.sunrise.common.models.addresses.CountryFormFieldViewModelFactory;
-import com.commercetools.sunrise.common.models.addresses.TitleFormFieldViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.forms.FormFieldWithOptions;
+import com.commercetools.sunrise.framework.viewmodels.FormViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.forms.countries.CountryFormFieldViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.forms.titles.TitleFormFieldViewModelFactory;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
 import com.commercetools.sunrise.framework.checkout.address.CheckoutAddressFormData;
 import com.neovisionaries.i18n.CountryCode;

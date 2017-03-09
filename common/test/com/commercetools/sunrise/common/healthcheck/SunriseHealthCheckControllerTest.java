@@ -9,7 +9,7 @@ import org.junit.Test;
 import play.mvc.Http;
 import play.mvc.Result;
 
-import static com.commercetools.sunrise.common.utils.JsonUtils.readCtpObject;
+import static com.commercetools.sunrise.test.JsonUtils.readCtpObject;
 import static org.assertj.core.api.Assertions.assertThat;
 import static play.test.Helpers.contentAsString;
 

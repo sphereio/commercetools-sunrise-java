@@ -1,7 +1,7 @@
 package com.commercetools.sunrise.productcatalog.home.viewmodels;
 
 import com.commercetools.sunrise.productcatalog.productoverview.viewmodels.ProductListViewModel;
-import com.commercetools.sunrise.common.pages.PageContent;
+import com.commercetools.sunrise.framework.viewmodels.content.PageContent;
 
 public class HomePageContent extends PageContent {
 

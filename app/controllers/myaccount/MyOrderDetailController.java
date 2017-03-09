@@ -1,8 +1,8 @@
 package controllers.myaccount;
 
-import com.commercetools.sunrise.framework.components.PageHeaderControllerComponentSupplier;
+import com.commercetools.sunrise.framework.components.controllers.PageHeaderControllerComponentSupplier;
 import com.commercetools.sunrise.framework.controllers.cache.NoCache;
-import com.commercetools.sunrise.framework.hooks.RegisteredComponents;
+import com.commercetools.sunrise.framework.components.controllers.RegisteredComponents;
 import com.commercetools.sunrise.framework.reverserouters.myaccount.authentication.AuthenticationReverseRouter;
 import com.commercetools.sunrise.framework.reverserouters.myaccount.myorders.MyOrdersReverseRouter;
 import com.commercetools.sunrise.framework.template.TemplateControllerComponentsSupplier;

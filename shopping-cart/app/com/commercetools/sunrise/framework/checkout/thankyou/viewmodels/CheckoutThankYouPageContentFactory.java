@@ -1,8 +1,8 @@
 package com.commercetools.sunrise.framework.checkout.thankyou.viewmodels;
 
-import com.commercetools.sunrise.common.models.PageContentFactory;
-import com.commercetools.sunrise.common.utils.PageTitleResolver;
-import com.commercetools.sunrise.common.models.carts.OrderViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.content.PageContentFactory;
+import com.commercetools.sunrise.framework.viewmodels.PageTitleResolver;
+import com.commercetools.sunrise.framework.viewmodels.content.carts.OrderViewModelFactory;
 import io.sphere.sdk.orders.Order;
 
 import javax.inject.Inject;

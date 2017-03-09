@@ -1,9 +1,9 @@
 package com.commercetools.sunrise.productcatalog.productdetail.viewmodels;
 
-import com.commercetools.sunrise.common.models.AttributeWithProductType;
-import com.commercetools.sunrise.common.models.SelectableViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.content.products.AttributeWithProductType;
+import com.commercetools.sunrise.framework.viewmodels.forms.SelectableViewModelFactory;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
-import com.commercetools.sunrise.common.utils.AttributeFormatter;
+import com.commercetools.sunrise.framework.viewmodels.formatters.AttributeFormatter;
 import io.sphere.sdk.products.attributes.Attribute;
 
 import javax.annotation.Nullable;

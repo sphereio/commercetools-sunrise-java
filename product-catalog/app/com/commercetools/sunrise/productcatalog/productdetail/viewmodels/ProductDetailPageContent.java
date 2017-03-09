@@ -1,7 +1,7 @@
 package com.commercetools.sunrise.productcatalog.productdetail.viewmodels;
 
-import com.commercetools.sunrise.common.models.BreadcrumbViewModel;
-import com.commercetools.sunrise.common.pages.PageContent;
+import com.commercetools.sunrise.framework.viewmodels.content.breadcrumbs.BreadcrumbViewModel;
+import com.commercetools.sunrise.framework.viewmodels.content.PageContent;
 import com.commercetools.sunrise.productcatalog.productoverview.viewmodels.ProductListViewModel;
 
 public class ProductDetailPageContent extends PageContent {

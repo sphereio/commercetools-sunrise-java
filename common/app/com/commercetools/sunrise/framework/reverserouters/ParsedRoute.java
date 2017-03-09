@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.framework.reverserouters;
 
-import com.commercetools.sunrise.common.models.SunriseModel;
+import com.commercetools.sunrise.framework.SunriseModel;
 import play.routing.Router;
 
 import javax.annotation.Nullable;

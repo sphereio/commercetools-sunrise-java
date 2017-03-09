@@ -10,8 +10,8 @@ import com.commercetools.sunrise.framework.reverserouters.productcatalog.home.Ho
 import com.commercetools.sunrise.framework.reverserouters.productcatalog.product.ProductLinksControllerComponent;
 import com.commercetools.sunrise.framework.reverserouters.shoppingcart.cart.CartLinksControllerComponent;
 import com.commercetools.sunrise.framework.reverserouters.shoppingcart.checkout.CheckoutLinksControllerComponent;
-import com.commercetools.sunrise.framework.components.ControllerComponent;
-import com.commercetools.sunrise.framework.components.ControllerComponentSupplier;
+import com.commercetools.sunrise.framework.components.controllers.ControllerComponent;
+import com.commercetools.sunrise.framework.components.controllers.ControllerComponentSupplier;
 
 import javax.inject.Inject;
 import java.util.ArrayList;

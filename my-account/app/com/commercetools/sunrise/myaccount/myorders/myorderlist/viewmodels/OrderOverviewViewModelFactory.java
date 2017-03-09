@@ -1,7 +1,7 @@
 package com.commercetools.sunrise.myaccount.myorders.myorderlist.viewmodels;
 
-import com.commercetools.sunrise.common.models.ViewModelFactory;
-import com.commercetools.sunrise.common.utils.PriceFormatter;
+import com.commercetools.sunrise.framework.viewmodels.ViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.formatters.PriceFormatter;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
 import com.commercetools.sunrise.framework.reverserouters.myaccount.myorders.MyOrdersReverseRouter;
 import com.commercetools.sunrise.framework.template.i18n.I18nIdentifierResolver;
@@ -12,7 +12,7 @@ import javax.inject.Inject;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
-import static com.commercetools.sunrise.common.utils.CartPriceUtils.calculateTotalPrice;
+import static com.commercetools.sunrise.framework.viewmodels.content.carts.CartPriceUtils.calculateTotalPrice;
 import static com.commercetools.sunrise.common.utils.EnumUtils.enumToCamelCase;
 
 @RequestScoped

@@ -1,7 +1,7 @@
 package com.commercetools.sunrise.myaccount.addressbook.addressbookdetail.viewmodels;
 
-import com.commercetools.sunrise.common.models.ViewModel;
-import com.commercetools.sunrise.common.models.addresses.AddressViewModel;
+import com.commercetools.sunrise.framework.viewmodels.ViewModel;
+import com.commercetools.sunrise.framework.viewmodels.content.addresses.AddressViewModel;
 
 public class EditableAddressViewModel extends ViewModel {
 

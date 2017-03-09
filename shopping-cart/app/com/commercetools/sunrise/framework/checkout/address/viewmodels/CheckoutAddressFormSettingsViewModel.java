@@ -1,8 +1,8 @@
 package com.commercetools.sunrise.framework.checkout.address.viewmodels;
 
-import com.commercetools.sunrise.common.models.addresses.CountryFormFieldViewModel;
-import com.commercetools.sunrise.common.models.ViewModel;
-import com.commercetools.sunrise.common.models.addresses.TitleFormFieldViewModel;
+import com.commercetools.sunrise.framework.viewmodels.forms.countries.CountryFormFieldViewModel;
+import com.commercetools.sunrise.framework.viewmodels.ViewModel;
+import com.commercetools.sunrise.framework.viewmodels.forms.titles.TitleFormFieldViewModel;
 
 public class CheckoutAddressFormSettingsViewModel extends ViewModel {
 

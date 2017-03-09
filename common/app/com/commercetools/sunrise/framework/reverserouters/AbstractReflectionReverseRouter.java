@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletionException;
 
-import static com.commercetools.sunrise.common.utils.ReflectionUtils.getClassByName;
+import static com.commercetools.sunrise.framework.reverserouters.ReflectionUtils.getClassByName;
 import static java.util.stream.Collectors.toList;
 
 public abstract class AbstractReflectionReverseRouter extends Base {

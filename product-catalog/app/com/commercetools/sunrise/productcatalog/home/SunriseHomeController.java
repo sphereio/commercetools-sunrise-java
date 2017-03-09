@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.productcatalog.home;
 
-import com.commercetools.sunrise.common.pages.PageContent;
+import com.commercetools.sunrise.framework.viewmodels.content.PageContent;
 import com.commercetools.sunrise.framework.template.engine.TemplateRenderer;
 import com.commercetools.sunrise.framework.controllers.SunriseTemplateController;
 import com.commercetools.sunrise.framework.controllers.WithQueryFlow;

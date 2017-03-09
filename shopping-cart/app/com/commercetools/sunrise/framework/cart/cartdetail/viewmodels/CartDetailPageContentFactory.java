@@ -1,8 +1,8 @@
 package com.commercetools.sunrise.framework.cart.cartdetail.viewmodels;
 
-import com.commercetools.sunrise.common.models.PageContentFactory;
-import com.commercetools.sunrise.common.utils.PageTitleResolver;
-import com.commercetools.sunrise.common.models.carts.CartViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.content.PageContentFactory;
+import com.commercetools.sunrise.framework.viewmodels.PageTitleResolver;
+import com.commercetools.sunrise.framework.viewmodels.content.carts.CartViewModelFactory;
 import io.sphere.sdk.carts.Cart;
 
 import javax.annotation.Nullable;

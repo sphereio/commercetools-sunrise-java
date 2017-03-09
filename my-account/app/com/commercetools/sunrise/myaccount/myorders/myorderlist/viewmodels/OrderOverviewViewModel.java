@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.myaccount.myorders.myorderlist.viewmodels;
 
-import com.commercetools.sunrise.common.models.ViewModel;
+import com.commercetools.sunrise.framework.viewmodels.ViewModel;
 
 public class OrderOverviewViewModel extends ViewModel {
 

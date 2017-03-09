@@ -1,7 +1,7 @@
 package com.commercetools.sunrise.productcatalog.productoverview.viewmodels;
 
 import com.commercetools.sunrise.framework.injection.RequestScoped;
-import com.commercetools.sunrise.common.models.ViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.ViewModelFactory;
 import com.commercetools.sunrise.productcatalog.productdetail.viewmodels.ProductViewModelFactory;
 import com.commercetools.sunrise.productcatalog.productdetail.ProductWithVariant;
 import io.sphere.sdk.categories.CategoryTree;
@@ -9,7 +9,7 @@ import io.sphere.sdk.categories.CategoryTree;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import static com.commercetools.sunrise.common.utils.ProductPriceUtils.hasDiscount;
+import static com.commercetools.sunrise.framework.viewmodels.content.products.ProductPriceUtils.hasDiscount;
 
 @RequestScoped
 public class ProductThumbnailViewModelFactory extends ViewModelFactory<ProductThumbnailViewModel, ProductWithVariant> {

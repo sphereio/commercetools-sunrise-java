@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.productcatalog.productoverview.viewmodels;
 
-import com.commercetools.sunrise.common.models.TitleDescriptionViewModel;
+import com.commercetools.sunrise.framework.viewmodels.TitleDescriptionViewModel;
 
 public class BannerViewModel extends TitleDescriptionViewModel {
 

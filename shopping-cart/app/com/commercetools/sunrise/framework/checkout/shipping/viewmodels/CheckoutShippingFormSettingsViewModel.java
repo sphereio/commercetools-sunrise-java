@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.framework.checkout.shipping.viewmodels;
 
-import com.commercetools.sunrise.common.models.ViewModel;
+import com.commercetools.sunrise.framework.viewmodels.ViewModel;
 
 public class CheckoutShippingFormSettingsViewModel extends ViewModel {
 

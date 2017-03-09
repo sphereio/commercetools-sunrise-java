@@ -6,12 +6,12 @@ import com.commercetools.sunrise.framework.cart.changelineitemquantity.ChangeLin
 import com.commercetools.sunrise.framework.cart.changelineitemquantity.ChangeLineItemQuantityFormData;
 import com.commercetools.sunrise.framework.cart.changelineitemquantity.SunriseChangeLineItemQuantityController;
 import com.commercetools.sunrise.framework.controllers.cache.NoCache;
-import com.commercetools.sunrise.framework.hooks.RegisteredComponents;
+import com.commercetools.sunrise.framework.components.controllers.RegisteredComponents;
 import com.commercetools.sunrise.framework.reverserouters.shoppingcart.cart.CartReverseRouter;
 import com.commercetools.sunrise.framework.template.TemplateControllerComponentsSupplier;
 import com.commercetools.sunrise.framework.template.engine.TemplateRenderer;
 import com.commercetools.sunrise.sessions.cart.CartOperationsControllerComponentSupplier;
-import com.commercetools.sunrise.framework.components.PageHeaderControllerComponentSupplier;
+import com.commercetools.sunrise.framework.components.controllers.PageHeaderControllerComponentSupplier;
 import io.sphere.sdk.carts.Cart;
 import play.data.FormFactory;
 import play.mvc.Result;

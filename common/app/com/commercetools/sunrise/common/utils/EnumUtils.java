@@ -2,7 +2,10 @@ package com.commercetools.sunrise.common.utils;
 
 import com.google.common.base.CaseFormat;
 
-public class EnumUtils {
+public final class EnumUtils {
+
+    private EnumUtils() {
+    }
 
     /**
      * Transforms a CTP enum name (e.g. BALANCE_DUE) to lower CamelCase (e.g. balanceDue).

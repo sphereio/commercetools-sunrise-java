@@ -1,7 +1,7 @@
 package com.commercetools.sunrise.myaccount.authentication;
 
-import com.commercetools.sunrise.common.models.FormPageContentFactory;
-import com.commercetools.sunrise.common.utils.PageTitleResolver;
+import com.commercetools.sunrise.framework.viewmodels.content.FormPageContentFactory;
+import com.commercetools.sunrise.framework.viewmodels.PageTitleResolver;
 import play.data.Form;
 
 public abstract class AbstractAuthenticationPageContentFactory<F> extends FormPageContentFactory<AuthenticationPageContent, Void, F> {

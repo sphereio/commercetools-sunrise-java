@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.sessions.cart;
 
-import com.commercetools.sunrise.common.models.carts.MiniCartViewModel;
+import com.commercetools.sunrise.framework.viewmodels.content.carts.MiniCartViewModel;
 import com.commercetools.sunrise.sessions.ResourceStoringOperations;
 import com.google.inject.ImplementedBy;
 import io.sphere.sdk.carts.Cart;

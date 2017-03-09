@@ -1,7 +1,7 @@
 package com.commercetools.sunrise.productcatalog.productdetail.viewmodels;
 
-import com.commercetools.sunrise.common.models.BreadcrumbLinkViewModel;
-import com.commercetools.sunrise.common.models.BreadcrumbViewModel;
+import com.commercetools.sunrise.framework.viewmodels.content.breadcrumbs.BreadcrumbLinkViewModel;
+import com.commercetools.sunrise.framework.viewmodels.content.breadcrumbs.BreadcrumbViewModel;
 import com.commercetools.sunrise.framework.reverserouters.productcatalog.product.ProductReverseRouter;
 import com.commercetools.sunrise.productcatalog.productdetail.ProductWithVariant;
 import com.commercetools.sunrise.test.TestableCall;
@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.function.Consumer;
 
-import static com.commercetools.sunrise.common.utils.JsonUtils.readCtpObject;
+import static com.commercetools.sunrise.test.JsonUtils.readCtpObject;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;

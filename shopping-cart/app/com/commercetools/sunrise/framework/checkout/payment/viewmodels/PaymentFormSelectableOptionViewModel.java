@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.framework.checkout.payment.viewmodels;
 
-import com.commercetools.sunrise.common.models.FormSelectableOptionViewModel;
+import com.commercetools.sunrise.framework.viewmodels.forms.FormSelectableOptionViewModel;
 
 public class PaymentFormSelectableOptionViewModel extends FormSelectableOptionViewModel {
 

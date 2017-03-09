@@ -1,7 +1,7 @@
 package com.commercetools.sunrise.myaccount.addressbook.addressbookdetail.viewmodels;
 
-import com.commercetools.sunrise.common.models.ViewModelFactory;
-import com.commercetools.sunrise.common.models.addresses.AddressViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.ViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.content.addresses.AddressViewModelFactory;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
 import com.commercetools.sunrise.framework.reverserouters.myaccount.addressbook.AddressBookReverseRouter;
 import io.sphere.sdk.models.Address;

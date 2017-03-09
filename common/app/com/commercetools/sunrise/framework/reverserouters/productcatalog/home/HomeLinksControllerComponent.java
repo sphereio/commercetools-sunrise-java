@@ -1,7 +1,7 @@
 package com.commercetools.sunrise.framework.reverserouters.productcatalog.home;
 
-import com.commercetools.sunrise.common.pages.AbstractLinksControllerComponent;
-import com.commercetools.sunrise.common.pages.PageMeta;
+import com.commercetools.sunrise.framework.reverserouters.AbstractLinksControllerComponent;
+import com.commercetools.sunrise.framework.viewmodels.meta.PageMeta;
 
 import javax.inject.Inject;
 

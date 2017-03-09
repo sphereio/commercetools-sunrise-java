@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.framework.template.engine.handlebars;
 
-import com.commercetools.sunrise.common.models.ViewModel;
+import com.commercetools.sunrise.framework.viewmodels.ViewModel;
 import com.github.jknack.handlebars.ValueResolver;
 import io.sphere.sdk.models.LocalizedString;
 

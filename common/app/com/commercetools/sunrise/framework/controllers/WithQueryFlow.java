@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.framework.controllers;
 
-import com.commercetools.sunrise.common.pages.PageContent;
+import com.commercetools.sunrise.framework.viewmodels.content.PageContent;
 import play.mvc.Result;
 
 import java.util.concurrent.CompletionStage;
