@@ -52,6 +52,12 @@ public interface SelectFacet<T> extends Facet<T> {
     boolean isMatchingAll();
 
     /**
+     * Gets the selected values for this facet used to filter.
+     * @return the selected values
+     */
+    List<String> getSelectedValues();
+
+    /**
      * Gets the associated term facet result for this select facet.
      * @return the term facet result, or absent if there is no associated facet result
      */
@@ -65,6 +71,14 @@ public interface SelectFacet<T> extends Facet<T> {
     @Nullable
     FacetOptionMapper getMapper();
 
+    @Override
     SelectFacet<T> withSearchResult(final PagedSearchResult<T> searchResult);
+
+    /**
+     * Gets a new instance of Facet with the same attributes as this, but with the given selected values.
+     * @param selectedValues the new selected values for this facet
+     * @return a new instance with same attributes, but with the given selected values
+     */
+    Facet<T> withSelectedValues(final List<String> selectedValues);
 
 }

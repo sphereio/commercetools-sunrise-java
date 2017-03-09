@@ -8,7 +8,9 @@ import io.sphere.sdk.categories.CategoryTree;
 import javax.inject.Inject;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 
 public class FacetedSearchSelectorListFactory {
@@ -35,6 +37,8 @@ public class FacetedSearchSelectorListFactory {
     }
 
     private List<FacetedSearchSelector> createRangeFacetSelectors() {
-        return Collections.emptyList(); // missing ranges
+        return facetedSearchConfigList.getRangeFacetedSearchConfigList().stream()
+                .map(facetConfig -> RangeFacetedSearchSelectorFactory.of(facetConfig, userContext, requestContext).create())
+                .collect(toList());
     }
 }

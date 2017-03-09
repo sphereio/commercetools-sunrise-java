@@ -53,6 +53,7 @@ public class HandlebarsFactory extends Base {
         handlebars.registerHelper("i18n", new HandlebarsI18nHelper(i18NResolver, i18nIdentifierFactory));
         handlebars.registerHelper("cms", new HandlebarsCmsHelper());
         handlebars.registerHelper("json", new HandlebarsJsonHelper<>());
+        handlebars.registerHelpers(new HandlebarsMoneyHelper());
         return handlebars;
     }
 

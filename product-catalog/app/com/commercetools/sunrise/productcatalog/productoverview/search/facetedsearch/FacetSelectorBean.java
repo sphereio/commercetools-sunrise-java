@@ -28,11 +28,11 @@ public class FacetSelectorBean extends ViewModel {
     }
 
     public boolean isSliderRangeFacet() {
-        return false; //TODO implement
+        return isFacetType(SunriseFacetType.SLIDER_RANGE);
     }
 
     public boolean isBucketRangeFacet() {
-        return false; //TODO implement
+        return isFacetType(SunriseFacetType.BUCKET_RANGE);
     }
 
     public boolean isHierarchicalSelectFacet() {
