@@ -1,7 +1,7 @@
 package com.commercetools.sunrise.productcatalog.productoverview.search;
 
-import com.commercetools.sunrise.search.pagination.AbstractPaginationViewModelFactory;
-import com.commercetools.sunrise.search.pagination.PaginationViewModel;
+import com.commercetools.sunrise.search.pagination.viewmodels.AbstractPaginationViewModelFactory;
+import com.commercetools.sunrise.search.pagination.viewmodels.PaginationViewModel;
 import io.sphere.sdk.queries.PagedResult;
 import play.mvc.Http;
 

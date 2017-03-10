@@ -3,6 +3,8 @@ package com.commercetools.sunrise.search.pagination;
 import com.commercetools.sunrise.framework.viewmodels.forms.QueryStringUtils;
 import com.commercetools.sunrise.search.pagination.products.ProductSearchPaginationSettings;
 import com.commercetools.sunrise.search.pagination.products.ProductPaginationViewModelFactory;
+import com.commercetools.sunrise.search.pagination.viewmodels.PaginationLinkViewModel;
+import com.commercetools.sunrise.search.pagination.viewmodels.PaginationViewModel;
 import io.sphere.sdk.products.ProductProjection;
 import io.sphere.sdk.queries.PagedResult;
 import org.junit.Test;

@@ -1,9 +1,8 @@
 package com.commercetools.sunrise.productcatalog.productoverview.search;
 
-import com.commercetools.sunrise.search.pagination.AbstractEntriesPerPageSelectorViewModelFactory;
-import com.commercetools.sunrise.search.pagination.EntriesPerPageFormSelectableOptionViewModelFactory;
-import com.commercetools.sunrise.search.pagination.EntriesPerPageFormSettings;
-import com.commercetools.sunrise.search.pagination.EntriesPerPageSelectorViewModel;
+import com.commercetools.sunrise.search.pagination.viewmodels.AbstractEntriesPerPageSelectorViewModelFactory;
+import com.commercetools.sunrise.search.pagination.viewmodels.EntriesPerPageFormSelectableOptionViewModelFactory;
+import com.commercetools.sunrise.search.pagination.viewmodels.EntriesPerPageSelectorViewModel;
 import io.sphere.sdk.queries.PagedResult;
 import play.mvc.Http;
 

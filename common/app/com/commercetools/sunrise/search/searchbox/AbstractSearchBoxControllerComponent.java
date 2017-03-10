@@ -3,6 +3,7 @@ package com.commercetools.sunrise.search.searchbox;
 import com.commercetools.sunrise.framework.components.controllers.ControllerComponent;
 import com.commercetools.sunrise.framework.hooks.consumers.PageDataReadyHook;
 import com.commercetools.sunrise.framework.viewmodels.PageData;
+import com.commercetools.sunrise.search.searchbox.viewmodels.WithSearchBoxViewModel;
 import io.sphere.sdk.models.Base;
 import io.sphere.sdk.models.LocalizedStringEntry;
 import play.mvc.Http;

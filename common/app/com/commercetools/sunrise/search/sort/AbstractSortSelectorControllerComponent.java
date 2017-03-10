@@ -3,6 +3,8 @@ package com.commercetools.sunrise.search.sort;
 import com.commercetools.sunrise.framework.components.controllers.ControllerComponent;
 import com.commercetools.sunrise.framework.hooks.consumers.PageDataReadyHook;
 import com.commercetools.sunrise.framework.viewmodels.PageData;
+import com.commercetools.sunrise.search.sort.viewmodels.AbstractSortSelectorViewModelFactory;
+import com.commercetools.sunrise.search.sort.viewmodels.WithSortSelectorViewModel;
 import io.sphere.sdk.models.Base;
 import io.sphere.sdk.queries.PagedResult;
 import play.mvc.Http;

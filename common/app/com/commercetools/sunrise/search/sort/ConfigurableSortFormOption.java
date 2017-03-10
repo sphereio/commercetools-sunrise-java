@@ -17,16 +17,16 @@ final class ConfigurableSortFormOption extends SortFormOptionImpl {
     private static final String OPTION_DEFAULT_ATTR = "default";
 
     ConfigurableSortFormOption(final Configuration configuration) {
-        super(label(configuration), value(configuration), expressions(configuration), isDefault(configuration));
+        super(fieldLabel(configuration), fieldValue(configuration), expressions(configuration), isDefault(configuration));
     }
 
-    private static String label(final Configuration configuration) {
+    private static String fieldLabel(final Configuration configuration) {
         return configuration.getString(OPTION_LABEL_ATTR, "");
     }
 
-    private static String value(final Configuration configuration) {
+    private static String fieldValue(final Configuration configuration) {
         return Optional.ofNullable(configuration.getString(OPTION_VALUE_ATTR))
-                .orElseThrow(() -> new SunriseConfigurationException("Missing sort value", OPTION_VALUE_ATTR));
+                .orElseThrow(() -> new SunriseConfigurationException("Missing sort value", OPTION_VALUE_ATTR, configuration));
     }
 
     private static List<String> expressions(final Configuration configuration) {

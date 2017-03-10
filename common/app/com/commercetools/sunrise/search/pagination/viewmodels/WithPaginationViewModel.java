@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.search.pagination;
+package com.commercetools.sunrise.search.pagination.viewmodels;
 
 public interface WithPaginationViewModel {
 

@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.search.searchbox;
+package com.commercetools.sunrise.search.searchbox.viewmodels;
 
 public interface WithSearchBoxViewModel {
 

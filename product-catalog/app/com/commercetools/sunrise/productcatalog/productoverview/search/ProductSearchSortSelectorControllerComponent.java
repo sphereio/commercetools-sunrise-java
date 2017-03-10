@@ -18,13 +18,13 @@ import java.util.concurrent.CompletionStage;
 import static java.util.concurrent.CompletableFuture.completedFuture;
 import static java.util.stream.Collectors.toList;
 
-public final class ProductSortSelectorControllerComponent extends AbstractSortSelectorControllerComponent
+public final class ProductSearchSortSelectorControllerComponent extends AbstractSortSelectorControllerComponent
         implements ControllerComponent, ProductProjectionSearchHook, ProductProjectionPagedSearchResultLoadedHook {
 
     @Inject
-    public ProductSortSelectorControllerComponent(final ProductSearchSortFormSettings settings,
-                                                  final ProductSortSelectorViewModelFactory sortSelectorViewModelFactory,
-                                                  final Http.Request httpRequest, final Locale locale) {
+    public ProductSearchSortSelectorControllerComponent(final ProductSearchSortFormSettings settings,
+                                                        final ProductSearchSortSelectorViewModelFactory sortSelectorViewModelFactory,
+                                                        final Http.Request httpRequest, final Locale locale) {
         super(settings, sortSelectorViewModelFactory, httpRequest, locale);
     }
 

@@ -1,5 +1,7 @@
 package com.commercetools.sunrise.framework;
 
+import play.Configuration;
+
 public class SunriseConfigurationException extends RuntimeException {
 
     public SunriseConfigurationException(final String message) {
@@ -12,6 +14,10 @@ public class SunriseConfigurationException extends RuntimeException {
 
     public SunriseConfigurationException(final String message, final String configurationKey, final String configurationPath) {
         super(generateMessage(message, configurationKey + " inside " + configurationPath));
+    }
+
+    public SunriseConfigurationException(final String message, final String configurationKey, final Configuration configuration) {
+        super(generateMessage(message, configurationKey + " inside " + configuration));
     }
 
     public SunriseConfigurationException(final String message, final Throwable cause) {

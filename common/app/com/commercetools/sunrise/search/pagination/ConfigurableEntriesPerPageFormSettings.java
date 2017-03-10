@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.search.sort;
+package com.commercetools.sunrise.search.pagination;
 
 import play.Configuration;
 
@@ -7,13 +7,13 @@ import java.util.List;
 import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 
-public abstract class ConfigurableSortFormSettings extends SortFormSettingsImpl {
+public abstract class ConfigurableEntriesPerPageFormSettings extends EntriesPerPageFormSettingsImpl {
 
     private static final String CONFIG_KEY = "key";
-    private static final String DEFAULT_KEY = "sort";
+    private static final String DEFAULT_KEY = "pp";
     private static final String CONFIG_OPTIONS = "options";
 
-    protected ConfigurableSortFormSettings(final Configuration configuration) {
+    protected ConfigurableEntriesPerPageFormSettings(final Configuration configuration) {
         super(key(configuration), options(configuration));
     }
 
@@ -21,9 +21,9 @@ public abstract class ConfigurableSortFormSettings extends SortFormSettingsImpl 
         return configuration.getString(CONFIG_KEY, DEFAULT_KEY);
     }
 
-    private static List<SortFormOption> options(final Configuration configuration) {
+    private static List<EntriesPerPageFormOption> options(final Configuration configuration) {
         return configuration.getConfigList(CONFIG_OPTIONS, emptyList()).stream()
-                .map(ConfigurableSortFormOption::new)
+                .map(ConfigurableEntriesPerPageFormOption::new)
                 .collect(toList());
     }
 }

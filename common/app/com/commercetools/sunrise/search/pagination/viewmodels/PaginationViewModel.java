@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.search.pagination;
+package com.commercetools.sunrise.search.pagination.viewmodels;
 
 import com.commercetools.sunrise.framework.viewmodels.ViewModel;
 

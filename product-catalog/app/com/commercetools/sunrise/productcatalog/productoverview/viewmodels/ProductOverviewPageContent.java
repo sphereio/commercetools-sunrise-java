@@ -5,12 +5,12 @@ import com.commercetools.sunrise.framework.viewmodels.TitleDescriptionViewModel;
 import com.commercetools.sunrise.framework.viewmodels.content.PageContent;
 import com.commercetools.sunrise.search.facetedsearch.old.FacetSelectorListViewModel;
 import com.commercetools.sunrise.search.facetedsearch.WithFacetedSearchViewModel;
-import com.commercetools.sunrise.search.pagination.PaginationViewModel;
-import com.commercetools.sunrise.search.pagination.EntriesPerPageSelectorViewModel;
-import com.commercetools.sunrise.search.pagination.WithPaginationViewModel;
-import com.commercetools.sunrise.search.searchbox.WithSearchBoxViewModel;
-import com.commercetools.sunrise.search.sort.SortSelectorViewModel;
-import com.commercetools.sunrise.search.sort.WithSortSelectorViewModel;
+import com.commercetools.sunrise.search.pagination.viewmodels.PaginationViewModel;
+import com.commercetools.sunrise.search.pagination.viewmodels.EntriesPerPageSelectorViewModel;
+import com.commercetools.sunrise.search.pagination.viewmodels.WithPaginationViewModel;
+import com.commercetools.sunrise.search.searchbox.viewmodels.WithSearchBoxViewModel;
+import com.commercetools.sunrise.search.sort.viewmodels.SortSelectorViewModel;
+import com.commercetools.sunrise.search.sort.viewmodels.WithSortSelectorViewModel;
 
 public class ProductOverviewPageContent extends PageContent implements WithPaginationViewModel, WithSearchBoxViewModel, WithSortSelectorViewModel, WithFacetedSearchViewModel {
 

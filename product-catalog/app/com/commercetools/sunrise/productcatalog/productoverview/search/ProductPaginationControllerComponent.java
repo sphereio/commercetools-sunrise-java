@@ -18,11 +18,12 @@ public final class ProductPaginationControllerComponent extends AbstractPaginati
         implements ControllerComponent, ProductProjectionSearchHook, ProductProjectionPagedSearchResultLoadedHook {
 
     @Inject
-    ProductPaginationControllerComponent(final Http.Request httpRequest, final ProductPaginationSettings paginationSettings,
-                                         final ProductsPerPageFormSettings elementsPerPageFormSettings,
-                                         final ProductPaginationViewModelFactory paginationViewModelFactory,
-                                         final ProductsPerPageSelectorViewModelFactory elementsPerPageSelectorViewModelFactory) {
-        super(paginationSettings, elementsPerPageFormSettings, paginationViewModelFactory, elementsPerPageSelectorViewModelFactory, httpRequest);
+    public ProductPaginationControllerComponent(final ProductPaginationSettings paginationSettings,
+                                                final ProductsPerPageFormSettings entriesPerPageFormSettings,
+                                                final ProductPaginationViewModelFactory paginationViewModelFactory,
+                                                final ProductsPerPageSelectorViewModelFactory entriesPerPageSelectorViewModelFactory,
+                                                final Http.Request httpRequest) {
+        super(paginationSettings, entriesPerPageFormSettings, paginationViewModelFactory, entriesPerPageSelectorViewModelFactory, httpRequest);
     }
 
     @Override

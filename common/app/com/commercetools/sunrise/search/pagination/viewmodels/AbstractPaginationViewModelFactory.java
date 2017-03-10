@@ -1,6 +1,7 @@
-package com.commercetools.sunrise.search.pagination;
+package com.commercetools.sunrise.search.pagination.viewmodels;
 
 import com.commercetools.sunrise.framework.viewmodels.ViewModelFactory;
+import com.commercetools.sunrise.search.pagination.PaginationSettings;
 import io.sphere.sdk.queries.PagedResult;
 import play.mvc.Http;
 

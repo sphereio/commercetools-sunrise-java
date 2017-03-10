@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.search.sort;
+package com.commercetools.sunrise.search.sort.viewmodels;
 
 public interface WithSortSelectorViewModel {
 

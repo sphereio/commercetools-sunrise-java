@@ -1,6 +1,8 @@
-package com.commercetools.sunrise.search.sort;
+package com.commercetools.sunrise.search.sort.viewmodels;
 
 import com.commercetools.sunrise.framework.viewmodels.ViewModelFactory;
+import com.commercetools.sunrise.search.sort.SortFormOption;
+import com.commercetools.sunrise.search.sort.SortFormSettings;
 import io.sphere.sdk.queries.PagedResult;
 import play.mvc.Http;
 

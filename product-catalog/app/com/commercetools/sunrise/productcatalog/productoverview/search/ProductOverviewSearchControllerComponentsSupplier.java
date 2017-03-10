@@ -8,11 +8,11 @@ import javax.inject.Inject;
 public class ProductOverviewSearchControllerComponentsSupplier extends AbstractControllerComponentSupplier {
 
     @Inject
-    public ProductOverviewSearchControllerComponentsSupplier(final ProductSortSelectorControllerComponent productSortSelectorControllerComponent,
+    public ProductOverviewSearchControllerComponentsSupplier(final ProductSearchSortSelectorControllerComponent productSearchSortSelectorControllerComponent,
                                                              final ProductPaginationControllerComponent productSearchPaginationControllerComponent,
                                                              final ProductSearchBoxControllerComponent productSearchBoxControllerComponent,
                                                              final FacetedSearchControllerComponent facetedSearchControllerComponent) {
-        add(productSortSelectorControllerComponent);
+        add(productSearchSortSelectorControllerComponent);
         add(productSearchPaginationControllerComponent);
         add(productSearchBoxControllerComponent);
         add(facetedSearchControllerComponent);
