@@ -16,12 +16,13 @@ import java.util.Locale;
 import java.util.concurrent.CompletionStage;
 
 import static java.util.concurrent.CompletableFuture.completedFuture;
+import static java.util.stream.Collectors.toList;
 
-public final class ProductSortSelectorControllerComponent extends AbstractSortSelectorControllerComponent<SortExpression<ProductProjection>>
+public final class ProductSortSelectorControllerComponent extends AbstractSortSelectorControllerComponent
         implements ControllerComponent, ProductProjectionSearchHook, ProductProjectionPagedSearchResultLoadedHook {
 
     @Inject
-    public ProductSortSelectorControllerComponent(final ProductSortFormSettings settings,
+    public ProductSortSelectorControllerComponent(final ProductSearchSortFormSettings settings,
                                                   final ProductSortSelectorViewModelFactory sortSelectorViewModelFactory,
                                                   final Http.Request httpRequest, final Locale locale) {
         super(settings, sortSelectorViewModelFactory, httpRequest, locale);
@@ -29,9 +30,11 @@ public final class ProductSortSelectorControllerComponent extends AbstractSortSe
 
     @Override
     public ProductProjectionSearch onProductProjectionSearch(final ProductProjectionSearch search) {
-        final List<SortExpression<ProductProjection>> selectedSortExpressions = getSelectedSortExpressions();
-        if (!selectedSortExpressions.isEmpty()) {
-            return search.plusSort(selectedSortExpressions);
+        final List<SortExpression<ProductProjection>> expressions = getSelectedSortExpressions().stream()
+                .map(SortExpression::<ProductProjection>of)
+                .collect(toList());
+        if (!expressions.isEmpty()) {
+            return search.plusSort(expressions);
         } else {
             return search;
         }

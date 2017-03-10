@@ -1,28 +1,13 @@
 package com.commercetools.sunrise.framework.viewmodels.forms;
 
-import com.commercetools.sunrise.framework.SunriseModel;
+public interface FormSettings<T> extends WithFormFieldName<T> {
 
-public abstract class FormSettings<T> extends SunriseModel implements WithFormFieldName<T> {
+    String getFieldName();
 
-    private final String fieldName;
-    private final T defaultValue;
+    T getDefaultValue();
 
-    protected FormSettings(final String fieldName, final T defaultValue) {
-        this.fieldName = fieldName;
-        this.defaultValue = defaultValue;
-    }
+    T mapToValue(final String valueAsString);
 
-    @Override
-    public String getFieldName() {
-        return fieldName;
-    }
-
-    public T getDefaultValue() {
-        return defaultValue;
-    }
-
-    public abstract T mapToValue(final String valueAsString);
-
-    public abstract boolean isValidValue(final T value);
+    boolean isValidValue(final T value);
 }
 

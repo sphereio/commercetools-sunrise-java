@@ -1,6 +1,7 @@
 package com.commercetools.sunrise.search.facetedsearch;
 
 import com.commercetools.sunrise.framework.SunriseConfigurationException;
+import com.commercetools.sunrise.framework.viewmodels.forms.AbstractFormSettingsWithOptions;
 import com.commercetools.sunrise.framework.viewmodels.forms.FormSettingsWithOptions;
 import com.commercetools.sunrise.search.sort.SortFormOption;
 import io.sphere.sdk.products.ProductProjection;
@@ -18,7 +19,7 @@ import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 
 @Singleton
-public final class SelectFacetedSearchFormSettings extends FormSettingsWithOptions<SortFormOption> {
+public final class SelectFacetedSearchFormSettings extends AbstractFormSettingsWithOptions<SortFormOption> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SelectFacetedSearchFormSettings.class);
 

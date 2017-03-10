@@ -1,7 +1,7 @@
 package com.commercetools.sunrise.search.pagination;
 
 import com.commercetools.sunrise.framework.SunriseConfigurationException;
-import com.commercetools.sunrise.framework.viewmodels.forms.FormSettingsWithOptions;
+import com.commercetools.sunrise.framework.viewmodels.forms.AbstractFormSettingsWithOptions;
 import play.Configuration;
 
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.Optional;
 import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 
-public class EntriesPerPageFormSettings extends FormSettingsWithOptions<EntriesPerPageFormOption> {
+public class EntriesPerPageFormSettings extends AbstractFormSettingsWithOptions<EntriesPerPageFormOption> {
 
     private static final int MIN_PAGE_SIZE = 0;
     private static final int MAX_PAGE_SIZE = 500;

@@ -15,13 +15,13 @@ public interface FacetOption {
      * Gets the label for this facet option.
      * @return the option label
      */
-    String getLabel();
+    String getLabel(); //
 
     /**
      * Gets the value for this facet option.
      * @return the option value
      */
-    String getValue();
+    String getValue(); //
 
     /**
      * Gets the amount of results present in this facet option.

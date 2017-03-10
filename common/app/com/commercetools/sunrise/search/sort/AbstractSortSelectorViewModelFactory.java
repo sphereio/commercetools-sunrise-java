@@ -9,14 +9,14 @@ import javax.annotation.Nullable;
 import static com.commercetools.sunrise.framework.viewmodels.forms.QueryStringUtils.findSelectedValueFromQueryString;
 import static java.util.stream.Collectors.toList;
 
-public abstract class AbstractSortSelectorViewModelFactory<T> extends ViewModelFactory<SortSelectorViewModel, PagedResult<?>> {
+public abstract class AbstractSortSelectorViewModelFactory extends ViewModelFactory<SortSelectorViewModel, PagedResult<?>> {
 
-    private final SortFormSettings<T> settings;
+    private final SortFormSettings settings;
     private final SortFormSelectableOptionViewModelFactory sortFormSelectableOptionViewModelFactory;
     @Nullable
     private final String selectedOptionValue;
 
-    protected AbstractSortSelectorViewModelFactory(final SortFormSettings<T> settings,
+    protected AbstractSortSelectorViewModelFactory(final SortFormSettings settings,
                                                    final SortFormSelectableOptionViewModelFactory sortFormSelectableOptionViewModelFactory,
                                                    final Http.Request httpRequest) {
         this.selectedOptionValue = findSelectedValueFromQueryString(settings, httpRequest)
@@ -31,7 +31,7 @@ public abstract class AbstractSortSelectorViewModelFactory<T> extends ViewModelF
         return selectedOptionValue;
     }
 
-    protected final SortFormSettings<T> getSettings() {
+    protected final SortFormSettings getSettings() {
         return settings;
     }
 

@@ -1,9 +1,9 @@
 package com.commercetools.sunrise.search.pagination;
 
-import com.commercetools.sunrise.framework.viewmodels.forms.FormSettings;
+import com.commercetools.sunrise.framework.viewmodels.forms.AbstractFormSettings;
 import play.Configuration;
 
-public class PaginationSettings extends FormSettings<Integer> {
+public class PaginationSettings extends AbstractFormSettings<Integer> {
 
     private static final String CONFIG_KEY = "key";
     private static final String DEFAULT_KEY = "page";

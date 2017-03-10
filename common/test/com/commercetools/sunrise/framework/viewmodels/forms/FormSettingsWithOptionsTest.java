@@ -53,14 +53,14 @@ public class FormSettingsWithOptionsTest {
         return new TestableFormOption("Option " + num, "option-" + num, num, isDefault);
     }
 
-    private static class TestableFormSettingsWithOptions extends FormSettingsWithOptions<TestableFormOption> {
+    private static class TestableFormSettingsWithOptions extends AbstractFormSettingsWithOptions<TestableFormOption> {
 
         TestableFormSettingsWithOptions(final String fieldName, final List<TestableFormOption> options) {
             super(fieldName, options);
         }
     }
 
-    private static class TestableFormOption extends FormOption<Integer> {
+    private static class TestableFormOption extends AbstractFormOption<Integer> {
 
         TestableFormOption(final String fieldLabel, final String fieldValue, final Integer value, final boolean isDefault) {
             super(fieldLabel, fieldValue, value, isDefault);

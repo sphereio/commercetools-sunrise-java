@@ -1,8 +1,8 @@
 package com.commercetools.sunrise.search.pagination;
 
-import com.commercetools.sunrise.framework.viewmodels.forms.FormOption;
+import com.commercetools.sunrise.framework.viewmodels.forms.AbstractFormOption;
 
-public final class EntriesPerPageFormOption extends FormOption<Integer> {
+public final class EntriesPerPageFormOption extends AbstractFormOption<Integer> {
 
     private EntriesPerPageFormOption(final String fieldLabel, final String fieldValue, final Integer value, final boolean isDefault) {
         super(fieldLabel, fieldValue, value, isDefault);

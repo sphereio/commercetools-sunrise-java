@@ -1,9 +1,9 @@
 package com.commercetools.sunrise.search.searchbox;
 
-import com.commercetools.sunrise.framework.viewmodels.forms.FormSettings;
+import com.commercetools.sunrise.framework.viewmodels.forms.AbstractFormSettings;
 import play.Configuration;
 
-public class SearchBoxSettings extends FormSettings<String> {
+public class SearchBoxSettings extends AbstractFormSettings<String> {
 
     private static final String CONFIG_KEY = "key";
     private static final String DEFAULT_KEY = "q";

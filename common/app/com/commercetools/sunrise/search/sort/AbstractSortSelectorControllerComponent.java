@@ -14,16 +14,16 @@ import java.util.Locale;
 import static com.commercetools.sunrise.framework.viewmodels.forms.QueryStringUtils.findSelectedValueFromQueryString;
 import static java.util.Collections.emptyList;
 
-public abstract class AbstractSortSelectorControllerComponent<T> extends Base implements ControllerComponent, PageDataReadyHook {
+public abstract class AbstractSortSelectorControllerComponent extends Base implements ControllerComponent, PageDataReadyHook {
 
-    private final List<T> selectedSortExpressions;
-    private final AbstractSortSelectorViewModelFactory<T> sortSelectorViewModelFactory;
+    private final List<String> selectedSortExpressions;
+    private final AbstractSortSelectorViewModelFactory sortSelectorViewModelFactory;
 
     @Nullable
     private PagedResult<?> pagedResult;
 
-    protected AbstractSortSelectorControllerComponent(final SortFormSettings<T> settings,
-                                                      final AbstractSortSelectorViewModelFactory<T> sortSelectorViewModelFactory,
+    protected AbstractSortSelectorControllerComponent(final SortFormSettings settings,
+                                                      final AbstractSortSelectorViewModelFactory sortSelectorViewModelFactory,
                                                       final Http.Request httpRequest, final Locale locale) {
         this.selectedSortExpressions = findSelectedValueFromQueryString(settings, httpRequest)
                 .map(option -> option.getLocalizedValue(locale))
@@ -31,16 +31,16 @@ public abstract class AbstractSortSelectorControllerComponent<T> extends Base im
         this.sortSelectorViewModelFactory = sortSelectorViewModelFactory;
     }
 
-    public final List<T> getSelectedSortExpressions() {
+    protected final List<String> getSelectedSortExpressions() {
         return selectedSortExpressions;
     }
 
     @Nullable
-    public final PagedResult<?> getPagedResult() {
+    protected final PagedResult<?> getPagedResult() {
         return pagedResult;
     }
 
-    public final void setPagedResult(@Nullable final PagedResult<?> pagedResult) {
+    protected final void setPagedResult(@Nullable final PagedResult<?> pagedResult) {
         this.pagedResult = pagedResult;
     }
 

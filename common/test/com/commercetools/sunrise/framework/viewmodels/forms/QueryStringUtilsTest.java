@@ -197,7 +197,7 @@ public class QueryStringUtilsTest {
         return new TestableFormOption("Option " + num, String.valueOf(num), num, isDefault);
     }
 
-    private static class TestableFormSettings extends FormSettings<Integer> {
+    private static class TestableFormSettings extends AbstractFormSettings<Integer> {
 
         TestableFormSettings(final String fieldName, final Integer defaultValue) {
             super(fieldName, defaultValue);
@@ -218,14 +218,14 @@ public class QueryStringUtilsTest {
         }
     }
 
-    private static class TestableFormSettingsWithOptions extends FormSettingsWithOptions<TestableFormOption> {
+    private static class TestableFormSettingsWithOptions extends AbstractFormSettingsWithOptions<TestableFormOption> {
 
         TestableFormSettingsWithOptions(final String fieldName, final List<TestableFormOption> options) {
             super(fieldName, options);
         }
     }
 
-    private static class TestableFormOption extends FormOption<Integer> {
+    private static class TestableFormOption extends AbstractFormOption<Integer> {
 
         TestableFormOption(final String fieldLabel, final String fieldValue, final Integer value, final boolean isDefault) {
             super(fieldLabel, fieldValue, value, isDefault);

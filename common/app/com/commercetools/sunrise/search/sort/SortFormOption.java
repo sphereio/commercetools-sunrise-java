@@ -4,53 +4,36 @@ import com.commercetools.sunrise.framework.viewmodels.forms.FormOption;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.function.BiFunction;
 
+import static com.commercetools.sunrise.search.SearchUtils.localizeExpression;
 import static java.util.stream.Collectors.toList;
 
-public class SortFormOption<T> extends FormOption<List<T>> {
-
-    private final BiFunction<T, Locale, T> localizationMapper;
-
-    protected SortFormOption(final String fieldLabel, final String fieldValue, final List<T> expressions,
-                             final boolean isDefault, final BiFunction<T, Locale, T> localizationMapper) {
-        super(fieldLabel, fieldValue, expressions, isDefault);
-        this.localizationMapper = localizationMapper;
-    }
-
-    @Override
-    public String getFieldLabel() {
-        return super.getFieldLabel();
-    }
-
-    @Override
-    public String getFieldValue() {
-        return super.getFieldValue();
-    }
+/**
+ * An option to sort the results from a query or search on some resource endpoint.
+ */
+public interface SortFormOption extends FormOption<List<String>> {
 
     /**
-     * Gets the sort model associated with this option, representing the attribute path and sorting direction.
+     * Gets the sort expressions associated with this option, representing the attribute path and sorting direction.
      * The expressions might contain {@code {{locale}}}, which should be replaced with the current locale before using them.
-     * @return the sort model for this option
+     * @return the sort expression for this option
      */
     @Override
-    public List<T> getValue() {
-        return super.getValue();
-    }
+    List<String> getValue();
 
-    @Override
-    public boolean isDefault() {
-        return super.isDefault();
-    }
-
-    public List<T> getLocalizedValue(final Locale locale) {
+    /**
+     * Gets the localized expressions associated with this option, representing the attribute path and sorting direction.
+     * These expressions are ready to be sent to the CTP platform.
+     * @param locale the current user's locale
+     * @return the localized sort expression for this option
+     */
+    default List<String> getLocalizedValue(final Locale locale) {
         return getValue().stream()
-                .map(expr -> localizationMapper.apply(expr, locale))
+                .map(expr -> localizeExpression(expr, locale))
                 .collect(toList());
     }
 
-    public static <T> SortFormOption<T> of(final String fieldLabel, final String fieldValue, final List<T> expressions,
-                                           final boolean isDefault, final BiFunction<T, Locale, T> localizationMapper) {
-        return new SortFormOption<>(fieldLabel, fieldValue, expressions, isDefault, localizationMapper);
+    static SortFormOption of(final String fieldLabel, final String fieldValue, final List<String> expressions, final boolean isDefault) {
+        return new SortFormOptionImpl(fieldLabel, fieldValue, expressions, isDefault);
     }
 }
