@@ -7,9 +7,9 @@ import static java.util.stream.Collectors.toList;
 /**
  * Mapper that sorts the options according to the label alphabetical order.
  */
-public class AlphabeticallySortedFacetOptionMapper implements FacetOptionMapper {
+public class AlphabeticallySortedTermFacetMapper implements TermFacetsMapper2 {
 
-    private AlphabeticallySortedFacetOptionMapper() {
+    private AlphabeticallySortedTermFacetMapper() {
     }
 
     @Override
@@ -19,7 +19,7 @@ public class AlphabeticallySortedFacetOptionMapper implements FacetOptionMapper 
                 .collect(toList());
     }
 
-    public static AlphabeticallySortedFacetOptionMapper of() {
-        return new AlphabeticallySortedFacetOptionMapper();
+    public static AlphabeticallySortedTermFacetMapper of() {
+        return new AlphabeticallySortedTermFacetMapper();
     }
 }

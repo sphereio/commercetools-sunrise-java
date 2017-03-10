@@ -3,9 +3,9 @@ package com.commercetools.sunrise.search.facetedsearch.old;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
 import io.sphere.sdk.categories.Category;
 import io.sphere.sdk.categories.CategoryTree;
-import io.sphere.sdk.facets.CategoryTreeFacetOptionMapper;
+import io.sphere.sdk.facets.CategoryTreeTermFacetMapper;
 import io.sphere.sdk.facets.Facet;
-import io.sphere.sdk.facets.FacetOptionMapper;
+import io.sphere.sdk.facets.TermFacetsMapper2;
 import io.sphere.sdk.models.Base;
 import io.sphere.sdk.products.ProductProjection;
 import io.sphere.sdk.search.model.FacetedSearchSearchModel;
@@ -53,11 +53,11 @@ public class SelectFacetedSearchSelectorFactory extends Base {
     }
 
     @Nullable
-    private FacetOptionMapper configureMapper(final SelectFacetedSearchConfig facetConfig, final List<Category> selectedCategories) {
-        final FacetOptionMapper mapper = facetConfig.getFacetBuilder().getMapper();
-        if (mapper != null && mapper instanceof CategoryTreeFacetOptionMapper) {
+    private TermFacetsMapper2 configureMapper(final SelectFacetedSearchConfig facetConfig, final List<Category> selectedCategories) {
+        final TermFacetsMapper2 mapper = facetConfig.getFacetBuilder().getMapper();
+        if (mapper != null && mapper instanceof CategoryTreeTermFacetMapper) {
             final CategoryTree categoriesInFacet = getCategoriesInFacet(selectedCategories);
-            return ((CategoryTreeFacetOptionMapper) mapper).withCategories(selectedCategories, categoriesInFacet, singletonList(locale));
+            return ((CategoryTreeTermFacetMapper) mapper).withCategories(selectedCategories, categoriesInFacet, singletonList(locale));
         }
         return mapper;
     }
@@ -69,8 +69,8 @@ public class SelectFacetedSearchSelectorFactory extends Base {
     }
 
     private List<String> getSelectedValues(final SelectFacetedSearchConfig facetConfig, final List<Category> selectedCategories) {
-        final FacetOptionMapper mapper = facetConfig.getFacetBuilder().getMapper();
-        if (mapper != null && mapper instanceof CategoryTreeFacetOptionMapper) {
+        final TermFacetsMapper2 mapper = facetConfig.getFacetBuilder().getMapper();
+        if (mapper != null && mapper instanceof CategoryTreeTermFacetMapper) {
             return selectedCategories.stream()
                     .flatMap(category -> categoryTree.getSubtree(singletonList(category)).getAllAsFlatList().stream())
                     .map(Category::getId)

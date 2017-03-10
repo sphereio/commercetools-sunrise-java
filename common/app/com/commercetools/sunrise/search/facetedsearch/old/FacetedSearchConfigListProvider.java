@@ -101,7 +101,7 @@ public final class FacetedSearchConfigListProvider implements Provider<FacetedSe
         final boolean multiSelect = facetConfig.getBoolean(MULTI_SELECT_ATTR, true);
         final Long limit = facetConfig.getLong(LIMIT_ATTR);
         final Long threshold = facetConfig.getLong(THRESHOLD_ATTR);
-        final FacetOptionMapper mapper = getMapper(facetConfig).orElse(null);
+        final TermFacetsMapper2 mapper = getMapper(facetConfig).orElse(null);
         return initializeSelectFacet(type, key, label, attrPath, countHidden, matchingAll, multiSelect, limit, threshold, mapper);
     }
 
@@ -138,7 +138,7 @@ public final class FacetedSearchConfigListProvider implements Provider<FacetedSe
         return result;
     }
 
-    private static Optional<FacetOptionMapper> getMapper(final Configuration facetConfig) {
+    private static Optional<TermFacetsMapper2> getMapper(final Configuration facetConfig) {
         return Optional.ofNullable(facetConfig.getConfig(MAPPER_ATTR))
                 .map(config -> {
                     final String type = config.getString(MAPPER_TYPE_ATTR, "");
@@ -148,14 +148,14 @@ public final class FacetedSearchConfigListProvider implements Provider<FacetedSe
     }
 
     @Nullable
-    private static FacetOptionMapper initializeMapper(final String type, final List<String> values) {
+    private static TermFacetsMapper2 initializeMapper(final String type, final List<String> values) {
         switch (type) {
             case "category_tree":
-                return CategoryTreeFacetOptionMapper.ofEmptyTree();
+                return CategoryTreeTermFacetMapper.ofEmptyTree();
             case "alphabetically_sorted":
-                return AlphabeticallySortedFacetOptionMapper.of();
+                return AlphabeticallySortedTermFacetMapper.of();
             case "custom_sorted":
-                return CustomSortedFacetOptionMapper.of(values);
+                return CustomSortedTermFacetMapper.of(values);
             default:
                 return null;
         }
@@ -165,7 +165,7 @@ public final class FacetedSearchConfigListProvider implements Provider<FacetedSe
                                                                                final String label, final String attrPath,
                                                                                final boolean countHidden, final boolean matchingAll,
                                                                                final boolean multiSelect, @Nullable final Long limit,
-                                                                               @Nullable final Long threshold, @Nullable final FacetOptionMapper mapper) {
+                                                                               @Nullable final Long threshold, @Nullable final TermFacetsMapper2 mapper) {
         final FacetedSearchSearchModel<ProductProjection> searchModel = TermFacetedSearchSearchModel.of(attrPath);
         return SelectFacetBuilder.of(key, searchModel)
                 .countHidden(countHidden)

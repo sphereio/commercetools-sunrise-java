@@ -18,14 +18,14 @@ import static java.util.stream.Collectors.toList;
  * The IDs are then replaced by the Category name, in a language according to the provided locales.
  * Any facet option that is not represented in the list of categories or doesn't contain a name for the locales, is discarded.
  */
-public class CategoryTreeFacetOptionMapper implements FacetOptionMapper {
+public class CategoryTreeTermFacetMapper implements TermFacetsMapper2 {
 
     private final List<Category> selectedCategories;
     private final CategoryTree categoryTree;
     private final List<Locale> locales;
 
-    private CategoryTreeFacetOptionMapper(final List<Category> selectedCategories,
-                                          final CategoryTree categoryTree, final List<Locale> locales) {
+    private CategoryTreeTermFacetMapper(final List<Category> selectedCategories,
+                                        final CategoryTree categoryTree, final List<Locale> locales) {
         this.selectedCategories = selectedCategories;
         this.categoryTree = categoryTree;
         this.locales = locales;
@@ -40,22 +40,22 @@ public class CategoryTreeFacetOptionMapper implements FacetOptionMapper {
                 .collect(toList());
     }
 
-    public CategoryTreeFacetOptionMapper withCategories(final List<Category> selectedCategories,
-                                                        final CategoryTree categoryTree, final List<Locale> locales) {
-        return new CategoryTreeFacetOptionMapper(selectedCategories, categoryTree, locales);
+    public CategoryTreeTermFacetMapper withCategories(final List<Category> selectedCategories,
+                                                      final CategoryTree categoryTree, final List<Locale> locales) {
+        return new CategoryTreeTermFacetMapper(selectedCategories, categoryTree, locales);
     }
 
-    public static CategoryTreeFacetOptionMapper of(final List<Category> selectedCategories,
-                                                   final CategoryTree subcategoryTree, final List<Locale> locales) {
-        return new CategoryTreeFacetOptionMapper(selectedCategories, subcategoryTree, locales);
+    public static CategoryTreeTermFacetMapper of(final List<Category> selectedCategories,
+                                                 final CategoryTree subcategoryTree, final List<Locale> locales) {
+        return new CategoryTreeTermFacetMapper(selectedCategories, subcategoryTree, locales);
     }
 
     /**
      * Initializes the facet mapper without any category tree associated.
      * Notice with this configuration no category will be obtained, so please configure it via {@link #withCategories(List, CategoryTree, List)}.
-     * @return a new instance of {@link CategoryTreeFacetOptionMapper} without any category tree
+     * @return a new instance of {@link CategoryTreeTermFacetMapper} without any category tree
      */
-    public static CategoryTreeFacetOptionMapper ofEmptyTree() {
+    public static CategoryTreeTermFacetMapper ofEmptyTree() {
         return of(emptyList(), CategoryTree.of(emptyList()), emptyList());
     }
 

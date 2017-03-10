@@ -8,10 +8,10 @@ import static java.util.stream.Collectors.toList;
  * Mapper that sorts the options according to the given list of values.
  * Any value that do not appear in the list of values is placed at the end of the output list.
  */
-public class CustomSortedFacetOptionMapper implements FacetOptionMapper {
+public class CustomSortedTermFacetMapper implements TermFacetsMapper2 {
     private final List<String> sortedFacetValues;
 
-    private CustomSortedFacetOptionMapper(final List<String> sortedFacetValues) {
+    private CustomSortedTermFacetMapper(final List<String> sortedFacetValues) {
         this.sortedFacetValues = sortedFacetValues;
     }
 
@@ -22,8 +22,8 @@ public class CustomSortedFacetOptionMapper implements FacetOptionMapper {
                 .collect(toList());
     }
 
-    public static CustomSortedFacetOptionMapper of(final List<String> sortedFacetValues) {
-        return new CustomSortedFacetOptionMapper(sortedFacetValues);
+    public static CustomSortedTermFacetMapper of(final List<String> sortedFacetValues) {
+        return new CustomSortedTermFacetMapper(sortedFacetValues);
     }
 
     private int comparePositions(final FacetOption left, final FacetOption right) {

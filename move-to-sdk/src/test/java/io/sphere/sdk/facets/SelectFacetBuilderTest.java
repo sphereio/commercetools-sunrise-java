@@ -31,7 +31,7 @@ public class SelectFacetBuilderTest {
             FacetOption.of("one", 30, false),
             FacetOption.of("two", 20, true),
             FacetOption.of("three", 10, false));
-    public static final FacetOptionMapper IDENTITY_MAPPER = v -> v;
+    public static final TermFacetsMapper2 IDENTITY_MAPPER = v -> v;
 
     @Test
     public void createsInstance() throws Exception {
@@ -83,7 +83,7 @@ public class SelectFacetBuilderTest {
 
     @Test
     public void mapsOptions() throws Exception {
-        final CustomSortedFacetOptionMapper mapper = CustomSortedFacetOptionMapper.of(asList("two", "three", "one"));
+        final CustomSortedTermFacetMapper mapper = CustomSortedTermFacetMapper.of(asList("two", "three", "one"));
         final SelectFacet<ProductProjection> facet = SelectFacetBuilder.of(KEY, SEARCH_MODEL)
                 .mapper(mapper)
                 .facetResult(FACET_RESULT_WITH_THREE_TERMS)

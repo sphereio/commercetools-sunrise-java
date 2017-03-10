@@ -2,7 +2,6 @@ package com.commercetools.sunrise.search.facetedsearch;
 
 import com.commercetools.sunrise.framework.SunriseConfigurationException;
 import com.commercetools.sunrise.framework.viewmodels.forms.AbstractFormSettingsWithOptions;
-import com.commercetools.sunrise.framework.viewmodels.forms.FormSettingsWithOptions;
 import com.commercetools.sunrise.search.sort.SortFormOption;
 import io.sphere.sdk.products.ProductProjection;
 import io.sphere.sdk.search.SortExpression;
@@ -10,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import play.Configuration;
 
-import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.List;
 import java.util.Optional;
@@ -18,10 +16,7 @@ import java.util.Optional;
 import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 
-@Singleton
-public final class SelectFacetedSearchFormSettings extends AbstractFormSettingsWithOptions<SortFormOption> {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(SelectFacetedSearchFormSettings.class);
+public abstract class ConfigurableTermFacetedSearchFormSettings extends TermFacetedSearchFormSettingsImpl {
 
     private static final String CONFIG_KEY = "key";
     private static final String CONFIG_TYPE = "type";
@@ -37,34 +32,18 @@ public final class SelectFacetedSearchFormSettings extends AbstractFormSettingsW
     private static final String CONFIG_MAPPER_TYPE = "type";
     private static final String CONFIG_MAPPER_VALUES = "values";
 
-    public SelectFacetedSearchFormSettings(final Configuration configuration) {
+    public ConfigurableTermFacetedSearchFormSettings(final Configuration configuration) {
         super(key(configuration), options(configuration));
-        LOGGER.debug("Provide SortConfig: {}", getOptions().stream().map(SortFormOption::getValue).collect(toList()));
-    }
-
-    @Override
-    public List<SortFormOption> getOptions() {
-        return super.getOptions();
-    }
-
-    @Override
-    public String getFieldName() {
-        return super.getFieldName();
-    }
-
-    @Override
-    public Optional<SortFormOption> findDefaultOption() {
-        return super.findDefaultOption();
     }
 
     private static String key(final Configuration configuration) {
         return Optional.ofNullable(configuration.getString(CONFIG_KEY))
-                .orElseThrow(() -> new SunriseConfigurationException("Missing key to create facet", CONFIG_KEY));
+                .orElseThrow(() -> new SunriseConfigurationException("Missing key to create facet", CONFIG_KEY, configuration));
     }
 
     private static List<SortFormOption> options(final Configuration configuration) {
         return configuration.getConfigList(CONFIG_OPTIONS, emptyList()).stream()
-                .map(SelectFacetedSearchFormSettings::initializeFormOption)
+                .map(ConfigurableTermFacetedSearchFormSettings::initializeFormOption)
                 .collect(toList());
     }
 

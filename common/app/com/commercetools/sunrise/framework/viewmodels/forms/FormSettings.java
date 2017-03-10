@@ -1,8 +1,6 @@
 package com.commercetools.sunrise.framework.viewmodels.forms;
 
-public interface FormSettings<T> extends WithFormFieldName<T> {
-
-    String getFieldName();
+public interface FormSettings<T> extends WithFormFieldName {
 
     T getDefaultValue();
 
