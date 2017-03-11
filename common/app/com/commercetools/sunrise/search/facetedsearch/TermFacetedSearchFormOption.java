@@ -1,11 +1,11 @@
 package com.commercetools.sunrise.search.facetedsearch;
 
-import io.sphere.sdk.facets.FacetOption;
 import io.sphere.sdk.search.TermStats;
 
 import java.util.List;
 
 import static java.util.Collections.emptyList;
+import static org.apache.commons.lang3.ObjectUtils.firstNonNull;
 
 public interface TermFacetedSearchFormOption extends FacetedSearchFormOption {
 
@@ -15,12 +15,13 @@ public interface TermFacetedSearchFormOption extends FacetedSearchFormOption {
      */
     List<TermFacetedSearchFormOption> getChildren();
 
-    static TermFacetedSearchFormOption of(final String fieldLabel, final String fieldValue, final List<String> value,
-                                          final boolean isDefault, final long count, final List<TermFacetedSearchFormOption> children) {
-        return new TermFacetedSearchFormOptionImpl(fieldLabel, fieldValue, value, isDefault, count, children);
+    static TermFacetedSearchFormOption of(final String fieldLabel, final String fieldValue, final String value,
+                                          final long count, final List<TermFacetedSearchFormOption> children) {
+        return new TermFacetedSearchFormOptionImpl(fieldLabel, fieldValue, value, count, children);
     }
 
     static TermFacetedSearchFormOption ofTermStats(final TermStats termStats) {
-        return of(termStats.getTerm(), termStats.getTerm(), termStats.getCount(), emptyList());
+        final long count = firstNonNull(termStats.getProductCount(), 0L);
+        return of(termStats.getTerm(), termStats.getTerm(), termStats.getTerm(), count, emptyList());
     }
 }

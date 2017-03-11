@@ -1,13 +1,12 @@
 package com.commercetools.sunrise.search.facetedsearch;
 
 import com.commercetools.sunrise.framework.viewmodels.forms.AbstractFormSettingsWithOptions;
-import io.sphere.sdk.facets.TermFacetsMapper2;
-import io.sphere.sdk.facets.FacetType;
+import com.commercetools.sunrise.search.facetedsearch.mappers.FacetMapperSettings;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-class FacetedSearchFormSettingsWithOptionsImpl<T extends FacetedSearchFormOption> extends AbstractFormSettingsWithOptions<T> implements FacetedSearchFormSettingsWithOptions<T> {
+abstract class FacetedSearchFormSettingsWithOptionsImpl<T extends FacetedSearchFormOption> extends AbstractFormSettingsWithOptions<T, String> implements FacetedSearchFormSettingsWithOptions<T> {
 
     private final FacetedSearchFormSettings settings;
 
@@ -17,7 +16,17 @@ class FacetedSearchFormSettingsWithOptionsImpl<T extends FacetedSearchFormOption
     }
 
     @Override
-    public FacetType getType() {
+    public String getLabel() {
+        return settings.getLabel();
+    }
+
+    @Override
+    public String getExpression() {
+        return settings.getExpression();
+    }
+
+    @Override
+    public FacetUIType getType() {
         return settings.getType();
     }
 
@@ -50,7 +59,7 @@ class FacetedSearchFormSettingsWithOptionsImpl<T extends FacetedSearchFormOption
 
     @Override
     @Nullable
-    public TermFacetsMapper2 getMapper() {
+    public FacetMapperSettings getMapper() {
         return settings.getMapper();
     }
 

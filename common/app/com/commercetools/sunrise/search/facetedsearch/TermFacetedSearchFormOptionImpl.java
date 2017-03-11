@@ -6,7 +6,7 @@ final class TermFacetedSearchFormOptionImpl extends FacetedSearchFormOptionImpl 
 
     private final List<TermFacetedSearchFormOption> children;
 
-    TermFacetedSearchFormOptionImpl(final String fieldLabel, final String fieldValue, final List<String> value,
+    TermFacetedSearchFormOptionImpl(final String fieldLabel, final String fieldValue, final String value,
                                     final long count, final List<TermFacetedSearchFormOption> children) {
         super(fieldLabel, fieldValue, value, count);
         this.children = children;

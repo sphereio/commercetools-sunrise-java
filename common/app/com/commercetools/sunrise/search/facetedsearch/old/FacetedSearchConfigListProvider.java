@@ -1,7 +1,7 @@
 package com.commercetools.sunrise.search.facetedsearch.old;
 
 import com.commercetools.sunrise.framework.SunriseConfigurationException;
-import com.commercetools.sunrise.search.facetedsearch.SunriseFacetType;
+import com.commercetools.sunrise.search.facetedsearch.SunriseFacetUIType;
 import io.sphere.sdk.facets.*;
 import io.sphere.sdk.products.ProductProjection;
 import io.sphere.sdk.search.model.FacetRange;
@@ -53,7 +53,7 @@ public final class FacetedSearchConfigListProvider implements Provider<FacetedSe
         final List<Configuration> configList = configuration.getConfigList(CONFIG_FACETS, emptyList());
         IntStream.range(0, configList.size()).forEach(i -> {
             final Configuration config = configList.get(i);
-            final SunriseFacetType type = getFacetType(config);
+            final SunriseFacetUIType type = getFacetType(config);
             switch (type) {
                 case CATEGORY_TREE:
                 case COLUMNS_LIST:
@@ -74,9 +74,9 @@ public final class FacetedSearchConfigListProvider implements Provider<FacetedSe
         return FacetedSearchConfigList.of(selectFacetConfigs, rangeFacetConfigs);
     }
 
-    private static SunriseFacetType getFacetType(final Configuration facetConfig) {
+    private static SunriseFacetUIType getFacetType(final Configuration facetConfig) {
         final String configType = facetConfig.getString(TYPE_ATTR, "").toUpperCase();
-        return Arrays.stream(SunriseFacetType.values())
+        return Arrays.stream(SunriseFacetUIType.values())
                 .filter(typeValue -> typeValue.name().equals(configType))
                 .findFirst()
                 .orElseThrow(() -> new SunriseConfigurationException("Unrecognized facet type \"" + configType + "\"", TYPE_ATTR, CONFIG_FACETS));
@@ -113,7 +113,7 @@ public final class FacetedSearchConfigListProvider implements Provider<FacetedSe
                 .orElseThrow(() -> new SunriseConfigurationException("Missing facet attribute path expression", EXPR_ATTR, CONFIG_FACETS));
         final boolean countHidden = !facetConfig.getBoolean(COUNT_ATTR, true);
         List<FacetRange<String>> initialFacetRanges = new ArrayList<>();
-        if (type == SunriseFacetType.BUCKET_RANGE) {
+        if (type == SunriseFacetUIType.BUCKET_RANGE) {
             String initialRanges = Optional.ofNullable(facetConfig.getString(INITIAL_RANGES))
                     .orElseThrow(() -> new SunriseConfigurationException("Missing initial ranges", INITIAL_RANGES, CONFIG_FACETS));
             initialFacetRanges.addAll(convertInitialRangesToFacetRanges(initialRanges));

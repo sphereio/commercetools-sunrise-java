@@ -4,7 +4,7 @@ import com.commercetools.sunrise.framework.viewmodels.forms.FormSettingsWithOpti
 
 import java.util.List;
 
-public interface EntriesPerPageFormSettings extends FormSettingsWithOptions<EntriesPerPageFormOption> {
+public interface EntriesPerPageFormSettings extends FormSettingsWithOptions<EntriesPerPageFormOption, Integer> {
 
     static EntriesPerPageFormSettings of(final String fieldName, final List<EntriesPerPageFormOption> options) {
         return new EntriesPerPageFormSettingsImpl(fieldName, options);

@@ -1,17 +1,43 @@
 package com.commercetools.sunrise.search.facetedsearch;
 
 import com.commercetools.sunrise.framework.viewmodels.forms.WithFormFieldName;
-import io.sphere.sdk.facets.FacetType;
+import com.commercetools.sunrise.search.facetedsearch.mappers.FacetMapperSettings;
 
 import javax.annotation.Nullable;
+import java.util.Locale;
+
+import static com.commercetools.sunrise.search.SearchUtils.localizeExpression;
 
 public interface FacetedSearchFormSettings extends WithFormFieldName {
+
+    /**
+     * Gets the label displayed in the facet.
+     * @return the label displayed in this facet
+     */
+    String getLabel();
+
+    /**
+     * Gets the facet expression associated, representing just the attribute path.
+     * The expression might contain {@code {{locale}}}, which should be replaced with the current locale before using it.
+     * @return the facet expression
+     */
+    String getExpression();
+
+    /**
+     * Gets the localized expression associated, representing just the attribute path.
+     * This expression is ready to be sent to the CTP platform.
+     * @param locale the current user's locale
+     * @return the localized facet expression
+     */
+    default String getLocalizedExpression(final Locale locale) {
+        return localizeExpression(getExpression(), locale);
+    }
 
     /**
      * Gets the type of this facet.
      * @return the type of this facet
      */
-    FacetType getType();
+    FacetUIType getType();
 
     /**
      * Gets the threshold indicating the minimum amount of options allowed to be displayed in the facet.
@@ -47,16 +73,9 @@ public interface FacetedSearchFormSettings extends WithFormFieldName {
     boolean isMatchingAll();
 
     /**
-     * Gets the mapper for this facet.
+     * Gets the mapper type for this facet.
      * @return the facet option mapper, or absent if there is no mapper
      */
     @Nullable
-    TermFacetResultMapper getMapper();
-
-    static FacetedSearchFormSettings of(final String fieldName, final FacetType facetType, @Nullable final Long limit,
-                                        @Nullable final Long threshold, final boolean isCountDisplayed,
-                                        final boolean isMultiSelect, final boolean isMatchingAll,
-                                        @Nullable final TermFacetResultMapper mapper) {
-        return new FacetedSearchFormSettingsImpl(fieldName, facetType, limit, threshold, isCountDisplayed, isMultiSelect, isMatchingAll, mapper);
-    }
+    FacetMapperSettings getMapper();
 }

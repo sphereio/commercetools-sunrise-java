@@ -3,7 +3,7 @@ package com.commercetools.sunrise.framework.viewmodels.forms;
 import java.util.List;
 import java.util.Optional;
 
-public interface WithFormOptions<T extends FormOption> {
+public interface WithFormOptions<T extends FormOption<V>, V> {
 
     List<T> getOptions();
 

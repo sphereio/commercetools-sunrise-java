@@ -1,6 +1,10 @@
 package com.commercetools.sunrise.search.facetedsearch;
 
-import java.util.List;
+import io.sphere.sdk.search.TermStats;
+import io.sphere.sdk.search.model.RangeStats;
+
+import static java.util.Collections.emptyList;
+import static org.apache.commons.lang3.ObjectUtils.firstNonNull;
 
 public interface RangeFacetedSearchFormOption extends FacetedSearchFormOption {
 
@@ -8,8 +12,18 @@ public interface RangeFacetedSearchFormOption extends FacetedSearchFormOption {
 
     String getUpperEndpoint();
 
-    static RangeFacetedSearchFormOption of(final String fieldLabel, final String fieldValue, final List<String> value,
-                                           final boolean isDefault, final long count, final String lowerEndpoint, final String upperEndpoint) {
-        return new RangeFacetedSearchFormOptionImpl(fieldLabel, fieldValue, value, isDefault, count, lowerEndpoint, upperEndpoint);
+    String getMaxValue();
+
+    String getMinValue();
+
+    static RangeFacetedSearchFormOption of(final String fieldLabel, final String fieldValue, final String value,
+                                           final long count, final String lowerEndpoint, final String upperEndpoint,
+                                           final String minValue, final String maxValue) {
+        return new RangeFacetedSearchFormOptionImpl(fieldLabel, fieldValue, value, count, lowerEndpoint, upperEndpoint, minValue, maxValue);
     }
+
+//    static RangeFacetedSearchFormOption ofRangeStats(final RangeStats rangeStats) {
+//        final long count = firstNonNull(rangeStats.getProductCount(), 0L);
+//        return of(rangeStats.getTerm(), termStats.getTerm(), termStats.getTerm(), termStats.getCount(), emptyList());
+//    }
 }

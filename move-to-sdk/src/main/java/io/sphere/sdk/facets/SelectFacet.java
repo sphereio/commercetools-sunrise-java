@@ -69,7 +69,7 @@ public interface SelectFacet<T> extends Facet<T> {
      * @return the facet option mapper, or absent if there is no mapper
      */
     @Nullable
-    FacetOptionMapper getMapper();
+    TermFacetsMapper2 getMapper();
 
     @Override
     SelectFacet<T> withSearchResult(final PagedSearchResult<T> searchResult);

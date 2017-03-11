@@ -1,7 +1,7 @@
 package com.commercetools.sunrise.search.facetedsearch.old;
 
 import com.commercetools.sunrise.framework.viewmodels.ViewModel;
-import com.commercetools.sunrise.search.facetedsearch.SunriseFacetType;
+import com.commercetools.sunrise.search.facetedsearch.SunriseFacetUIType;
 import io.sphere.sdk.facets.Facet;
 import io.sphere.sdk.facets.FacetType;
 
@@ -21,23 +21,23 @@ public class FacetSelectorViewModel extends ViewModel {
     }
 
     public boolean isDisplayList() {
-        return isFacetType(SunriseFacetType.LIST);
+        return isFacetType(SunriseFacetUIType.LIST);
     }
 
     public boolean isSelectFacet() {
-        return isFacetType(SunriseFacetType.LIST) || isFacetType(SunriseFacetType.COLUMNS_LIST);
+        return isFacetType(SunriseFacetUIType.LIST) || isFacetType(SunriseFacetUIType.COLUMNS_LIST);
     }
 
     public boolean isSliderRangeFacet() {
-        return isFacetType(SunriseFacetType.SLIDER_RANGE);
+        return isFacetType(SunriseFacetUIType.SLIDER_RANGE);
     }
 
     public boolean isBucketRangeFacet() {
-        return isFacetType(SunriseFacetType.BUCKET_RANGE);
+        return isFacetType(SunriseFacetUIType.BUCKET_RANGE);
     }
 
     public boolean isHierarchicalSelectFacet() {
-        return isFacetType(SunriseFacetType.CATEGORY_TREE);
+        return isFacetType(SunriseFacetUIType.CATEGORY_TREE);
     }
 
     private boolean isFacetType(final FacetType type) {

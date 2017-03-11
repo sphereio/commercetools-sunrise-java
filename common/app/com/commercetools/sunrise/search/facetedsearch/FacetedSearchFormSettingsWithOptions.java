@@ -1,13 +1,13 @@
 package com.commercetools.sunrise.search.facetedsearch;
 
-import com.commercetools.sunrise.framework.viewmodels.forms.WithFormOptions;
+import com.commercetools.sunrise.framework.viewmodels.forms.FormSettingsWithOptions;
 
 import java.util.List;
 import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
-interface FacetedSearchFormSettingsWithOptions<T extends FacetedSearchFormOption> extends FacetedSearchFormSettings, WithFormOptions<T> {
+interface FacetedSearchFormSettingsWithOptions<T extends FacetedSearchFormOption> extends FacetedSearchFormSettings, FormSettingsWithOptions<T, String> {
 
     /**
      * Whether the facet can be displayed or not.

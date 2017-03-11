@@ -1,14 +1,12 @@
 package com.commercetools.sunrise.search.sort.viewmodels;
 
 import com.commercetools.sunrise.framework.viewmodels.ViewModelFactory;
-import com.commercetools.sunrise.search.sort.SortFormOption;
 import com.commercetools.sunrise.search.sort.SortFormSettings;
 import io.sphere.sdk.queries.PagedResult;
 import play.mvc.Http;
 
 import javax.annotation.Nullable;
 
-import static com.commercetools.sunrise.framework.viewmodels.forms.QueryStringUtils.findSelectedValueFromQueryString;
 import static java.util.stream.Collectors.toList;
 
 public abstract class AbstractSortSelectorViewModelFactory extends ViewModelFactory<SortSelectorViewModel, PagedResult<?>> {
@@ -21,9 +19,7 @@ public abstract class AbstractSortSelectorViewModelFactory extends ViewModelFact
     protected AbstractSortSelectorViewModelFactory(final SortFormSettings settings,
                                                    final SortFormSelectableOptionViewModelFactory sortFormSelectableOptionViewModelFactory,
                                                    final Http.Request httpRequest) {
-        this.selectedOptionValue = findSelectedValueFromQueryString(settings, httpRequest)
-                .map(SortFormOption::getFieldValue)
-                .orElse(null);
+        this.selectedOptionValue = settings.getSelectedFieldValue(httpRequest);
         this.settings = settings;
         this.sortFormSelectableOptionViewModelFactory = sortFormSelectableOptionViewModelFactory;
     }

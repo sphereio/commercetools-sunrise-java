@@ -11,8 +11,7 @@ import io.sphere.sdk.queries.PagedResult;
 import play.mvc.Http;
 
 import javax.annotation.Nullable;
-
-import static com.commercetools.sunrise.framework.viewmodels.forms.QueryStringUtils.findSelectedValueFromQueryString;
+import java.util.Optional;
 
 public abstract class AbstractPaginationControllerComponent extends Base implements ControllerComponent, PageDataReadyHook {
 
@@ -31,10 +30,8 @@ public abstract class AbstractPaginationControllerComponent extends Base impleme
                                                     final AbstractPaginationViewModelFactory paginationViewModelFactory,
                                                     final AbstractEntriesPerPageSelectorViewModelFactory entriesPerPageSelectorViewModelFactory,
                                                     final Http.Request httpRequest) {
-        this.limit = findSelectedValueFromQueryString(entriesPerPageFormSettings, httpRequest)
-                .map(EntriesPerPageFormOption::getValue)
-                .orElse(DEFAULT_LIMIT);
-        this.offset = (findSelectedValueFromQueryString(paginationSettings, httpRequest) - 1) * limit;
+        this.limit = Optional.ofNullable(entriesPerPageFormSettings.getSelectedValue(httpRequest)).orElse(DEFAULT_LIMIT);
+        this.offset = (paginationSettings.getSelectedValue(httpRequest) - 1) * limit;
         this.paginationViewModelFactory = paginationViewModelFactory;
         this.entriesPerPageSelectorViewModelFactory = entriesPerPageSelectorViewModelFactory;
     }

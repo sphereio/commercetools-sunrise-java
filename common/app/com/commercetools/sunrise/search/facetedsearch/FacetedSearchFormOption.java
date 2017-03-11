@@ -2,9 +2,7 @@ package com.commercetools.sunrise.search.facetedsearch;
 
 import com.commercetools.sunrise.framework.viewmodels.forms.FormOption;
 
-import java.util.List;
-
-interface FacetedSearchFormOption extends FormOption<List<String>> {
+interface FacetedSearchFormOption extends FormOption<String> {
 
     /**
      * Gets the amount of results present in this facet option.

@@ -1,13 +1,15 @@
 package com.commercetools.sunrise.search.facetedsearch;
 
 import com.commercetools.sunrise.framework.viewmodels.forms.AbstractFormFieldName;
-import io.sphere.sdk.facets.FacetType;
+import com.commercetools.sunrise.search.facetedsearch.mappers.FacetMapperSettings;
 
 import javax.annotation.Nullable;
 
 class FacetedSearchFormSettingsImpl extends AbstractFormFieldName implements FacetedSearchFormSettings {
 
-    private final FacetType facetType;
+    private final String label;
+    private final String expression;
+    private final FacetUIType type;
     @Nullable
     private final Long limit;
     @Nullable
@@ -16,13 +18,16 @@ class FacetedSearchFormSettingsImpl extends AbstractFormFieldName implements Fac
     private final boolean isMultiSelect;
     private final boolean isMatchingAll;
     @Nullable
-    private final TermFacetResultMapper mapper;
+    private final FacetMapperSettings mapper;
 
-    FacetedSearchFormSettingsImpl(final String fieldName, final FacetType facetType, @Nullable final Long limit,
-                                  @Nullable final Long threshold, final boolean isCountDisplayed, final boolean isMultiSelect,
-                                  final boolean isMatchingAll, @Nullable final TermFacetResultMapper mapper) {
+    FacetedSearchFormSettingsImpl(final String fieldName, final String label, final String expression,
+                                  final FacetUIType type, @Nullable final Long limit, @Nullable final Long threshold,
+                                  final boolean isCountDisplayed, final boolean isMultiSelect, final boolean isMatchingAll,
+                                  @Nullable final FacetMapperSettings mapper) {
         super(fieldName);
-        this.facetType = facetType;
+        this.label = label;
+        this.expression = expression;
+        this.type = type;
         this.limit = limit;
         this.threshold = threshold;
         this.isCountDisplayed = isCountDisplayed;
@@ -32,8 +37,18 @@ class FacetedSearchFormSettingsImpl extends AbstractFormFieldName implements Fac
     }
 
     @Override
-    public FacetType getType() {
-        return facetType;
+    public String getLabel() {
+        return label;
+    }
+
+    @Override
+    public String getExpression() {
+        return expression;
+    }
+
+    @Override
+    public FacetUIType getType() {
+        return type;
     }
 
     @Override
@@ -63,9 +78,9 @@ class FacetedSearchFormSettingsImpl extends AbstractFormFieldName implements Fac
         return isMatchingAll;
     }
 
-    @Override
     @Nullable
-    public TermFacetResultMapper getMapper() {
+    @Override
+    public FacetMapperSettings getMapper() {
         return mapper;
     }
 }

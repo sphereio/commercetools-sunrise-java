@@ -9,7 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.LongStream;
 
-import static com.commercetools.sunrise.framework.viewmodels.forms.QueryStringUtils.*;
+import static com.commercetools.sunrise.framework.viewmodels.forms.QueryStringUtils.buildUri;
+import static com.commercetools.sunrise.framework.viewmodels.forms.QueryStringUtils.extractQueryString;
 import static java.util.Collections.singletonList;
 import static java.util.stream.Collectors.toList;
 
@@ -21,7 +22,7 @@ public abstract class AbstractPaginationViewModelFactory extends ViewModelFactor
 
     protected AbstractPaginationViewModelFactory(final PaginationSettings settings, final Http.Request httpRequest) {
         this.settings = settings;
-        this.currentPage = findSelectedValueFromQueryString(settings, httpRequest);
+        this.currentPage = settings.getSelectedValue(httpRequest);
         this.httpRequest = httpRequest;
     }
 

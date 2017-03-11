@@ -10,14 +10,12 @@ import play.mvc.Http;
 
 import java.util.Locale;
 
-import static com.commercetools.sunrise.framework.viewmodels.forms.QueryStringUtils.findSelectedValueFromQueryString;
-
 public abstract class AbstractSearchBoxControllerComponent extends Base implements ControllerComponent, PageDataReadyHook {
 
     private final LocalizedStringEntry searchText;
 
-    protected AbstractSearchBoxControllerComponent(final SearchBoxSettings searchBoxSettings, final Http.Request httpRequest, final Locale locale) {
-        this.searchText = LocalizedStringEntry.of(locale, findSelectedValueFromQueryString(searchBoxSettings, httpRequest));
+    protected AbstractSearchBoxControllerComponent(final SearchBoxSettings settings, final Http.Request httpRequest, final Locale locale) {
+        this.searchText = LocalizedStringEntry.of(locale, settings.getSelectedValue(httpRequest));
     }
 
     public final LocalizedStringEntry getSearchText() {

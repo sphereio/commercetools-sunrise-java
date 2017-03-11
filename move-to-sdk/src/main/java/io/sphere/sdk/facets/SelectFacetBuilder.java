@@ -14,7 +14,7 @@ public final class SelectFacetBuilder<T> extends FacetBuilder<SelectFacetBuilder
     @Nullable private TermFacetResult facetResult = null;
     @Nullable private Long threshold = 1L;
     @Nullable private Long limit = null;
-    @Nullable private FacetOptionMapper mapper = null;
+    @Nullable private TermFacetsMapper2 mapper = null;
 
     private SelectFacetBuilder(final String key, final FacetedSearchSearchModel<T> facetedSearchSearchModel) {
         super(key);
@@ -32,7 +32,7 @@ public final class SelectFacetBuilder<T> extends FacetBuilder<SelectFacetBuilder
         return this;
     }
 
-    public SelectFacetBuilder<T> mapper(@Nullable final FacetOptionMapper mapper) {
+    public SelectFacetBuilder<T> mapper(@Nullable final TermFacetsMapper2 mapper) {
         this.mapper = mapper;
         return this;
     }
@@ -90,7 +90,7 @@ public final class SelectFacetBuilder<T> extends FacetBuilder<SelectFacetBuilder
     }
 
     @Nullable
-    public FacetOptionMapper getMapper() {
+    public TermFacetsMapper2 getMapper() {
         return mapper;
     }
 

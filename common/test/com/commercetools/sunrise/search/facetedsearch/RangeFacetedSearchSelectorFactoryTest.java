@@ -42,7 +42,7 @@ public class RangeFacetedSearchSelectorFactoryTest {
             final Facet<ProductProjection> facet = facetSelector.getFacet(searchResult());
             assertThat(facet).as("class").isInstanceOf(RangeFacet.class);
             final RangeFacet<ProductProjection> rangeFacet = (RangeFacet<ProductProjection>) facet;
-            assertThat(rangeFacet.getType()).as("type").isEqualTo(SunriseFacetType.LIST);
+            assertThat(rangeFacet.getType()).as("type").isEqualTo(SunriseFacetUIType.LIST);
             assertThat(rangeFacet.getKey()).as("key").isEqualTo(KEY);
             assertThat(rangeFacet.getLabel()).as("label").isEqualTo(LABEL);
             assertThat(rangeFacet.isCountHidden()).as("count hidden").isTrue();
@@ -75,7 +75,7 @@ public class RangeFacetedSearchSelectorFactoryTest {
     private RangeFacetBuilder<ProductProjection> facetBuilder(final String attrPath) {
         return RangeFacetBuilder.of(KEY, RangeTermFacetedSearchSearchModel.<ProductProjection>of(attrPath))
                 .label(LABEL)
-                .type(SunriseFacetType.LIST)
+                .type(SunriseFacetUIType.LIST)
                 .countHidden(true)
                 .initialRanges(asList(FacetRange.atLeast("0")));
     }

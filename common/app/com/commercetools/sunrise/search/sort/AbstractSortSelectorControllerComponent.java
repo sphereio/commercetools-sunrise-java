@@ -13,9 +13,6 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Locale;
 
-import static com.commercetools.sunrise.framework.viewmodels.forms.QueryStringUtils.findSelectedValueFromQueryString;
-import static java.util.Collections.emptyList;
-
 public abstract class AbstractSortSelectorControllerComponent extends Base implements ControllerComponent, PageDataReadyHook {
 
     private final List<String> selectedSortExpressions;
@@ -27,9 +24,7 @@ public abstract class AbstractSortSelectorControllerComponent extends Base imple
     protected AbstractSortSelectorControllerComponent(final SortFormSettings settings,
                                                       final AbstractSortSelectorViewModelFactory sortSelectorViewModelFactory,
                                                       final Http.Request httpRequest, final Locale locale) {
-        this.selectedSortExpressions = findSelectedValueFromQueryString(settings, httpRequest)
-                .map(option -> option.getLocalizedValue(locale))
-                .orElse(emptyList());
+        this.selectedSortExpressions = settings.getSelectedLocalizedValue(httpRequest, locale);
         this.sortSelectorViewModelFactory = sortSelectorViewModelFactory;
     }
 

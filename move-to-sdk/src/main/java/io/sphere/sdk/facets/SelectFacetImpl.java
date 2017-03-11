@@ -13,7 +13,7 @@ import java.util.Optional;
 import static java.util.stream.Collectors.toList;
 
 /**
- * Select facet that allows to manipulate the facet options via a FacetOptionMapper. This enables any desired behaviour,
+ * Select facet that allows to manipulate the facet options via a TermFacetsMapper2. This enables any desired behaviour,
  * such as replacing the values for its localized names or building hierarchies out of the flat list of options received
  * from the search result.
  * As this facet has no particular type, it is required to also provide the associated facet type.
@@ -26,14 +26,14 @@ public class SelectFacetImpl<T> extends BaseFacet<T> implements SelectFacet<T> {
     @Nullable private final TermFacetResult facetResult;
     @Nullable private final Long threshold;
     @Nullable private final Long limit;
-    @Nullable private final FacetOptionMapper mapper;
+    @Nullable private final TermFacetsMapper2 mapper;
     private final List<FacetOption> facetOptions;
     private final FacetedSearchSearchModel<T> facetedSearchSearchModel;
 
     protected SelectFacetImpl(final String key, final String label, final boolean countHidden, final FacetType type,
                               final FacetedSearchSearchModel<T> searchModel, final boolean multiSelect, final boolean matchingAll,
                               final List<String> selectedValues, @Nullable final TermFacetResult facetResult,
-                              @Nullable final Long threshold, @Nullable final Long limit, @Nullable final FacetOptionMapper mapper) {
+                              @Nullable final Long threshold, @Nullable final Long limit, @Nullable final TermFacetsMapper2 mapper) {
         super(key, type, countHidden, label);
         if (threshold != null && limit != null && threshold > limit) {
             throw new InvalidSelectFacetConstraintsException(threshold, limit);
@@ -106,7 +106,7 @@ public class SelectFacetImpl<T> extends BaseFacet<T> implements SelectFacet<T> {
 
     @Nullable
     @Override
-    public FacetOptionMapper getMapper() {
+    public TermFacetsMapper2 getMapper() {
         return mapper;
     }
 
@@ -144,7 +144,7 @@ public class SelectFacetImpl<T> extends BaseFacet<T> implements SelectFacet<T> {
      * @return the generated facet options
      */
     private static List<FacetOption> initializeOptions(final List<String> selectedValues, @Nullable final TermFacetResult facetResult,
-                                                       @Nullable final FacetOptionMapper mapper) {
+                                                       @Nullable final TermFacetsMapper2 mapper) {
         final List<FacetOption> facetOptions = Optional.ofNullable(facetResult)
                 .map(result -> result.getTerms().stream()
                         .map(termStats -> FacetOption.ofTermStats(termStats, selectedValues))

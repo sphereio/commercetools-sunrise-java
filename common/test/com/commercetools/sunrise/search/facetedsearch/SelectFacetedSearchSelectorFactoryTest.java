@@ -41,7 +41,7 @@ public class SelectFacetedSearchSelectorFactoryTest {
             final Facet<ProductProjection> facet = facetSelector.getFacet(searchResult());
             assertThat(facet).as("class").isInstanceOf(SelectFacet.class);
             final SelectFacet<ProductProjection> selectFacet = (SelectFacet<ProductProjection>) facet;
-            assertThat(selectFacet.getType()).as("type").isEqualTo(SunriseFacetType.LIST);
+            assertThat(selectFacet.getType()).as("type").isEqualTo(SunriseFacetUIType.LIST);
             assertThat(selectFacet.getKey()).as("key").isEqualTo(KEY);
             assertThat(selectFacet.getLabel()).as("label").isEqualTo(LABEL);
             assertThat(selectFacet.isCountHidden()).as("count hidden").isTrue();
@@ -87,7 +87,7 @@ public class SelectFacetedSearchSelectorFactoryTest {
     private SelectFacetBuilder<ProductProjection> facetBuilder(final String attrPath) {
         return SelectFacetBuilder.of(KEY, TermFacetedSearchSearchModel.<ProductProjection>of(attrPath))
                 .label(LABEL)
-                .type(SunriseFacetType.LIST)
+                .type(SunriseFacetUIType.LIST)
                 .countHidden(true)
                 .matchingAll(true)
                 .multiSelect(false)
