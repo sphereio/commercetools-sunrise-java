@@ -6,4 +6,7 @@ package com.commercetools.sunrise.search.facetedsearch;
  */
 public interface FacetUIType {
 
+    String name();
+
+    String value();
 }

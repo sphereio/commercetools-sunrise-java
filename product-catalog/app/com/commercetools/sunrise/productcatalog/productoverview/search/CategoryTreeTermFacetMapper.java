@@ -1,6 +1,7 @@
-package com.commercetools.sunrise.search.facetedsearch.mappers;
+package com.commercetools.sunrise.productcatalog.productoverview.search;
 
 import com.commercetools.sunrise.search.facetedsearch.TermFacetedSearchFormOption;
+import com.commercetools.sunrise.search.facetedsearch.mappers.TermFacetMapper;
 import io.sphere.sdk.categories.Category;
 import io.sphere.sdk.categories.CategoryTree;
 import io.sphere.sdk.facets.FacetOption;
@@ -20,14 +21,13 @@ import static java.util.stream.Collectors.toList;
  * The IDs are then replaced by the Category name, in a language according to the provided locales.
  * Any facet option that is not represented in the list of categories or doesn't contain a name for the locales, is discarded.
  */
-public class CategoryTreeFacetMapper implements FacetMapper {
+public final class CategoryTreeTermFacetMapper implements TermFacetMapper {
 
     private final List<Category> selectedCategories;
     private final CategoryTree categoryTree;
     private final List<Locale> locales;
 
-    private CategoryTreeFacetMapper(final List<Category> selectedCategories,
-                                    final CategoryTree categoryTree, final List<Locale> locales) {
+    public CategoryTreeTermFacetMapper(final List<Category> selectedCategories, final CategoryTree categoryTree, final List<Locale> locales) {
         this.selectedCategories = selectedCategories;
         this.categoryTree = categoryTree;
         this.locales = locales;
@@ -42,9 +42,9 @@ public class CategoryTreeFacetMapper implements FacetMapper {
                 .collect(toList());
     }
 
-    public static CategoryTreeFacetMapper of(final List<Category> selectedCategories,
-                                             final CategoryTree subcategoryTree, final List<Locale> locales) {
-        return new CategoryTreeFacetMapper(selectedCategories, subcategoryTree, locales);
+    public static CategoryTreeTermFacetMapper of(final List<Category> selectedCategories,
+                                                 final CategoryTree subcategoryTree, final List<Locale> locales) {
+        return new CategoryTreeTermFacetMapper(selectedCategories, subcategoryTree, locales);
     }
 
     private List<Category> getRootCategories() {

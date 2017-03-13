@@ -20,7 +20,6 @@ abstract class FacetedSearchFormSettingsWithOptionsImpl<T extends FacetedSearchF
         return settings.getLabel();
     }
 
-    @Override
     public String getExpression() {
         return settings.getExpression();
     }
@@ -59,8 +58,8 @@ abstract class FacetedSearchFormSettingsWithOptionsImpl<T extends FacetedSearchF
 
     @Override
     @Nullable
-    public FacetMapperSettings getMapper() {
-        return settings.getMapper();
+    public FacetMapperSettings getMapperSettings() {
+        return settings.getMapperSettings();
     }
 
 }

@@ -5,35 +5,30 @@ import com.commercetools.sunrise.search.facetedsearch.mappers.FacetMapperSetting
 
 import javax.annotation.Nullable;
 
-class FacetedSearchFormSettingsImpl extends AbstractFormFieldName implements FacetedSearchFormSettings {
+abstract class FacetedSearchFormSettingsImpl extends AbstractFormFieldName implements FacetedSearchFormSettings {
 
     private final String label;
     private final String expression;
+    private final int position;
     private final FacetUIType type;
-    @Nullable
-    private final Long limit;
-    @Nullable
-    private final Long threshold;
     private final boolean isCountDisplayed;
     private final boolean isMultiSelect;
     private final boolean isMatchingAll;
     @Nullable
-    private final FacetMapperSettings mapper;
+    private final FacetMapperSettings mapperSettings;
 
-    FacetedSearchFormSettingsImpl(final String fieldName, final String label, final String expression,
-                                  final FacetUIType type, @Nullable final Long limit, @Nullable final Long threshold,
-                                  final boolean isCountDisplayed, final boolean isMultiSelect, final boolean isMatchingAll,
-                                  @Nullable final FacetMapperSettings mapper) {
+    FacetedSearchFormSettingsImpl(final String fieldName, final String label, final String expression, final int position,
+                                  final FacetUIType type, final boolean isCountDisplayed, final boolean isMultiSelect,
+                                  final boolean isMatchingAll, @Nullable final FacetMapperSettings mapperSettings) {
         super(fieldName);
         this.label = label;
         this.expression = expression;
+        this.position = position;
         this.type = type;
-        this.limit = limit;
-        this.threshold = threshold;
         this.isCountDisplayed = isCountDisplayed;
         this.isMultiSelect = isMultiSelect;
         this.isMatchingAll = isMatchingAll;
-        this.mapper = mapper;
+        this.mapperSettings = mapperSettings;
     }
 
     @Override
@@ -47,20 +42,13 @@ class FacetedSearchFormSettingsImpl extends AbstractFormFieldName implements Fac
     }
 
     @Override
+    public int getPosition() {
+        return position;
+    }
+
+    @Override
     public FacetUIType getType() {
         return type;
-    }
-
-    @Override
-    @Nullable
-    public Long getLimit() {
-        return limit;
-    }
-
-    @Override
-    @Nullable
-    public Long getThreshold() {
-        return threshold;
     }
 
     @Override
@@ -80,7 +68,7 @@ class FacetedSearchFormSettingsImpl extends AbstractFormFieldName implements Fac
 
     @Nullable
     @Override
-    public FacetMapperSettings getMapper() {
-        return mapper;
+    public FacetMapperSettings getMapperSettings() {
+        return mapperSettings;
     }
 }

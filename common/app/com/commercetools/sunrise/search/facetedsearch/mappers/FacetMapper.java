@@ -1,7 +1,7 @@
 package com.commercetools.sunrise.search.facetedsearch.mappers;
 
-import com.commercetools.sunrise.search.facetedsearch.TermFacetedSearchFormOption;
-import io.sphere.sdk.search.TermFacetResult;
+import com.commercetools.sunrise.search.facetedsearch.FacetedSearchFormOption;
+import io.sphere.sdk.search.FacetResult;
 
 import java.util.List;
 import java.util.function.Function;
@@ -11,13 +11,13 @@ import java.util.function.Function;
  * For example, to transform a list of category IDs coming from a facet search request into a hierarchical structure of categories with localized names.
  */
 @FunctionalInterface
-public interface FacetMapper extends Function<TermFacetResult, List<TermFacetedSearchFormOption>> {
+public interface FacetMapper extends Function<FacetResult, List<? extends FacetedSearchFormOption>> {
 
     /**
-     * Transforms the given term facet result into a list of faceted search options.
-     * @param termFacetResult the term facet result to be transformed into the list of faceted search options
+     * Transforms the given facet result into a list of faceted search options.
+     * @param facetResult the facet result to be transformed into the list of faceted search options
      * @return the transformed faceted search options
      */
     @Override
-    List<TermFacetedSearchFormOption> apply(TermFacetResult termFacetResult);
+    List<? extends FacetedSearchFormOption> apply(FacetResult facetResult);
 }

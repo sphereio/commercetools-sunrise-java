@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.search.facetedsearch;
 
-import com.commercetools.sunrise.search.facetedsearch.mappers.FacetMapper;
+import com.commercetools.sunrise.search.facetedsearch.mappers.TermFacetMapper;
 import io.sphere.sdk.search.TermFacetResult;
 
 import javax.annotation.Nullable;
@@ -20,7 +20,7 @@ public interface TermFacetedSearchFormSettingsWithOptions extends FacetedSearchF
      * @return the generated facet options
      */
     static TermFacetedSearchFormSettingsWithOptions of(final FacetedSearchFormSettings settings, final TermFacetResult facetResult,
-                                                       @Nullable final FacetMapper mapper) {
+                                                       @Nullable final TermFacetMapper mapper) {
         final List<TermFacetedSearchFormOption> options = Optional.ofNullable(mapper)
                 .map(m -> m.apply(facetResult))
                 .orElseGet(() -> facetResult.getTerms().stream()

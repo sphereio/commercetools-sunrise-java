@@ -12,8 +12,8 @@ public interface WithRequiredAddress {
 
     AddressFinder getAddressFinder();
 
-    default CompletionStage<Result> requireAddress(final Customer customer, final String addressId, final Function<Address, CompletionStage<Result>> nextAction) {
-        return getAddressFinder().apply(customer, addressId)
+    default CompletionStage<Result> requireAddress(final Customer customer, final String addressIdentifier, final Function<Address, CompletionStage<Result>> nextAction) {
+        return getAddressFinder().apply(customer, addressIdentifier)
                 .thenComposeAsync(addressOpt -> addressOpt
                                 .map(nextAction)
                                 .orElseGet(this::handleNotFoundAddress),

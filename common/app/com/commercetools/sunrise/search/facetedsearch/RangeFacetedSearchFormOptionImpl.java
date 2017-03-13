@@ -1,5 +1,7 @@
 package com.commercetools.sunrise.search.facetedsearch;
 
+import javax.annotation.Nullable;
+
 final class RangeFacetedSearchFormOptionImpl extends FacetedSearchFormOptionImpl implements RangeFacetedSearchFormOption {
 
     private final String lowerEndpoint;
@@ -16,11 +18,13 @@ final class RangeFacetedSearchFormOptionImpl extends FacetedSearchFormOptionImpl
         this.maxValue = maxValue;
     }
 
+    @Nullable
     @Override
     public String getLowerEndpoint() {
         return lowerEndpoint;
     }
 
+    @Nullable
     @Override
     public String getUpperEndpoint() {
         return upperEndpoint;

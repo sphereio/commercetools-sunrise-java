@@ -65,17 +65,17 @@ public abstract class SunriseChangeAddressController extends SunriseTemplateForm
 
     @RunRequestStartedHook
     @SunriseRoute(AddressBookReverseRouter.CHANGE_ADDRESS_PAGE)
-    public CompletionStage<Result> show(final String languageTag, final String addressId) {
+    public CompletionStage<Result> show(final String languageTag, final String addressIdentifier) {
         return requireCustomer(customer ->
-                requireAddress(customer, addressId, address ->
+                requireAddress(customer, addressIdentifier, address ->
                         showFormPage(AddressWithCustomer.of(address, customer), formData)));
     }
 
     @RunRequestStartedHook
     @SunriseRoute(AddressBookReverseRouter.CHANGE_ADDRESS_PROCESS)
-    public CompletionStage<Result> process(final String languageTag, final String addressId) {
+    public CompletionStage<Result> process(final String languageTag, final String addressIdentifier) {
         return requireCustomer(customer ->
-                requireAddress(customer, addressId, address ->
+                requireAddress(customer, addressIdentifier, address ->
                         processForm(AddressWithCustomer.of(address, customer))));
     }
 

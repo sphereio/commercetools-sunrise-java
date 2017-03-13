@@ -74,9 +74,8 @@ public class RangeFacetImpl<T> extends BaseFacet<T> implements RangeFacet<T> {
     }
 
     private RangeFacetedSearchExpression<T> buildRangeFacetedSearchExpression(final FacetedSearchExpression<T> facetedSearchExpr) {
-        final List<FacetRange<String>> facetRanges = initialRanges;
         final RangeTermFacetSearchModel<T, String> searchModel = extractSearchModel(facetedSearchExpr);
-        return RangeFacetedSearchExpression.of(searchModel.onlyRange(facetRanges), facetedSearchExpr.filterExpressions());
+        return RangeFacetedSearchExpression.of(searchModel.onlyRange(initialRanges), facetedSearchExpr.filterExpressions());
     }
 
     private RangeTermFacetSearchModel<T, String> extractSearchModel(final FacetedSearchExpression<T> facetedSearchExpr) {

@@ -3,85 +3,67 @@ package com.commercetools.sunrise.search.facetedsearch;
 import com.commercetools.sunrise.framework.components.controllers.ControllerComponent;
 import com.commercetools.sunrise.framework.hooks.consumers.PageDataReadyHook;
 import com.commercetools.sunrise.framework.viewmodels.PageData;
+import com.commercetools.sunrise.search.facetedsearch.mappers.TermFacetMapper;
 import com.commercetools.sunrise.search.sort.viewmodels.AbstractSortSelectorViewModelFactory;
 import com.commercetools.sunrise.search.sort.viewmodels.WithSortSelectorViewModel;
 import io.sphere.sdk.models.Base;
-import io.sphere.sdk.queries.PagedResult;
-import io.sphere.sdk.search.FacetedSearchExpression;
 import io.sphere.sdk.search.PagedSearchResult;
-import io.sphere.sdk.search.model.FacetedSearchSearchModel;
-import io.sphere.sdk.search.model.RangeTermFacetedSearchSearchModel;
-import io.sphere.sdk.search.model.TermFacetedSearchSearchModel;
-import play.mvc.Http;
+import io.sphere.sdk.search.TermFacetResult;
+import io.sphere.sdk.search.TermFacetedSearchExpression;
+import play.inject.Injector;
 
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.Locale;
-
-import static java.util.stream.Collectors.toList;
+import java.util.Optional;
 
 public abstract class AbstractFacetedSearchSelectorControllerComponent<T> extends Base implements ControllerComponent, PageDataReadyHook {
 
     private final List<FacetedSearchFormSettings> settings;
-    private final List<FacetedSearchExpression<T>> facetedSearchExpressions;
     private final AbstractSortSelectorViewModelFactory sortSelectorViewModelFactory;
+    private final Injector injector;
 
     @Nullable
-    private PagedSearchResult<?> pagedResult;
-    private List<FacetedSearchFormSettingsWithOptions<?>> settingsWithOptions;
+    private PagedSearchResult<T> pagedSearchResult;
 
     protected AbstractFacetedSearchSelectorControllerComponent(final List<FacetedSearchFormSettings> settings,
                                                                final AbstractSortSelectorViewModelFactory sortSelectorViewModelFactory,
-                                                               final Http.Request httpRequest, final Locale locale) {
-
+                                                               final Injector injector) {
         this.settings = settings;
-        this.facetedSearchExpressions = settings.stream()
-                .map(setting -> setting.getFacetedSearchExpression(httpRequest, locale))
-                .collect(toList());
         this.sortSelectorViewModelFactory = sortSelectorViewModelFactory;
+        this.injector = injector;
     }
 
-    protected final List<FacetedSearchExpression<T>> getFacetedSearchExpressions() {
-        return facetedSearchExpressions;
+    protected final List<FacetedSearchFormSettings> getSettings() {
+        return settings;
     }
 
     @Nullable
-    protected final PagedResult<?> getPagedResult() {
-        return pagedResult;
+    protected final PagedSearchResult<T> getPagedSearchResult() {
+        return pagedSearchResult;
     }
 
-    protected final void setPagedResult(@Nullable final PagedResult<?> pagedResult) {
-        this.pagedResult = pagedResult;
+    protected final void setPagedSearchResult(@Nullable final PagedSearchResult<T> pagedSearchResult) {
+        this.pagedSearchResult = pagedSearchResult;
     }
 
-    private FacetedSearchExpression<T> getFacetedSearchExpression(final FacetedSearchFormSettingsWithOptions<?> setting, final Http.Request httpRequest, final Locale locale) {
-        final List<String> selectedValues = setting.getAllSelectedValues(httpRequest);
-        final FacetedSearchSearchModel<T> facetedSearchModel = RangeTermFacetedSearchSearchModel.of(setting.getLocalizedExpression(locale));
-        final FacetedSearchExpression<T> facetedSearchExpr;
-        if (selectedValues.isEmpty()) {
-            facetedSearchExpr = facetedSearchModel.allTerms();
-        } else if (setting.isMatchingAll()) {
-            facetedSearchExpr = facetedSearchModel.containsAll(selectedValues);
-        } else {
-            facetedSearchExpr = facetedSearchModel.containsAny(selectedValues);
-        }
-        return facetedSearchExpr;
-    }
-
-    protected final void setX() {
-        settings.stream()
-                .map(setting -> {
-                    if (setting instanceof TermFacetedSearchFormSettings) {
-                        TermFacetedSearchFormSettingsWithOptions.of(setting, pagedResult.)
-                        TermFacetedSearchSearchModel.of(getLocalizedExpression(locale));
-                    })
+    private TermFacetedSearchFormSettingsWithOptions createSettingsWithOptions(final TermFacetedSearchFormSettings setting,
+                                                                               final TermFacetedSearchExpression<T> expression,
+                                                                               final PagedSearchResult<T> pagedSearchResult) {
+        final TermFacetResult termFacetResult = pagedSearchResult.getFacetResult(expression);
+        final TermFacetMapper termFacetMapper = Optional.ofNullable(setting.getMapperSettings())
+                .flatMap(mapperSettings -> Optional.ofNullable(mapperSettings.getType().factory()))
+                .map(factoryClass -> injector.instanceOf(factoryClass).create(setting.getMapperSettings()))
+                .filter(facetMapper -> facetMapper instanceof TermFacetMapper)
+                .map(facetMapper -> (TermFacetMapper) facetMapper)
+                .orElse(null);
+        return TermFacetedSearchFormSettingsWithOptions.of(setting, termFacetResult, termFacetMapper);
     }
 
     @Override
     public void onPageDataReady(final PageData pageData) {
-        if (pagedResult != null && pageData.getContent() instanceof WithSortSelectorViewModel) {
+        if (pagedSearchResult != null && pageData.getContent() instanceof WithSortSelectorViewModel) {
             final WithSortSelectorViewModel content = (WithSortSelectorViewModel) pageData.getContent();
-            content.setSortSelector(sortSelectorViewModelFactory.create(pagedResult));
+            content.setSortSelector(sortSelectorViewModelFactory.create(pagedSearchResult));
         }
     }
 }

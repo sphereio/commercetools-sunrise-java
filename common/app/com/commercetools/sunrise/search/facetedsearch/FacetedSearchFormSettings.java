@@ -2,6 +2,8 @@ package com.commercetools.sunrise.search.facetedsearch;
 
 import com.commercetools.sunrise.framework.viewmodels.forms.WithFormFieldName;
 import com.commercetools.sunrise.search.facetedsearch.mappers.FacetMapperSettings;
+import io.sphere.sdk.search.FacetedSearchExpression;
+import play.mvc.Http;
 
 import javax.annotation.Nullable;
 import java.util.Locale;
@@ -29,29 +31,21 @@ public interface FacetedSearchFormSettings extends WithFormFieldName {
      * @param locale the current user's locale
      * @return the localized facet expression
      */
-    default String getLocalizedExpression(final Locale locale) {
+    default String getLocalizedAttributePath(final Locale locale) {
         return localizeExpression(getExpression(), locale);
     }
+
+    /**
+     * Gets the position of this facet in relation to other facets.
+     * @return a natural number indicating the position of this facet
+     */
+    int getPosition();
 
     /**
      * Gets the type of this facet.
      * @return the type of this facet
      */
     FacetUIType getType();
-
-    /**
-     * Gets the threshold indicating the minimum amount of options allowed to be displayed in the facet.
-     * @return the threshold for the amount of options that can be displayed, or absent if it has no threshold
-     */
-    @Nullable
-    Long getThreshold();
-
-    /**
-     * Gets the limit for the maximum amount of options allowed to be displayed in the facet.
-     * @return the limit for the amount of options that can be displayed, or absent if it has no limit
-     */
-    @Nullable
-    Long getLimit();
 
     /**
      * Whether the facet count should be hidden or not.
@@ -77,5 +71,7 @@ public interface FacetedSearchFormSettings extends WithFormFieldName {
      * @return the facet option mapper, or absent if there is no mapper
      */
     @Nullable
-    FacetMapperSettings getMapper();
+    FacetMapperSettings getMapperSettings();
+
+    <T> FacetedSearchExpression<T> buildSearchExpression(final Http.Request httpRequest, final Locale locale, final Class<T> resourceClazz);
 }
