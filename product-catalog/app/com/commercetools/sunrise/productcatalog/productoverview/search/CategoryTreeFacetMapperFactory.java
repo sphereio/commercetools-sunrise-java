@@ -3,16 +3,15 @@ package com.commercetools.sunrise.productcatalog.productoverview.search;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
 import com.commercetools.sunrise.framework.localization.UserLanguage;
 import com.commercetools.sunrise.productcatalog.productoverview.CategoryFinder;
-import com.commercetools.sunrise.search.facetedsearch.mappers.TermFacetMapper;
 import com.commercetools.sunrise.search.facetedsearch.mappers.FacetMapperFactory;
 import com.commercetools.sunrise.search.facetedsearch.mappers.FacetMapperSettings;
+import com.commercetools.sunrise.search.facetedsearch.mappers.TermFacetMapper;
 import io.sphere.sdk.categories.Category;
 import io.sphere.sdk.categories.CategoryTree;
 import play.mvc.Http;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
-import javax.inject.Named;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -22,7 +21,6 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 import static java.util.stream.Collectors.toList;
 
-@Named("categoryTree")
 @RequestScoped
 public class CategoryTreeFacetMapperFactory implements FacetMapperFactory {
 

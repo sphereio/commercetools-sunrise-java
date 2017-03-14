@@ -13,7 +13,6 @@ import io.sphere.sdk.search.TermFacetedSearchExpression;
 import play.inject.Injector;
 
 import javax.annotation.Nullable;
-import java.util.List;
 import java.util.Optional;
 
 public abstract class AbstractFacetedSearchSelectorControllerComponent<T> extends Base implements ControllerComponent, PageDataReadyHook {
@@ -21,9 +20,6 @@ public abstract class AbstractFacetedSearchSelectorControllerComponent<T> extend
     private final FacetedSearchFormSettingsList<T> settings;
     private final AbstractSortSelectorViewModelFactory sortSelectorViewModelFactory;
     private final Injector injector;
-
-    @Nullable
-    private PagedSearchResult<T> pagedSearchResult;
 
     protected AbstractFacetedSearchSelectorControllerComponent(final FacetedSearchFormSettingsList<T> settings,
                                                                final AbstractSortSelectorViewModelFactory sortSelectorViewModelFactory,
@@ -38,17 +34,11 @@ public abstract class AbstractFacetedSearchSelectorControllerComponent<T> extend
     }
 
     @Nullable
-    protected final PagedSearchResult<T> getPagedSearchResult() {
-        return pagedSearchResult;
-    }
-
-    protected final void setPagedSearchResult(@Nullable final PagedSearchResult<T> pagedSearchResult) {
-        this.pagedSearchResult = pagedSearchResult;
-    }
+    protected abstract PagedSearchResult<T> getPagedSearchResult();
 
     private TermFacetedSearchFormSettingsWithOptions<T> createSettingsWithOptions(final TermFacetedSearchFormSettings<T> setting,
-                                                                               final TermFacetedSearchExpression<T> expression,
-                                                                               final PagedSearchResult<T> pagedSearchResult) {
+                                                                                  final TermFacetedSearchExpression<T> expression,
+                                                                                  final PagedSearchResult<T> pagedSearchResult) {
         final TermFacetResult termFacetResult = pagedSearchResult.getFacetResult(expression);
         final TermFacetMapper termFacetMapper = Optional.ofNullable(setting.getMapperSettings())
                 .flatMap(mapperSettings -> Optional.ofNullable(mapperSettings.getType().factory()))
@@ -61,6 +51,7 @@ public abstract class AbstractFacetedSearchSelectorControllerComponent<T> extend
 
     @Override
     public void onPageDataReady(final PageData pageData) {
+        final PagedSearchResult<T> pagedSearchResult = getPagedSearchResult();
         if (pagedSearchResult != null && pageData.getContent() instanceof WithSortSelectorViewModel) {
             final WithSortSelectorViewModel content = (WithSortSelectorViewModel) pageData.getContent();
             content.setSortSelector(sortSelectorViewModelFactory.create(pagedSearchResult));

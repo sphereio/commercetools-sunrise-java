@@ -6,11 +6,11 @@ import com.commercetools.sunrise.search.facetedsearch.mappers.FacetMapperSetting
 import javax.annotation.Nullable;
 import java.util.List;
 
-class RangeFacetedSearchFormSettingsWithOptionsImpl<T> extends AbstractFormSettingsWithOptions<RangeFacetedSearchFormOption, String> implements RangeFacetedSearchFormSettingsWithOptions<T> {
+class RangeFacetedSearchFormSettingsWithOptionsImpl<T> extends AbstractFormSettingsWithOptions<BucketRangeFacetedSearchFormOption, String> implements RangeFacetedSearchFormSettingsWithOptions<T> {
 
     private final RangeFacetedSearchFormSettings<T> settings;
 
-    RangeFacetedSearchFormSettingsWithOptionsImpl(final RangeFacetedSearchFormSettings<T> settings, final List<RangeFacetedSearchFormOption> options) {
+    RangeFacetedSearchFormSettingsWithOptionsImpl(final RangeFacetedSearchFormSettings<T> settings, final List<BucketRangeFacetedSearchFormOption> options) {
         super(settings.getFieldName(), options);
         this.settings = settings;
     }

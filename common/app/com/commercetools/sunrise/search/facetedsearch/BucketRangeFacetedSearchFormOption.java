@@ -1,0 +1,10 @@
+package com.commercetools.sunrise.search.facetedsearch;
+
+import com.commercetools.sunrise.framework.viewmodels.forms.FormOption;
+
+public interface BucketRangeFacetedSearchFormOption extends FormOption<String> {
+
+    static BucketRangeFacetedSearchFormOption of(final String fieldLabel, final String fieldValue, final String expression) {
+        return new BucketRangeFacetedSearchFormOptionImpl(fieldLabel, fieldValue, expression);
+    }
+}

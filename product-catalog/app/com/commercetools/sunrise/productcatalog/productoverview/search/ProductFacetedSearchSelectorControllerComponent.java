@@ -6,38 +6,45 @@ import com.commercetools.sunrise.framework.hooks.requests.ProductProjectionSearc
 import com.commercetools.sunrise.search.facetedsearch.AbstractFacetedSearchSelectorControllerComponent;
 import io.sphere.sdk.products.ProductProjection;
 import io.sphere.sdk.products.search.ProductProjectionSearch;
-import io.sphere.sdk.search.*;
+import io.sphere.sdk.search.FacetedSearchExpression;
+import io.sphere.sdk.search.PagedSearchResult;
 import play.inject.Injector;
 import play.mvc.Http;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.CompletionStage;
 
 import static java.util.concurrent.CompletableFuture.completedFuture;
-import static java.util.stream.Collectors.toList;
 
 public final class ProductFacetedSearchSelectorControllerComponent extends AbstractFacetedSearchSelectorControllerComponent<ProductProjection>
         implements ControllerComponent, ProductProjectionSearchHook, ProductProjectionPagedSearchResultLoadedHook {
 
-    private final Http.Request httpRequest;
-    private final Locale locale;
+    private final List<FacetedSearchExpression<ProductProjection>> facetedSearchExpressions;
+
+    @Nullable
+    private PagedSearchResult<ProductProjection> pagedSearchResult;
 
     @Inject
     public ProductFacetedSearchSelectorControllerComponent(final ProductFacetedSearchFormSettingsList settings,
                                                            final ProductSearchSortSelectorViewModelFactory sortSelectorViewModelFactory,
                                                            final Injector injector, final Http.Request httpRequest, final Locale locale) {
         super(settings, sortSelectorViewModelFactory, injector);
-        this.httpRequest = httpRequest;
-        this.locale = locale;
+        this.facetedSearchExpressions = getSettings().buildSearchExpressions(httpRequest, locale);
+    }
+
+    @Nullable
+    @Override
+    protected PagedSearchResult<ProductProjection> getPagedSearchResult() {
+        return pagedSearchResult;
     }
 
     @Override
     public ProductProjectionSearch onProductProjectionSearch(final ProductProjectionSearch search) {
-        final List<FacetedSearchExpression<ProductProjection>> facetedSearchExpressions = getSettings().buildSearchExpressions(httpRequest, locale);
-        if (!expressions.isEmpty()) {
-            return search.plusSort(expressions);
+        if (!facetedSearchExpressions.isEmpty()) {
+            return search.plusFacetedSearch(facetedSearchExpressions);
         } else {
             return search;
         }
@@ -45,7 +52,7 @@ public final class ProductFacetedSearchSelectorControllerComponent extends Abstr
 
     @Override
     public CompletionStage<?> onProductProjectionPagedSearchResultLoaded(final PagedSearchResult<ProductProjection> pagedSearchResult) {
-        setPagedResult(pagedSearchResult);
+        this.pagedSearchResult = pagedSearchResult;
         return completedFuture(null);
     }
 }

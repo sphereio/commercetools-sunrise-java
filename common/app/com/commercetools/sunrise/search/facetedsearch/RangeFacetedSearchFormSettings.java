@@ -25,6 +25,8 @@ public interface RangeFacetedSearchFormSettings<T> extends FacetedSearchFormSett
         } else {
             facetedSearchExpr = searchModel.isBetweenAny(selectedValues);
         }
+        // we'll need this to provide initial ranges:
+        RangeFacetedSearchExpression.of(searchModel.onlyRange(initialRanges), facetedSearchExpr.filterExpressions());
         return facetedSearchExpr;
     }
 

@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.search.facetedsearch;
 
-import com.commercetools.sunrise.search.facetedsearch.old.FacetSelectorListViewModel;
+import com.commercetools.sunrise.search.facetedsearch.viewmodels.FacetSelectorListViewModel;
 
 public interface WithFacetedSearchViewModel {
 
