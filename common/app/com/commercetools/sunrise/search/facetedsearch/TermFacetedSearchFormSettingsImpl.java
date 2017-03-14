@@ -4,7 +4,7 @@ import com.commercetools.sunrise.search.facetedsearch.mappers.FacetMapperSetting
 
 import javax.annotation.Nullable;
 
-class TermFacetedSearchFormSettingsImpl extends FacetedSearchFormSettingsImpl implements TermFacetedSearchFormSettings {
+class TermFacetedSearchFormSettingsImpl<T> extends FacetedSearchFormSettingsImpl<T> implements TermFacetedSearchFormSettings<T> {
 
     @Nullable
     private final Long limit;

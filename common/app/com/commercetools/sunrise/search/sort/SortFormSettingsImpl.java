@@ -4,7 +4,7 @@ import com.commercetools.sunrise.framework.viewmodels.forms.AbstractFormSettings
 
 import java.util.List;
 
-class SortFormSettingsImpl extends AbstractFormSettingsWithOptions<SortFormOption> implements SortFormSettings {
+class SortFormSettingsImpl<T> extends AbstractFormSettingsWithOptions<SortFormOption, List<String>> implements SortFormSettings<T> {
 
     SortFormSettingsImpl(final String fieldName, final List<SortFormOption> options) {
         super(fieldName, options);

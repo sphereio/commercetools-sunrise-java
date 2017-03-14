@@ -10,7 +10,7 @@ import java.util.Locale;
 
 import static com.commercetools.sunrise.search.SearchUtils.localizeExpression;
 
-public interface FacetedSearchFormSettings extends WithFormFieldName {
+public interface FacetedSearchFormSettings<T> extends WithFormFieldName {
 
     /**
      * Gets the label displayed in the facet.
@@ -31,7 +31,7 @@ public interface FacetedSearchFormSettings extends WithFormFieldName {
      * @param locale the current user's locale
      * @return the localized facet expression
      */
-    default String getLocalizedAttributePath(final Locale locale) {
+    default String getLocalizedExpression(final Locale locale) {
         return localizeExpression(getExpression(), locale);
     }
 
@@ -45,7 +45,8 @@ public interface FacetedSearchFormSettings extends WithFormFieldName {
      * Gets the type of this facet.
      * @return the type of this facet
      */
-    FacetUIType getType();
+    @Nullable
+    FacetUIType getUIType();
 
     /**
      * Whether the facet count should be hidden or not.
@@ -73,5 +74,5 @@ public interface FacetedSearchFormSettings extends WithFormFieldName {
     @Nullable
     FacetMapperSettings getMapperSettings();
 
-    <T> FacetedSearchExpression<T> buildSearchExpression(final Http.Request httpRequest, final Locale locale, final Class<T> resourceClazz);
+    FacetedSearchExpression<T> buildSearchExpression(final Http.Request httpRequest, final Locale locale);
 }

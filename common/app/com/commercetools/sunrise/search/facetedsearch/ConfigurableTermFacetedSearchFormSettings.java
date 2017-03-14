@@ -6,15 +6,34 @@ import play.Configuration;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public abstract class ConfigurableTermFacetedSearchFormSettings extends ConfigurableFacetedSearchFormSettings {
+class ConfigurableTermFacetedSearchFormSettings<T> extends ConfigurableFacetedSearchFormSettings<T> implements TermFacetedSearchFormSettings<T> {
 
     private static final String CONFIG_LIMIT = "limit";
     private static final String CONFIG_THRESHOLD = "threshold";
 
+    @Nullable
+    private final Long limit;
+    @Nullable
+    private final Long threshold;
+
     protected ConfigurableTermFacetedSearchFormSettings(final Configuration configuration, final int position,
-                                                        final List<? extends FacetUIType> facetUITypes, final List<? extends FacetMapperType> facetMapperTypes) {
+                                                        final List<? extends FacetUIType> facetUITypes,
+                                                        final List<? extends FacetMapperType> facetMapperTypes) {
         super(configuration, position, facetUITypes, facetMapperTypes);
-        new TermFacetedSearchFormSettingsImpl()
+        this.limit = limit(configuration);
+        this.threshold = threshold(configuration);
+    }
+
+    @Override
+    @Nullable
+    public Long getLimit() {
+        return limit;
+    }
+
+    @Override
+    @Nullable
+    public Long getThreshold() {
+        return threshold;
     }
 
     @Nullable

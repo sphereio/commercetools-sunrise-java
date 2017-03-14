@@ -6,24 +6,24 @@ import com.commercetools.sunrise.framework.viewmodels.PageData;
 import com.commercetools.sunrise.search.searchbox.viewmodels.WithSearchBoxViewModel;
 import io.sphere.sdk.models.Base;
 import io.sphere.sdk.models.LocalizedStringEntry;
-import play.mvc.Http;
-
-import java.util.Locale;
 
 public abstract class AbstractSearchBoxControllerComponent extends Base implements ControllerComponent, PageDataReadyHook {
 
-    private final LocalizedStringEntry searchText;
+    private final SearchBoxSettings settings;
 
-    protected AbstractSearchBoxControllerComponent(final SearchBoxSettings settings, final Http.Request httpRequest, final Locale locale) {
-        this.searchText = LocalizedStringEntry.of(locale, settings.getSelectedValue(httpRequest));
+    protected AbstractSearchBoxControllerComponent(final SearchBoxSettings settings) {
+        this.settings = settings;
     }
 
-    public final LocalizedStringEntry getSearchText() {
-        return searchText;
+    protected final SearchBoxSettings getSettings() {
+        return settings;
     }
+
+    protected abstract LocalizedStringEntry getSearchText();
 
     @Override
     public void onPageDataReady(final PageData pageData) {
+        final LocalizedStringEntry searchText = getSearchText();
         if (!searchText.getValue().isEmpty() && pageData.getContent() instanceof WithSearchBoxViewModel) {
             final WithSearchBoxViewModel content = (WithSearchBoxViewModel) pageData.getContent();
             content.setSearchTerm(searchText.getValue());

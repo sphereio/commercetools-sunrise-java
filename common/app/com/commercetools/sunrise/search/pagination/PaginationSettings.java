@@ -1,10 +1,15 @@
 package com.commercetools.sunrise.search.pagination;
 
 import com.commercetools.sunrise.framework.viewmodels.forms.FormSettings;
+import play.mvc.Http;
 
 public interface PaginationSettings extends FormSettings<Integer> {
 
     int getDisplayedPages();
+
+    default long getOffset(final Http.Request httpRequest, final long limit) {
+        return (getSelectedValue(httpRequest) - 1) * limit;
+    }
 
     @Override
     default Integer mapToValue(final String valueAsString) {

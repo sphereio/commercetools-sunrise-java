@@ -12,7 +12,7 @@ import java.util.Locale;
 
 import static com.commercetools.sunrise.framework.viewmodels.forms.QueryStringUtils.findAllSelectedValuesFromQueryString;
 
-public interface TermFacetedSearchFormSettings extends FacetedSearchFormSettings {
+public interface TermFacetedSearchFormSettings<T> extends FacetedSearchFormSettings<T> {
 
     /**
      * Gets the threshold indicating the minimum amount of options allowed to be displayed in the facet.
@@ -29,8 +29,8 @@ public interface TermFacetedSearchFormSettings extends FacetedSearchFormSettings
     Long getLimit();
 
     @Override
-    default <T> TermFacetedSearchExpression<T> buildSearchExpression(final Http.Request httpRequest, final Locale locale, final Class<T> resourceClazz) {
-        final FacetedSearchSearchModel<T> searchModel = TermFacetedSearchSearchModel.of(getLocalizedAttributePath(locale));
+    default TermFacetedSearchExpression<T> buildSearchExpression(final Http.Request httpRequest, final Locale locale) {
+        final FacetedSearchSearchModel<T> searchModel = TermFacetedSearchSearchModel.of(getLocalizedExpression(locale));
         final List<String> selectedValues = findAllSelectedValuesFromQueryString(getFieldName(), httpRequest);
         final TermFacetedSearchExpression<T> facetedSearchExpr;
         if (selectedValues.isEmpty()) {
@@ -43,10 +43,10 @@ public interface TermFacetedSearchFormSettings extends FacetedSearchFormSettings
         return facetedSearchExpr;
     }
 
-    static TermFacetedSearchFormSettings of(final String fieldName, final String label, final String expression,
-                                            final int position, final FacetUIType facetType, final boolean isCountDisplayed,
-                                            final boolean isMultiSelect, final boolean isMatchingAll, @Nullable final FacetMapperSettings mapper,
-                                            @Nullable final Long limit, @Nullable final Long threshold) {
-        return new TermFacetedSearchFormSettingsImpl(fieldName, label, expression, position, facetType, isCountDisplayed, isMultiSelect, isMatchingAll, mapper, limit, threshold);
+    static <T> TermFacetedSearchFormSettings<T> of(final String fieldName, final String label, final String expression,
+                                                   final int position, final FacetUIType uiType, final boolean isCountDisplayed,
+                                                   final boolean isMultiSelect, final boolean isMatchingAll, @Nullable final FacetMapperSettings mapper,
+                                                   @Nullable final Long limit, @Nullable final Long threshold) {
+        return new TermFacetedSearchFormSettingsImpl<>(fieldName, label, expression, position, uiType, isCountDisplayed, isMultiSelect, isMatchingAll, mapper, limit, threshold);
     }
 }

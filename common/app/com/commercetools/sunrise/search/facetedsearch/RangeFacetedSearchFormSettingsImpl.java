@@ -4,7 +4,7 @@ import com.commercetools.sunrise.search.facetedsearch.mappers.FacetMapperSetting
 
 import javax.annotation.Nullable;
 
-class RangeFacetedSearchFormSettingsImpl extends FacetedSearchFormSettingsImpl implements RangeFacetedSearchFormSettings {
+class RangeFacetedSearchFormSettingsImpl<T> extends FacetedSearchFormSettingsImpl<T> implements RangeFacetedSearchFormSettings<T> {
 
     RangeFacetedSearchFormSettingsImpl(final String fieldName, final String label, final String expression, final int position,
                                        final FacetUIType type, final boolean isCountDisplayed, final boolean isMultiSelect,

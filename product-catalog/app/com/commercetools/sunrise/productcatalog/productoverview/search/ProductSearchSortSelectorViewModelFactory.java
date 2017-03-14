@@ -11,7 +11,7 @@ import javax.inject.Inject;
 public class ProductSearchSortSelectorViewModelFactory extends AbstractSortSelectorViewModelFactory {
 
     @Inject
-    public ProductSearchSortSelectorViewModelFactory(final ProductSearchSortFormSettings settings,
+    public ProductSearchSortSelectorViewModelFactory(final ProductSortFormSettings settings,
                                                      final SortFormSelectableOptionViewModelFactory sortFormSelectableOptionViewModelFactory,
                                                      final Http.Request httpRequest) {
         super(settings, sortFormSelectableOptionViewModelFactory, httpRequest);

@@ -13,11 +13,11 @@ import java.util.Locale;
 
 import static com.commercetools.sunrise.framework.viewmodels.forms.QueryStringUtils.findAllSelectedValuesFromQueryString;
 
-public interface RangeFacetedSearchFormSettings extends FacetedSearchFormSettings {
+public interface RangeFacetedSearchFormSettings<T> extends FacetedSearchFormSettings<T> {
 
     @Override
-    default <T> RangeFacetedSearchExpression<T> buildSearchExpression(final Http.Request httpRequest, final Locale locale, final Class<T> resourceClass) {
-        final RangeTermFacetedSearchSearchModel<T> searchModel = RangeTermFacetedSearchSearchModel.of(getLocalizedAttributePath(locale));
+    default RangeFacetedSearchExpression<T> buildSearchExpression(final Http.Request httpRequest, final Locale locale) {
+        final RangeTermFacetedSearchSearchModel<T> searchModel = RangeTermFacetedSearchSearchModel.of(getLocalizedExpression(locale));
         final List<FilterRange<String>> selectedValues = convertToRanges(findAllSelectedValuesFromQueryString(getFieldName(), httpRequest));
         final RangeFacetedSearchExpression<T> facetedSearchExpr;
         if (selectedValues.isEmpty()) {
@@ -43,9 +43,9 @@ public interface RangeFacetedSearchFormSettings extends FacetedSearchFormSetting
         return result;
     }
 
-    static RangeFacetedSearchFormSettings of(final String fieldName, final String label, final String expression, final int position,
+    static <T> RangeFacetedSearchFormSettings<T> of(final String fieldName, final String label, final String expression, final int position,
                                              final FacetUIType facetType, final boolean isCountDisplayed, final boolean isMultiSelect,
                                              final boolean isMatchingAll, @Nullable final FacetMapperSettings mapper) {
-        return new RangeFacetedSearchFormSettingsImpl(fieldName, label, expression, position, facetType, isCountDisplayed, isMultiSelect, isMatchingAll, mapper);
+        return new RangeFacetedSearchFormSettingsImpl<>(fieldName, label, expression, position, facetType, isCountDisplayed, isMultiSelect, isMatchingAll, mapper);
     }
 }

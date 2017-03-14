@@ -9,18 +9,42 @@ import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
-public interface TermFacetedSearchFormSettingsWithOptions extends FacetedSearchFormSettingsWithOptions<TermFacetedSearchFormOption> {
+public interface TermFacetedSearchFormSettingsWithOptions<T> extends TermFacetedSearchFormSettings<T>, FacetedSearchFormSettingsWithOptions<T, TermFacetedSearchFormOption> {
 
-    static TermFacetedSearchFormSettingsWithOptions of(final FacetedSearchFormSettings settings, final List<TermFacetedSearchFormOption> options) {
-        return new TermFacetedSearchFormSettingsWithOptionsImpl(settings, options);
+    /**
+     * Whether the facet can be displayed or not.
+     * @return true if the facet can be displayed, false otherwise
+     */
+    default boolean isAvailable() {
+        return Optional.ofNullable(getThreshold())
+                .map(threshold -> getOptions().size() >= threshold)
+                .orElse(true);
+    }
+
+    /**
+     * Obtains the truncated options list according to the defined limit.
+     * @return the truncated options if the limit is defined, the whole list otherwise
+     */
+    default List<TermFacetedSearchFormOption> getLimitedOptions() {
+        return Optional.ofNullable(getLimit())
+                .map(limit -> getOptions().stream()
+                        .limit(limit)
+                        .collect(toList()))
+                .orElse(getOptions());
+    }
+
+    static <T> TermFacetedSearchFormSettingsWithOptions<T> of(final TermFacetedSearchFormSettings<T> settings,
+                                                              final List<TermFacetedSearchFormOption> options) {
+        return new TermFacetedSearchFormSettingsWithOptionsImpl<>(settings, options);
     }
 
     /**
      * Generates the facet options according to the facet result and mapper provided.
      * @return the generated facet options
      */
-    static TermFacetedSearchFormSettingsWithOptions of(final FacetedSearchFormSettings settings, final TermFacetResult facetResult,
-                                                       @Nullable final TermFacetMapper mapper) {
+    static <T> TermFacetedSearchFormSettingsWithOptions<T> ofFacetResult(final TermFacetedSearchFormSettings<T> settings,
+                                                                      final TermFacetResult facetResult,
+                                                                      @Nullable final TermFacetMapper mapper) {
         final List<TermFacetedSearchFormOption> options = Optional.ofNullable(mapper)
                 .map(m -> m.apply(facetResult))
                 .orElseGet(() -> facetResult.getTerms().stream()

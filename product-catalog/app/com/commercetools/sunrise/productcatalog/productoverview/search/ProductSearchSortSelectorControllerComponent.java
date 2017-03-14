@@ -6,35 +6,45 @@ import com.commercetools.sunrise.framework.hooks.requests.ProductProjectionSearc
 import com.commercetools.sunrise.search.sort.AbstractSortSelectorControllerComponent;
 import io.sphere.sdk.products.ProductProjection;
 import io.sphere.sdk.products.search.ProductProjectionSearch;
+import io.sphere.sdk.queries.PagedResult;
 import io.sphere.sdk.search.PagedSearchResult;
 import io.sphere.sdk.search.SortExpression;
 import play.mvc.Http;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.CompletionStage;
 
 import static java.util.concurrent.CompletableFuture.completedFuture;
-import static java.util.stream.Collectors.toList;
 
-public final class ProductSearchSortSelectorControllerComponent extends AbstractSortSelectorControllerComponent
+public final class ProductSearchSortSelectorControllerComponent extends AbstractSortSelectorControllerComponent<ProductProjection>
         implements ControllerComponent, ProductProjectionSearchHook, ProductProjectionPagedSearchResultLoadedHook {
 
+    private final List<SortExpression<ProductProjection>> sortExpressions;
+
+    @Nullable
+    private PagedResult<ProductProjection> pagedResult;
+
     @Inject
-    public ProductSearchSortSelectorControllerComponent(final ProductSearchSortFormSettings settings,
+    public ProductSearchSortSelectorControllerComponent(final ProductSortFormSettings productSortFormSettings,
                                                         final ProductSearchSortSelectorViewModelFactory sortSelectorViewModelFactory,
                                                         final Http.Request httpRequest, final Locale locale) {
-        super(settings, sortSelectorViewModelFactory, httpRequest, locale);
+        super(productSortFormSettings, sortSelectorViewModelFactory);
+        this.sortExpressions = productSortFormSettings.buildSearchExpressions(httpRequest, locale);
+    }
+
+    @Nullable
+    @Override
+    protected PagedResult<ProductProjection> getPagedResult() {
+        return pagedResult;
     }
 
     @Override
     public ProductProjectionSearch onProductProjectionSearch(final ProductProjectionSearch search) {
-        final List<SortExpression<ProductProjection>> expressions = getSelectedSortExpressions().stream()
-                .map(SortExpression::<ProductProjection>of)
-                .collect(toList());
-        if (!expressions.isEmpty()) {
-            return search.plusSort(expressions);
+        if (!sortExpressions.isEmpty()) {
+            return search.plusSort(sortExpressions);
         } else {
             return search;
         }
@@ -42,7 +52,7 @@ public final class ProductSearchSortSelectorControllerComponent extends Abstract
 
     @Override
     public CompletionStage<?> onProductProjectionPagedSearchResultLoaded(final PagedSearchResult<ProductProjection> pagedSearchResult) {
-        setPagedResult(pagedSearchResult);
+        this.pagedResult = pagedSearchResult;
         return completedFuture(null);
     }
 }

@@ -1,7 +1,6 @@
 package com.commercetools.sunrise.search.facetedsearch.mappers;
 
 import com.commercetools.sunrise.search.facetedsearch.TermFacetedSearchFormOption;
-import com.commercetools.sunrise.search.facetedsearch.mappers.FacetMapper;
 import io.sphere.sdk.search.TermFacetResult;
 
 import java.util.List;
@@ -12,11 +11,11 @@ import static java.util.stream.Collectors.toList;
  * Mapper that sorts the options according to the given list of values.
  * Any value that do not appear in the list of values is placed at the end of the output list.
  */
-public class CustomSortedFacetMapper implements FacetMapper {
+public final class CustomSortedTermFacetMapper implements TermFacetMapper {
 
     private final List<String> sortedFacetValues;
 
-    private CustomSortedFacetMapper(final List<String> sortedFacetValues) {
+    public CustomSortedTermFacetMapper(final List<String> sortedFacetValues) {
         this.sortedFacetValues = sortedFacetValues;
     }
 

@@ -9,10 +9,10 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class ConfigurableFacetedSearchFormSettings extends FacetedSearchFormSettingsImpl {
+abstract class ConfigurableFacetedSearchFormSettings<T> extends FacetedSearchFormSettingsImpl<T> {
 
     private static final String CONFIG_KEY = "key";
-    private static final String CONFIG_TYPE = "type";
+    private static final String CONFIG_UI_TYPE = "uiType";
     private static final String CONFIG_LABEL = "label";
     private static final String CONFIG_EXPR = "expr";
     private static final String CONFIG_COUNT = "count";
@@ -24,9 +24,10 @@ public abstract class ConfigurableFacetedSearchFormSettings extends FacetedSearc
     private static final String CONFIG_MAPPER_VALUES = "values";
 
     protected ConfigurableFacetedSearchFormSettings(final Configuration configuration, final int position,
-                                                    final List<? extends FacetUIType> facetUITypes, final List<? extends FacetMapperType> facetMapperTypes) {
+                                                    final List<? extends FacetUIType> facetUITypes,
+                                                    final List<? extends FacetMapperType> facetMapperTypes) {
         super(key(configuration), label(configuration), expression(configuration), position,
-                type(configuration, facetUITypes), isCountDisplayed(configuration), isMultiSelect(configuration),
+                uiType(configuration, facetUITypes), isCountDisplayed(configuration), isMultiSelect(configuration),
                 isMatchingAll(configuration), mapperSettings(configuration, facetMapperTypes));
     }
 
@@ -39,13 +40,14 @@ public abstract class ConfigurableFacetedSearchFormSettings extends FacetedSearc
         return configuration.getString(CONFIG_LABEL, "");
     }
 
-    private static FacetUIType type(final Configuration configuration, final List<? extends FacetUIType> facetUITypes) {
-        return Optional.ofNullable(configuration.getString(CONFIG_TYPE))
-                .map(type -> facetUITypes.stream()
-                        .filter(typeValue -> typeValue.value().equals(type))
+    @Nullable
+    private static FacetUIType uiType(final Configuration configuration, final List<? extends FacetUIType> facetUITypes) {
+        return Optional.ofNullable(configuration.getString(CONFIG_UI_TYPE))
+                .map(uiType -> facetUITypes.stream()
+                        .filter(uiTypeOption -> uiTypeOption.value().equals(uiType))
                         .findAny()
-                        .orElseThrow(() -> new SunriseConfigurationException("Unrecognized facet UI type \"" + type + "\"", CONFIG_TYPE, configuration)))
-                .orElseThrow(() -> new SunriseConfigurationException("Could not find facet UI type required to initialize it", CONFIG_KEY, configuration));
+                        .orElseThrow(() -> new SunriseConfigurationException("Unrecognized facet UI type \"" + uiType + "\"", CONFIG_UI_TYPE, configuration)))
+                .orElse(null);
     }
 
     private static String expression(final Configuration configuration) {

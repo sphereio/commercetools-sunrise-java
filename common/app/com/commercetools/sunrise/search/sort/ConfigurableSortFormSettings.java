@@ -7,7 +7,7 @@ import java.util.List;
 import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 
-public abstract class ConfigurableSortFormSettings extends SortFormSettingsImpl {
+public abstract class ConfigurableSortFormSettings<T> extends SortFormSettingsImpl<T> {
 
     private static final String CONFIG_KEY = "key";
     private static final String DEFAULT_KEY = "sort";

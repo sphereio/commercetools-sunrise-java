@@ -12,15 +12,22 @@ import java.util.Locale;
 
 public final class ProductSearchBoxControllerComponent extends AbstractSearchBoxControllerComponent implements ControllerComponent, ProductProjectionSearchHook {
 
+    private final LocalizedStringEntry searchText;
+
     @Inject
     public ProductSearchBoxControllerComponent(final ProductSearchBoxSettings productSearchBoxSettings,
                                                final Http.Request httpRequest, final Locale locale) {
-        super(productSearchBoxSettings, httpRequest, locale);
+        super(productSearchBoxSettings);
+        this.searchText = productSearchBoxSettings.getSearchText(httpRequest, locale);
+    }
+
+    @Override
+    protected LocalizedStringEntry getSearchText() {
+        return searchText;
     }
 
     @Override
     public ProductProjectionSearch onProductProjectionSearch(final ProductProjectionSearch search) {
-        final LocalizedStringEntry searchText = getSearchText();
         if (!searchText.getValue().isEmpty()) {
             return search.withText(searchText);
         } else {

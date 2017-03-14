@@ -18,14 +18,14 @@ import java.util.Optional;
 
 public abstract class AbstractFacetedSearchSelectorControllerComponent<T> extends Base implements ControllerComponent, PageDataReadyHook {
 
-    private final List<FacetedSearchFormSettings> settings;
+    private final FacetedSearchFormSettingsList<T> settings;
     private final AbstractSortSelectorViewModelFactory sortSelectorViewModelFactory;
     private final Injector injector;
 
     @Nullable
     private PagedSearchResult<T> pagedSearchResult;
 
-    protected AbstractFacetedSearchSelectorControllerComponent(final List<FacetedSearchFormSettings> settings,
+    protected AbstractFacetedSearchSelectorControllerComponent(final FacetedSearchFormSettingsList<T> settings,
                                                                final AbstractSortSelectorViewModelFactory sortSelectorViewModelFactory,
                                                                final Injector injector) {
         this.settings = settings;
@@ -33,7 +33,7 @@ public abstract class AbstractFacetedSearchSelectorControllerComponent<T> extend
         this.injector = injector;
     }
 
-    protected final List<FacetedSearchFormSettings> getSettings() {
+    protected final FacetedSearchFormSettingsList<T> getSettings() {
         return settings;
     }
 
@@ -46,7 +46,7 @@ public abstract class AbstractFacetedSearchSelectorControllerComponent<T> extend
         this.pagedSearchResult = pagedSearchResult;
     }
 
-    private TermFacetedSearchFormSettingsWithOptions createSettingsWithOptions(final TermFacetedSearchFormSettings setting,
+    private TermFacetedSearchFormSettingsWithOptions<T> createSettingsWithOptions(final TermFacetedSearchFormSettings<T> setting,
                                                                                final TermFacetedSearchExpression<T> expression,
                                                                                final PagedSearchResult<T> pagedSearchResult) {
         final TermFacetResult termFacetResult = pagedSearchResult.getFacetResult(expression);
@@ -56,7 +56,7 @@ public abstract class AbstractFacetedSearchSelectorControllerComponent<T> extend
                 .filter(facetMapper -> facetMapper instanceof TermFacetMapper)
                 .map(facetMapper -> (TermFacetMapper) facetMapper)
                 .orElse(null);
-        return TermFacetedSearchFormSettingsWithOptions.of(setting, termFacetResult, termFacetMapper);
+        return TermFacetedSearchFormSettingsWithOptions.ofFacetResult(setting, termFacetResult, termFacetMapper);
     }
 
     @Override
