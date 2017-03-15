@@ -12,10 +12,10 @@ class TermFacetedSearchFormSettingsImpl<T> extends FacetedSearchFormSettingsImpl
     private final Long threshold;
 
     TermFacetedSearchFormSettingsImpl(final String fieldName, final String label, final String attributePath, final int position,
-                                      final FacetUIType type, final boolean isCountDisplayed, final boolean isMultiSelect,
-                                      final boolean isMatchingAll, @Nullable final FacetMapperSettings mapper,
+                                      final boolean isCountDisplayed, final boolean isMultiSelect, final boolean isMatchingAll,
+                                      @Nullable final String uiType, @Nullable final FacetMapperSettings mapper,
                                       @Nullable final Long limit, @Nullable final Long threshold) {
-        super(fieldName, label, attributePath, position, type, isCountDisplayed, isMultiSelect, isMatchingAll, mapper);
+        super(fieldName, label, attributePath, position, isCountDisplayed, isMultiSelect, isMatchingAll, uiType, mapper);
         this.limit = limit;
         this.threshold = threshold;
     }

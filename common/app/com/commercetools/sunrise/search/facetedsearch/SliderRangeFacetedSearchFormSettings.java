@@ -1,38 +1,43 @@
 package com.commercetools.sunrise.search.facetedsearch;
 
-import io.sphere.sdk.search.RangeFacetResult;
+import io.sphere.sdk.search.RangeFacetExpression;
+import io.sphere.sdk.search.RangeFacetedSearchExpression;
+import io.sphere.sdk.search.model.RangeTermFacetSearchModel;
+import io.sphere.sdk.search.model.RangeTermFacetedSearchSearchModel;
+import play.mvc.Http;
 
 import javax.annotation.Nullable;
-import java.util.List;
+import java.util.Locale;
+import java.util.function.Function;
 
-import static java.util.stream.Collectors.toList;
+import static com.commercetools.sunrise.framework.viewmodels.forms.QueryStringUtils.findSelectedValueFromQueryString;
+import static com.commercetools.sunrise.search.facetedsearch.RangeUtils.parseFilterRange;
 
-public interface SliderRangeFacetedSearchFormSettings<T> extends RangeFacetedSearchFormSettings<T> {
+public interface SliderRangeFacetedSearchFormSettings<T> extends FacetedSearchFormSettings<T> {
 
-    @Nullable
-    String getLowerEndpoint();
+    RangeEndpointFormSettings getLowerEndpointSettings();
 
-    @Nullable
-    String getUpperEndpoint();
+    RangeEndpointFormSettings getUpperEndpointSettings();
 
-    String getMaxValue();
-
-    String getMinValue();
-
-    static <T> SliderRangeFacetedSearchFormSettings<T> of(final RangeFacetedSearchFormSettings<T> settings,
-                                                          final List<BucketRangeFacetedSearchFormOption> options) {
-        return new RangeFacetedSearchFormSettingsWithOptionsImpl<>(settings, options);
+    @Override
+    default RangeFacetedSearchExpression<T> buildSearchExpression(final Http.Request httpRequest, final Locale locale) {
+        final String attributePath = getLocalizedAttributePath(locale);
+        final RangeTermFacetedSearchSearchModel<T> searchModel = RangeTermFacetedSearchSearchModel.of(attributePath);
+        final String rangeAsString = String.format("(%s to %s)",
+                findSelectedValueFromQueryString(getLowerEndpointSettings(), httpRequest),
+                findSelectedValueFromQueryString(getUpperEndpointSettings(), httpRequest));
+        final RangeFacetedSearchExpression<T> facetedSearchExpr = parseFilterRange(rangeAsString)
+                .map(searchModel::isBetween)
+                .orElseGet(searchModel::allRanges);
+        final RangeFacetExpression<T> facetExpression = RangeTermFacetSearchModel.<T, String>of(attributePath, Function.identity())
+                .withCountingProducts(true)
+                .allRanges();
+        return RangeFacetedSearchExpression.of(facetExpression, facetedSearchExpr.filterExpressions());
     }
 
-    /**
-     * Generates the facet options according to the facet result provided.
-     * @return the generated facet options
-     */
-    static <T> SliderRangeFacetedSearchFormSettings<T> ofFacetResult(final RangeFacetedSearchFormSettings<T> settings,
-                                                                     final RangeFacetResult facetResult) {
-        final List<BucketRangeFacetedSearchFormOption> options = facetResult.getRanges().stream()
-                        .map(BucketRangeFacetedSearchFormOption::ofRangeStats)
-                        .collect(toList());
-        return of(settings, options);
+    static <T> SliderRangeFacetedSearchFormSettings<T> of(final String fieldName, final String label, final String attributePath,
+                                                          final int position, final boolean isCountDisplayed, @Nullable final String uiType,
+                                                          final RangeEndpointFormSettings lowerEndpointSettings, final RangeEndpointFormSettings upperEndpointSettings) {
+        return new SliderRangeFacetedSearchFormSettingsImpl<>(fieldName, label, attributePath, position, isCountDisplayed, uiType, lowerEndpointSettings, upperEndpointSettings);
     }
 }

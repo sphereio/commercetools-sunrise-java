@@ -19,11 +19,7 @@ public final class ProductFacetedSearchFormSettingsList extends ConfigurableFace
 
     @Inject
     public ProductFacetedSearchFormSettingsList(final Configuration configuration) {
-        super(Optional.ofNullable(configuration.getConfigList(CONFIG)).orElseGet(Collections::emptyList), facetUITypes(), facetMapperTypes());
-    }
-
-    private static List<SunriseFacetUIType> facetUITypes() {
-        return asList(SunriseFacetUIType.values());
+        super(Optional.ofNullable(configuration.getConfigList(CONFIG)).orElseGet(Collections::emptyList), facetMapperTypes());
     }
 
     private static List<SunriseFacetMapperType> facetMapperTypes() {

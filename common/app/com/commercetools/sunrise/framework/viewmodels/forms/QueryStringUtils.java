@@ -43,17 +43,13 @@ public final class QueryStringUtils {
      * @param settings the form settings
      * @param httpRequest current HTTP request
      * @param <T> type of the form options
-     * @return a list of valid selected value for this form, or the default value if no valid value is selected
+     * @return a list of valid selected values for this form
      */
     public static <T> List<T> findAllSelectedValuesFromQueryString(final FormSettings<T> settings, final Http.Request httpRequest) {
-        final List<T> selectedValues = findAllSelectedValuesFromQueryString(settings.getFieldName(), httpRequest).stream()
+        return findAllSelectedValuesFromQueryString(settings.getFieldName(), httpRequest).stream()
                 .map(settings::mapToValue)
                 .filter(settings::isValidValue)
                 .collect(toList());
-        if (selectedValues.isEmpty()) {
-            selectedValues.add(settings.getDefaultValue());
-        }
-        return selectedValues;
     }
 
     /**

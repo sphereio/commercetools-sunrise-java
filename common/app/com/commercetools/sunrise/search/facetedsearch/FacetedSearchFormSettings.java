@@ -1,6 +1,5 @@
 package com.commercetools.sunrise.search.facetedsearch;
 
-import com.commercetools.sunrise.framework.viewmodels.forms.WithFormFieldName;
 import com.commercetools.sunrise.search.facetedsearch.mappers.FacetMapperSettings;
 import io.sphere.sdk.search.FacetedSearchExpression;
 import play.mvc.Http;
@@ -10,7 +9,7 @@ import java.util.Locale;
 
 import static com.commercetools.sunrise.search.SearchUtils.localizeExpression;
 
-public interface FacetedSearchFormSettings<T> extends WithFormFieldName {
+public interface FacetedSearchFormSettings<T> {
 
     /**
      * Gets the label displayed in the facet.
@@ -23,7 +22,7 @@ public interface FacetedSearchFormSettings<T> extends WithFormFieldName {
      * The expression might contain {@code {{locale}}}, which should be replaced with the current locale before using it.
      * @return the facet expression
      */
-    String getExpression();
+    String getAttributePath();
 
     /**
      * Gets the localized expression associated, representing just the attribute path.
@@ -31,8 +30,8 @@ public interface FacetedSearchFormSettings<T> extends WithFormFieldName {
      * @param locale the current user's locale
      * @return the localized facet expression
      */
-    default String getLocalizedExpression(final Locale locale) {
-        return localizeExpression(getExpression(), locale);
+    default String getLocalizedAttributePath(final Locale locale) {
+        return localizeExpression(getAttributePath(), locale);
     }
 
     /**
@@ -40,13 +39,6 @@ public interface FacetedSearchFormSettings<T> extends WithFormFieldName {
      * @return a natural number indicating the position of this facet
      */
     int getPosition();
-
-    /**
-     * Gets the type of this facet.
-     * @return the type of this facet
-     */
-    @Nullable
-    FacetUIType getUIType();
 
     /**
      * Whether the facet count should be hidden or not.
@@ -66,6 +58,13 @@ public interface FacetedSearchFormSettings<T> extends WithFormFieldName {
      * @return true if results should match all selected values, false otherwise
      */
     boolean isMatchingAll();
+
+    /**
+     * Gets the UI type of this facet.
+     * @return the UI type of this facet
+     */
+    @Nullable
+    String getUIType();
 
     /**
      * Gets the mapper type for this facet.

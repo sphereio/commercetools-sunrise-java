@@ -8,22 +8,22 @@ import javax.annotation.Nullable;
 abstract class FacetedSearchFormSettingsImpl<T> extends AbstractFormFieldName implements FacetedSearchFormSettings<T> {
 
     private final String label;
-    private final String expression;
+    private final String attributePath;
     private final int position;
-    @Nullable
-    private final FacetUIType uiType;
     private final boolean isCountDisplayed;
     private final boolean isMultiSelect;
     private final boolean isMatchingAll;
     @Nullable
+    private final String uiType;
+    @Nullable
     private final FacetMapperSettings mapperSettings;
 
-    FacetedSearchFormSettingsImpl(final String fieldName, final String label, final String expression, final int position,
-                                  @Nullable final FacetUIType uiType, final boolean isCountDisplayed, final boolean isMultiSelect,
-                                  final boolean isMatchingAll, @Nullable final FacetMapperSettings mapperSettings) {
+    FacetedSearchFormSettingsImpl(final String fieldName, final String label, final String attributePath, final int position,
+                                  final boolean isCountDisplayed, final boolean isMultiSelect, final boolean isMatchingAll,
+                                  @Nullable final String uiType, @Nullable final FacetMapperSettings mapperSettings) {
         super(fieldName);
         this.label = label;
-        this.expression = expression;
+        this.attributePath = attributePath;
         this.position = position;
         this.uiType = uiType;
         this.isCountDisplayed = isCountDisplayed;
@@ -38,19 +38,13 @@ abstract class FacetedSearchFormSettingsImpl<T> extends AbstractFormFieldName im
     }
 
     @Override
-    public String getExpression() {
-        return expression;
+    public String getAttributePath() {
+        return attributePath;
     }
 
     @Override
     public int getPosition() {
         return position;
-    }
-
-    @Nullable
-    @Override
-    public FacetUIType getUIType() {
-        return uiType;
     }
 
     @Override
@@ -66,6 +60,12 @@ abstract class FacetedSearchFormSettingsImpl<T> extends AbstractFormFieldName im
     @Override
     public boolean isMatchingAll() {
         return isMatchingAll;
+    }
+
+    @Nullable
+    @Override
+    public String getUIType() {
+        return uiType;
     }
 
     @Nullable

@@ -13,20 +13,21 @@ public abstract class ConfigurableFacetedSearchFormSettingsList<T> implements Fa
 
     private final static String CONFIG_TYPE = "type";
     private final static String CONFIG_TYPE_TERM = "term";
-    private final static String CONFIG_TYPE_RANGE = "range";
+    private final static String CONFIG_TYPE_SLIDER = "sliderRange";
+    private final static String CONFIG_TYPE_BUCKET = "bucketRange";
 
     private final List<TermFacetedSearchFormSettings<T>> termSettings = new ArrayList<>();
-    private final List<RangeFacetedSearchFormSettings<T>> rangeSettings = new ArrayList<>();
+    private final List<SliderRangeFacetedSearchFormSettings<T>> sliderRangeSettings = new ArrayList<>();
+    private final List<BucketRangeFacetedSearchFormSettings<T>> bucketRangeSettings = new ArrayList<>();
 
     protected ConfigurableFacetedSearchFormSettingsList(final List<Configuration> configurations,
-                                                        final List<? extends FacetUIType> facetUITypes,
                                                         final List<? extends FacetMapperType> facetMapperTypes) {
         IntStream.range(0, configurations.size())
                 .forEach(i -> {
                     final Configuration configuration = configurations.get(i);
                     final String type = Optional.ofNullable(configuration.getString(CONFIG_TYPE))
                             .orElseThrow(() -> new SunriseConfigurationException("Could not find required facet type", CONFIG_TYPE, configuration));
-                    initializeFacet(configuration, type, i, facetUITypes, facetMapperTypes);
+                    initializeFacet(configuration, type, i, facetMapperTypes);
                 });
     }
 
@@ -36,19 +37,26 @@ public abstract class ConfigurableFacetedSearchFormSettingsList<T> implements Fa
     }
 
     @Override
-    public List<RangeFacetedSearchFormSettings<T>> getRangeSettings() {
-        return rangeSettings;
+    public List<SliderRangeFacetedSearchFormSettings<T>> getSliderRangeSettings() {
+        return sliderRangeSettings;
+    }
+
+    @Override
+    public List<BucketRangeFacetedSearchFormSettings<T>> getBucketRangeSettings() {
+        return bucketRangeSettings;
     }
 
     private void initializeFacet(final Configuration configuration, final String type, final int i,
-                                 final List<? extends FacetUIType> facetUITypes,
                                  final List<? extends FacetMapperType> facetMapperTypes) {
         switch (type) {
             case CONFIG_TYPE_TERM:
-                termSettings.add(new ConfigurableTermFacetedSearchFormSettings<>(configuration, i, facetUITypes, facetMapperTypes));
+                termSettings.add(new ConfigurableTermFacetedSearchFormSettings<>(configuration, i, facetMapperTypes));
                 break;
-            case CONFIG_TYPE_RANGE:
-                rangeSettings.add(new ConfigurableRangeFacetedSearchFormSettings<>(configuration, i, facetUITypes, facetMapperTypes));
+            case CONFIG_TYPE_SLIDER:
+                sliderRangeSettings.add(new ConfigurableSliderRangeFacetedSearchFormSettings<>(configuration, i, facetMapperTypes));
+                break;
+            case CONFIG_TYPE_BUCKET:
+                bucketRangeSettings.add(new ConfigurableBucketRangeFacetedSearchFormSettings<>(configuration, i, facetMapperTypes));
                 break;
             default:
                 throw new SunriseConfigurationException("Unrecognized facet type \"" + type + "\"", CONFIG_TYPE, configuration);

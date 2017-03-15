@@ -1,18 +1,20 @@
 package com.commercetools.sunrise.search.facetedsearch;
 
+import com.commercetools.sunrise.framework.viewmodels.forms.FormSettings;
 import com.commercetools.sunrise.search.facetedsearch.mappers.FacetMapperSettings;
+import io.sphere.sdk.search.TermFacetExpression;
 import io.sphere.sdk.search.TermFacetedSearchExpression;
 import io.sphere.sdk.search.model.FacetedSearchSearchModel;
+import io.sphere.sdk.search.model.TermFacetSearchModel;
 import io.sphere.sdk.search.model.TermFacetedSearchSearchModel;
 import play.mvc.Http;
 
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Function;
 
-import static com.commercetools.sunrise.framework.viewmodels.forms.QueryStringUtils.findAllSelectedValuesFromQueryString;
-
-public interface TermFacetedSearchFormSettings<T> extends FacetedSearchFormSettings<T> {
+public interface TermFacetedSearchFormSettings<T> extends FacetedSearchFormSettings<T>, FormSettings<String> {
 
     /**
      * Gets the threshold indicating the minimum amount of options allowed to be displayed in the facet.
@@ -29,9 +31,25 @@ public interface TermFacetedSearchFormSettings<T> extends FacetedSearchFormSetti
     Long getLimit();
 
     @Override
+    default String getDefaultValue() {
+        return "";
+    }
+
+    @Override
+    default String mapToValue(final String valueAsString) {
+        return valueAsString;
+    }
+
+    @Override
+    default boolean isValidValue(final String value) {
+        return true;
+    }
+
+    @Override
     default TermFacetedSearchExpression<T> buildSearchExpression(final Http.Request httpRequest, final Locale locale) {
-        final FacetedSearchSearchModel<T> searchModel = TermFacetedSearchSearchModel.of(getLocalizedExpression(locale));
-        final List<String> selectedValues = findAllSelectedValuesFromQueryString(getFieldName(), httpRequest);
+        final String attributePath = getLocalizedAttributePath(locale);
+        final FacetedSearchSearchModel<T> searchModel = TermFacetedSearchSearchModel.of(attributePath);
+        final List<String> selectedValues = getAllSelectedValues(httpRequest);
         final TermFacetedSearchExpression<T> facetedSearchExpr;
         if (selectedValues.isEmpty()) {
             facetedSearchExpr = searchModel.allTerms();
@@ -40,13 +58,16 @@ public interface TermFacetedSearchFormSettings<T> extends FacetedSearchFormSetti
         } else {
             facetedSearchExpr = searchModel.containsAny(selectedValues);
         }
-        return facetedSearchExpr;
+        final TermFacetExpression<T> facetExpression = TermFacetSearchModel.<T, String>of(attributePath, Function.identity())
+                .withCountingProducts(true)
+                .allTerms();
+        return TermFacetedSearchExpression.of(facetExpression, facetedSearchExpr.filterExpressions());
     }
 
-    static <T> TermFacetedSearchFormSettings<T> of(final String fieldName, final String label, final String expression,
-                                                   final int position, final FacetUIType uiType, final boolean isCountDisplayed,
-                                                   final boolean isMultiSelect, final boolean isMatchingAll, @Nullable final FacetMapperSettings mapper,
+    static <T> TermFacetedSearchFormSettings<T> of(final String fieldName, final String label, final String expression, final int position,
+                                                   final boolean isCountDisplayed, final boolean isMultiSelect, final boolean isMatchingAll,
+                                                   @Nullable final String uiType, @Nullable final FacetMapperSettings mapper,
                                                    @Nullable final Long limit, @Nullable final Long threshold) {
-        return new TermFacetedSearchFormSettingsImpl<>(fieldName, label, expression, position, uiType, isCountDisplayed, isMultiSelect, isMatchingAll, mapper, limit, threshold);
+        return new TermFacetedSearchFormSettingsImpl<>(fieldName, label, expression, position, isCountDisplayed, isMultiSelect, isMatchingAll, uiType, mapper, limit, threshold);
     }
 }

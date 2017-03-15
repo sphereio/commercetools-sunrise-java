@@ -11,8 +11,8 @@ import static java.util.stream.Collectors.toList;
 
 final class ConfigurableSortFormOption extends SortFormOptionImpl {
 
-    private static final String OPTION_LABEL_ATTR = "label";
-    private static final String OPTION_VALUE_ATTR = "value";
+    private static final String OPTION_FIELD_LABEL_ATTR = "fieldLabel";
+    private static final String OPTION_FIELD_VALUE_ATTR = "fieldValue";
     private static final String OPTION_EXPR_ATTR = "expr";
     private static final String OPTION_DEFAULT_ATTR = "default";
 
@@ -21,12 +21,12 @@ final class ConfigurableSortFormOption extends SortFormOptionImpl {
     }
 
     private static String fieldLabel(final Configuration configuration) {
-        return configuration.getString(OPTION_LABEL_ATTR, "");
+        return configuration.getString(OPTION_FIELD_LABEL_ATTR, "");
     }
 
     private static String fieldValue(final Configuration configuration) {
-        return Optional.ofNullable(configuration.getString(OPTION_VALUE_ATTR))
-                .orElseThrow(() -> new SunriseConfigurationException("Missing sort value", OPTION_VALUE_ATTR, configuration));
+        return Optional.ofNullable(configuration.getString(OPTION_FIELD_VALUE_ATTR))
+                .orElseThrow(() -> new SunriseConfigurationException("Missing sort field value", OPTION_FIELD_VALUE_ATTR, configuration));
     }
 
     private static List<String> expressions(final Configuration configuration) {

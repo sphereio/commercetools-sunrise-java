@@ -27,8 +27,8 @@ class TermFacetedSearchFormSettingsWithOptionsImpl<T> extends AbstractFormSettin
     }
 
     @Override
-    public String getExpression() {
-        return settings.getExpression();
+    public String getAttributePath() {
+        return settings.getAttributePath();
     }
 
     @Override
