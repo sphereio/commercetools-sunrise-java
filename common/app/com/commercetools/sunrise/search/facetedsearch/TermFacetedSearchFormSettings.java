@@ -1,7 +1,7 @@
 package com.commercetools.sunrise.search.facetedsearch;
 
 import com.commercetools.sunrise.framework.viewmodels.forms.FormSettings;
-import com.commercetools.sunrise.search.facetedsearch.mappers.FacetMapperSettings;
+import com.commercetools.sunrise.search.facetedsearch.mappers.TermFacetMapperSettings;
 import io.sphere.sdk.search.TermFacetExpression;
 import io.sphere.sdk.search.TermFacetedSearchExpression;
 import io.sphere.sdk.search.model.FacetedSearchSearchModel;
@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.function.Function;
 
-public interface TermFacetedSearchFormSettings<T> extends FacetedSearchFormSettings<T>, FormSettings<String> {
+public interface TermFacetedSearchFormSettings<T> extends MultiOptionFacetedSearchFormSettings<T>, FormSettings<String> {
 
     /**
      * Gets the threshold indicating the minimum amount of options allowed to be displayed in the facet.
@@ -29,6 +29,13 @@ public interface TermFacetedSearchFormSettings<T> extends FacetedSearchFormSetti
      */
     @Nullable
     Long getLimit();
+
+    /**
+     * Gets the mapper type for this facet.
+     * @return the facet option mapper, or absent if there is no mapper
+     */
+    @Nullable
+    TermFacetMapperSettings getMapperSettings();
 
     @Override
     default String getDefaultValue() {
@@ -65,9 +72,10 @@ public interface TermFacetedSearchFormSettings<T> extends FacetedSearchFormSetti
     }
 
     static <T> TermFacetedSearchFormSettings<T> of(final String fieldName, final String label, final String expression, final int position,
-                                                   final boolean isCountDisplayed, final boolean isMultiSelect, final boolean isMatchingAll,
-                                                   @Nullable final String uiType, @Nullable final FacetMapperSettings mapper,
+                                                   final boolean isCountDisplayed, @Nullable final String uiType,
+                                                   final boolean isMultiSelect, final boolean isMatchingAll,
+                                                   @Nullable final TermFacetMapperSettings mapper,
                                                    @Nullable final Long limit, @Nullable final Long threshold) {
-        return new TermFacetedSearchFormSettingsImpl<>(fieldName, label, expression, position, isCountDisplayed, isMultiSelect, isMatchingAll, uiType, mapper, limit, threshold);
+        return new TermFacetedSearchFormSettingsImpl<>(fieldName, label, expression, position, isCountDisplayed, uiType, isMultiSelect, isMatchingAll, mapper, limit, threshold);
     }
 }

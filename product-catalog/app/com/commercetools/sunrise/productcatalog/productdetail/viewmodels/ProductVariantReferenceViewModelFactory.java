@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.productcatalog.productdetail.viewmodels;
 
-import com.commercetools.sunrise.framework.viewmodels.ViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
 import com.commercetools.sunrise.framework.reverserouters.productcatalog.product.ProductReverseRouter;
 import com.commercetools.sunrise.productcatalog.productdetail.ProductWithVariant;
@@ -9,7 +9,7 @@ import play.mvc.Call;
 import javax.inject.Inject;
 
 @RequestScoped
-public class ProductVariantReferenceViewModelFactory extends ViewModelFactory<ProductVariantReferenceViewModel, ProductWithVariant> {
+public class ProductVariantReferenceViewModelFactory extends SimpleViewModelFactory<ProductVariantReferenceViewModel, ProductWithVariant> {
 
     private final ProductReverseRouter productReverseRouter;
 

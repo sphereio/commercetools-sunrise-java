@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.framework.viewmodels.content.categories;
 
-import com.commercetools.sunrise.framework.viewmodels.ViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
 import com.commercetools.sunrise.framework.reverserouters.productcatalog.product.ProductReverseRouter;
 import io.sphere.sdk.categories.Category;
@@ -15,7 +15,7 @@ import java.util.Optional;
 import static java.util.stream.Collectors.toList;
 
 @RequestScoped
-public class CategoryViewModelFactory extends ViewModelFactory<CategoryViewModel, Category> {
+public class CategoryViewModelFactory extends SimpleViewModelFactory<CategoryViewModel, Category> {
 
     @Nullable
     private final String saleCategoryExtId;

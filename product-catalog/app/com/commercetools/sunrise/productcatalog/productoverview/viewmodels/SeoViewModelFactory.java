@@ -1,12 +1,12 @@
 package com.commercetools.sunrise.productcatalog.productoverview.viewmodels;
 
-import com.commercetools.sunrise.framework.viewmodels.ViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
 import com.commercetools.sunrise.productcatalog.productoverview.ProductsWithCategory;
 
 import javax.inject.Singleton;
 
 @Singleton
-public class SeoViewModelFactory extends ViewModelFactory<SeoViewModel, ProductsWithCategory> {
+public class SeoViewModelFactory extends SimpleViewModelFactory<SeoViewModel, ProductsWithCategory> {
 
     @Override
     protected SeoViewModel newViewModelInstance(final ProductsWithCategory productsWithCategory) {

@@ -1,8 +1,8 @@
 package com.commercetools.sunrise.framework.viewmodels.content;
 
-import com.commercetools.sunrise.framework.viewmodels.ViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
 
-public abstract class PageContentFactory<M extends PageContent, I> extends ViewModelFactory<M, I> {
+public abstract class PageContentFactory<M extends PageContent, I> extends SimpleViewModelFactory<M, I> {
 
     @Override
     protected void initialize(final M viewModel, final I input) {

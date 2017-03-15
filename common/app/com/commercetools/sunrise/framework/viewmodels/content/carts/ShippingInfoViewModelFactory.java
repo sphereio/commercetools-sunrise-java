@@ -1,7 +1,7 @@
 package com.commercetools.sunrise.framework.viewmodels.content.carts;
 
 import com.commercetools.sunrise.framework.injection.RequestScoped;
-import com.commercetools.sunrise.framework.viewmodels.ViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
 import com.commercetools.sunrise.framework.viewmodels.formatters.PriceFormatter;
 import io.sphere.sdk.carts.CartLike;
 import io.sphere.sdk.models.Reference;
@@ -14,7 +14,7 @@ import javax.money.CurrencyUnit;
 import javax.money.MonetaryAmount;
 
 @RequestScoped
-public class ShippingInfoViewModelFactory extends ViewModelFactory<ShippingInfoViewModel, CartLike<?>> {
+public class ShippingInfoViewModelFactory extends SimpleViewModelFactory<ShippingInfoViewModel, CartLike<?>> {
 
     private final CurrencyUnit currency;
     private final PriceFormatter priceFormatter;

@@ -1,12 +1,12 @@
 package com.commercetools.sunrise.productcatalog.productdetail.viewmodels;
 
-import com.commercetools.sunrise.framework.viewmodels.ViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
 import io.sphere.sdk.products.Image;
 
 import javax.inject.Singleton;
 
 @Singleton
-public class ProductImageViewModelFactory extends ViewModelFactory<ProductImageViewModel, Image> {
+public class ProductImageViewModelFactory extends SimpleViewModelFactory<ProductImageViewModel, Image> {
 
     @Override
     public final ProductImageViewModel create(final Image image) {

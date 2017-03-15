@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.framework.viewmodels.content.carts;
 
-import com.commercetools.sunrise.framework.viewmodels.ViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
 import com.commercetools.sunrise.framework.viewmodels.formatters.PriceFormatter;
 import io.sphere.sdk.carts.CartLike;
 import io.sphere.sdk.carts.LineItem;
@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 import static com.commercetools.sunrise.framework.viewmodels.content.carts.CartPriceUtils.calculateTotalPrice;
 
-public abstract class AbstractMiniCartViewModelFactory<M extends MiniCartViewModel, I extends CartLike<?>> extends ViewModelFactory<M, I> {
+public abstract class AbstractMiniCartViewModelFactory<M extends MiniCartViewModel, I extends CartLike<?>> extends SimpleViewModelFactory<M, I> {
 
     private final CurrencyUnit currency;
     private final PriceFormatter priceFormatter;

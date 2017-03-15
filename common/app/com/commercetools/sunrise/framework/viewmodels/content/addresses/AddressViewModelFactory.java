@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.framework.viewmodels.content.addresses;
 
-import com.commercetools.sunrise.framework.viewmodels.ViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
 import com.commercetools.sunrise.framework.template.i18n.I18nIdentifierResolver;
 import io.sphere.sdk.models.Address;
@@ -10,7 +10,7 @@ import javax.inject.Inject;
 import java.util.Locale;
 
 @RequestScoped
-public class AddressViewModelFactory extends ViewModelFactory<AddressViewModel, Address> {
+public class AddressViewModelFactory extends SimpleViewModelFactory<AddressViewModel, Address> {
 
     private final Locale locale;
     private final I18nIdentifierResolver i18nIdentifierResolver;

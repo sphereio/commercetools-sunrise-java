@@ -1,8 +1,10 @@
 package com.commercetools.sunrise.framework.viewmodels.forms;
 
+import com.commercetools.sunrise.framework.viewmodels.ViewModelFactory;
+
 import javax.annotation.Nullable;
 
-public abstract class SelectableViewModelFactory<M, O, S> {
+public abstract class SelectableViewModelFactory<M, O, S> extends ViewModelFactory {
 
     protected abstract M newViewModelInstance(final O option, @Nullable final S selectedValue);
 

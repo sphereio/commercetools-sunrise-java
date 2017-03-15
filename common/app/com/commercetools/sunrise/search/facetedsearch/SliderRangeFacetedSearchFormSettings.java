@@ -23,10 +23,9 @@ public interface SliderRangeFacetedSearchFormSettings<T> extends FacetedSearchFo
     default RangeFacetedSearchExpression<T> buildSearchExpression(final Http.Request httpRequest, final Locale locale) {
         final String attributePath = getLocalizedAttributePath(locale);
         final RangeTermFacetedSearchSearchModel<T> searchModel = RangeTermFacetedSearchSearchModel.of(attributePath);
-        final String rangeAsString = String.format("(%s to %s)",
+        final RangeFacetedSearchExpression<T> facetedSearchExpr = parseFilterRange(
                 findSelectedValueFromQueryString(getLowerEndpointSettings(), httpRequest),
-                findSelectedValueFromQueryString(getUpperEndpointSettings(), httpRequest));
-        final RangeFacetedSearchExpression<T> facetedSearchExpr = parseFilterRange(rangeAsString)
+                findSelectedValueFromQueryString(getUpperEndpointSettings(), httpRequest))
                 .map(searchModel::isBetween)
                 .orElseGet(searchModel::allRanges);
         final RangeFacetExpression<T> facetExpression = RangeTermFacetSearchModel.<T, String>of(attributePath, Function.identity())

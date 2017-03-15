@@ -22,7 +22,7 @@ public final class ProductFacetedSearchFormSettingsList extends ConfigurableFace
         super(Optional.ofNullable(configuration.getConfigList(CONFIG)).orElseGet(Collections::emptyList), facetMapperTypes());
     }
 
-    private static List<SunriseFacetMapperType> facetMapperTypes() {
-        return asList(SunriseFacetMapperType.values());
+    private static List<SunriseTermFacetMapperType> facetMapperTypes() {
+        return asList(SunriseTermFacetMapperType.values());
     }
 }

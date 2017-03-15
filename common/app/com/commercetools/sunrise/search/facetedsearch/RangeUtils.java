@@ -1,6 +1,5 @@
 package com.commercetools.sunrise.search.facetedsearch;
 
-import com.commercetools.sunrise.framework.viewmodels.forms.FormOption;
 import io.sphere.sdk.search.model.FacetRange;
 import io.sphere.sdk.search.model.FilterRange;
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -21,22 +20,41 @@ public final class RangeUtils {
     private RangeUtils() {
     }
 
+    public static Optional<FilterRange<String>> parseFilterRange(@Nullable final String lowerEndpoint, @Nullable final String upperEndpoint) {
+        final String rangeAsString = buildRange(lowerEndpoint, upperEndpoint);
+        return parseFilterRange(rangeAsString);
+    }
+
+    public static Optional<FacetRange<String>> parseFacetRange(@Nullable final String lowerEndpoint, @Nullable final String upperEndpoint) {
+        final String rangeAsString = buildRange(lowerEndpoint, upperEndpoint);
+        return parseFacetRange(rangeAsString);
+    }
+
+
     public static List<FilterRange<String>> optionsToFilterRange(final List<BucketRangeFacetedSearchFormOption> rangeOptions) {
         return rangeOptions.stream()
-                .map(FormOption::getValue)
-                .map(RangeUtils::parseFilterRange)
-                .filter(range -> range.isPresent() && range.get().isBounded())
+                .map(RangeUtils::optionToFilterRange)
+                .filter(Optional::isPresent)
                 .map(Optional::get)
                 .collect(toList());
     }
 
     public static List<FacetRange<String>> optionsToFacetRange(final List<BucketRangeFacetedSearchFormOption> rangeOptions) {
         return rangeOptions.stream()
-                .map(FormOption::getValue)
-                .map(RangeUtils::parseFacetRange)
-                .filter(range -> range.isPresent() && range.get().isBounded())
+                .map(RangeUtils::optionToFacetRange)
+                .filter(Optional::isPresent)
                 .map(Optional::get)
                 .collect(toList());
+    }
+
+    public static Optional<FilterRange<String>> optionToFilterRange(final BucketRangeFacetedSearchFormOption rangeOption) {
+        return parseFilterRange(rangeOption.getValue())
+                .filter(range -> range.isBounded());
+    }
+
+    public static Optional<FacetRange<String>> optionToFacetRange(final BucketRangeFacetedSearchFormOption rangeOption) {
+          return parseFacetRange(rangeOption.getValue())
+                .filter(range -> range.isBounded());
     }
 
     /**
@@ -44,7 +62,7 @@ public final class RangeUtils {
      * @param rangeAsString range of the form {@code (x to y)}
      * @return the {@link FilterRange} corresponding to that range, or empty if it could not be parsed
      */
-    public static Optional<FilterRange<String>> parseFilterRange(final String rangeAsString) {
+    private static Optional<FilterRange<String>> parseFilterRange(final String rangeAsString) {
         return Optional.ofNullable(parseRangeToPair(rangeAsString))
                 .filter(pair -> pair.getRight() != null || pair.getLeft() != null)
                 .map(pair -> {
@@ -63,7 +81,7 @@ public final class RangeUtils {
      * @param rangeAsString range of the form {@code (x to y)}
      * @return the {@link FacetRange} corresponding to that range, or empty if it could not be parsed
      */
-    public static Optional<FacetRange<String>> parseFacetRange(final String rangeAsString) {
+    private static Optional<FacetRange<String>> parseFacetRange(final String rangeAsString) {
         return Optional.ofNullable(parseRangeToPair(rangeAsString))
                 .filter(pair -> pair.getRight() != null || pair.getLeft() != null)
                 .map(pair -> {
@@ -83,12 +101,23 @@ public final class RangeUtils {
         if (matcher.matches()) {
             final String lowerEndpoint = matcher.group("lower");
             final String upperEndpoint = matcher.group("upper");
-            return ImmutablePair.of(endpointOrNull(lowerEndpoint), endpointOrNull(upperEndpoint));
+            return ImmutablePair.of(boundEndpointOrNull(lowerEndpoint), boundEndpointOrNull(upperEndpoint));
         }
         return null;
     }
 
-    private static String endpointOrNull(final String lowerEndpoint) {
-        return lowerEndpoint.equals("*") ? null : lowerEndpoint;
+    private static String buildRange(@Nullable final String lowerEndpoint, @Nullable final String upperEndpoint) {
+        return String.format("(%s to %s)",
+                boundEndpointOrAsterisk(lowerEndpoint),
+                boundEndpointOrAsterisk(upperEndpoint));
+    }
+
+    @Nullable
+    private static String boundEndpointOrNull(@Nullable final String endpoint) {
+        return endpoint == null || endpoint.equals("*") ? null : endpoint;
+    }
+
+    private static String boundEndpointOrAsterisk(@Nullable final String endpoint) {
+        return endpoint == null ? "*" : endpoint;
     }
 }

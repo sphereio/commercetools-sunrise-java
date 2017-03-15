@@ -1,14 +1,14 @@
 package com.commercetools.sunrise.productcatalog.productoverview.viewmodels;
 
 import com.commercetools.sunrise.framework.injection.RequestScoped;
-import com.commercetools.sunrise.framework.viewmodels.ViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
 import com.commercetools.sunrise.productcatalog.productoverview.ProductsWithCategory;
 import io.sphere.sdk.categories.CategoryTree;
 
 import javax.inject.Inject;
 
 @RequestScoped
-public class JumbotronViewModelFactory extends ViewModelFactory<JumbotronViewModel, ProductsWithCategory> {
+public class JumbotronViewModelFactory extends SimpleViewModelFactory<JumbotronViewModel, ProductsWithCategory> {
 
     private final CategoryTree categoryTree;
 

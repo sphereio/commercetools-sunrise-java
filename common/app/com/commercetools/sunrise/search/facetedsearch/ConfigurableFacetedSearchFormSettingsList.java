@@ -1,7 +1,7 @@
 package com.commercetools.sunrise.search.facetedsearch;
 
 import com.commercetools.sunrise.framework.SunriseConfigurationException;
-import com.commercetools.sunrise.search.facetedsearch.mappers.FacetMapperType;
+import com.commercetools.sunrise.search.facetedsearch.mappers.TermFacetMapperType;
 import play.Configuration;
 
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ public abstract class ConfigurableFacetedSearchFormSettingsList<T> implements Fa
     private final List<BucketRangeFacetedSearchFormSettings<T>> bucketRangeSettings = new ArrayList<>();
 
     protected ConfigurableFacetedSearchFormSettingsList(final List<Configuration> configurations,
-                                                        final List<? extends FacetMapperType> facetMapperTypes) {
+                                                        final List<? extends TermFacetMapperType> facetMapperTypes) {
         IntStream.range(0, configurations.size())
                 .forEach(i -> {
                     final Configuration configuration = configurations.get(i);
@@ -47,16 +47,16 @@ public abstract class ConfigurableFacetedSearchFormSettingsList<T> implements Fa
     }
 
     private void initializeFacet(final Configuration configuration, final String type, final int i,
-                                 final List<? extends FacetMapperType> facetMapperTypes) {
+                                 final List<? extends TermFacetMapperType> facetMapperTypes) {
         switch (type) {
             case CONFIG_TYPE_TERM:
                 termSettings.add(new ConfigurableTermFacetedSearchFormSettings<>(configuration, i, facetMapperTypes));
                 break;
             case CONFIG_TYPE_SLIDER:
-                sliderRangeSettings.add(new ConfigurableSliderRangeFacetedSearchFormSettings<>(configuration, i, facetMapperTypes));
+                sliderRangeSettings.add(new ConfigurableSliderRangeFacetedSearchFormSettings<>(configuration, i));
                 break;
             case CONFIG_TYPE_BUCKET:
-                bucketRangeSettings.add(new ConfigurableBucketRangeFacetedSearchFormSettings<>(configuration, i, facetMapperTypes));
+                bucketRangeSettings.add(new ConfigurableBucketRangeFacetedSearchFormSettings<>(configuration, i));
                 break;
             default:
                 throw new SunriseConfigurationException("Unrecognized facet type \"" + type + "\"", CONFIG_TYPE, configuration);

@@ -10,7 +10,7 @@ class SliderRangeFacetedSearchFormSettingsImpl<T> extends FacetedSearchFormSetti
     SliderRangeFacetedSearchFormSettingsImpl(final String fieldName, final String label, final String expression,
                                              final int position, final boolean isCountDisplayed, @Nullable final String uiType,
                                              final RangeEndpointFormSettings lowerEndpointSettings, final RangeEndpointFormSettings upperEndpointSettings) {
-        super(fieldName, label, expression, position, isCountDisplayed, false, true, uiType, null);
+        super(fieldName, label, expression, position, isCountDisplayed, uiType);
         this.lowerEndpointSettings = lowerEndpointSettings;
         this.upperEndpointSettings = upperEndpointSettings;
     }

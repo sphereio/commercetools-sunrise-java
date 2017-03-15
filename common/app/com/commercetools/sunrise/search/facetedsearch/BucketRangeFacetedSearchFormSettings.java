@@ -17,7 +17,7 @@ import static com.commercetools.sunrise.framework.viewmodels.forms.QueryStringUt
 import static com.commercetools.sunrise.search.facetedsearch.RangeUtils.optionsToFacetRange;
 import static com.commercetools.sunrise.search.facetedsearch.RangeUtils.optionsToFilterRange;
 
-public interface BucketRangeFacetedSearchFormSettings<T> extends FacetedSearchFormSettings<T>, FormSettingsWithOptions<BucketRangeFacetedSearchFormOption, String> {
+public interface BucketRangeFacetedSearchFormSettings<T> extends MultiOptionFacetedSearchFormSettings<T>, FormSettingsWithOptions<BucketRangeFacetedSearchFormOption, String> {
 
     @Override
     default RangeFacetedSearchExpression<T> buildSearchExpression(final Http.Request httpRequest, final Locale locale) {
@@ -39,8 +39,9 @@ public interface BucketRangeFacetedSearchFormSettings<T> extends FacetedSearchFo
     }
 
     static <T> BucketRangeFacetedSearchFormSettings<T> of(final String fieldName, final String label, final String attributePath, final int position,
-                                                          final boolean isCountDisplayed, final boolean isMultiSelect, final boolean isMatchingAll,
-                                                          @Nullable final String uiType, final List<BucketRangeFacetedSearchFormOption> options) {
-        return new BucketRangeFacetedSearchFormSettingsImpl<>(fieldName, label, attributePath, position, isCountDisplayed, isMultiSelect, isMatchingAll, uiType, options);
+                                                          final boolean isCountDisplayed, @Nullable final String uiType,
+                                                          final boolean isMultiSelect, final boolean isMatchingAll,
+                                                          final List<BucketRangeFacetedSearchFormOption> options) {
+        return new BucketRangeFacetedSearchFormSettingsImpl<>(fieldName, label, attributePath, position, isCountDisplayed, uiType, isMultiSelect, isMatchingAll, options);
     }
 }

@@ -1,9 +1,9 @@
 package com.commercetools.sunrise.framework.viewmodels.content.customers;
 
-import com.commercetools.sunrise.framework.viewmodels.ViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
 import io.sphere.sdk.customers.Customer;
 
-public class CustomerInfoViewModelFactory extends ViewModelFactory<CustomerInfoViewModel, Customer> {
+public class CustomerInfoViewModelFactory extends SimpleViewModelFactory<CustomerInfoViewModel, Customer> {
 
     @Override
     protected CustomerInfoViewModel newViewModelInstance(final Customer customer) {

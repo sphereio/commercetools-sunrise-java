@@ -5,7 +5,7 @@ import com.commercetools.sunrise.framework.viewmodels.content.products.Attribute
 import com.commercetools.sunrise.framework.viewmodels.content.products.ProductAttributeViewModel;
 import com.commercetools.sunrise.framework.viewmodels.content.products.ProductAttributeViewModelFactory;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
-import com.commercetools.sunrise.framework.viewmodels.ViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
 import com.commercetools.sunrise.productcatalog.productdetail.ProductWithVariant;
 import io.sphere.sdk.models.Reference;
 import io.sphere.sdk.products.attributes.Attribute;
@@ -18,7 +18,7 @@ import java.util.Objects;
 import static java.util.stream.Collectors.toList;
 
 @RequestScoped
-public class ProductDetailsViewModelFactory extends ViewModelFactory<ProductDetailsViewModel, ProductWithVariant> {
+public class ProductDetailsViewModelFactory extends SimpleViewModelFactory<ProductDetailsViewModel, ProductWithVariant> {
 
     private final ProductAttributeSettings productAttributeSettings;
     private final ProductAttributeViewModelFactory productAttributeViewModelFactory;

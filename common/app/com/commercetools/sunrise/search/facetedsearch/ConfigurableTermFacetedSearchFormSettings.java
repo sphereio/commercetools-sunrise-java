@@ -1,26 +1,40 @@
 package com.commercetools.sunrise.search.facetedsearch;
 
-import com.commercetools.sunrise.search.facetedsearch.mappers.FacetMapperType;
+import com.commercetools.sunrise.search.facetedsearch.mappers.TermFacetMapperSettings;
+import com.commercetools.sunrise.search.facetedsearch.mappers.TermFacetMapperType;
 import play.Configuration;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Optional;
 
-final class ConfigurableTermFacetedSearchFormSettings<T> extends ConfigurableFacetedSearchFormSettings<T> implements TermFacetedSearchFormSettings<T> {
+final class ConfigurableTermFacetedSearchFormSettings<T> extends ConfigurableMultiOptionFacetedSearchFormSettings<T> implements TermFacetedSearchFormSettings<T> {
 
+    private static final String CONFIG_MAPPER = "mapper";
+    private static final String CONFIG_MAPPER_TYPE = "type";
+    private static final String CONFIG_MAPPER_VALUES = "values";
     private static final String CONFIG_LIMIT = "limit";
     private static final String CONFIG_THRESHOLD = "threshold";
 
+    @Nullable
+    private final TermFacetMapperSettings mapperSettings;
     @Nullable
     private final Long limit;
     @Nullable
     private final Long threshold;
 
     ConfigurableTermFacetedSearchFormSettings(final Configuration configuration, final int position,
-                                              final List<? extends FacetMapperType> facetMapperTypes) {
-        super(configuration, position, facetMapperTypes);
+                                              final List<? extends TermFacetMapperType> facetMapperTypes) {
+        super(configuration, position);
+        this.mapperSettings = mapperSettings(configuration, facetMapperTypes);
         this.limit = limit(configuration);
         this.threshold = threshold(configuration);
+    }
+
+    @Override
+    @Nullable
+    public TermFacetMapperSettings getMapperSettings() {
+        return mapperSettings;
     }
 
     @Override
@@ -33,6 +47,21 @@ final class ConfigurableTermFacetedSearchFormSettings<T> extends ConfigurableFac
     @Nullable
     public Long getThreshold() {
         return threshold;
+    }
+
+    @Nullable
+    private static TermFacetMapperSettings mapperSettings(final Configuration configuration, final List<? extends TermFacetMapperType> facetMapperTypes) {
+        return Optional.ofNullable(configuration.getConfig(CONFIG_MAPPER))
+                .flatMap(mapperConfig -> mapperType(configuration, facetMapperTypes)
+                        .map(type -> TermFacetMapperSettings.of(type, mapperConfig.getStringList(CONFIG_MAPPER_VALUES))))
+                .orElse(null);
+    }
+
+    private static Optional<? extends TermFacetMapperType> mapperType(final Configuration configuration, final List<? extends TermFacetMapperType> facetMapperTypes) {
+        return Optional.ofNullable(configuration.getString(CONFIG_MAPPER_TYPE))
+                .flatMap(type -> facetMapperTypes.stream()
+                        .filter(typeValue -> typeValue.value().equals(type))
+                        .findAny());
     }
 
     @Nullable

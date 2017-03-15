@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.myaccount.addressbook.addressbookdetail.viewmodels;
 
-import com.commercetools.sunrise.framework.viewmodels.ViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
 import com.commercetools.sunrise.framework.viewmodels.content.addresses.AddressViewModelFactory;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
 import com.commercetools.sunrise.framework.reverserouters.myaccount.addressbook.AddressBookReverseRouter;
@@ -10,7 +10,7 @@ import play.mvc.Call;
 import javax.inject.Inject;
 
 @RequestScoped
-public class EditableAddressViewModelFactory extends ViewModelFactory<EditableAddressViewModel, Address> {
+public class EditableAddressViewModelFactory extends SimpleViewModelFactory<EditableAddressViewModel, Address> {
 
     private final AddressViewModelFactory addressViewModelFactory;
     private final AddressBookReverseRouter addressBookReverseRouter;

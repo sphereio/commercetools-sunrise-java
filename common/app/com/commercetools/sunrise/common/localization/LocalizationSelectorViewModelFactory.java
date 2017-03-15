@@ -2,7 +2,7 @@ package com.commercetools.sunrise.common.localization;
 
 import com.commercetools.sunrise.framework.viewmodels.forms.languages.LanguageFormSelectableOptionViewModel;
 import com.commercetools.sunrise.framework.viewmodels.forms.languages.LanguageFormSelectableOptionViewModelFactory;
-import com.commercetools.sunrise.framework.viewmodels.ViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
 import com.commercetools.sunrise.framework.viewmodels.forms.countries.CountryFormSelectableOptionViewModel;
 import com.commercetools.sunrise.framework.viewmodels.forms.countries.CountryFormSelectableOptionViewModelFactory;
 import com.commercetools.sunrise.framework.localization.ProjectContext;
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Locale;
 
 @RequestScoped
-public class LocalizationSelectorViewModelFactory extends ViewModelFactory<LocalizationSelectorViewModel, Void> {
+public class LocalizationSelectorViewModelFactory extends SimpleViewModelFactory<LocalizationSelectorViewModel, Void> {
 
     private final Locale locale;
     private final CountryCode country;

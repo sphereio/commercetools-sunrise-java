@@ -2,8 +2,6 @@ import com.commercetools.sunrise.cms.CmsService;
 import com.commercetools.sunrise.common.categorytree.CategoryTreeInNewProvider;
 import com.commercetools.sunrise.common.categorytree.RefreshableCategoryTree;
 import com.commercetools.sunrise.framework.viewmodels.content.carts.MiniCartViewModelFactory;
-import com.commercetools.sunrise.productcatalog.productoverview.search.SunriseFacetMapperType;
-import com.commercetools.sunrise.search.facetedsearch.mappers.FacetMapperType;
 import com.commercetools.sunrise.search.facetedsearch.old.FacetedSearchConfigList;
 import com.commercetools.sunrise.search.facetedsearch.old.FacetedSearchConfigListProvider;
 import com.commercetools.sunrise.framework.localization.CountryFromSessionProvider;

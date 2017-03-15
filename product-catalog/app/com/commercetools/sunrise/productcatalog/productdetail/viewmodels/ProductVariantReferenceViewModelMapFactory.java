@@ -2,7 +2,7 @@ package com.commercetools.sunrise.productcatalog.productdetail.viewmodels;
 
 import com.commercetools.sunrise.common.ctp.ProductAttributeSettings;
 import com.commercetools.sunrise.framework.viewmodels.content.products.AttributeWithProductType;
-import com.commercetools.sunrise.framework.viewmodels.ViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
 import com.commercetools.sunrise.framework.viewmodels.formatters.AttributeFormatter;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
 import com.commercetools.sunrise.productcatalog.productdetail.ProductWithVariant;
@@ -17,7 +17,7 @@ import java.util.Objects;
 import static java.util.stream.Collectors.joining;
 
 @RequestScoped
-public class ProductVariantReferenceViewModelMapFactory extends ViewModelFactory<ProductVariantReferenceMapViewModel, ProductWithVariant> {
+public class ProductVariantReferenceViewModelMapFactory extends SimpleViewModelFactory<ProductVariantReferenceMapViewModel, ProductWithVariant> {
 
     private final ProductAttributeSettings productAttributeSettings;
     private final AttributeFormatter attributeFormatter;

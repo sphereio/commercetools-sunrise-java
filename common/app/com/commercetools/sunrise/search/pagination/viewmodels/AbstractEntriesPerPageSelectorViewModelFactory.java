@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.search.pagination.viewmodels;
 
-import com.commercetools.sunrise.framework.viewmodels.ViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
 import com.commercetools.sunrise.search.pagination.EntriesPerPageFormSettings;
 import io.sphere.sdk.queries.PagedResult;
 import play.mvc.Http;
@@ -9,7 +9,7 @@ import javax.annotation.Nullable;
 
 import static java.util.stream.Collectors.toList;
 
-public abstract class AbstractEntriesPerPageSelectorViewModelFactory extends ViewModelFactory<EntriesPerPageSelectorViewModel, PagedResult<?>> {
+public abstract class AbstractEntriesPerPageSelectorViewModelFactory extends SimpleViewModelFactory<EntriesPerPageSelectorViewModel, PagedResult<?>> {
 
     @Nullable
     private final String selectedOptionValue;

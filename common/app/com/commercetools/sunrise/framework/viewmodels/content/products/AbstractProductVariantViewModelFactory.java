@@ -1,12 +1,12 @@
 package com.commercetools.sunrise.framework.viewmodels.content.products;
 
-import com.commercetools.sunrise.framework.viewmodels.ViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
 import io.sphere.sdk.products.Image;
 import io.sphere.sdk.products.ProductVariant;
 
 import java.util.Optional;
 
-public abstract class AbstractProductVariantViewModelFactory<I> extends ViewModelFactory<ProductVariantViewModel, I> {
+public abstract class AbstractProductVariantViewModelFactory<I> extends SimpleViewModelFactory<ProductVariantViewModel, I> {
 
     protected AbstractProductVariantViewModelFactory() {
     }

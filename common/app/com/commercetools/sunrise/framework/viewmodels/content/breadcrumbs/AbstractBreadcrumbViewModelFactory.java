@@ -1,7 +1,7 @@
 package com.commercetools.sunrise.framework.viewmodels.content.breadcrumbs;
 
 import com.commercetools.sunrise.framework.reverserouters.productcatalog.product.ProductReverseRouter;
-import com.commercetools.sunrise.framework.viewmodels.ViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
 import io.sphere.sdk.categories.Category;
 import io.sphere.sdk.categories.CategoryTree;
 import play.mvc.Call;
@@ -11,7 +11,7 @@ import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
-public abstract class AbstractBreadcrumbViewModelFactory<I> extends ViewModelFactory<BreadcrumbViewModel, I> {
+public abstract class AbstractBreadcrumbViewModelFactory<I> extends SimpleViewModelFactory<BreadcrumbViewModel, I> {
 
     private final CategoryTree categoryTree;
     private final ProductReverseRouter productReverseRouter;

@@ -1,7 +1,6 @@
 package com.commercetools.sunrise.search.facetedsearch.viewmodels;
 
 import com.commercetools.sunrise.framework.viewmodels.ViewModel;
-import io.sphere.sdk.facets.FacetOption;
 
 import java.util.List;
 
@@ -13,7 +12,7 @@ public class FacetViewModel extends ViewModel {
     private boolean isCountHidden;
     private boolean multiSelect;
     private boolean matchingAll;
-    private List<FacetOption> limitedOptions;
+    private List<FacetOptionViewModel> limitedOptions;
 
     public FacetViewModel() {
     }
@@ -50,11 +49,11 @@ public class FacetViewModel extends ViewModel {
         isCountHidden = countHidden;
     }
 
-    public List<FacetOption> getLimitedOptions() {
+    public List<FacetOptionViewModel> getLimitedOptions() {
         return limitedOptions;
     }
 
-    public void setLimitedOptions(final List<FacetOption> limitedOptions) {
+    public void setLimitedOptions(final List<FacetOptionViewModel> limitedOptions) {
         this.limitedOptions = limitedOptions;
     }
 

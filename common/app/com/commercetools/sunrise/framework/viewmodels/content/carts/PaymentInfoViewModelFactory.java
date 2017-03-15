@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.framework.viewmodels.content.carts;
 
-import com.commercetools.sunrise.framework.viewmodels.ViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
 import io.sphere.sdk.carts.CartLike;
 import io.sphere.sdk.models.LocalizedString;
 import io.sphere.sdk.models.Reference;
@@ -10,7 +10,7 @@ import javax.inject.Singleton;
 import java.util.Objects;
 
 @Singleton
-public class PaymentInfoViewModelFactory extends ViewModelFactory<PaymentInfoViewModel, CartLike<?>> {
+public class PaymentInfoViewModelFactory extends SimpleViewModelFactory<PaymentInfoViewModel, CartLike<?>> {
 
     @Override
     protected PaymentInfoViewModel newViewModelInstance(@Nullable final CartLike<?> cartLike) {

@@ -1,9 +1,9 @@
 package com.commercetools.sunrise.framework.viewmodels.footer;
 
-import com.commercetools.sunrise.framework.viewmodels.ViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
 import com.commercetools.sunrise.framework.viewmodels.content.PageContent;
 
-public class PageFooterFactory extends ViewModelFactory<PageFooter, PageContent> {
+public class PageFooterFactory extends SimpleViewModelFactory<PageFooter, PageContent> {
 
     @Override
     protected final PageFooter newViewModelInstance(final PageContent pageContent) {

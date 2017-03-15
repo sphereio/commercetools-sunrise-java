@@ -1,9 +1,8 @@
 package com.commercetools.sunrise.framework.viewmodels;
 
-import com.commercetools.sunrise.framework.viewmodels.ViewModel;
 import play.data.Form;
 
-public abstract class FormViewModelFactory<M extends ViewModel, I, F>  {
+public abstract class FormViewModelFactory<M extends ViewModel, I, F> extends ViewModelFactory {
 
     protected abstract M newViewModelInstance(final I input, final Form<? extends F> form);
 

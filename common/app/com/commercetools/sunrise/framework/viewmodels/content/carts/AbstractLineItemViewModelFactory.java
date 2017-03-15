@@ -1,10 +1,10 @@
 package com.commercetools.sunrise.framework.viewmodels.content.carts;
 
-import com.commercetools.sunrise.framework.viewmodels.ViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
 import com.commercetools.sunrise.framework.viewmodels.formatters.PriceFormatter;
 import io.sphere.sdk.carts.LineItem;
 
-public abstract class AbstractLineItemViewModelFactory<T extends LineItemViewModel> extends ViewModelFactory<T, LineItem> {
+public abstract class AbstractLineItemViewModelFactory<T extends LineItemViewModel> extends SimpleViewModelFactory<T, LineItem> {
 
     private final PriceFormatter priceFormatter;
     private final LineItemProductVariantViewModelFactory lineItemProductVariantViewModelFactory;

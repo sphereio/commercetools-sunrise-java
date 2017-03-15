@@ -1,7 +1,7 @@
 package com.commercetools.sunrise.productcatalog.productoverview.viewmodels;
 
 import com.commercetools.sunrise.framework.injection.RequestScoped;
-import com.commercetools.sunrise.framework.viewmodels.ViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
 import com.commercetools.sunrise.productcatalog.productdetail.ProductWithVariant;
 import io.sphere.sdk.products.ProductProjection;
 import io.sphere.sdk.products.ProductVariant;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RequestScoped
-public class ProductListViewModelFactory extends ViewModelFactory<ProductListViewModel, Iterable<ProductProjection>> {
+public class ProductListViewModelFactory extends SimpleViewModelFactory<ProductListViewModel, Iterable<ProductProjection>> {
 
     private final ProductThumbnailViewModelFactory productThumbnailViewModelFactory;
 

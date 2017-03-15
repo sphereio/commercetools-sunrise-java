@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.myaccount.myorders.myorderlist.viewmodels;
 
-import com.commercetools.sunrise.framework.viewmodels.ViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
 import com.commercetools.sunrise.framework.viewmodels.formatters.PriceFormatter;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
 import com.commercetools.sunrise.framework.reverserouters.myaccount.myorders.MyOrdersReverseRouter;
@@ -16,7 +16,7 @@ import static com.commercetools.sunrise.framework.viewmodels.content.carts.CartP
 import static com.commercetools.sunrise.common.utils.EnumUtils.enumToCamelCase;
 
 @RequestScoped
-public class OrderOverviewViewModelFactory extends ViewModelFactory<OrderOverviewViewModel, Order> {
+public class OrderOverviewViewModelFactory extends SimpleViewModelFactory<OrderOverviewViewModel, Order> {
 
     private final I18nIdentifierResolver i18nIdentifierResolver;
     private final PriceFormatter priceFormatter;

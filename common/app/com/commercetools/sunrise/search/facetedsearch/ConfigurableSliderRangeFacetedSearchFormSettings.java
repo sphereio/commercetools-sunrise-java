@@ -1,10 +1,8 @@
 package com.commercetools.sunrise.search.facetedsearch;
 
 import com.commercetools.sunrise.framework.SunriseConfigurationException;
-import com.commercetools.sunrise.search.facetedsearch.mappers.FacetMapperType;
 import play.Configuration;
 
-import java.util.List;
 import java.util.Optional;
 
 final class ConfigurableSliderRangeFacetedSearchFormSettings<T> extends ConfigurableFacetedSearchFormSettings<T> implements SliderRangeFacetedSearchFormSettings<T> {
@@ -16,9 +14,8 @@ final class ConfigurableSliderRangeFacetedSearchFormSettings<T> extends Configur
     private final RangeEndpointFormSettings lowerEndpointSettings;
     private final RangeEndpointFormSettings upperEndpointSettings;
 
-    ConfigurableSliderRangeFacetedSearchFormSettings(final Configuration configuration, final int position,
-                                                               final List<? extends FacetMapperType> facetMapperTypes) {
-        super(configuration, position, facetMapperTypes);
+    ConfigurableSliderRangeFacetedSearchFormSettings(final Configuration configuration, final int position) {
+        super(configuration, position);
         this.lowerEndpointSettings = lowerEndpointSettings(configuration);
         this.upperEndpointSettings = upperEndpointSettings(configuration);
     }

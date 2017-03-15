@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.search.pagination.viewmodels;
 
-import com.commercetools.sunrise.framework.viewmodels.ViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
 import com.commercetools.sunrise.search.pagination.PaginationSettings;
 import io.sphere.sdk.queries.PagedResult;
 import play.mvc.Http;
@@ -14,7 +14,7 @@ import static com.commercetools.sunrise.framework.viewmodels.forms.QueryStringUt
 import static java.util.Collections.singletonList;
 import static java.util.stream.Collectors.toList;
 
-public abstract class AbstractPaginationViewModelFactory extends ViewModelFactory<PaginationViewModel, PagedResult<?>> {
+public abstract class AbstractPaginationViewModelFactory extends SimpleViewModelFactory<PaginationViewModel, PagedResult<?>> {
 
     private final PaginationSettings settings;
     private final int currentPage;

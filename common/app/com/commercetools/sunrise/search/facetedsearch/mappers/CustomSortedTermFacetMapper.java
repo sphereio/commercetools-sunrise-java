@@ -1,6 +1,7 @@
 package com.commercetools.sunrise.search.facetedsearch.mappers;
 
-import com.commercetools.sunrise.search.facetedsearch.TermFacetedSearchFormOption;
+import com.commercetools.sunrise.search.facetedsearch.viewmodels.FacetOptionViewModel;
+import com.commercetools.sunrise.search.facetedsearch.viewmodels.TermFacetOptionViewModelFactory;
 import io.sphere.sdk.search.TermFacetResult;
 
 import java.util.List;
@@ -13,23 +14,25 @@ import static java.util.stream.Collectors.toList;
  */
 public final class CustomSortedTermFacetMapper implements TermFacetMapper {
 
-    private final List<String> sortedFacetValues;
+    private final List<String> customSortedValues;
+    private final TermFacetOptionViewModelFactory termFacetOptionViewModelFactory;
 
-    public CustomSortedTermFacetMapper(final List<String> sortedFacetValues) {
-        this.sortedFacetValues = sortedFacetValues;
+    CustomSortedTermFacetMapper(final List<String> customSortedValues, final TermFacetOptionViewModelFactory termFacetOptionViewModelFactory) {
+        this.customSortedValues = customSortedValues;
+        this.termFacetOptionViewModelFactory = termFacetOptionViewModelFactory;
     }
 
     @Override
-    public List<TermFacetedSearchFormOption> apply(final TermFacetResult termFacetResult) {
+    public List<FacetOptionViewModel> apply(final TermFacetResult termFacetResult, final List<String> selectedValues) {
         return termFacetResult.getTerms().stream()
-                .map(TermFacetedSearchFormOption::ofTermStats)
+                .map(term -> termFacetOptionViewModelFactory.create(term, selectedValues))
                 .sorted(this::comparePositions)
                 .collect(toList());
     }
 
-    private int comparePositions(final TermFacetedSearchFormOption left, final TermFacetedSearchFormOption right) {
-        final int leftPosition = sortedFacetValues.indexOf(left.getValue());
-        final int rightPosition = sortedFacetValues.indexOf(right.getValue());
+    private int comparePositions(final FacetOptionViewModel left, final FacetOptionViewModel right) {
+        final int leftPosition = customSortedValues.indexOf(left.getValue());
+        final int rightPosition = customSortedValues.indexOf(right.getValue());
         return comparePositions(leftPosition, rightPosition);
     }
 

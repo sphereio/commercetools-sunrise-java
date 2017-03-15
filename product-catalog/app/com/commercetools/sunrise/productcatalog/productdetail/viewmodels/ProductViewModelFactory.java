@@ -2,14 +2,14 @@ package com.commercetools.sunrise.productcatalog.productdetail.viewmodels;
 
 import com.commercetools.sunrise.common.ctp.ProductAttributeSettings;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
-import com.commercetools.sunrise.framework.viewmodels.ViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
 import com.commercetools.sunrise.productcatalog.productdetail.ProductWithVariant;
 
 import javax.inject.Inject;
 import java.util.Optional;
 
 @RequestScoped
-public class ProductViewModelFactory extends ViewModelFactory<ProductViewModel, ProductWithVariant> {
+public class ProductViewModelFactory extends SimpleViewModelFactory<ProductViewModel, ProductWithVariant> {
 
     private final ProductAttributeSettings productAttributeSettings;
     private final ProductVariantViewModelFactory productVariantViewModelFactory;

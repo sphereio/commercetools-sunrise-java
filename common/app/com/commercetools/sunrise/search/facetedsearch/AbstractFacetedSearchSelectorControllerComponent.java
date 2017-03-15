@@ -4,6 +4,7 @@ import com.commercetools.sunrise.framework.components.controllers.ControllerComp
 import com.commercetools.sunrise.framework.hooks.consumers.PageDataReadyHook;
 import com.commercetools.sunrise.framework.viewmodels.PageData;
 import com.commercetools.sunrise.search.facetedsearch.mappers.TermFacetMapper;
+import com.commercetools.sunrise.search.facetedsearch.viewmodels.TermFacetedSearchFormSettingsWithOptions;
 import com.commercetools.sunrise.search.sort.viewmodels.AbstractSortSelectorViewModelFactory;
 import com.commercetools.sunrise.search.sort.viewmodels.WithSortSelectorViewModel;
 import io.sphere.sdk.models.Base;
@@ -43,8 +44,6 @@ public abstract class AbstractFacetedSearchSelectorControllerComponent<T> extend
         final TermFacetMapper termFacetMapper = Optional.ofNullable(setting.getMapperSettings())
                 .flatMap(mapperSettings -> Optional.ofNullable(mapperSettings.getType().factory()))
                 .map(factoryClass -> injector.instanceOf(factoryClass).create(setting.getMapperSettings()))
-                .filter(facetMapper -> facetMapper instanceof TermFacetMapper)
-                .map(facetMapper -> (TermFacetMapper) facetMapper)
                 .orElse(null);
         return TermFacetedSearchFormSettingsWithOptions.ofFacetResult(setting, termFacetResult, termFacetMapper);
     }

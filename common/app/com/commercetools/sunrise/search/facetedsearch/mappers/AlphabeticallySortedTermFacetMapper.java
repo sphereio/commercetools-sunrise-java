@@ -1,16 +1,12 @@
 package com.commercetools.sunrise.search.facetedsearch.mappers;
 
-import com.commercetools.sunrise.framework.viewmodels.forms.FormOption;
-import com.commercetools.sunrise.search.facetedsearch.TermFacetedSearchFormOption;
-import io.sphere.sdk.search.FacetResult;
+import com.commercetools.sunrise.search.facetedsearch.viewmodels.FacetOptionViewModel;
+import com.commercetools.sunrise.search.facetedsearch.viewmodels.TermFacetOptionViewModelFactory;
 import io.sphere.sdk.search.TermFacetResult;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Comparator;
 import java.util.List;
 
-import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 
 /**
@@ -18,18 +14,17 @@ import static java.util.stream.Collectors.toList;
  */
 public final class AlphabeticallySortedTermFacetMapper implements TermFacetMapper {
 
-    private static Logger LOGGER = LoggerFactory.getLogger(AlphabeticallySortedTermFacetMapper.class);
+    private final TermFacetOptionViewModelFactory termFacetOptionViewModelFactory;
+
+    AlphabeticallySortedTermFacetMapper(final TermFacetOptionViewModelFactory termFacetOptionViewModelFactory) {
+        this.termFacetOptionViewModelFactory = termFacetOptionViewModelFactory;
+    }
 
     @Override
-    public List<TermFacetedSearchFormOption> apply(final FacetResult facetResult) {
-        if (facetResult instanceof TermFacetResult) {
-            return ((TermFacetResult) facetResult).getTerms().stream()
-                    .map(TermFacetedSearchFormOption::ofTermStats)
-                    .sorted(Comparator.comparing(FormOption::getFieldLabel))
-                    .collect(toList());
-        } else {
-            LOGGER.error("Wrong usage of this facet mapper, it can only be used with TermFacetResult, used with " + facetResult.getClass().getSimpleName());
-            return emptyList();
-        }
+    public List<FacetOptionViewModel> apply(final TermFacetResult facetResult, final List<String> selectedValues) {
+        return facetResult.getTerms().stream()
+                .map(term -> termFacetOptionViewModelFactory.create(term, selectedValues))
+                .sorted(Comparator.comparing(FacetOptionViewModel::getLabel))
+                .collect(toList());
     }
 }

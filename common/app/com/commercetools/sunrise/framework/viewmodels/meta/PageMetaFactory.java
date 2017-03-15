@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.framework.viewmodels.meta;
 
-import com.commercetools.sunrise.framework.viewmodels.ViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
 import com.commercetools.sunrise.framework.viewmodels.content.PageContent;
 import play.filters.csrf.CSRF;
 import play.mvc.Http;
@@ -10,7 +10,7 @@ import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.toList;
 
-public class PageMetaFactory extends ViewModelFactory<PageMeta, PageContent> {
+public class PageMetaFactory extends SimpleViewModelFactory<PageMeta, PageContent> {
 
     private final Http.Context httpContext;
 

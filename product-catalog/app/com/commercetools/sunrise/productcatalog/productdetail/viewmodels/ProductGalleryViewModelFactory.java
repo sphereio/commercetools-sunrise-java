@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.productcatalog.productdetail.viewmodels;
 
-import com.commercetools.sunrise.framework.viewmodels.ViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
 import com.commercetools.sunrise.productcatalog.productdetail.ProductWithVariant;
 
 import javax.inject.Inject;
@@ -9,7 +9,7 @@ import javax.inject.Singleton;
 import static java.util.stream.Collectors.toList;
 
 @Singleton
-public class ProductGalleryViewModelFactory extends ViewModelFactory<ProductGalleryViewModel, ProductWithVariant> {
+public class ProductGalleryViewModelFactory extends SimpleViewModelFactory<ProductGalleryViewModel, ProductWithVariant> {
 
     private final ProductImageViewModelFactory productImageViewModelFactory;
 

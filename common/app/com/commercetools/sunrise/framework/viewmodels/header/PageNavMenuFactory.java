@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.framework.viewmodels.header;
 
-import com.commercetools.sunrise.framework.viewmodels.ViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
 import com.commercetools.sunrise.framework.viewmodels.content.categories.CategoryViewModel;
 import com.commercetools.sunrise.framework.viewmodels.content.categories.CategoryViewModelFactory;
 import io.sphere.sdk.categories.CategoryTree;
@@ -9,7 +9,7 @@ import javax.inject.Inject;
 import java.util.LinkedList;
 import java.util.List;
 
-public class PageNavMenuFactory extends ViewModelFactory<PageNavMenu, Void> {
+public class PageNavMenuFactory extends SimpleViewModelFactory<PageNavMenu, Void> {
 
     private final CategoryTree categoryTree;
     private final CategoryViewModelFactory categoryViewModelFactory;

@@ -1,12 +1,12 @@
 package com.commercetools.sunrise.framework.viewmodels.header;
 
-import com.commercetools.sunrise.framework.viewmodels.ViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
 import com.commercetools.sunrise.framework.viewmodels.content.PageContent;
 import play.Configuration;
 
 import javax.inject.Inject;
 
-public class PageHeaderFactory extends ViewModelFactory<PageHeader, PageContent> {
+public class PageHeaderFactory extends SimpleViewModelFactory<PageHeader, PageContent> {
 
     private final String customerServiceNumber;
 

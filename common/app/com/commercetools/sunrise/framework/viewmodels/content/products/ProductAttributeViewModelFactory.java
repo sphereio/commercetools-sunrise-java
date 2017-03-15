@@ -1,13 +1,13 @@
 package com.commercetools.sunrise.framework.viewmodels.content.products;
 
-import com.commercetools.sunrise.framework.viewmodels.ViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
 import com.commercetools.sunrise.framework.viewmodels.formatters.AttributeFormatter;
 
 import javax.inject.Inject;
 
 @RequestScoped
-public class ProductAttributeViewModelFactory extends ViewModelFactory<ProductAttributeViewModel, AttributeWithProductType> {
+public class ProductAttributeViewModelFactory extends SimpleViewModelFactory<ProductAttributeViewModel, AttributeWithProductType> {
 
     private final AttributeFormatter attributeFormatter;
 
