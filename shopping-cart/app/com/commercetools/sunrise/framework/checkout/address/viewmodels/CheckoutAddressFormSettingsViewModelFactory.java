@@ -72,7 +72,7 @@ public class CheckoutAddressFormSettingsViewModelFactory extends FormViewModelFa
     }
 
     protected void fillCountriesShipping(final CheckoutAddressFormSettingsViewModel viewModel, final Cart cart, final Form<? extends CheckoutAddressFormData> form) {
-        final FormFieldWithOptions<CountryCode> formFieldWithOptions = new FormFieldWithOptions<>(form.field("countryShipping"), singletonList(country));
+        final FormFieldWithOptions<CountryCode> formFieldWithOptions = FormFieldWithOptions.of(form.field("countryShipping"), singletonList(country));
         viewModel.setCountriesShipping(countryFormFieldViewModelFactory.create(formFieldWithOptions));
     }
 }

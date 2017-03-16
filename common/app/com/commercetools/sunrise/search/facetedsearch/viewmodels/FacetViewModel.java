@@ -13,6 +13,7 @@ public class FacetViewModel extends ViewModel {
     private boolean multiSelect;
     private boolean matchingAll;
     private List<FacetOptionViewModel> limitedOptions;
+    private SliderRangeEndpointViewModel endpoints;
 
     public FacetViewModel() {
     }
@@ -71,5 +72,13 @@ public class FacetViewModel extends ViewModel {
 
     public void setMatchingAll(final boolean matchingAll) {
         this.matchingAll = matchingAll;
+    }
+
+    public SliderRangeEndpointViewModel getEndpoints() {
+        return endpoints;
+    }
+
+    public void setEndpoints(final SliderRangeEndpointViewModel endpoints) {
+        this.endpoints = endpoints;
     }
 }

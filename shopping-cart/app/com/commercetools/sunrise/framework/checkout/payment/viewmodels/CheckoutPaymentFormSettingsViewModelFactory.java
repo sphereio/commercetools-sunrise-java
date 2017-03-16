@@ -45,7 +45,7 @@ public class CheckoutPaymentFormSettingsViewModelFactory extends FormViewModelFa
     }
 
     protected void fillPaymentMethod(final CheckoutPaymentFormSettingsViewModel viewModel, final PaymentMethodsWithCart paymentMethodsWithCart, final Form<? extends CheckoutPaymentFormData> form) {
-        final FormFieldWithOptions<PaymentMethodInfo> formFieldWithOptions = new FormFieldWithOptions<>(form.field(paymentFormFieldName), paymentMethodsWithCart.getPaymentMethods());
+        final FormFieldWithOptions<PaymentMethodInfo> formFieldWithOptions = FormFieldWithOptions.of(form.field(paymentFormFieldName), paymentMethodsWithCart.getPaymentMethods());
         viewModel.setPaymentMethod(paymentMethodFormFieldViewModelFactory.create(formFieldWithOptions));
     }
 }

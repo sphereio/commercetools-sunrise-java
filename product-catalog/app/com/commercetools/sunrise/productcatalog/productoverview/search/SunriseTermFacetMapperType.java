@@ -5,8 +5,6 @@ import com.commercetools.sunrise.search.facetedsearch.mappers.CustomSortedTermFa
 import com.commercetools.sunrise.search.facetedsearch.mappers.TermFacetMapperFactory;
 import com.commercetools.sunrise.search.facetedsearch.mappers.TermFacetMapperType;
 
-import javax.annotation.Nullable;
-
 /**
  * Type of the mapper, to map from the facet result received from the platform to a form option.
  */
@@ -18,7 +16,6 @@ public enum SunriseTermFacetMapperType implements TermFacetMapperType {
             return "categoryTree";
         }
 
-        @Nullable
         @Override
         public Class<? extends TermFacetMapperFactory> factory() {
             return CategoryTreeTermFacetMapperFactory.class;
@@ -31,7 +28,6 @@ public enum SunriseTermFacetMapperType implements TermFacetMapperType {
             return "alphabeticallySorted";
         }
 
-        @Nullable
         @Override
         public Class<? extends TermFacetMapperFactory> factory() {
             return AlphabeticallySortedTermFacetMapperFactory.class;
@@ -44,7 +40,6 @@ public enum SunriseTermFacetMapperType implements TermFacetMapperType {
             return "customSorted";
         }
 
-        @Nullable
         @Override
         public Class<? extends TermFacetMapperFactory> factory() {
             return CustomSortedTermFacetMapperFactory.class;

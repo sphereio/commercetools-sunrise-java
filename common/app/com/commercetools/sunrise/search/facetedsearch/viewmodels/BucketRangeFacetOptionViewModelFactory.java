@@ -28,6 +28,13 @@ public class BucketRangeFacetOptionViewModelFactory extends ViewModelFactory {
         return new FacetOptionViewModel();
     }
 
+    public FacetOptionViewModel create(final BucketRangeFacetedSearchFormOption option,
+                                       final RangeStats rangeStats, final List<String> selectedValues) {
+        final FacetOptionViewModel viewModel = newViewModelInstance(option, rangeStats, selectedValues);
+        initialize(viewModel, option, rangeStats, selectedValues);
+        return viewModel;
+    }
+
     protected final void initialize(final FacetOptionViewModel viewModel, final BucketRangeFacetedSearchFormOption option,
                                     final RangeStats rangeStats, final List<String> selectedValues) {
         fillLabel(viewModel, option, rangeStats, selectedValues);

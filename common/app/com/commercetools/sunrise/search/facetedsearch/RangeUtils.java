@@ -1,12 +1,16 @@
 package com.commercetools.sunrise.search.facetedsearch;
 
+import io.sphere.sdk.search.RangeFacetResult;
 import io.sphere.sdk.search.model.FacetRange;
 import io.sphere.sdk.search.model.FilterRange;
+import io.sphere.sdk.search.model.RangeStats;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nullable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -18,6 +22,14 @@ public final class RangeUtils {
     private static final Pattern PATTERN = Pattern.compile("^\\(\\s*(?<lower>\\S+)\\s+to\\s+(?<upper>\\S+)\\s*\\)$");
 
     private RangeUtils() {
+    }
+
+    public static Map<FacetRange<String>, RangeStats> mapRangeToStats(final RangeFacetResult facetResult) {
+        final Map<FacetRange<String>, RangeStats> rangeToStats = new HashMap<>();
+        facetResult.getRanges()
+                .forEach(stats -> parseFacetRange(stats.getLowerEndpoint(), stats.getUpperEndpoint())
+                        .ifPresent(range -> rangeToStats.put(range, stats)));
+        return rangeToStats;
     }
 
     public static Optional<FilterRange<String>> parseFilterRange(@Nullable final String lowerEndpoint, @Nullable final String upperEndpoint) {
