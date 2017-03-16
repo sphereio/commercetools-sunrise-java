@@ -13,10 +13,10 @@ import javax.annotation.Nullable;
 public abstract class AbstractSortSelectorControllerComponent<T> extends Base implements ControllerComponent, PageDataReadyHook {
 
     private final SortFormSettings<T> settings;
-    private final AbstractSortSelectorViewModelFactory sortSelectorViewModelFactory;
+    private final AbstractSortSelectorViewModelFactory<T> sortSelectorViewModelFactory;
 
     protected AbstractSortSelectorControllerComponent(final SortFormSettings<T> settings,
-                                                      final AbstractSortSelectorViewModelFactory sortSelectorViewModelFactory) {
+                                                      final AbstractSortSelectorViewModelFactory<T> sortSelectorViewModelFactory) {
         this.settings = settings;
         this.sortSelectorViewModelFactory = sortSelectorViewModelFactory;
     }

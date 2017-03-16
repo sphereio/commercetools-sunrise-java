@@ -1,19 +1,17 @@
 import com.commercetools.sunrise.cms.CmsService;
 import com.commercetools.sunrise.common.categorytree.CategoryTreeInNewProvider;
 import com.commercetools.sunrise.common.categorytree.RefreshableCategoryTree;
-import com.commercetools.sunrise.framework.viewmodels.content.carts.MiniCartViewModelFactory;
-import com.commercetools.sunrise.search.facetedsearch.old.FacetedSearchConfigList;
-import com.commercetools.sunrise.search.facetedsearch.old.FacetedSearchConfigListProvider;
+import com.commercetools.sunrise.framework.controllers.metrics.SimpleMetricsSphereClientProvider;
+import com.commercetools.sunrise.framework.injection.RequestScoped;
 import com.commercetools.sunrise.framework.localization.CountryFromSessionProvider;
 import com.commercetools.sunrise.framework.localization.CurrencyFromCountryProvider;
 import com.commercetools.sunrise.framework.localization.LocaleFromUrlProvider;
-import com.commercetools.sunrise.framework.controllers.metrics.SimpleMetricsSphereClientProvider;
-import com.commercetools.sunrise.framework.injection.RequestScoped;
 import com.commercetools.sunrise.framework.template.cms.FileBasedCmsServiceProvider;
 import com.commercetools.sunrise.framework.template.engine.HandlebarsTemplateEngineProvider;
 import com.commercetools.sunrise.framework.template.engine.TemplateEngine;
 import com.commercetools.sunrise.framework.template.i18n.ConfigurableI18nResolverProvider;
 import com.commercetools.sunrise.framework.template.i18n.I18nResolver;
+import com.commercetools.sunrise.framework.viewmodels.content.carts.MiniCartViewModelFactory;
 import com.commercetools.sunrise.httpauth.HttpAuthentication;
 import com.commercetools.sunrise.httpauth.basic.BasicAuthenticationProvider;
 import com.commercetools.sunrise.sessions.cart.TruncatedMiniCartViewModelFactory;
@@ -49,7 +47,6 @@ public class Module extends AbstractModule {
         bind(I18nResolver.class).toProvider(ConfigurableI18nResolverProvider.class).in(Singleton.class);
         bind(HttpAuthentication.class).toProvider(BasicAuthenticationProvider.class).in(Singleton.class);
         bind(CategoryTree.class).annotatedWith(Names.named("new")).toProvider(CategoryTreeInNewProvider.class).in(Singleton.class);
-        bind(FacetedSearchConfigList.class).toProvider(FacetedSearchConfigListProvider.class).in(Singleton.class);
         bind(MiniCartViewModelFactory.class).to(TruncatedMiniCartViewModelFactory.class);
     }
 

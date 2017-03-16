@@ -145,9 +145,11 @@ public abstract class AbstractPaginationViewModelFactory extends SimpleViewModel
     private long calculateTotalPages(final PagedResult<?> pagedResult) {
         if (pagedResult.isLast()) {
             return currentPage;
-        } else {
+        } else if (pagedResult.getCount() > 0) {
             final Double totalPages = Math.ceil(pagedResult.getTotal() / pagedResult.getCount());
             return totalPages.longValue();
+        } else {
+            return 0;
         }
     }
 }

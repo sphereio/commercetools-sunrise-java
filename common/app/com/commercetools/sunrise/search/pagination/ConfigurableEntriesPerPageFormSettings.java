@@ -9,7 +9,7 @@ import static java.util.stream.Collectors.toList;
 
 public abstract class ConfigurableEntriesPerPageFormSettings extends EntriesPerPageFormSettingsImpl {
 
-    private static final String CONFIG_KEY = "key";
+    private static final String CONFIG_KEY = "fieldName";
     private static final String DEFAULT_KEY = "pp";
     private static final String CONFIG_OPTIONS = "options";
 

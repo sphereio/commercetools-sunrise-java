@@ -45,8 +45,8 @@ public final class ProductPaginationControllerComponent extends AbstractPaginati
     @Override
     public ProductProjectionSearch onProductProjectionSearch(final ProductProjectionSearch search) {
         return search
-                .withOffset(limit)
-                .withLimit(offset);
+                .withOffset(offset)
+                .withLimit(limit);
     }
 
     @Override

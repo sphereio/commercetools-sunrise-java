@@ -13,11 +13,11 @@ public class SunriseConfigurationException extends RuntimeException {
     }
 
     public SunriseConfigurationException(final String message, final String configurationKey, final String configurationPath) {
-        super(generateMessage(message, configurationKey + " inside " + configurationPath));
+        super(generateMessage(message, "\"" + configurationKey + "\" inside " + configurationPath));
     }
 
     public SunriseConfigurationException(final String message, final String configurationKey, final Configuration configuration) {
-        super(generateMessage(message, configurationKey + " inside " + configuration));
+        super(generateMessage(message, "\"" + configurationKey + "\" inside " + configuration.asMap()));
     }
 
     public SunriseConfigurationException(final String message, final Throwable cause) {

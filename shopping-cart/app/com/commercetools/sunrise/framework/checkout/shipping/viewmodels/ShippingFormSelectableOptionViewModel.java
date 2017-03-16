@@ -4,10 +4,19 @@ import com.commercetools.sunrise.framework.viewmodels.forms.FormSelectableOption
 
 public class ShippingFormSelectableOptionViewModel extends FormSelectableOptionViewModel {
 
+    private String description;
     private String deliveryDays;
     private String price;
 
     public ShippingFormSelectableOptionViewModel() {
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(final String description) {
+        this.description = description;
     }
 
     public String getDeliveryDays() {

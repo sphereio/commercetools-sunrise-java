@@ -8,7 +8,7 @@ import java.util.Optional;
 final class ConfigurableEntriesPerPageFormOption extends EntriesPerPageFormOptionImpl {
 
     private static final String OPTION_LABEL_ATTR = "label";
-    private static final String OPTION_VALUE_ATTR = "value";
+    private static final String OPTION_VALUE_ATTR = "fieldValue";
     private static final String OPTION_AMOUNT_ATTR = "amount";
     private static final String OPTION_DEFAULT_ATTR = "default";
 

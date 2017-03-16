@@ -4,7 +4,7 @@ import play.Configuration;
 
 public abstract class ConfigurablePaginationSettings extends PaginationSettingsImpl {
 
-    private static final String CONFIG_KEY = "key";
+    private static final String CONFIG_KEY = "fieldName";
     private static final String DEFAULT_KEY = "page";
     private static final String CONFIG_DISPLAYED_PAGES = "displayedPages";
     private static final int DEFAULT_DISPLAYED_PAGES = 6;

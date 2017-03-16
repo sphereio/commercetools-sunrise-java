@@ -9,12 +9,10 @@ public class PaymentFormSelectableOptionViewModel extends FormSelectableOptionVi
     public PaymentFormSelectableOptionViewModel() {
     }
 
-    @Override
     public String getImage() {
         return image;
     }
 
-    @Override
     public void setImage(final String image) {
         this.image = image;
     }

@@ -12,10 +12,10 @@ import javax.annotation.Nullable;
 public abstract class AbstractFacetedSearchSelectorControllerComponent<T> extends Base implements ControllerComponent, PageDataReadyHook {
 
     private final FacetedSearchFormSettingsList<T> settings;
-    private final AbstractFacetSelectorListViewModelFactory facetSelectorListViewModelFactory;
+    private final AbstractFacetSelectorListViewModelFactory<T> facetSelectorListViewModelFactory;
 
     protected AbstractFacetedSearchSelectorControllerComponent(final FacetedSearchFormSettingsList<T> settings,
-                                                               final AbstractFacetSelectorListViewModelFactory facetSelectorListViewModelFactory) {
+                                                               final AbstractFacetSelectorListViewModelFactory<T> facetSelectorListViewModelFactory) {
         this.settings = settings;
         this.facetSelectorListViewModelFactory = facetSelectorListViewModelFactory;
     }
@@ -32,7 +32,7 @@ public abstract class AbstractFacetedSearchSelectorControllerComponent<T> extend
         final PagedSearchResult<T> pagedSearchResult = getPagedSearchResult();
         if (pagedSearchResult != null && pageData.getContent() instanceof WithFacetedSearchViewModel) {
             final WithFacetedSearchViewModel content = (WithFacetedSearchViewModel) pageData.getContent();
-            content.setFacets(facetSelectorListViewModelFactory.create(settings, pagedSearchResult));
+            content.setFacets(facetSelectorListViewModelFactory.create(pagedSearchResult));
         }
     }
 }
