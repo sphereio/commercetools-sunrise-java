@@ -8,7 +8,6 @@ import io.sphere.sdk.products.ProductProjection;
 import io.sphere.sdk.products.search.ProductProjectionSearch;
 import io.sphere.sdk.search.FacetedSearchExpression;
 import io.sphere.sdk.search.PagedSearchResult;
-import play.inject.Injector;
 import play.mvc.Http;
 
 import javax.annotation.Nullable;
@@ -29,10 +28,10 @@ public final class ProductFacetedSearchSelectorControllerComponent extends Abstr
 
     @Inject
     public ProductFacetedSearchSelectorControllerComponent(final ProductFacetedSearchFormSettingsList settings,
-                                                           final ProductSearchSortSelectorViewModelFactory sortSelectorViewModelFactory,
-                                                           final Injector injector, final Http.Request httpRequest, final Locale locale) {
-        super(settings, sortSelectorViewModelFactory, injector);
-        this.facetedSearchExpressions = getSettings().buildSearchExpressions(httpRequest, locale);
+                                                           final ProductFacetSelectorListViewModelFactory productFacetSelectorListViewModelFactory,
+                                                           final Http.Request httpRequest, final Locale locale) {
+        super(settings, productFacetSelectorListViewModelFactory);
+        this.facetedSearchExpressions = getSettings().buildFacetedSearchExpressions(httpRequest, locale);
     }
 
     @Nullable

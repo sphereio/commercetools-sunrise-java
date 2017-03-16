@@ -44,7 +44,7 @@ public abstract class AbstractPaginationViewModelFactory extends SimpleViewModel
     }
 
     @Override
-    public PaginationViewModel create(final PagedResult<?> pagedResult) {
+    public final PaginationViewModel create(final PagedResult<?> pagedResult) {
         return super.create(pagedResult);
     }
 

@@ -1,9 +1,12 @@
 package com.commercetools.sunrise.search.facetedsearch;
 
+import io.sphere.sdk.search.FacetExpression;
 import io.sphere.sdk.search.FacetedSearchExpression;
+import io.sphere.sdk.search.FilterExpression;
 import play.mvc.Http;
 
 import javax.annotation.Nullable;
+import java.util.List;
 import java.util.Locale;
 
 import static com.commercetools.sunrise.search.SearchUtils.localizeExpression;
@@ -52,5 +55,9 @@ public interface FacetedSearchFormSettings<T> {
     @Nullable
     String getUIType();
 
-    FacetedSearchExpression<T> buildSearchExpression(final Http.Request httpRequest, final Locale locale);
+    FacetedSearchExpression<T> buildFacetedSearchExpression(final Locale locale, final Http.Request httpRequest);
+
+    List<FilterExpression<T>> buildFilterExpressions(final Locale locale, final Http.Request httpRequest);
+
+    FacetExpression<T> buildFacetExpression(final Locale locale);
 }

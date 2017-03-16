@@ -38,13 +38,13 @@ public abstract class AbstractEntriesPerPageSelectorViewModelFactory extends Sim
     }
 
     @Override
-    public EntriesPerPageSelectorViewModel create(final PagedResult<?> pagedResult) {
-        return super.create(pagedResult);
+    protected EntriesPerPageSelectorViewModel newViewModelInstance(final PagedResult<?> pagedResult) {
+        return new EntriesPerPageSelectorViewModel();
     }
 
     @Override
-    protected EntriesPerPageSelectorViewModel newViewModelInstance(final PagedResult<?> pagedResult) {
-        return new EntriesPerPageSelectorViewModel();
+    public final EntriesPerPageSelectorViewModel create(final PagedResult<?> pagedResult) {
+        return super.create(pagedResult);
     }
 
     @Override

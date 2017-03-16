@@ -2,8 +2,7 @@ package com.commercetools.sunrise.search.facetedsearch;
 
 import com.commercetools.sunrise.framework.viewmodels.forms.FormSettings;
 import com.commercetools.sunrise.search.facetedsearch.mappers.TermFacetMapperSettings;
-import io.sphere.sdk.search.TermFacetExpression;
-import io.sphere.sdk.search.TermFacetedSearchExpression;
+import io.sphere.sdk.search.*;
 import io.sphere.sdk.search.model.FacetedSearchSearchModel;
 import io.sphere.sdk.search.model.TermFacetSearchModel;
 import io.sphere.sdk.search.model.TermFacetedSearchSearchModel;
@@ -12,6 +11,7 @@ import play.mvc.Http;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.function.Function;
 
 public interface TermFacetedSearchFormSettings<T> extends MultiOptionFacetedSearchFormSettings<T>, FormSettings<String> {
@@ -53,10 +53,16 @@ public interface TermFacetedSearchFormSettings<T> extends MultiOptionFacetedSear
     }
 
     @Override
-    default TermFacetedSearchExpression<T> buildSearchExpression(final Http.Request httpRequest, final Locale locale) {
-        final String attributePath = getLocalizedAttributePath(locale);
-        final FacetedSearchSearchModel<T> searchModel = TermFacetedSearchSearchModel.of(attributePath);
+    default TermFacetedSearchExpression<T> buildFacetedSearchExpression(final Locale locale, final Http.Request httpRequest) {
+        final TermFacetExpression<T> facetExpression = buildFacetExpression(locale);
+        final List<FilterExpression<T>> filterExpressions = buildFilterExpressions(locale, httpRequest);
+        return TermFacetedSearchExpression.of(facetExpression, filterExpressions);
+    }
+
+    @Override
+    default List<FilterExpression<T>> buildFilterExpressions(final Locale locale, final Http.Request httpRequest) {
         final List<String> selectedValues = getAllSelectedValues(httpRequest);
+        final FacetedSearchSearchModel<T> searchModel = TermFacetedSearchSearchModel.of(getLocalizedAttributePath(locale));
         final TermFacetedSearchExpression<T> facetedSearchExpr;
         if (selectedValues.isEmpty()) {
             facetedSearchExpr = searchModel.allTerms();
@@ -65,10 +71,19 @@ public interface TermFacetedSearchFormSettings<T> extends MultiOptionFacetedSear
         } else {
             facetedSearchExpr = searchModel.containsAny(selectedValues);
         }
-        final TermFacetExpression<T> facetExpression = TermFacetSearchModel.<T, String>of(attributePath, Function.identity())
+        return facetedSearchExpr.filterExpressions();
+    }
+
+    @Override
+    default TermFacetExpression<T> buildFacetExpression(final Locale locale) {
+        return TermFacetSearchModel.<T, String>of(getLocalizedAttributePath(locale), Function.identity())
                 .withCountingProducts(true)
                 .allTerms();
-        return TermFacetedSearchExpression.of(facetExpression, facetedSearchExpr.filterExpressions());
+    }
+
+    default Optional<TermFacetResult> findFacetResult(final PagedSearchResult<T> pagedSearchResult, final Locale locale) {
+        final TermFacetExpression<T> facetExpression = buildFacetExpression(locale);
+        return Optional.ofNullable(pagedSearchResult.getFacetResult(facetExpression));
     }
 
     static <T> TermFacetedSearchFormSettings<T> of(final String fieldName, final String label, final String expression, final int position,

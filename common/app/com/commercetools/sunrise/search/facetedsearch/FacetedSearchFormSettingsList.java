@@ -17,9 +17,9 @@ public interface FacetedSearchFormSettingsList<T> {
 
     List<BucketRangeFacetedSearchFormSettings<T>> getBucketRangeSettings();
 
-    default List<FacetedSearchExpression<T>> buildSearchExpressions(final Http.Request httpRequest, final Locale locale) {
+    default List<FacetedSearchExpression<T>> buildFacetedSearchExpressions(final Http.Request httpRequest, final Locale locale) {
         return concat(getTermSettings().stream(), concat(getSliderRangeSettings().stream(), getBucketRangeSettings().stream()))
-                .map(setting -> setting.buildSearchExpression(httpRequest, locale))
+                .map(setting -> setting.buildFacetedSearchExpression(locale, httpRequest))
                 .collect(toList());
     }
 }

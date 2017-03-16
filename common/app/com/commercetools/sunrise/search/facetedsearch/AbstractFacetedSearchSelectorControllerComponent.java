@@ -3,26 +3,21 @@ package com.commercetools.sunrise.search.facetedsearch;
 import com.commercetools.sunrise.framework.components.controllers.ControllerComponent;
 import com.commercetools.sunrise.framework.hooks.consumers.PageDataReadyHook;
 import com.commercetools.sunrise.framework.viewmodels.PageData;
-import com.commercetools.sunrise.search.sort.viewmodels.AbstractSortSelectorViewModelFactory;
-import com.commercetools.sunrise.search.sort.viewmodels.WithSortSelectorViewModel;
+import com.commercetools.sunrise.search.facetedsearch.viewmodels.AbstractFacetSelectorListViewModelFactory;
 import io.sphere.sdk.models.Base;
 import io.sphere.sdk.search.PagedSearchResult;
-import play.inject.Injector;
 
 import javax.annotation.Nullable;
 
 public abstract class AbstractFacetedSearchSelectorControllerComponent<T> extends Base implements ControllerComponent, PageDataReadyHook {
 
     private final FacetedSearchFormSettingsList<T> settings;
-    private final AbstractSortSelectorViewModelFactory sortSelectorViewModelFactory;
-    private final Injector injector;
+    private final AbstractFacetSelectorListViewModelFactory facetSelectorListViewModelFactory;
 
     protected AbstractFacetedSearchSelectorControllerComponent(final FacetedSearchFormSettingsList<T> settings,
-                                                               final AbstractSortSelectorViewModelFactory sortSelectorViewModelFactory,
-                                                               final Injector injector) {
+                                                               final AbstractFacetSelectorListViewModelFactory facetSelectorListViewModelFactory) {
         this.settings = settings;
-        this.sortSelectorViewModelFactory = sortSelectorViewModelFactory;
-        this.injector = injector;
+        this.facetSelectorListViewModelFactory = facetSelectorListViewModelFactory;
     }
 
     protected final FacetedSearchFormSettingsList<T> getSettings() {
@@ -35,9 +30,9 @@ public abstract class AbstractFacetedSearchSelectorControllerComponent<T> extend
     @Override
     public void onPageDataReady(final PageData pageData) {
         final PagedSearchResult<T> pagedSearchResult = getPagedSearchResult();
-        if (pagedSearchResult != null && pageData.getContent() instanceof WithSortSelectorViewModel) {
-            final WithSortSelectorViewModel content = (WithSortSelectorViewModel) pageData.getContent();
-            content.setSortSelector(sortSelectorViewModelFactory.create(pagedSearchResult));
+        if (pagedSearchResult != null && pageData.getContent() instanceof WithFacetedSearchViewModel) {
+            final WithFacetedSearchViewModel content = (WithFacetedSearchViewModel) pageData.getContent();
+            content.setFacets(facetSelectorListViewModelFactory.create(settings, pagedSearchResult));
         }
     }
 }
