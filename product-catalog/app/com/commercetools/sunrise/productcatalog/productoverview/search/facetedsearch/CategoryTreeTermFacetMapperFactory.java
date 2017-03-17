@@ -91,7 +91,7 @@ public class CategoryTreeTermFacetMapperFactory implements TermFacetMapperFactor
 
     private Optional<Integer> indexOfCategoryIdentifierInRoutePattern() {
         return Optional.ofNullable(httpContext.args.get("ROUTE_PATTERN"))
-                .map(routePattern -> routePattern.toString().replaceAll("<[^>]+>", "")) //hack since splitting '$languageTag<[^/]+>' with '/' would create more words
+                .map(routePattern -> routePattern.toString().replaceAll("<[^>]+>", "")) //hack since splitting '$categoryIdentifier<[^/]+>' with '/' would create more words
                 .map(routePattern -> {
                     final List<String> paths = asList(routePattern.split("/"));
                     return paths.indexOf("$categoryIdentifier");

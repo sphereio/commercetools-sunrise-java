@@ -53,7 +53,7 @@ public class ConfigurableTermFacetedSearchFormSettings<T> extends AbstractConfig
     @Nullable
     private static TermFacetMapperSettings mapperSettings(final Configuration configuration, final List<? extends TermFacetMapperType> facetMapperTypes) {
         return Optional.ofNullable(configuration.getConfig(CONFIG_MAPPER))
-                .flatMap(mapperConfig -> mapperType(configuration, facetMapperTypes)
+                .flatMap(mapperConfig -> mapperType(mapperConfig, facetMapperTypes)
                         .map(type -> TermFacetMapperSettings.of(type, mapperConfig.getStringList(CONFIG_MAPPER_VALUES))))
                 .orElse(null);
     }

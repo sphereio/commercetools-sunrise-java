@@ -60,7 +60,7 @@ public class Module extends AbstractModule {
     @Singleton
     private ProductTypeLocalRepository fetchProductTypeLocalRepository(final SphereClient sphereClient) {
         final ProductTypeQuery query = ProductTypeQuery.of();
-        final List<ProductType> productTypes = blockingWait(queryAll(sphereClient, query), 30, TimeUnit.SECONDS);
+        final List<ProductType> productTypes = blockingWait(queryAll(sphereClient, query), 1, TimeUnit.MINUTES);
         return ProductTypeLocalRepository.of(productTypes);
     }
 
