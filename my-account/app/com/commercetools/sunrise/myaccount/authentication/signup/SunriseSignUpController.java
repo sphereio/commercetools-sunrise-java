@@ -17,7 +17,7 @@ import play.mvc.Result;
 
 import java.util.concurrent.CompletionStage;
 
-import static com.commercetools.sunrise.common.utils.SphereExceptionUtils.isDuplicatedEmailFieldError;
+import static com.commercetools.sunrise.ctp.CtpExceptionUtils.isDuplicatedEmailFieldError;
 
 public abstract class SunriseSignUpController extends SunriseTemplateFormController
         implements MyAccountController, WithTemplateFormFlow<Void, CustomerSignInResult, SignUpFormData> {

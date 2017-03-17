@@ -17,7 +17,7 @@ import play.mvc.Result;
 
 import java.util.concurrent.CompletionStage;
 
-import static com.commercetools.sunrise.common.utils.SphereExceptionUtils.isCustomerInvalidCredentialsError;
+import static com.commercetools.sunrise.ctp.CtpExceptionUtils.isCustomerInvalidCredentialsError;
 
 public abstract class SunriseLogInController extends SunriseTemplateFormController
         implements MyAccountController, WithTemplateFormFlow<Void, CustomerSignInResult, LogInFormData> {

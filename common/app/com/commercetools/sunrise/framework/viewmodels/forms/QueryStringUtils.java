@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static com.commercetools.sunrise.common.utils.ArrayUtils.arrayToList;
+import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.*;
 
 public final class QueryStringUtils {
@@ -25,7 +25,7 @@ public final class QueryStringUtils {
      */
     public static List<String> findAllSelectedValuesFromQueryString(final String fieldName, final Http.Request httpRequest) {
         final String[] values = httpRequest.queryString().getOrDefault(fieldName, new String[]{});
-        return arrayToList(values);
+        return asList(values);
     }
 
     /**
@@ -106,7 +106,7 @@ public final class QueryStringUtils {
      */
     public static Map<String, List<String>> extractQueryString(final Http.Request httpRequest) {
         return httpRequest.queryString().entrySet().stream()
-                .collect(toMap(Map.Entry::getKey, entry -> arrayToList(entry.getValue())));
+                .collect(toMap(Map.Entry::getKey, entry -> asList(entry.getValue())));
     }
 
     /**

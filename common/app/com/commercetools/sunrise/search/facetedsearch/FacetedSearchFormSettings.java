@@ -17,7 +17,7 @@ public interface FacetedSearchFormSettings<T> {
      * Gets the label displayed in the facet.
      * @return the label displayed in this facet
      */
-    String getLabel();
+    String getFieldLabel();
 
     /**
      * Gets the facet expression associated, representing just the attribute path.
@@ -35,12 +35,6 @@ public interface FacetedSearchFormSettings<T> {
     default String getLocalizedAttributePath(final Locale locale) {
         return localizeExpression(getAttributePath(), locale);
     }
-
-    /**
-     * Gets the position of this facet in relation to other facets.
-     * @return a natural number indicating the position of this facet
-     */
-    int getPosition();
 
     /**
      * Whether the facet count should be hidden or not.

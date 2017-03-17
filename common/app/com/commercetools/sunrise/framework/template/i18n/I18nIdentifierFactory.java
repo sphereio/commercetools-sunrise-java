@@ -2,7 +2,8 @@ package com.commercetools.sunrise.framework.template.i18n;
 
 import io.sphere.sdk.models.Base;
 
-import static com.commercetools.sunrise.common.utils.ArrayUtils.getArrayElement;
+import javax.annotation.Nullable;
+
 import static org.apache.commons.lang3.StringUtils.split;
 
 public class I18nIdentifierFactory extends Base {
@@ -32,5 +33,19 @@ public class I18nIdentifierFactory extends Base {
 
     protected String getDefaultBundle() {
         return DEFAULT_BUNDLE;
+    }
+
+    /**
+     * Given a string array and a particular position, it returns the array element in that position
+     * or the default value if the array does not contain an element for that position.
+     * @param array the string array from which to get the element
+     * @param position the position of the element
+     * @param defaultValue the default value returned in case there is no element in that position
+     * @return the element from the array in that position, or the default value if there is no element
+     */
+    @Nullable
+    private static String getArrayElement(final String[] array, final int position, final String defaultValue) {
+        final boolean containsPosition = array.length > position;
+        return containsPosition ? array[position] : defaultValue;
     }
 }

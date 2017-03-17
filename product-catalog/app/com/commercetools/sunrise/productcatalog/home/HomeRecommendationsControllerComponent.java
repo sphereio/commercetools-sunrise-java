@@ -1,7 +1,7 @@
 package com.commercetools.sunrise.productcatalog.home;
 
 import com.commercetools.sunrise.framework.viewmodels.PageData;
-import com.commercetools.sunrise.common.suggestion.ProductRecommender;
+import com.commercetools.sunrise.recommendations.ProductRecommender;
 import com.commercetools.sunrise.framework.components.controllers.ControllerComponent;
 import com.commercetools.sunrise.framework.hooks.consumers.PageDataReadyHook;
 import com.commercetools.sunrise.framework.hooks.events.RequestStartedHook;

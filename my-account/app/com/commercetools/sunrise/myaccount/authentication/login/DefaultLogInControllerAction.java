@@ -13,7 +13,7 @@ import javax.inject.Inject;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
-import static com.commercetools.sunrise.common.utils.SphereExceptionUtils.isInvalidOperationError;
+import static com.commercetools.sunrise.ctp.CtpExceptionUtils.isInvalidOperationError;
 import static io.sphere.sdk.utils.CompletableFutureUtils.exceptionallyCompletedFuture;
 import static io.sphere.sdk.utils.CompletableFutureUtils.recoverWith;
 

@@ -5,27 +5,27 @@ import play.Configuration;
 
 import java.util.Optional;
 
-final class ConfigurableEntriesPerPageFormOption extends EntriesPerPageFormOptionImpl {
+public class ConfigurableEntriesPerPageFormOption extends EntriesPerPageFormOptionImpl {
 
-    private static final String OPTION_LABEL_ATTR = "label";
-    private static final String OPTION_VALUE_ATTR = "fieldValue";
+    private static final String OPTION_FIELD_LABEL_ATTR = "fieldLabel";
+    private static final String OPTION_FIELD_VALUE_ATTR = "fieldValue";
     private static final String OPTION_AMOUNT_ATTR = "amount";
     private static final String OPTION_DEFAULT_ATTR = "default";
 
     private static final int MIN_PAGE_SIZE = 0;
     private static final int MAX_PAGE_SIZE = 500;
 
-    protected ConfigurableEntriesPerPageFormOption(final Configuration configuration) {
+    public ConfigurableEntriesPerPageFormOption(final Configuration configuration) {
         super(fieldLabel(configuration), fieldValue(configuration), amount(configuration), isDefault(configuration));
     }
 
     private static String fieldLabel(final Configuration optionConfig) {
-        return optionConfig.getString(OPTION_LABEL_ATTR, "");
+        return optionConfig.getString(OPTION_FIELD_LABEL_ATTR, "");
     }
 
     private static String fieldValue(final Configuration optionConfig) {
-        return Optional.ofNullable(optionConfig.getString(OPTION_VALUE_ATTR))
-                .orElseThrow(() -> new SunriseConfigurationException("Missing elements per page value", OPTION_VALUE_ATTR, optionConfig));
+        return Optional.ofNullable(optionConfig.getString(OPTION_FIELD_VALUE_ATTR))
+                .orElseThrow(() -> new SunriseConfigurationException("Missing elements per page value", OPTION_FIELD_VALUE_ATTR, optionConfig));
     }
 
     private static int amount(final Configuration optionConfig) {

@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.framework.viewmodels.content.carts;
 
-import com.commercetools.sunrise.common.ctp.ProductAttributeSettings;
+import com.commercetools.sunrise.ctp.ProductAttributeSettings;
 import com.commercetools.sunrise.framework.viewmodels.content.products.AttributeWithProductType;
 import com.commercetools.sunrise.framework.viewmodels.content.products.ProductAttributeViewModel;
 import com.commercetools.sunrise.framework.viewmodels.content.products.ProductAttributeViewModelFactory;

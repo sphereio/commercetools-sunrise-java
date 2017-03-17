@@ -2,6 +2,7 @@ package com.commercetools.sunrise.productcatalog.productoverview.search;
 
 import com.commercetools.sunrise.framework.reverserouters.productcatalog.product.ProductReverseRouter;
 import com.commercetools.sunrise.framework.viewmodels.forms.FormSelectableOptionViewModel;
+import com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch.CategoryTreeTermFacetMapper;
 import com.commercetools.sunrise.search.facetedsearch.viewmodels.FacetOptionViewModel;
 import com.commercetools.sunrise.test.TestableCall;
 import io.sphere.sdk.categories.Category;

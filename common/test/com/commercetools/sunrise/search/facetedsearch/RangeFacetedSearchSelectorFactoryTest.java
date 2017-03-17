@@ -15,7 +15,7 @@ public class RangeFacetedSearchSelectorFactoryTest {
 //            final RangeFacet<ProductProjection> rangeFacet = (RangeFacet<ProductProjection>) facet;
 //            assertThat(rangeFacet.getType()).as("type").isEqualTo(SunriseFacetUIType.LIST);
 //            assertThat(rangeFacet.getKey()).as("key").isEqualTo(KEY);
-//            assertThat(rangeFacet.getLabel()).as("label").isEqualTo(LABEL);
+//            assertThat(rangeFacet.getFieldLabel()).as("label").isEqualTo(LABEL);
 //            assertThat(rangeFacet.isCountHidden()).as("count hidden").isTrue();
 //            assertThat(rangeFacet.getSelectedRanges()).as("selected values").isEqualTo(asList(FilterRange.of("0", "1000"), FilterRange.of("1000", "2000")));
 //        });

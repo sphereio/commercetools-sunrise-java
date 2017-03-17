@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.framework.controllers.metrics;
 
-import com.commercetools.sunrise.common.utils.LogUtils;
+import com.commercetools.sunrise.ctp.CtpLogUtils;
 import io.sphere.sdk.client.SphereClient;
 import io.sphere.sdk.client.metrics.ObservedTotalDuration;
 import io.sphere.sdk.client.metrics.SimpleMetricsSphereClient;
@@ -68,7 +68,7 @@ final class MetricsLogger extends Action.Simple {
         String report = metrics.stream()
                 .map(data -> String.format("(%dms) %s",
                         data.getDurationInMilliseconds(),
-                        LogUtils.printableRequest(data.getRequest())))
+                        CtpLogUtils.printableRequest(data.getRequest())))
                 .collect(joining("\n"));
         if (!report.isEmpty()) {
             report = ":\n" + report;

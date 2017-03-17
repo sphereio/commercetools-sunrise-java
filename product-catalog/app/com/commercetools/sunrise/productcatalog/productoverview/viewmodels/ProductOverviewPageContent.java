@@ -4,7 +4,7 @@ import com.commercetools.sunrise.framework.viewmodels.content.breadcrumbs.Breadc
 import com.commercetools.sunrise.framework.viewmodels.TitleDescriptionViewModel;
 import com.commercetools.sunrise.framework.viewmodels.content.PageContent;
 import com.commercetools.sunrise.search.facetedsearch.viewmodels.FacetSelectorListViewModel;
-import com.commercetools.sunrise.search.facetedsearch.WithFacetedSearchViewModel;
+import com.commercetools.sunrise.search.facetedsearch.viewmodels.WithFacetedSearchViewModel;
 import com.commercetools.sunrise.search.pagination.viewmodels.PaginationViewModel;
 import com.commercetools.sunrise.search.pagination.viewmodels.EntriesPerPageSelectorViewModel;
 import com.commercetools.sunrise.search.pagination.viewmodels.WithPaginationViewModel;

@@ -1,19 +1,19 @@
 package com.commercetools.sunrise.search.facetedsearch.viewmodels;
 
 import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
-import com.commercetools.sunrise.search.facetedsearch.FacetedSearchFormSettings;
 import com.commercetools.sunrise.search.facetedsearch.FacetedSearchFormSettingsList;
+import com.commercetools.sunrise.search.facetedsearch.bucketranges.BucketRangeFacetedSearchFormSettings;
+import com.commercetools.sunrise.search.facetedsearch.bucketranges.viewmodels.BucketRangeFacetSelectorViewModelFactory;
+import com.commercetools.sunrise.search.facetedsearch.sliderranges.SliderRangeFacetedSearchFormSettings;
+import com.commercetools.sunrise.search.facetedsearch.sliderranges.viewmodels.SliderRangeFacetSelectorViewModelFactory;
+import com.commercetools.sunrise.search.facetedsearch.terms.TermFacetedSearchFormSettings;
+import com.commercetools.sunrise.search.facetedsearch.terms.viewmodels.TermFacetSelectorViewModelFactory;
 import io.sphere.sdk.search.PagedSearchResult;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.Comparator;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.stream.Stream;
-
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Stream.concat;
 
 public abstract class AbstractFacetSelectorListViewModelFactory<T> extends SimpleViewModelFactory<FacetSelectorListViewModel, PagedSearchResult<T>> {
 
@@ -72,33 +72,31 @@ public abstract class AbstractFacetSelectorListViewModelFactory<T> extends Simpl
     }
 
     protected void fillList(final FacetSelectorListViewModel viewModel, final PagedSearchResult<T> pagedSearchResult) {
-        viewModel.setList(concat(createTermFacets(pagedSearchResult), concat(createBucketRangeFacets(pagedSearchResult), createSliderRangeFacets(pagedSearchResult)))
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .sorted(Comparator.comparingDouble(Pair::getLeft))
-                .map(Pair::getRight)
-                .collect(toList()));
+        final List<FacetSelectorViewModel> list = new ArrayList<>();
+        settingsList.getAllSettingsSorted().forEach(settings -> {
+            if (settings instanceof TermFacetedSearchFormSettings) {
+                createViewModel((TermFacetedSearchFormSettings<T>) settings, pagedSearchResult).ifPresent(list::add);
+            } else if (settings instanceof SliderRangeFacetedSearchFormSettings) {
+                createViewModel((SliderRangeFacetedSearchFormSettings<T>) settings, pagedSearchResult).ifPresent(list::add);
+            } else if (settings instanceof BucketRangeFacetedSearchFormSettings) {
+                createViewModel((BucketRangeFacetedSearchFormSettings<T>) settings, pagedSearchResult).ifPresent(list::add);
+            }
+        });
+        viewModel.setList(list);
     }
 
-    private Stream<Optional<Pair<Integer, FacetSelectorViewModel>>> createTermFacets(final PagedSearchResult<T> pagedSearchResult) {
-        return settingsList.getTermSettings().stream()
-                .map(settings -> settings.findFacetResult(pagedSearchResult, locale)
-                        .map(facetResult -> createPair(settings, termFacetSelectorViewModelFactory.create(settings, facetResult))));
+    private Optional<FacetSelectorViewModel> createViewModel(final TermFacetedSearchFormSettings<T> settings, final PagedSearchResult<T> pagedSearchResult) {
+        return settings.findFacetResult(pagedSearchResult, locale)
+                .map(facetResult -> termFacetSelectorViewModelFactory.create(settings, facetResult));
     }
 
-    private Stream<Optional<Pair<Integer, FacetSelectorViewModel>>> createBucketRangeFacets(final PagedSearchResult<T> pagedSearchResult) {
-        return settingsList.getBucketRangeSettings().stream()
-                .map(settings -> settings.findFacetResult(pagedSearchResult, locale)
-                        .map(facetResult -> createPair(settings, bucketRangeFacetSelectorViewModelFactory.create(settings, facetResult))));
+    private Optional<FacetSelectorViewModel> createViewModel(final SliderRangeFacetedSearchFormSettings<T> settings, final PagedSearchResult<T> pagedSearchResult) {
+        return settings.findFacetResult(pagedSearchResult, locale)
+                .map(facetResult -> sliderRangeFacetSelectorViewModelFactory.create(settings, facetResult));
     }
 
-    private Stream<Optional<Pair<Integer, FacetSelectorViewModel>>> createSliderRangeFacets(final PagedSearchResult<T> pagedSearchResult) {
-        return settingsList.getSliderRangeSettings().stream()
-                .map(settings -> settings.findFacetResult(pagedSearchResult, locale)
-                        .map(facetResult -> createPair(settings, sliderRangeFacetSelectorViewModelFactory.create(settings, facetResult))));
-    }
-
-    private ImmutablePair<Integer, FacetSelectorViewModel> createPair(final FacetedSearchFormSettings<T> settings, final FacetSelectorViewModel viewModel) {
-        return ImmutablePair.of(settings.getPosition(), viewModel);
+    private Optional<FacetSelectorViewModel> createViewModel(final BucketRangeFacetedSearchFormSettings<T> settings, final PagedSearchResult<T> pagedSearchResult) {
+        return settings.findFacetResult(pagedSearchResult, locale)
+                .map(facetResult -> bucketRangeFacetSelectorViewModelFactory.create(settings, facetResult));
     }
 }

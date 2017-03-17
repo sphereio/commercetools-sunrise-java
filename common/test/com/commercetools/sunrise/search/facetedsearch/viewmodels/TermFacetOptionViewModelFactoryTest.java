@@ -1,5 +1,6 @@
 package com.commercetools.sunrise.search.facetedsearch.viewmodels;
 
+import com.commercetools.sunrise.search.facetedsearch.terms.viewmodels.TermFacetOptionViewModelFactory;
 import io.sphere.sdk.search.TermStats;
 import org.junit.Test;
 

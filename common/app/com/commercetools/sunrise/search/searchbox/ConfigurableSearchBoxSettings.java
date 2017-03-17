@@ -2,12 +2,12 @@ package com.commercetools.sunrise.search.searchbox;
 
 import play.Configuration;
 
-public abstract class ConfigurableSearchBoxSettings extends SearchBoxSettingsImpl {
+public class ConfigurableSearchBoxSettings extends SearchBoxSettingsImpl {
 
-    private static final String CONFIG_KEY = "fieldName";
-    private static final String DEFAULT_KEY = "q";
+    private static final String CONFIG_FIELD_NAME = "fieldName";
+    private static final String DEFAULT_FIELD_NAME = "q";
 
-    protected ConfigurableSearchBoxSettings(final Configuration configuration) {
-        super(configuration.getString(CONFIG_KEY, DEFAULT_KEY));
+    public ConfigurableSearchBoxSettings(final Configuration configuration) {
+        super(configuration.getString(CONFIG_FIELD_NAME, DEFAULT_FIELD_NAME));
     }
 }

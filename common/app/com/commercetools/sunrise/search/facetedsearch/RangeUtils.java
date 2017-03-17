@@ -9,13 +9,10 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import static java.util.stream.Collectors.toList;
 
 public final class RangeUtils {
 
@@ -42,39 +39,12 @@ public final class RangeUtils {
         return parseFacetRange(rangeAsString);
     }
 
-
-    public static List<FilterRange<String>> optionsToFilterRange(final List<BucketRangeFacetedSearchFormOption> rangeOptions) {
-        return rangeOptions.stream()
-                .map(RangeUtils::optionToFilterRange)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .collect(toList());
-    }
-
-    public static List<FacetRange<String>> optionsToFacetRange(final List<BucketRangeFacetedSearchFormOption> rangeOptions) {
-        return rangeOptions.stream()
-                .map(RangeUtils::optionToFacetRange)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .collect(toList());
-    }
-
-    public static Optional<FilterRange<String>> optionToFilterRange(final BucketRangeFacetedSearchFormOption rangeOption) {
-        return parseFilterRange(rangeOption.getValue())
-                .filter(range -> range.isBounded());
-    }
-
-    public static Optional<FacetRange<String>> optionToFacetRange(final BucketRangeFacetedSearchFormOption rangeOption) {
-          return parseFacetRange(rangeOption.getValue())
-                .filter(range -> range.isBounded());
-    }
-
     /**
      * Parses a range of the form {@code (x to y)} to a {@link FilterRange<String>}.
      * @param rangeAsString range of the form {@code (x to y)}
      * @return the {@link FilterRange} corresponding to that range, or empty if it could not be parsed
      */
-    private static Optional<FilterRange<String>> parseFilterRange(final String rangeAsString) {
+    public static Optional<FilterRange<String>> parseFilterRange(final String rangeAsString) {
         return Optional.ofNullable(parseRangeToPair(rangeAsString))
                 .filter(pair -> pair.getRight() != null || pair.getLeft() != null)
                 .map(pair -> {
@@ -93,7 +63,7 @@ public final class RangeUtils {
      * @param rangeAsString range of the form {@code (x to y)}
      * @return the {@link FacetRange} corresponding to that range, or empty if it could not be parsed
      */
-    private static Optional<FacetRange<String>> parseFacetRange(final String rangeAsString) {
+    public static Optional<FacetRange<String>> parseFacetRange(final String rangeAsString) {
         return Optional.ofNullable(parseRangeToPair(rangeAsString))
                 .filter(pair -> pair.getRight() != null || pair.getLeft() != null)
                 .map(pair -> {

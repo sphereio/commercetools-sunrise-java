@@ -4,6 +4,7 @@ import com.commercetools.sunrise.framework.components.controllers.ControllerComp
 import com.commercetools.sunrise.framework.hooks.consumers.PageDataReadyHook;
 import com.commercetools.sunrise.framework.viewmodels.PageData;
 import com.commercetools.sunrise.search.facetedsearch.viewmodels.AbstractFacetSelectorListViewModelFactory;
+import com.commercetools.sunrise.search.facetedsearch.viewmodels.WithFacetedSearchViewModel;
 import io.sphere.sdk.models.Base;
 import io.sphere.sdk.search.PagedSearchResult;
 
