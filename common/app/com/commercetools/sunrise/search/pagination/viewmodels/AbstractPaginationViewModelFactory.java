@@ -70,8 +70,7 @@ public abstract class AbstractPaginationViewModelFactory extends SimpleViewModel
     }
 
     protected void fillFirstPage(final PaginationViewModel viewModel, final PagedResult<?> pagedResult) {
-        final long totalPages = calculateTotalPages(pagedResult);
-        if (firstPageIsDisplayed(totalPages)) {
+        if (firstPageIsDisplayed()) {
             viewModel.setFirstPage(createLinkData(1));
         }
     }
@@ -87,29 +86,21 @@ public abstract class AbstractPaginationViewModelFactory extends SimpleViewModel
         final long totalPages = calculateTotalPages(pagedResult);
         long startPage = 1;
         long endPage = totalPages;
-        if (firstPageIsDisplayed(totalPages) && lastPageIsDisplayed(totalPages)) {
-            startPage = currentPage - 1;
-            endPage = currentPage + 1;
-        } else if (firstPageIsDisplayed(totalPages)) {
-            startPage = calculateTopThreshold(totalPages);
-        } else if (lastPageIsDisplayed(totalPages)) {
-            endPage = calculateBottomThreshold();
+        if (firstPageIsDisplayed()) {
+            startPage = calculateBottomThresholdPage();
+        }
+        if (lastPageIsDisplayed(totalPages)) {
+            endPage = calculateTopThresholdPage(totalPages);
         }
         viewModel.setPages(createPages(startPage, endPage));
     }
 
-    private boolean notAllPagesAreDisplayed(final long totalPages) {
-        return totalPages > settings.getDisplayedPages();
-    }
-
-    private boolean firstPageIsDisplayed(final long totalPages) {
-        final boolean currentPageIsAboveBottomThreshold = currentPage > calculateBottomThreshold();
-        return notAllPagesAreDisplayed(totalPages) && currentPageIsAboveBottomThreshold;
+    private boolean firstPageIsDisplayed() {
+        return calculateBottomThresholdPage() > 2;
     }
 
     private boolean lastPageIsDisplayed(final long totalPages) {
-        final boolean currentPageIsBelowTopThreshold = currentPage < calculateTopThreshold(totalPages);
-        return notAllPagesAreDisplayed(totalPages) && currentPageIsBelowTopThreshold;
+        return calculateTopThresholdPage(totalPages) < totalPages - 1;
     }
 
     private List<PaginationLinkViewModel> createPages(final long startPage, final long endPage) {
@@ -134,12 +125,12 @@ public abstract class AbstractPaginationViewModelFactory extends SimpleViewModel
         return buildUri(httpContext.request().path(), queryString);
     }
 
-    private int calculateBottomThreshold() {
-        return settings.getDisplayedPages() - 1;
+    private long calculateBottomThresholdPage() {
+        return Math.max(currentPage - settings.getDisplayedPages(), 1);
     }
 
-    private long calculateTopThreshold(final long totalPages) {
-        return totalPages - settings.getDisplayedPages() + 2;
+    private long calculateTopThresholdPage(final long totalPages) {
+        return Math.min(currentPage + settings.getDisplayedPages(), totalPages);
     }
 
     private long calculateTotalPages(final PagedResult<?> pagedResult) {

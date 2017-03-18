@@ -7,7 +7,7 @@ public class ConfigurablePaginationSettings extends PaginationSettingsImpl {
     private static final String CONFIG_FIELD_NAME = "fieldName";
     private static final String DEFAULT_FIELD_NAME = "page";
     private static final String CONFIG_DISPLAYED_PAGES = "displayedPages";
-    private static final int DEFAULT_DISPLAYED_PAGES = 6;
+    private static final int DEFAULT_DISPLAYED_PAGES = 2;
 
     public ConfigurablePaginationSettings(final Configuration configuration) {
         super(fieldName(configuration), displayedPages(configuration));

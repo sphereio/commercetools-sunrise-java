@@ -7,6 +7,10 @@ import javax.annotation.Nullable;
 
 public interface PaginationSettings extends FormSettings<Integer> {
 
+    /**
+     * The amount of pages on each side of the current page that are can be displayed.
+     * @return amount of displayed pages
+     */
     int getDisplayedPages();
 
     default long getOffset(final Http.Context httpContext, final long limit) {
