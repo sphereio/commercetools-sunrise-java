@@ -18,8 +18,8 @@ public abstract class AbstractEntriesPerPageSelectorViewModelFactory extends Sim
 
     protected AbstractEntriesPerPageSelectorViewModelFactory(final EntriesPerPageFormSettings settings,
                                                              final EntriesPerPageFormSelectableOptionViewModelFactory entriesPerPageFormSelectableOptionViewModelFactory,
-                                                             final Http.Request httpRequest) {
-        this.selectedOptionValue = settings.getSelectedFieldValue(httpRequest);
+                                                             final Http.Context httpContext) {
+        this.selectedOptionValue = settings.getSelectedFieldValue(httpContext);
         this.settings = settings;
         this.entriesPerPageFormSelectableOptionViewModelFactory = entriesPerPageFormSelectableOptionViewModelFactory;
     }

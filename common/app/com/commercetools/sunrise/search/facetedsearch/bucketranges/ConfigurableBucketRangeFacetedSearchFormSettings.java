@@ -9,16 +9,23 @@ import java.util.function.Function;
 import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 
-public class ConfigurableBucketRangeFacetedSearchFormSettings<T> extends AbstractConfigurableFacetedSearchFormSettingsWithOptions<T> implements BucketRangeFacetedSearchFormSettings<T> {
+public class ConfigurableBucketRangeFacetedSearchFormSettings<T> extends AbstractConfigurableFacetedSearchFormSettingsWithOptions<T> implements SimpleBucketRangeFacetedSearchFormSettings<T> {
 
     private static final String CONFIG_RANGES = "ranges";
 
+    private final String fieldName;
     private final List<BucketRangeFacetedSearchFormOption> options;
 
     public ConfigurableBucketRangeFacetedSearchFormSettings(final Configuration configuration,
                                                             final Function<Configuration, BucketRangeFacetedSearchFormOption> optionCreator) {
         super(configuration);
+        this.fieldName = fieldName(configuration);
         this.options = options(configuration, optionCreator);
+    }
+
+    @Override
+    public String getFieldName() {
+        return fieldName;
     }
 
     @Override

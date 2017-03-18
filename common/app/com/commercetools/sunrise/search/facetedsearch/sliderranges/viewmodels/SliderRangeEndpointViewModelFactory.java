@@ -9,11 +9,11 @@ import javax.inject.Inject;
 
 public class SliderRangeEndpointViewModelFactory extends ViewModelFactory {
 
-    private final Http.Request httpRequest;
+    private final Http.Context httpContext;
 
     @Inject
-    public SliderRangeEndpointViewModelFactory(final Http.Request httpRequest) {
-        this.httpRequest = httpRequest;
+    public SliderRangeEndpointViewModelFactory(final Http.Context httpContext) {
+        this.httpContext = httpContext;
     }
 
     protected SliderRangeEndpointViewModel newViewModelInstance(final SliderRangeFacetedSearchFormSettings<?> settings, final SimpleRangeStats rangeStats) {
@@ -45,11 +45,11 @@ public class SliderRangeEndpointViewModelFactory extends ViewModelFactory {
     }
 
     protected void fillLowerValue(final SliderRangeEndpointViewModel viewModel, final SliderRangeFacetedSearchFormSettings<?> settings, final SimpleRangeStats rangeStats) {
-        viewModel.setLowerValue(settings.getLowerEndpointSettings().getSelectedValue(httpRequest));
+        viewModel.setLowerValue(settings.getLowerEndpointSettings().getSelectedValue(httpContext));
     }
 
     protected void fillUpperValue(final SliderRangeEndpointViewModel viewModel, final SliderRangeFacetedSearchFormSettings<?> settings, final SimpleRangeStats rangeStats) {
-        viewModel.setUpperValue(settings.getUpperEndpointSettings().getSelectedValue(httpRequest));
+        viewModel.setUpperValue(settings.getUpperEndpointSettings().getSelectedValue(httpContext));
     }
 
     protected void fillLowerEndpoint(final SliderRangeEndpointViewModel viewModel, final SliderRangeFacetedSearchFormSettings<?> settings, final SimpleRangeStats rangeStats) {

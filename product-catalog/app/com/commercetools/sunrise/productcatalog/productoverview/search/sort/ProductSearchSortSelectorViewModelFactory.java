@@ -12,7 +12,7 @@ public class ProductSearchSortSelectorViewModelFactory extends AbstractSortSelec
     @Inject
     public ProductSearchSortSelectorViewModelFactory(final ProductSortFormSettings settings,
                                                      final SortFormSelectableOptionViewModelFactory sortFormSelectableOptionViewModelFactory,
-                                                     final Http.Request httpRequest) {
-        super(settings, sortFormSelectableOptionViewModelFactory, httpRequest);
+                                                     final Http.Context httpContext) {
+        super(settings, sortFormSelectableOptionViewModelFactory, httpContext);
     }
 }

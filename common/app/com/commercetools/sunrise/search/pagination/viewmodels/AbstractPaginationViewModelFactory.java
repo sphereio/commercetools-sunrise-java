@@ -18,12 +18,12 @@ public abstract class AbstractPaginationViewModelFactory extends SimpleViewModel
 
     private final PaginationSettings settings;
     private final int currentPage;
-    private final Http.Request httpRequest;
+    private final Http.Context httpContext;
 
-    protected AbstractPaginationViewModelFactory(final PaginationSettings settings, final Http.Request httpRequest) {
+    protected AbstractPaginationViewModelFactory(final PaginationSettings settings, final Http.Context httpContext) {
         this.settings = settings;
-        this.currentPage = settings.getSelectedValue(httpRequest);
-        this.httpRequest = httpRequest;
+        this.currentPage = settings.getSelectedValue(httpContext);
+        this.httpContext = httpContext;
     }
 
     protected final int getCurrentPage() {
@@ -34,8 +34,8 @@ public abstract class AbstractPaginationViewModelFactory extends SimpleViewModel
         return settings;
     }
 
-    protected final Http.Request getHttpRequest() {
-        return httpRequest;
+    protected final Http.Context getHttpContext() {
+        return httpContext;
     }
 
     @Override
@@ -129,9 +129,9 @@ public abstract class AbstractPaginationViewModelFactory extends SimpleViewModel
     }
 
     private String buildUriWithPage(final String key, final long page) {
-        final Map<String, List<String>> queryString = extractQueryString(httpRequest);
+        final Map<String, List<String>> queryString = extractQueryString(httpContext.request());
         queryString.put(key, singletonList(String.valueOf(page)));
-        return buildUri(httpRequest.path(), queryString);
+        return buildUri(httpContext.request().path(), queryString);
     }
 
     private int calculateBottomThreshold() {

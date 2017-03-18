@@ -19,27 +19,27 @@ public class ConfigurableEntriesPerPageFormOption extends EntriesPerPageFormOpti
         super(fieldLabel(configuration), fieldValue(configuration), amount(configuration), isDefault(configuration));
     }
 
-    private static String fieldLabel(final Configuration optionConfig) {
-        return optionConfig.getString(OPTION_FIELD_LABEL_ATTR, "");
+    private static String fieldLabel(final Configuration configuration) {
+        return configuration.getString(OPTION_FIELD_LABEL_ATTR, "");
     }
 
-    private static String fieldValue(final Configuration optionConfig) {
-        return Optional.ofNullable(optionConfig.getString(OPTION_FIELD_VALUE_ATTR))
-                .orElseThrow(() -> new SunriseConfigurationException("Missing elements per page value", OPTION_FIELD_VALUE_ATTR, optionConfig));
+    private static String fieldValue(final Configuration configuration) {
+        return Optional.ofNullable(configuration.getString(OPTION_FIELD_VALUE_ATTR))
+                .orElseThrow(() -> new SunriseConfigurationException("Missing elements per page value", OPTION_FIELD_VALUE_ATTR, configuration));
     }
 
-    private static int amount(final Configuration optionConfig) {
-        final int amount = Optional.ofNullable(optionConfig.getInt(OPTION_AMOUNT_ATTR))
-                .orElseThrow(() -> new SunriseConfigurationException("Missing elements per page amount", OPTION_AMOUNT_ATTR, optionConfig));
+    private static int amount(final Configuration configuration) {
+        final int amount = Optional.ofNullable(configuration.getInt(OPTION_AMOUNT_ATTR))
+                .orElseThrow(() -> new SunriseConfigurationException("Missing elements per page amount", OPTION_AMOUNT_ATTR, configuration));
         if (!isValidAmount(amount)) {
             throw new SunriseConfigurationException(String.format("Elements per page option is not within bounds [%d, %d]: %s",
-                    MIN_PAGE_SIZE, MAX_PAGE_SIZE, amount), OPTION_AMOUNT_ATTR, optionConfig);
+                    MIN_PAGE_SIZE, MAX_PAGE_SIZE, amount), OPTION_AMOUNT_ATTR, configuration);
         }
         return amount;
     }
 
-    private static Boolean isDefault(final Configuration optionConfig) {
-        return optionConfig.getBoolean(OPTION_DEFAULT_ATTR, false);
+    private static Boolean isDefault(final Configuration configuration) {
+        return configuration.getBoolean(OPTION_DEFAULT_ATTR, false);
     }
 
     private static boolean isValidAmount(final int amount) {

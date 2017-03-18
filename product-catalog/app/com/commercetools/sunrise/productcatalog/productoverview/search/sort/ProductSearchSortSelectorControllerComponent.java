@@ -30,9 +30,9 @@ public final class ProductSearchSortSelectorControllerComponent extends Abstract
     @Inject
     public ProductSearchSortSelectorControllerComponent(final ProductSortFormSettings productSortFormSettings,
                                                         final ProductSearchSortSelectorViewModelFactory sortSelectorViewModelFactory,
-                                                        final Http.Request httpRequest, final Locale locale) {
+                                                        final Http.Context httpContext, final Locale locale) {
         super(productSortFormSettings, sortSelectorViewModelFactory);
-        this.sortExpressions = productSortFormSettings.buildSearchExpressions(httpRequest, locale);
+        this.sortExpressions = productSortFormSettings.buildSearchExpressions(httpContext, locale);
     }
 
     @Nullable

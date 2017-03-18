@@ -11,7 +11,7 @@ public class ProductsPerPageSelectorViewModelFactory extends AbstractEntriesPerP
     @Inject
     public ProductsPerPageSelectorViewModelFactory(final ProductsPerPageFormSettings settings,
                                                    final EntriesPerPageFormSelectableOptionViewModelFactory entriesPerPageFormSelectableOptionViewModelFactory,
-                                                   final Http.Request httpRequest) {
-        super(settings, entriesPerPageFormSelectableOptionViewModelFactory, httpRequest);
+                                                   final Http.Context httpContext) {
+        super(settings, entriesPerPageFormSelectableOptionViewModelFactory, httpContext);
     }
 }

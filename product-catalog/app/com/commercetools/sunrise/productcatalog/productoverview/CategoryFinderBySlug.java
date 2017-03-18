@@ -2,6 +2,7 @@ package com.commercetools.sunrise.productcatalog.productoverview;
 
 import com.commercetools.sunrise.framework.hooks.HookRunner;
 import com.commercetools.sunrise.framework.hooks.events.CategoryLoadedHook;
+import com.commercetools.sunrise.framework.injection.RequestScoped;
 import io.sphere.sdk.categories.Category;
 import io.sphere.sdk.categories.CategoryTree;
 
@@ -12,6 +13,7 @@ import java.util.concurrent.CompletionStage;
 
 import static java.util.concurrent.CompletableFuture.completedFuture;
 
+@RequestScoped
 public final class CategoryFinderBySlug implements CategoryFinder {
 
     private final Locale locale;

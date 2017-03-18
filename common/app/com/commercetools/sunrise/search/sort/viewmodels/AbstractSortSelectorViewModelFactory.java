@@ -18,8 +18,8 @@ public abstract class AbstractSortSelectorViewModelFactory<T> extends SimpleView
 
     protected AbstractSortSelectorViewModelFactory(final SortFormSettings<T> settings,
                                                    final SortFormSelectableOptionViewModelFactory sortFormSelectableOptionViewModelFactory,
-                                                   final Http.Request httpRequest) {
-        this.selectedOptionValue = settings.getSelectedFieldValue(httpRequest);
+                                                   final Http.Context httpContext) {
+        this.selectedOptionValue = settings.getSelectedFieldValue(httpContext);
         this.settings = settings;
         this.sortFormSelectableOptionViewModelFactory = sortFormSelectableOptionViewModelFactory;
     }

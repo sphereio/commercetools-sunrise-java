@@ -10,53 +10,40 @@ import io.sphere.sdk.search.model.RangeTermFacetedSearchSearchModel;
 import io.sphere.sdk.search.model.SimpleRangeStats;
 import play.mvc.Http;
 
-import javax.annotation.Nullable;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 import java.util.function.Function;
 
-import static com.commercetools.sunrise.framework.viewmodels.forms.QueryStringUtils.findSelectedValueFromQueryString;
 import static com.commercetools.sunrise.search.facetedsearch.RangeUtils.parseFilterRange;
 
-public interface SliderRangeFacetedSearchFormSettings<T> extends FacetedSearchFormSettings<T> {
-
-    RangeEndpointFormSettings getLowerEndpointSettings();
-
-    RangeEndpointFormSettings getUpperEndpointSettings();
+public interface SliderRangeFacetedSearchFormSettings<T> extends SimpleSliderRangeFacetedSearchFormSettings<T>, FacetedSearchFormSettings<T> {
 
     @Override
-    default RangeFacetedSearchExpression<T> buildFacetedSearchExpression(final Locale locale, final Http.Request httpRequest) {
-        final RangeFacetExpression<T> facetExpression = buildFacetExpression(locale);
-        final List<FilterExpression<T>> filterExpressions = buildFilterExpressions(locale, httpRequest);
+    default RangeFacetedSearchExpression<T> buildFacetedSearchExpression(final Http.Context httpContext) {
+        final RangeFacetExpression<T> facetExpression = buildFacetExpression();
+        final List<FilterExpression<T>> filterExpressions = buildFilterExpressions(httpContext);
         return RangeFacetedSearchExpression.of(facetExpression, filterExpressions);
     }
 
     @Override
-    default List<FilterExpression<T>> buildFilterExpressions(final Locale locale, final Http.Request httpRequest) {
-        final RangeTermFacetedSearchSearchModel<T> searchModel = RangeTermFacetedSearchSearchModel.of(getLocalizedAttributePath(locale));
-        return parseFilterRange(
-                findSelectedValueFromQueryString(getLowerEndpointSettings(), httpRequest),
-                findSelectedValueFromQueryString(getUpperEndpointSettings(), httpRequest))
-                .map(searchModel::isBetween)
-                .orElseGet(searchModel::allRanges).filterExpressions();
-    }
-
-    @Override
-    default RangeFacetExpression<T> buildFacetExpression(final Locale locale) {
-        return RangeTermFacetSearchModel.<T, String>of(getLocalizedAttributePath(locale), Function.identity())
+    default RangeFacetExpression<T> buildFacetExpression() {
+        return RangeTermFacetSearchModel.<T, String>of(getAttributePath(), Function.identity())
                 .withCountingProducts(true)
                 .allRanges();
     }
 
-    default Optional<SimpleRangeStats> findFacetResult(final PagedSearchResult<T> pagedSearchResult, final Locale locale) {
-        final RangeFacetExpression<T> facetExpression = buildFacetExpression(locale);
-        return Optional.ofNullable(pagedSearchResult.getRangeStatsOfAllRanges(facetExpression));
+    @Override
+    default List<FilterExpression<T>> buildFilterExpressions(final Http.Context httpContext) {
+        final RangeTermFacetedSearchSearchModel<T> searchModel = RangeTermFacetedSearchSearchModel.of(getAttributePath());
+        return parseFilterRange(
+                getLowerEndpointSettings().getSelectedValue(httpContext),
+                getUpperEndpointSettings().getSelectedValue(httpContext))
+                .map(searchModel::isBetween)
+                .orElseGet(searchModel::allRanges).filterExpressions();
     }
 
-    static <T> SliderRangeFacetedSearchFormSettings<T> of(final String fieldName, final String label, final String attributePath,
-                                                          final boolean isCountDisplayed, @Nullable final String uiType,
-                                                          final RangeEndpointFormSettings lowerEndpointSettings, final RangeEndpointFormSettings upperEndpointSettings) {
-        return new SliderRangeFacetedSearchFormSettingsImpl<>(fieldName, label, attributePath, isCountDisplayed, uiType, lowerEndpointSettings, upperEndpointSettings);
+    default Optional<SimpleRangeStats> findFacetResult(final PagedSearchResult<T> pagedSearchResult) {
+        final RangeFacetExpression<T> facetExpression = buildFacetExpression();
+        return Optional.ofNullable(pagedSearchResult.getRangeStatsOfAllRanges(facetExpression));
     }
 }

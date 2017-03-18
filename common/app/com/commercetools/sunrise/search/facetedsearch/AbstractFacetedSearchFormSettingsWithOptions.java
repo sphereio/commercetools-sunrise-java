@@ -1,27 +1,18 @@
 package com.commercetools.sunrise.search.facetedsearch;
 
-import javax.annotation.Nullable;
+import java.util.Locale;
 
-public abstract class AbstractFacetedSearchFormSettingsWithOptions<T> extends AbstractFacetedSearchFormSettings<T> implements FacetedSearchFormSettingsWithOptions<T> {
+public abstract class AbstractFacetedSearchFormSettingsWithOptions<T, S extends SimpleFacetedSearchFormSettingsWithOptions<T>> extends AbstractFacetedSearchFormSettings<T, S> implements SimpleFacetedSearchFormSettingsWithOptions<T> {
 
-    private final boolean isMultiSelect;
-    private final boolean isMatchingAll;
-
-    protected AbstractFacetedSearchFormSettingsWithOptions(final String fieldName, final String label, final String attributePath,
-                                                           final boolean isCountDisplayed, @Nullable final String uiType,
-                                                           final boolean isMultiSelect, final boolean isMatchingAll) {
-        super(fieldName, label, attributePath, isCountDisplayed, uiType);
-        this.isMultiSelect = isMultiSelect;
-        this.isMatchingAll = isMatchingAll;
+    protected AbstractFacetedSearchFormSettingsWithOptions(final S settings, final Locale locale) {
+        super(settings, locale);
     }
 
-    @Override
     public boolean isMultiSelect() {
-        return isMultiSelect;
+        return getSettings().isMultiSelect();
     }
 
-    @Override
     public boolean isMatchingAll() {
-        return isMatchingAll;
+        return getSettings().isMatchingAll();
     }
 }

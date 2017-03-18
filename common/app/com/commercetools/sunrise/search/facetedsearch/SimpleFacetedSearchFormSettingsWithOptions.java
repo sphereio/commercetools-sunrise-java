@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.search.facetedsearch;
 
-public interface FacetedSearchFormSettingsWithOptions<T> extends FacetedSearchFormSettings<T> {
+public interface SimpleFacetedSearchFormSettingsWithOptions<T> extends SimpleFacetedSearchFormSettings<T> {
 
     /**
      * Defines whether multiple options can be selected or only one.

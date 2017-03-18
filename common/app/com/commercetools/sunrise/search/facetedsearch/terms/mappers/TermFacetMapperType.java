@@ -9,5 +9,5 @@ public interface TermFacetMapperType {
 
     String value();
 
-    Class<? extends TermFacetMapperFactory> factory();
+    Class<? extends TermFacetMapper> mapper();
 }

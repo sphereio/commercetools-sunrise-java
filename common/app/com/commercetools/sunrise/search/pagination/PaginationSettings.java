@@ -7,8 +7,8 @@ public interface PaginationSettings extends FormSettings<Integer> {
 
     int getDisplayedPages();
 
-    default long getOffset(final Http.Request httpRequest, final long limit) {
-        return (getSelectedValue(httpRequest) - 1) * limit;
+    default long getOffset(final Http.Context httpContext, final long limit) {
+        return (getSelectedValue(httpContext) - 1) * limit;
     }
 
     @Override

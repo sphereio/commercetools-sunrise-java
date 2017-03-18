@@ -8,8 +8,8 @@ import java.util.Locale;
 
 public interface SearchBoxSettings extends FormSettings<String> {
 
-    default LocalizedStringEntry getSearchText(final Http.Request httpRequest, final Locale locale) {
-        final String selectedValue = this.getSelectedValue(httpRequest);
+    default LocalizedStringEntry getSearchText(final Http.Context httpContext, final Locale locale) {
+        final String selectedValue = this.getSelectedValue(httpContext);
         return LocalizedStringEntry.of(locale, selectedValue);
     }
 

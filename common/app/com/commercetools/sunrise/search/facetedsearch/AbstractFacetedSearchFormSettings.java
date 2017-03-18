@@ -1,44 +1,48 @@
 package com.commercetools.sunrise.search.facetedsearch;
 
-import com.commercetools.sunrise.framework.viewmodels.forms.AbstractFormFieldName;
+import com.commercetools.sunrise.framework.SunriseModel;
 
 import javax.annotation.Nullable;
+import java.util.Locale;
 
-public abstract class AbstractFacetedSearchFormSettings<T> extends AbstractFormFieldName implements FacetedSearchFormSettings<T> {
+import static com.commercetools.sunrise.search.SearchUtils.localizeExpression;
 
-    private final String label;
-    private final String attributePath;
-    private final boolean isCountDisplayed;
-    @Nullable
-    private final String uiType;
+public abstract class AbstractFacetedSearchFormSettings<T, S extends SimpleFacetedSearchFormSettings<T>> extends SunriseModel implements SimpleFacetedSearchFormSettings<T> {
 
-    protected AbstractFacetedSearchFormSettings(final String fieldName, final String label, final String attributePath,
-                                                final boolean isCountDisplayed, @Nullable final String uiType) {
-        super(fieldName);
-        this.label = label;
-        this.attributePath = attributePath;
-        this.uiType = uiType;
-        this.isCountDisplayed = isCountDisplayed;
+    private final S settings;
+    private final Locale locale;
+
+    protected AbstractFacetedSearchFormSettings(final S settings, final Locale locale) {
+        this.settings = settings;
+        this.locale = locale;
+    }
+
+    protected final S getSettings() {
+        return settings;
+    }
+
+    protected final Locale getLocale() {
+        return locale;
     }
 
     @Override
     public String getFieldLabel() {
-        return label;
+        return settings.getFieldLabel();
     }
 
     @Override
     public String getAttributePath() {
-        return attributePath;
+        return localizeExpression(settings.getAttributePath(), locale);
     }
 
     @Override
     public boolean isCountDisplayed() {
-        return isCountDisplayed;
+        return settings.isCountDisplayed();
     }
 
-    @Nullable
     @Override
+    @Nullable
     public String getUIType() {
-        return uiType;
+        return settings.getUIType();
     }
 }

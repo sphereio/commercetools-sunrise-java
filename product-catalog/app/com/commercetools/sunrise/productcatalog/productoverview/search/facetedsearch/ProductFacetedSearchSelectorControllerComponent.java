@@ -13,7 +13,6 @@ import play.mvc.Http;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 import java.util.List;
-import java.util.Locale;
 import java.util.concurrent.CompletionStage;
 
 import static java.util.concurrent.CompletableFuture.completedFuture;
@@ -27,11 +26,11 @@ public final class ProductFacetedSearchSelectorControllerComponent extends Abstr
     private PagedSearchResult<ProductProjection> pagedSearchResult;
 
     @Inject
-    public ProductFacetedSearchSelectorControllerComponent(final ProductFacetedSearchFormSettingsList settings,
+    public ProductFacetedSearchSelectorControllerComponent(final ProductFacetedSearchFormSettingsListFactory settingsFactory,
                                                            final ProductFacetSelectorListViewModelFactory productFacetSelectorListViewModelFactory,
-                                                           final Http.Request httpRequest, final Locale locale) {
-        super(settings, productFacetSelectorListViewModelFactory);
-        this.facetedSearchExpressions = getSettings().buildFacetedSearchExpressions(httpRequest, locale);
+                                                           final Http.Context httpContext) {
+        super(settingsFactory.create(), productFacetSelectorListViewModelFactory);
+        this.facetedSearchExpressions = getSettings().buildFacetedSearchExpressions(httpContext);
     }
 
     @Nullable

@@ -6,7 +6,7 @@ import play.Configuration;
 
 import java.util.Optional;
 
-public class ConfigurableSliderRangeFacetedSearchFormSettings<T> extends AbstractConfigurableFacetedSearchFormSettings<T> implements SliderRangeFacetedSearchFormSettings<T> {
+public class ConfigurableSliderRangeFacetedSearchFormSettings<T> extends AbstractConfigurableFacetedSearchFormSettings<T> implements SimpleSliderRangeFacetedSearchFormSettings<T> {
 
     private static final String CONFIG_LOWER = "lowerEndpoint";
     private static final String CONFIG_UPPER = "upperEndpoint";

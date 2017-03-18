@@ -10,8 +10,8 @@ public interface EntriesPerPageFormSettings extends FormSettingsWithOptions<Entr
 
     int DEFAULT_LIMIT = 20;
 
-    default long getLimit(final Http.Request httpRequest) {
-        return Optional.ofNullable(getSelectedValue(httpRequest)).orElse(DEFAULT_LIMIT);
+    default long getLimit(final Http.Context httpContext) {
+        return Optional.ofNullable(getSelectedValue(httpContext)).orElse(DEFAULT_LIMIT);
     }
 
     static EntriesPerPageFormSettings of(final String fieldName, final List<EntriesPerPageFormOption> options) {

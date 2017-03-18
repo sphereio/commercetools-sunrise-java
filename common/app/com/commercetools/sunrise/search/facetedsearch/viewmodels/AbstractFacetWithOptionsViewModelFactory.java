@@ -1,11 +1,11 @@
 package com.commercetools.sunrise.search.facetedsearch.viewmodels;
 
 import com.commercetools.sunrise.framework.template.i18n.I18nIdentifierResolver;
-import com.commercetools.sunrise.search.facetedsearch.FacetedSearchFormSettingsWithOptions;
+import com.commercetools.sunrise.search.facetedsearch.SimpleFacetedSearchFormSettingsWithOptions;
 
-public abstract class AbstractMultiOptionFacetViewModelFactory<M extends MultiOptionFacetViewModel, T extends FacetedSearchFormSettingsWithOptions<?>, F> extends AbstractFacetViewModelFactory<M, T, F> {
+public abstract class AbstractFacetWithOptionsViewModelFactory<M extends FacetWithOptionsViewModel, T extends SimpleFacetedSearchFormSettingsWithOptions<?>, F> extends AbstractFacetViewModelFactory<M, T, F> {
 
-    protected AbstractMultiOptionFacetViewModelFactory(final I18nIdentifierResolver i18nIdentifierResolver) {
+    protected AbstractFacetWithOptionsViewModelFactory(final I18nIdentifierResolver i18nIdentifierResolver) {
         super(i18nIdentifierResolver);
     }
 

@@ -3,7 +3,7 @@ package com.commercetools.sunrise.search.facetedsearch.bucketranges.viewmodels;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
 import com.commercetools.sunrise.framework.template.i18n.I18nIdentifierResolver;
 import com.commercetools.sunrise.search.facetedsearch.bucketranges.BucketRangeFacetedSearchFormSettings;
-import com.commercetools.sunrise.search.facetedsearch.viewmodels.AbstractMultiOptionFacetViewModelFactory;
+import com.commercetools.sunrise.search.facetedsearch.viewmodels.AbstractFacetWithOptionsViewModelFactory;
 import com.commercetools.sunrise.search.facetedsearch.viewmodels.FacetOptionViewModel;
 import io.sphere.sdk.search.RangeFacetResult;
 import io.sphere.sdk.search.model.FacetRange;
@@ -20,21 +20,21 @@ import static com.commercetools.sunrise.search.facetedsearch.RangeUtils.mapRange
 import static com.commercetools.sunrise.search.facetedsearch.bucketranges.BucketRangeUtils.optionToFacetRange;
 
 @RequestScoped
-public class BucketRangeFacetViewModelFactory extends AbstractMultiOptionFacetViewModelFactory<BucketRangeFacetViewModel, BucketRangeFacetedSearchFormSettings<?>, RangeFacetResult> {
+public class BucketRangeFacetViewModelFactory extends AbstractFacetWithOptionsViewModelFactory<BucketRangeFacetViewModel, BucketRangeFacetedSearchFormSettings<?>, RangeFacetResult> {
 
-    private final Http.Request httpRequest;
+    private final Http.Context httpContext;
     private final BucketRangeFacetOptionViewModelFactory bucketRangeFacetOptionViewModelFactory;
 
     @Inject
-    public BucketRangeFacetViewModelFactory(final I18nIdentifierResolver i18nIdentifierResolver, final Http.Request httpRequest,
+    public BucketRangeFacetViewModelFactory(final I18nIdentifierResolver i18nIdentifierResolver, final Http.Context httpContext,
                                             final BucketRangeFacetOptionViewModelFactory bucketRangeFacetOptionViewModelFactory) {
         super(i18nIdentifierResolver);
-        this.httpRequest = httpRequest;
+        this.httpContext = httpContext;
         this.bucketRangeFacetOptionViewModelFactory = bucketRangeFacetOptionViewModelFactory;
     }
 
-    protected final Http.Request getHttpRequest() {
-        return httpRequest;
+    protected final Http.Context getHttpContext() {
+        return httpContext;
     }
 
     protected final BucketRangeFacetOptionViewModelFactory getBucketRangeFacetOptionViewModelFactory() {
@@ -68,7 +68,7 @@ public class BucketRangeFacetViewModelFactory extends AbstractMultiOptionFacetVi
 
     @Override
     protected void fillLimitedOptions(final BucketRangeFacetViewModel viewModel, final BucketRangeFacetedSearchFormSettings<?> settings, final RangeFacetResult facetResult) {
-        final List<String> selectedValues = settings.getAllSelectedFieldValues(httpRequest);
+        final List<String> selectedValues = settings.getAllSelectedFieldValues(httpContext);
         final Map<FacetRange<String>, RangeStats> rangeToStatsMap = mapRangeToStats(facetResult);
         final List<FacetOptionViewModel> options = new ArrayList<>();
         settings.getOptions()

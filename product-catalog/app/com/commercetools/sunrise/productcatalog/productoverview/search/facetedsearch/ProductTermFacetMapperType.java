@@ -1,8 +1,8 @@
 package com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch;
 
-import com.commercetools.sunrise.search.facetedsearch.terms.mappers.AlphabeticallySortedTermFacetMapperFactory;
-import com.commercetools.sunrise.search.facetedsearch.terms.mappers.CustomSortedTermFacetMapperFactory;
-import com.commercetools.sunrise.search.facetedsearch.terms.mappers.TermFacetMapperFactory;
+import com.commercetools.sunrise.search.facetedsearch.terms.mappers.AlphabeticallySortedTermFacetMapper;
+import com.commercetools.sunrise.search.facetedsearch.terms.mappers.CustomSortedTermFacetMapper;
+import com.commercetools.sunrise.search.facetedsearch.terms.mappers.TermFacetMapper;
 import com.commercetools.sunrise.search.facetedsearch.terms.mappers.TermFacetMapperType;
 
 /**
@@ -17,8 +17,8 @@ public enum ProductTermFacetMapperType implements TermFacetMapperType {
         }
 
         @Override
-        public Class<? extends TermFacetMapperFactory> factory() {
-            return CategoryTreeTermFacetMapperFactory.class;
+        public Class<? extends TermFacetMapper> mapper() {
+            return CategoryTreeTermFacetMapper.class;
         }
     },
 
@@ -29,8 +29,8 @@ public enum ProductTermFacetMapperType implements TermFacetMapperType {
         }
 
         @Override
-        public Class<? extends TermFacetMapperFactory> factory() {
-            return AlphabeticallySortedTermFacetMapperFactory.class;
+        public Class<? extends TermFacetMapper> mapper() {
+            return AlphabeticallySortedTermFacetMapper.class;
         }
     },
 
@@ -41,8 +41,8 @@ public enum ProductTermFacetMapperType implements TermFacetMapperType {
         }
 
         @Override
-        public Class<? extends TermFacetMapperFactory> factory() {
-            return CustomSortedTermFacetMapperFactory.class;
+        public Class<? extends TermFacetMapper> mapper() {
+            return CustomSortedTermFacetMapper.class;
         }
     }
 }

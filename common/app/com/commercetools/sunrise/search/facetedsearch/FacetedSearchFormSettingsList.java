@@ -9,12 +9,11 @@ import play.mvc.Http;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.Locale;
 
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Stream.concat;
 
-public interface FacetedSearchFormSettingsList<T> {
+public interface FacetedSearchFormSettingsList<T> extends SimpleFacetedSearchFormSettingsList<T> {
 
     List<PositionedSettings<TermFacetedSearchFormSettings<T>>> getTermSettings();
 
@@ -22,16 +21,16 @@ public interface FacetedSearchFormSettingsList<T> {
 
     List<PositionedSettings<BucketRangeFacetedSearchFormSettings<T>>> getBucketRangeSettings();
 
+    default List<FacetedSearchExpression<T>> buildFacetedSearchExpressions(final Http.Context httpContext) {
+        return concat(getTermSettings().stream(), concat(getSliderRangeSettings().stream(), getBucketRangeSettings().stream()))
+                .map(positioned -> positioned.getSettings().buildFacetedSearchExpression(httpContext))
+                .collect(toList());
+    }
+
     default List<? extends FacetedSearchFormSettings<T>> getAllSettingsSorted() {
         return concat(getTermSettings().stream(), concat(getSliderRangeSettings().stream(), getBucketRangeSettings().stream()))
                 .sorted(Comparator.comparingDouble(PositionedSettings::getPosition))
                 .map(PositionedSettings::getSettings)
-                .collect(toList());
-    }
-
-    default List<FacetedSearchExpression<T>> buildFacetedSearchExpressions(final Http.Request httpRequest, final Locale locale) {
-        return concat(getTermSettings().stream(), concat(getSliderRangeSettings().stream(), getBucketRangeSettings().stream()))
-                .map(positioned -> positioned.getSettings().buildFacetedSearchExpression(locale, httpRequest))
                 .collect(toList());
     }
 }

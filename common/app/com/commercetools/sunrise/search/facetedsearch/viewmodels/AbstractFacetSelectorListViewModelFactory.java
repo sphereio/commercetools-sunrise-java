@@ -6,6 +6,7 @@ import com.commercetools.sunrise.search.facetedsearch.bucketranges.BucketRangeFa
 import com.commercetools.sunrise.search.facetedsearch.bucketranges.viewmodels.BucketRangeFacetSelectorViewModelFactory;
 import com.commercetools.sunrise.search.facetedsearch.sliderranges.SliderRangeFacetedSearchFormSettings;
 import com.commercetools.sunrise.search.facetedsearch.sliderranges.viewmodels.SliderRangeFacetSelectorViewModelFactory;
+import com.commercetools.sunrise.search.facetedsearch.terms.SimpleTermFacetedSearchFormSettings;
 import com.commercetools.sunrise.search.facetedsearch.terms.TermFacetedSearchFormSettings;
 import com.commercetools.sunrise.search.facetedsearch.terms.viewmodels.TermFacetSelectorViewModelFactory;
 import io.sphere.sdk.search.PagedSearchResult;
@@ -17,25 +18,19 @@ import java.util.Optional;
 
 public abstract class AbstractFacetSelectorListViewModelFactory<T> extends SimpleViewModelFactory<FacetSelectorListViewModel, PagedSearchResult<T>> {
 
-    private final Locale locale;
     private final FacetedSearchFormSettingsList<T> settingsList;
     private final TermFacetSelectorViewModelFactory termFacetSelectorViewModelFactory;
     private final BucketRangeFacetSelectorViewModelFactory bucketRangeFacetSelectorViewModelFactory;
     private final SliderRangeFacetSelectorViewModelFactory sliderRangeFacetSelectorViewModelFactory;
 
-    protected AbstractFacetSelectorListViewModelFactory(final Locale locale, final FacetedSearchFormSettingsList<T> settingsList,
+    protected AbstractFacetSelectorListViewModelFactory(final FacetedSearchFormSettingsList<T> settingsList,
                                                         final TermFacetSelectorViewModelFactory termFacetSelectorViewModelFactory,
                                                         final BucketRangeFacetSelectorViewModelFactory bucketRangeFacetSelectorViewModelFactory,
                                                         final SliderRangeFacetSelectorViewModelFactory sliderRangeFacetSelectorViewModelFactory) {
-        this.locale = locale;
         this.settingsList = settingsList;
         this.termFacetSelectorViewModelFactory = termFacetSelectorViewModelFactory;
         this.bucketRangeFacetSelectorViewModelFactory = bucketRangeFacetSelectorViewModelFactory;
         this.sliderRangeFacetSelectorViewModelFactory = sliderRangeFacetSelectorViewModelFactory;
-    }
-
-    protected final Locale getLocale() {
-        return locale;
     }
 
     protected final FacetedSearchFormSettingsList<T> getSettingsList() {
@@ -86,17 +81,17 @@ public abstract class AbstractFacetSelectorListViewModelFactory<T> extends Simpl
     }
 
     private Optional<FacetSelectorViewModel> createViewModel(final TermFacetedSearchFormSettings<T> settings, final PagedSearchResult<T> pagedSearchResult) {
-        return settings.findFacetResult(pagedSearchResult, locale)
+        return settings.findFacetResult(pagedSearchResult)
                 .map(facetResult -> termFacetSelectorViewModelFactory.create(settings, facetResult));
     }
 
     private Optional<FacetSelectorViewModel> createViewModel(final SliderRangeFacetedSearchFormSettings<T> settings, final PagedSearchResult<T> pagedSearchResult) {
-        return settings.findFacetResult(pagedSearchResult, locale)
+        return settings.findFacetResult(pagedSearchResult)
                 .map(facetResult -> sliderRangeFacetSelectorViewModelFactory.create(settings, facetResult));
     }
 
     private Optional<FacetSelectorViewModel> createViewModel(final BucketRangeFacetedSearchFormSettings<T> settings, final PagedSearchResult<T> pagedSearchResult) {
-        return settings.findFacetResult(pagedSearchResult, locale)
+        return settings.findFacetResult(pagedSearchResult)
                 .map(facetResult -> bucketRangeFacetSelectorViewModelFactory.create(settings, facetResult));
     }
 }

@@ -9,7 +9,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
 
-public class ConfigurableTermFacetedSearchFormSettings<T> extends AbstractConfigurableFacetedSearchFormSettingsWithOptions<T> implements TermFacetedSearchFormSettings<T> {
+public class ConfigurableTermFacetedSearchFormSettings<T> extends AbstractConfigurableFacetedSearchFormSettingsWithOptions<T> implements SimpleTermFacetedSearchFormSettings<T> {
 
     private static final String CONFIG_MAPPER = "mapper";
     private static final String CONFIG_MAPPER_TYPE = "type";
@@ -17,6 +17,7 @@ public class ConfigurableTermFacetedSearchFormSettings<T> extends AbstractConfig
     private static final String CONFIG_LIMIT = "limit";
     private static final String CONFIG_THRESHOLD = "threshold";
 
+    private final String fieldName;
     @Nullable
     private final TermFacetMapperSettings mapperSettings;
     @Nullable
@@ -27,9 +28,15 @@ public class ConfigurableTermFacetedSearchFormSettings<T> extends AbstractConfig
     public ConfigurableTermFacetedSearchFormSettings(final Configuration configuration,
                                                      final List<? extends TermFacetMapperType> facetMapperTypes) {
         super(configuration);
+        this.fieldName = fieldName(configuration);
         this.mapperSettings = mapperSettings(configuration, facetMapperTypes);
         this.limit = limit(configuration);
         this.threshold = threshold(configuration);
+    }
+
+    @Override
+    public String getFieldName() {
+        return fieldName;
     }
 
     @Override

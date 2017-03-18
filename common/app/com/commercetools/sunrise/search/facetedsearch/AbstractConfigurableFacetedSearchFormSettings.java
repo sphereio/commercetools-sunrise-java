@@ -6,7 +6,7 @@ import play.Configuration;
 import javax.annotation.Nullable;
 import java.util.Optional;
 
-public abstract class AbstractConfigurableFacetedSearchFormSettings<T> extends AbstractFacetedSearchFormSettings<T> {
+public abstract class AbstractConfigurableFacetedSearchFormSettings<T> extends AbstractSimpleFacetedSearchFormSettings<T> {
 
     private static final String CONFIG_FIELD_NAME = "fieldName";
     private static final String CONFIG_FIELD_LABEL = "fieldLabel";
@@ -15,11 +15,10 @@ public abstract class AbstractConfigurableFacetedSearchFormSettings<T> extends A
     private static final String CONFIG_COUNT = "count";
 
     protected AbstractConfigurableFacetedSearchFormSettings(final Configuration configuration) {
-        super(fieldName(configuration), fieldLabel(configuration), attributePath(configuration),
-                isCountDisplayed(configuration), uiType(configuration));
+        super(fieldLabel(configuration), attributePath(configuration), isCountDisplayed(configuration), uiType(configuration));
     }
 
-    private static String fieldName(final Configuration configuration) {
+    protected static String fieldName(final Configuration configuration) {
         return Optional.ofNullable(configuration.getString(CONFIG_FIELD_NAME))
                 .orElseThrow(() -> new SunriseConfigurationException("Missing required field name for facet", CONFIG_FIELD_NAME, configuration));
     }

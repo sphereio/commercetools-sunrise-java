@@ -10,7 +10,8 @@ import java.util.Map;
 import java.util.Optional;
 
 import static java.util.Arrays.asList;
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.toMap;
 
 public final class QueryStringUtils {
 
@@ -36,67 +37,6 @@ public final class QueryStringUtils {
      */
     public static Optional<String> findSelectedValueFromQueryString(final String fieldName, final Http.Request httpRequest) {
         return Optional.ofNullable(httpRequest.getQueryString(fieldName));
-    }
-
-    /**
-     * Finds all selected valid values for this form in the HTTP request.
-     * @param settings the form settings
-     * @param httpRequest current HTTP request
-     * @param <T> type of the form options
-     * @return a list of valid selected values for this form
-     */
-    public static <T> List<T> findAllSelectedValuesFromQueryString(final FormSettings<T> settings, final Http.Request httpRequest) {
-        return findAllSelectedValuesFromQueryString(settings.getFieldName(), httpRequest).stream()
-                .map(settings::mapToValue)
-                .filter(settings::isValidValue)
-                .collect(toList());
-    }
-
-    /**
-     * Finds one selected valid value for this form in the HTTP request.
-     * If many valid values are selected, which one is going to be returned is non-deterministic.
-     * @param settings the form settings
-     * @param httpRequest current HTTP request
-     * @param <T> type of the form options
-     * @return a valid selected value for this form, or the default value if no valid value is selected
-     */
-    public static <T> T findSelectedValueFromQueryString(final FormSettings<T> settings, final Http.Request httpRequest) {
-        return findAllSelectedValuesFromQueryString(settings.getFieldName(), httpRequest).stream()
-                .map(settings::mapToValue)
-                .filter(settings::isValidValue)
-                .findAny()
-                .orElseGet(settings::getDefaultValue);
-    }
-
-    /**
-     * Finds all selected valid options for this form in the HTTP request.
-     * @param settings the form with options settings
-     * @param httpRequest current HTTP request
-     * @param <T> type of the form options
-     * @return a list of valid selected options for this form
-     */
-    public static <T extends FormOption<V>, V> List<T> findAllSelectedValuesFromQueryString(final FormSettingsWithOptions<T, V> settings, final Http.Request httpRequest) {
-        final List<String> selectedValues = findAllSelectedValuesFromQueryString(settings.getFieldName(), httpRequest);
-        return settings.getOptions().stream()
-                .filter(option -> selectedValues.contains(option.getFieldValue()))
-                .collect(toList());
-    }
-
-    /**
-     * Finds one selected valid option for this form in the HTTP request.
-     * If many valid values are selected, which one is going to be returned is non-deterministic.
-     * @param settings the form with options settings
-     * @param httpRequest current HTTP request
-     * @param <T> type of the form options
-     * @return a valid selected option for this form, or empty if no valid option is selected
-     */
-    public static <T extends FormOption<V>, V> Optional<T> findSelectedValueFromQueryString(final FormSettingsWithOptions<T, V> settings, final Http.Request httpRequest) {
-        final List<String> selectedValues = findAllSelectedValuesFromQueryString(settings.getFieldName(), httpRequest);
-        return settings.getOptions().stream()
-                .filter(option -> selectedValues.contains(option.getFieldValue()))
-                .findAny()
-                .map(Optional::of)
-                .orElseGet(settings::findDefaultOption);
     }
 
     /**

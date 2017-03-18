@@ -2,14 +2,14 @@ package com.commercetools.sunrise.search.facetedsearch.viewmodels;
 
 import java.util.List;
 
-public abstract class MultiOptionFacetViewModel extends FacetViewModel {
+public abstract class FacetWithOptionsViewModel extends FacetViewModel {
 
     private String key;
     private boolean multiSelect;
     private boolean matchingAll;
     private List<FacetOptionViewModel> limitedOptions;
 
-    public MultiOptionFacetViewModel() {
+    public FacetWithOptionsViewModel() {
     }
 
     public String getKey() {

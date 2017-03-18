@@ -30,10 +30,10 @@ public final class ProductPaginationControllerComponent extends AbstractPaginati
                                                 final ProductsPerPageFormSettings entriesPerPageFormSettings,
                                                 final ProductPaginationViewModelFactory paginationViewModelFactory,
                                                 final ProductsPerPageSelectorViewModelFactory entriesPerPageSelectorViewModelFactory,
-                                                final Http.Request httpRequest) {
+                                                final Http.Context httpContext) {
         super(paginationSettings, entriesPerPageFormSettings, paginationViewModelFactory, entriesPerPageSelectorViewModelFactory);
-        this.limit = entriesPerPageFormSettings.getLimit(httpRequest);
-        this.offset = paginationSettings.getOffset(httpRequest, limit);
+        this.limit = entriesPerPageFormSettings.getLimit(httpContext);
+        this.offset = paginationSettings.getOffset(httpContext, limit);
     }
 
     @Nullable
