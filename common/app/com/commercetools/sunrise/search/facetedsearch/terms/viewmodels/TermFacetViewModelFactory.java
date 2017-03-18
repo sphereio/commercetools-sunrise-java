@@ -65,9 +65,11 @@ public class TermFacetViewModelFactory extends AbstractFacetWithOptionsViewModel
 
     @Override
     protected void fillAvailable(final TermFacetViewModel viewModel, final TermFacetedSearchFormSettings<?> settings, final TermFacetResult facetResult) {
-        Optional.ofNullable(settings.getThreshold())
-                .map(threshold -> facetResult.getTerms().size() >= threshold)
-                .ifPresent(viewModel::setAvailable);
+        if (settings.getThreshold() != null) {
+            viewModel.setAvailable(facetResult.getTerms().size() >= settings.getThreshold());
+        } else {
+            viewModel.setAvailable(true);
+        }
     }
 
     @Override

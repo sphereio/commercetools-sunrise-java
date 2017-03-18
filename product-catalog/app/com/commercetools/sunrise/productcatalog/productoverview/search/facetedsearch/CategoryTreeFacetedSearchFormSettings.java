@@ -71,7 +71,7 @@ public final class CategoryTreeFacetedSearchFormSettings extends AbstractFaceted
                 .orElseGet(() -> TermFilterSearchModel.<ProductProjection, String>of(getAttributePath(), Function.identity()).isIn(emptyList()));
     }
 
-    private Optional<Category> findSelectedCategory(final Http.Context httpContext) {
+    public Optional<Category> findSelectedCategory(final Http.Context httpContext) {
         final String categoryIdentifier = getSelectedValue(httpContext);
         if (!categoryIdentifier.isEmpty()) {
             try {

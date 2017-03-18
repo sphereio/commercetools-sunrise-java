@@ -10,14 +10,10 @@ import com.commercetools.sunrise.search.facetedsearch.viewmodels.FacetOptionView
 import io.sphere.sdk.categories.Category;
 import io.sphere.sdk.categories.CategoryTree;
 import io.sphere.sdk.search.TermFacetResult;
-import io.sphere.sdk.search.TermStats;
 import play.mvc.Http;
 
 import javax.inject.Inject;
 import java.util.*;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 import static java.util.Collections.singletonList;
 import static java.util.stream.Collectors.toList;
@@ -75,52 +71,43 @@ public class CategoryTreeTermFacetMapper implements TermFacetMapper {
                     final CategoryTree subCategoryTree = buildSubCategoryTree(selectedCategory);
                     return subCategoryTree.getSubtreeRoots().stream()
                             .map(root -> createViewModel(root, termFacetResult, subCategoryTree, selectedCategory))
-                            .filter(Optional::isPresent)
-                            .map(Optional::get)
                             .collect(toList());
                 }).orElseGet(Collections::emptyList);
     }
 
-    private Optional<FacetOptionViewModel> createViewModel(final Category category, final TermFacetResult termFacetResult,
+    private FacetOptionViewModel createViewModel(final Category category, final TermFacetResult termFacetResult,
                                                            final CategoryTree subCategoryTree, final Category selectedCategory) {
-        return findTermStats(termFacetResult, category)
-                .map(termStats -> {
-                    final FacetOptionViewModel viewModel = createViewModel(category, termStats, selectedCategory);
-                    subCategoryTree.findChildren(category)
-                            .forEach(child -> createViewModel(child, termFacetResult, subCategoryTree, selectedCategory)
-                                    .ifPresent(childViewModel -> {
-                                        viewModel.getChildren().add(childViewModel);
-                                        viewModel.setCount(viewModel.getCount() + childViewModel.getCount());
-                                    }));
-                    return viewModel;
+        final long count = findCount(termFacetResult, category);
+        final FacetOptionViewModel viewModel = createViewModel(category, count, selectedCategory);
+        subCategoryTree.findChildren(category).forEach(child -> {
+            final FacetOptionViewModel childViewModel = createViewModel(child, termFacetResult, subCategoryTree, selectedCategory);
+            viewModel.getChildren().add(childViewModel);
+            viewModel.setCount(viewModel.getCount() + childViewModel.getCount());
         });
+        return viewModel;
     }
 
-    private FacetOptionViewModel createViewModel(final Category category, final TermStats termStats, final Category selectedCategory) {
+    private FacetOptionViewModel createViewModel(final Category category, final long count, final Category selectedCategory) {
         final FacetOptionViewModel viewModel = new FacetOptionViewModel();
         productReverseRouter.productOverviewPageCall(category).ifPresent(call -> viewModel.setValue(call.url()));
         viewModel.setLabel(category.getName().find(locales).orElseGet(category::getId));
         viewModel.setSelected(category.getId().equals(selectedCategory.getId()));
-        viewModel.setCount(firstNonNull(termStats.getProductCount(), 0L));
+        viewModel.setCount(count);
         viewModel.setChildren(new ArrayList<>());
         return viewModel;
     }
 
-    private Optional<TermStats> findTermStats(final TermFacetResult termFacetResult, final Category category) {
+    private long findCount(final TermFacetResult termFacetResult, final Category category) {
         return termFacetResult.getTerms().stream()
                 .filter(termStats -> termStats.getTerm().equals(category.getId()))
-                .findAny();
+                .findAny()
+                .map(termStats -> firstNonNull(termStats.getProductCount(), 0L))
+                .orElse(0L);
     }
 
     private Optional<Category> findSelectedCategory(final TermFacetedSearchFormSettings<?> settings) {
-        final String categoryIdentifier = settings.getSelectedValue(httpContext);
-        if (!categoryIdentifier.isEmpty()) {
-            try {
-                return categoryFinder.apply(categoryIdentifier)
-                        .toCompletableFuture().get(5, TimeUnit.SECONDS);
-            } catch (InterruptedException | ExecutionException | TimeoutException e) {
-                // Returns default empty
-            }
+        if (settings instanceof CategoryTreeFacetedSearchFormSettings) {
+            return ((CategoryTreeFacetedSearchFormSettings) settings).findSelectedCategory(httpContext);
         }
         return Optional.empty();
     }
