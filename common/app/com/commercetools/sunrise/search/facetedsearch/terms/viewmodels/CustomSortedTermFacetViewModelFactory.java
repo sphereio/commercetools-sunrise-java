@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.search.facetedsearch.terms.mappers;
+package com.commercetools.sunrise.search.facetedsearch.terms.viewmodels;
 
 import com.commercetools.sunrise.framework.injection.RequestScoped;
 import com.commercetools.sunrise.framework.template.i18n.I18nIdentifierResolver;

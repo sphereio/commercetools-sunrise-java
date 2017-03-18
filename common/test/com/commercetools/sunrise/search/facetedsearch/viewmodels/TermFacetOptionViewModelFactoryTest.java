@@ -12,15 +12,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class TermFacetOptionViewModelFactoryTest {
 
-    private static final TermStats TERM_ONE = TermStats.of("one", 30L);
-    private static final TermStats TERM_TWO = TermStats.of("two", 20L);
-    private static final TermStats TERM_THREE = TermStats.of("three", 10L);
+    private static final TermStats TERM_ONE = TermStats.of("one", 60L, 30L);
+    private static final TermStats TERM_TWO = TermStats.of("two", 40L, 20L);
+    private static final TermStats TERM_THREE = TermStats.of("three", 20L, 10L);
 
     @Test
     public void createsInstanceFromTermStats() throws Exception {
         final FacetOptionViewModel viewModel = viewModelFactory(TERM_TWO, asList(TERM_TWO, TERM_THREE));
         assertThat(viewModel.getValue()).isEqualTo(TERM_TWO.getTerm());
-        assertThat(viewModel.getCount()).isEqualTo(TERM_TWO.getCount());
+        assertThat(viewModel.getCount()).isEqualTo(TERM_TWO.getProductCount());
         assertThat(viewModel.isSelected()).isTrue();
     }
 
@@ -28,7 +28,7 @@ public class TermFacetOptionViewModelFactoryTest {
     public void createsInstanceFromTermStatsWithUnselectedValue() throws Exception {
         final FacetOptionViewModel viewModel = viewModelFactory(TERM_THREE, asList(TERM_ONE, TERM_TWO));
         assertThat(viewModel.getValue()).isEqualTo(TERM_THREE.getTerm());
-        assertThat(viewModel.getCount()).isEqualTo(TERM_THREE.getCount());
+        assertThat(viewModel.getCount()).isEqualTo(TERM_THREE.getProductCount());
         assertThat(viewModel.isSelected()).isFalse();
     }
 

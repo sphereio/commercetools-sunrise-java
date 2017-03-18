@@ -1,7 +1,6 @@
 package com.commercetools.sunrise.search.facetedsearch.terms;
 
 import com.commercetools.sunrise.search.facetedsearch.AbstractSimpleFacetedSearchFormSettingsWithOptions;
-import com.commercetools.sunrise.search.facetedsearch.terms.mappers.TermFacetMapperSettings;
 
 import javax.annotation.Nullable;
 

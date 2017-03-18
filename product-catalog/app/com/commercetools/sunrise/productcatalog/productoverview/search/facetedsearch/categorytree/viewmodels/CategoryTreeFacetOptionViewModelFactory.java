@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch.categorytree;
+package com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch.categorytree.viewmodels;
 
 import com.commercetools.sunrise.framework.injection.RequestScoped;
 import com.commercetools.sunrise.framework.localization.UserLanguage;
@@ -19,7 +19,7 @@ import static com.commercetools.sunrise.framework.viewmodels.forms.QueryStringUt
 import static com.commercetools.sunrise.framework.viewmodels.forms.QueryStringUtils.extractQueryString;
 
 @RequestScoped
-public class CategoryFacetOptionViewModelFactory extends AbstractFacetOptionViewModelFactory<TermFacetResult, Category, String> {
+public class CategoryTreeFacetOptionViewModelFactory extends AbstractFacetOptionViewModelFactory<TermFacetResult, Category, String> {
 
     private final List<Locale> locales;
     private final Http.Request httpRequest;
@@ -27,8 +27,8 @@ public class CategoryFacetOptionViewModelFactory extends AbstractFacetOptionView
     private final ProductReverseRouter productReverseRouter;
 
     @Inject
-    public CategoryFacetOptionViewModelFactory(final UserLanguage userLanguage, final Http.Request httpRequest,
-                                               final CategoryTree categoryTree, final ProductReverseRouter productReverseRouter) {
+    public CategoryTreeFacetOptionViewModelFactory(final UserLanguage userLanguage, final Http.Request httpRequest,
+                                                   final CategoryTree categoryTree, final ProductReverseRouter productReverseRouter) {
         this.locales = userLanguage.locales();
         this.httpRequest = httpRequest;
         this.categoryTree = categoryTree;

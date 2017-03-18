@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch.categorytree;
+package com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch.categorytree.viewmodels;
 
 import com.commercetools.sunrise.framework.injection.RequestScoped;
 import com.commercetools.sunrise.framework.template.i18n.I18nIdentifierResolver;
@@ -23,23 +23,23 @@ import static java.util.stream.Collectors.toList;
 public final class CategoryTreeFacetViewModelFactory extends TermFacetViewModelFactory {
 
     private final CategoryTree categoryTree;
-    private final CategoryFacetOptionViewModelFactory categoryFacetOptionViewModelFactory;
+    private final CategoryTreeFacetOptionViewModelFactory categoryTreeFacetOptionViewModelFactory;
 
     @Inject
     public CategoryTreeFacetViewModelFactory(final I18nIdentifierResolver i18nIdentifierResolver, final Http.Context httpContext,
                                              final TermFacetOptionViewModelFactory termFacetOptionViewModelFactory,
                                              final CategoryTree categoryTree,
-                                             final CategoryFacetOptionViewModelFactory categoryFacetOptionViewModelFactory) {
+                                             final CategoryTreeFacetOptionViewModelFactory categoryTreeFacetOptionViewModelFactory) {
         super(i18nIdentifierResolver, httpContext, termFacetOptionViewModelFactory);
         this.categoryTree = categoryTree;
-        this.categoryFacetOptionViewModelFactory = categoryFacetOptionViewModelFactory;
+        this.categoryTreeFacetOptionViewModelFactory = categoryTreeFacetOptionViewModelFactory;
     }
 
     @Override
     protected List<FacetOptionViewModel> createOptions(final TermFacetedSearchFormSettings<?> settings, final TermFacetResult facetResult) {
         final String selectedValue = settings.getSelectedValue(getHttpContext());
         return categoryTree.getRoots().stream()
-                .map(root -> categoryFacetOptionViewModelFactory.create(facetResult, root, selectedValue))
+                .map(root -> categoryTreeFacetOptionViewModelFactory.create(facetResult, root, selectedValue))
                 .filter(root -> root.getCount() > 0)
                 .collect(toList());
     }

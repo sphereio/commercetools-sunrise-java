@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.search.facetedsearch.terms.mappers;
+package com.commercetools.sunrise.search.facetedsearch.terms;
 
 import javax.annotation.Nullable;
 import java.util.List;

@@ -1,7 +1,7 @@
 package com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch.categorytree;
 
 import com.commercetools.sunrise.search.facetedsearch.terms.SimpleTermFacetedSearchFormSettings;
-import com.commercetools.sunrise.search.facetedsearch.terms.mappers.TermFacetMapperSettings;
+import com.commercetools.sunrise.search.facetedsearch.terms.TermFacetMapperSettings;
 import io.sphere.sdk.products.ProductProjection;
 
 import javax.annotation.Nullable;

@@ -2,7 +2,6 @@ package com.commercetools.sunrise.search.facetedsearch.terms;
 
 import com.commercetools.sunrise.framework.SunriseConfigurationException;
 import com.commercetools.sunrise.search.facetedsearch.AbstractConfigurableFacetedSearchFormSettingsWithOptions;
-import com.commercetools.sunrise.search.facetedsearch.terms.mappers.TermFacetMapperSettings;
 import play.Configuration;
 
 import javax.annotation.Nullable;

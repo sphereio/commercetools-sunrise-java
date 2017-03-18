@@ -1,9 +1,8 @@
-package com.commercetools.sunrise.search.facetedsearch.terms.mappers;
+package com.commercetools.sunrise.search.facetedsearch.terms.viewmodels;
 
 import com.commercetools.sunrise.search.facetedsearch.terms.DefaultTermFacetedSearchFormSettings;
 import com.commercetools.sunrise.search.facetedsearch.terms.SimpleTermFacetedSearchFormSettings;
-import com.commercetools.sunrise.search.facetedsearch.terms.viewmodels.TermFacetOptionViewModelFactory;
-import com.commercetools.sunrise.search.facetedsearch.terms.viewmodels.TermFacetViewModelFactory;
+import com.commercetools.sunrise.search.facetedsearch.terms.TermFacetMapperSettings;
 import com.commercetools.sunrise.search.facetedsearch.viewmodels.FacetOptionViewModel;
 import io.sphere.sdk.search.TermFacetResult;
 import io.sphere.sdk.search.TermStats;
@@ -12,10 +11,10 @@ import play.mvc.Http;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.function.Consumer;
 
-import static com.commercetools.sunrise.search.facetedsearch.terms.mappers.CustomSortedTermFacetViewModelFactory.comparePositions;
-import static com.commercetools.sunrise.search.facetedsearch.terms.mappers.CustomSortedTermFacetViewModelFactoryTest.TestableFacetMapperType.CUSTOM_SORTED;
+import static com.commercetools.sunrise.search.facetedsearch.terms.viewmodels.CustomSortedTermFacetViewModelFactory.comparePositions;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
@@ -83,32 +82,18 @@ public class CustomSortedTermFacetViewModelFactoryTest {
         assertThat(comparePositions(-1, 3)).isGreaterThan(0);
     }
 
-    private void testCustomSortedMapper(final List<String> customSortedValues, final List<String> terms,
-                                        final Consumer<List<String>> test) {
-        final TermFacetMapperSettings mapperSettings = TermFacetMapperSettings.of(CUSTOM_SORTED, customSortedValues);
-        final DefaultTermFacetedSearchFormSettings<?> settings = new DefaultTermFacetedSearchFormSettings<>(SimpleTermFacetedSearchFormSettings.of("bar", "", "", false, null, false, false, mapperSettings, null, null), Locale.ENGLISH);
+    private void testCustomSortedMapper(final List<String> customSortedValues, final List<String> terms, final Consumer<List<String>> test) {
+        final TermFacetMapperSettings mapperSettings = TermFacetMapperSettings.of("customSorted", customSortedValues);
+        final SimpleTermFacetedSearchFormSettings<?> simpleSettings = SimpleTermFacetedSearchFormSettings.of("bar", "", "", false, null, false, false, mapperSettings, null, null);
+        final DefaultTermFacetedSearchFormSettings<?> settings = new DefaultTermFacetedSearchFormSettings<>(simpleSettings, Locale.ENGLISH);
         final List<TermStats> termStats = terms.stream()
                 .map(term -> TermStats.of(term, 0L))
                 .collect(toList());
         final Http.Context context = new Http.Context(fakeRequest());
-        final List<FacetOptionViewModel> sortedFacetOptions = new CustomSortedTermFacetViewModelFactory(context, new TermFacetOptionViewModelFactory())
-                .apply(settings, TermFacetResult.of(0L, 0L, 0L, termStats));
-        test.accept(sortedFacetOptions.stream()
+        final List<FacetOptionViewModel> options = new CustomSortedTermFacetViewModelFactory(Optional::of, context, new TermFacetOptionViewModelFactory())
+                .createOptions(settings, TermFacetResult.of(0L, 0L, 0L, termStats));
+        test.accept(options.stream()
                 .map(FacetOptionViewModel::getValue)
                 .collect(toList()));
-    }
-
-    enum TestableFacetMapperType implements TermFacetMapperType {
-        CUSTOM_SORTED {
-            @Override
-            public String value() {
-                return "customSorted";
-            }
-
-            @Override
-            public Class<? extends TermFacetViewModelFactory> viewModelFactory() {
-                return CustomSortedTermFacetViewModelFactory.class;
-            }
-        }
     }
 }
