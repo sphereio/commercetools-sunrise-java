@@ -3,6 +3,7 @@ package com.commercetools.sunrise.search.facetedsearch.terms.mappers;
 import com.commercetools.sunrise.search.facetedsearch.terms.DefaultTermFacetedSearchFormSettings;
 import com.commercetools.sunrise.search.facetedsearch.terms.SimpleTermFacetedSearchFormSettings;
 import com.commercetools.sunrise.search.facetedsearch.terms.viewmodels.TermFacetOptionViewModelFactory;
+import com.commercetools.sunrise.search.facetedsearch.terms.viewmodels.TermFacetViewModelFactory;
 import com.commercetools.sunrise.search.facetedsearch.viewmodels.FacetOptionViewModel;
 import io.sphere.sdk.search.TermFacetResult;
 import io.sphere.sdk.search.TermStats;
@@ -13,15 +14,15 @@ import java.util.List;
 import java.util.Locale;
 import java.util.function.Consumer;
 
-import static com.commercetools.sunrise.search.facetedsearch.terms.mappers.CustomSortedTermFacetMapper.comparePositions;
-import static com.commercetools.sunrise.search.facetedsearch.terms.mappers.CustomSortedTermFacetMapperTest.TestableFacetMapperType.CUSTOM_SORTED;
+import static com.commercetools.sunrise.search.facetedsearch.terms.mappers.CustomSortedTermFacetViewModelFactory.comparePositions;
+import static com.commercetools.sunrise.search.facetedsearch.terms.mappers.CustomSortedTermFacetViewModelFactoryTest.TestableFacetMapperType.CUSTOM_SORTED;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static play.test.Helpers.fakeRequest;
 
-public class CustomSortedTermFacetMapperTest {
+public class CustomSortedTermFacetViewModelFactoryTest {
 
     @Test
     public void sortsOptionsAsGivenList() throws Exception {
@@ -90,7 +91,7 @@ public class CustomSortedTermFacetMapperTest {
                 .map(term -> TermStats.of(term, 0L))
                 .collect(toList());
         final Http.Context context = new Http.Context(fakeRequest());
-        final List<FacetOptionViewModel> sortedFacetOptions = new CustomSortedTermFacetMapper(context, new TermFacetOptionViewModelFactory())
+        final List<FacetOptionViewModel> sortedFacetOptions = new CustomSortedTermFacetViewModelFactory(context, new TermFacetOptionViewModelFactory())
                 .apply(settings, TermFacetResult.of(0L, 0L, 0L, termStats));
         test.accept(sortedFacetOptions.stream()
                 .map(FacetOptionViewModel::getValue)
@@ -105,8 +106,8 @@ public class CustomSortedTermFacetMapperTest {
             }
 
             @Override
-            public Class<? extends TermFacetMapper> mapper() {
-                return CustomSortedTermFacetMapper.class;
+            public Class<? extends TermFacetViewModelFactory> viewModelFactory() {
+                return CustomSortedTermFacetViewModelFactory.class;
             }
         }
     }

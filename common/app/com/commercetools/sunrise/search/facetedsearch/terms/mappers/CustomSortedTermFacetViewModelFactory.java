@@ -1,8 +1,10 @@
 package com.commercetools.sunrise.search.facetedsearch.terms.mappers;
 
 import com.commercetools.sunrise.framework.injection.RequestScoped;
+import com.commercetools.sunrise.framework.template.i18n.I18nIdentifierResolver;
 import com.commercetools.sunrise.search.facetedsearch.terms.TermFacetedSearchFormSettings;
 import com.commercetools.sunrise.search.facetedsearch.terms.viewmodels.TermFacetOptionViewModelFactory;
+import com.commercetools.sunrise.search.facetedsearch.terms.viewmodels.TermFacetViewModelFactory;
 import com.commercetools.sunrise.search.facetedsearch.viewmodels.FacetOptionViewModel;
 import io.sphere.sdk.search.TermFacetResult;
 import play.mvc.Http;
@@ -18,24 +20,18 @@ import static java.util.stream.Collectors.toList;
  * Any value that do not appear in the list of values is placed at the end of the output list.
  */
 @RequestScoped
-public final class CustomSortedTermFacetMapper implements TermFacetMapper {
-
-    private final Http.Context httpContext;
-    private final TermFacetOptionViewModelFactory termFacetOptionViewModelFactory;
+public final class CustomSortedTermFacetViewModelFactory extends TermFacetViewModelFactory {
 
     @Inject
-    CustomSortedTermFacetMapper(final Http.Context httpContext,
-                                final TermFacetOptionViewModelFactory termFacetOptionViewModelFactory) {
-        this.httpContext = httpContext;
-        this.termFacetOptionViewModelFactory = termFacetOptionViewModelFactory;
+    public CustomSortedTermFacetViewModelFactory(final I18nIdentifierResolver i18nIdentifierResolver, final Http.Context httpContext,
+                                                 final TermFacetOptionViewModelFactory termFacetOptionViewModelFactory) {
+        super(i18nIdentifierResolver, httpContext, termFacetOptionViewModelFactory);
     }
 
     @Override
-    public List<FacetOptionViewModel> apply(final TermFacetedSearchFormSettings<?> settings, final TermFacetResult termFacetResult) {
+    protected List<FacetOptionViewModel> createOptions(final TermFacetedSearchFormSettings<?> settings, final TermFacetResult facetResult) {
         final List<String> customSortedValues = customSortedValues(settings);
-        final List<String> selectedValues = settings.getAllSelectedValues(httpContext);
-        return termFacetResult.getTerms().stream()
-                .map(term -> termFacetOptionViewModelFactory.create(term, null, selectedValues))
+        return super.createOptions(settings, facetResult).stream()
                 .sorted((left, right) -> comparePositions(left, right, customSortedValues))
                 .collect(toList());
     }

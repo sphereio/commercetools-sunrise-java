@@ -5,12 +5,12 @@ import java.util.List;
 
 public interface TermFacetMapperSettings {
 
-    TermFacetMapperType getType();
+    String getName();
 
     @Nullable
     List<String> getValues();
 
-    static TermFacetMapperSettings of(final TermFacetMapperType type, @Nullable final List<String> values) {
-        return new TermTermFacetMapperSettingsImpl(type, values);
+    static TermFacetMapperSettings of(final String name, @Nullable final List<String> values) {
+        return new TermTermFacetMapperSettingsImpl(name, values);
     }
 }

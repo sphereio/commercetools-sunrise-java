@@ -14,6 +14,10 @@ import com.commercetools.sunrise.framework.template.i18n.I18nResolver;
 import com.commercetools.sunrise.framework.viewmodels.content.carts.MiniCartViewModelFactory;
 import com.commercetools.sunrise.httpauth.HttpAuthentication;
 import com.commercetools.sunrise.httpauth.basic.BasicAuthenticationProvider;
+import com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch.categorytree.CategoryTreeFacetViewModelFactory;
+import com.commercetools.sunrise.search.facetedsearch.terms.mappers.AlphabeticallySortedTermFacetViewModelFactory;
+import com.commercetools.sunrise.search.facetedsearch.terms.mappers.CustomSortedTermFacetViewModelFactory;
+import com.commercetools.sunrise.search.facetedsearch.terms.viewmodels.TermFacetViewModelFactory;
 import com.commercetools.sunrise.sessions.cart.TruncatedMiniCartViewModelFactory;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
@@ -48,6 +52,18 @@ public class Module extends AbstractModule {
         bind(HttpAuthentication.class).toProvider(BasicAuthenticationProvider.class).in(Singleton.class);
         bind(CategoryTree.class).annotatedWith(Names.named("new")).toProvider(CategoryTreeInNewProvider.class).in(Singleton.class);
         bind(MiniCartViewModelFactory.class).to(TruncatedMiniCartViewModelFactory.class);
+        bind(TermFacetViewModelFactory.class)
+                .annotatedWith(Names.named("alphabeticallySorted"))
+                .to(AlphabeticallySortedTermFacetViewModelFactory.class)
+                .in(RequestScoped.class);
+        bind(TermFacetViewModelFactory.class)
+                .annotatedWith(Names.named("customSorted"))
+                .to(CustomSortedTermFacetViewModelFactory.class)
+                .in(RequestScoped.class);
+        bind(TermFacetViewModelFactory.class)
+                .annotatedWith(Names.named("categoryTree"))
+                .to(CategoryTreeFacetViewModelFactory.class)
+                .in(RequestScoped.class);
     }
 
     @Provides

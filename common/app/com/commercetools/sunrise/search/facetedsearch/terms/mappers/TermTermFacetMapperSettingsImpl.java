@@ -5,18 +5,18 @@ import java.util.List;
 
 class TermTermFacetMapperSettingsImpl implements TermFacetMapperSettings {
 
-    private final TermFacetMapperType type;
+    private final String name;
     @Nullable
     private final List<String> values;
 
-    TermTermFacetMapperSettingsImpl(final TermFacetMapperType type, @Nullable final List<String> values) {
-        this.type = type;
+    TermTermFacetMapperSettingsImpl(final String name, @Nullable final List<String> values) {
+        this.name = name;
         this.values = values;
     }
 
     @Override
-    public TermFacetMapperType getType() {
-        return type;
+    public String getName() {
+        return name;
     }
 
     @Nullable

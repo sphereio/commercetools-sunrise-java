@@ -4,7 +4,7 @@ import com.commercetools.sunrise.framework.localization.UserLanguage;
 import com.commercetools.sunrise.framework.reverserouters.productcatalog.product.ProductReverseRouter;
 import com.commercetools.sunrise.framework.viewmodels.forms.FormSelectableOptionViewModel;
 import com.commercetools.sunrise.productcatalog.productoverview.CategoryFinder;
-import com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch.categorytree.CategoryTreeTermFacetMapper;
+import com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch.categorytree.CategoryTreeFacetViewModelFactory;
 import com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch.categorytree.DefaultCategoryTreeFacetedSearchFormSettings;
 import com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch.categorytree.ProductTermFacetMapperType;
 import com.commercetools.sunrise.search.facetedsearch.terms.SimpleTermFacetedSearchFormSettings;
@@ -32,7 +32,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class CategoryTreeTermFacetMapperTest {
+public class CategoryTreeFacetViewModelFactoryTest {
 
     private final static String CAT_A_ID = "d5a0952b-6574-49c9-b0cd-61e0d21d36cc";
     private final static String CAT_B_ID = "e92b6d26-7a34-4960-804c-0fc9e40c64e3";
@@ -138,7 +138,7 @@ public class CategoryTreeTermFacetMapperTest {
         final CategoryTree categoryTree = CategoryTree.of(categories);
         final CategoryFinder categoryFinder = identifier -> completedFuture(categoryTree.findById(identifier));
         final DefaultCategoryTreeFacetedSearchFormSettings settings = new DefaultCategoryTreeFacetedSearchFormSettings(bar, Locale.ENGLISH, categoryFinder);
-        final CategoryTreeTermFacetMapper mapper = new CategoryTreeTermFacetMapper(userLanguage, categoryTree, categoryFinder, reverseRouter());
+        final CategoryTreeFacetViewModelFactory mapper = new CategoryTreeFacetViewModelFactory(userLanguage, categoryTree, categoryFinder, reverseRouter());
         final TermFacetResult termFacetResult = TermFacetResult.of(0L, 0L, 0L, termStats);
         final List<FacetOptionViewModel> viewModels = mapper.apply(termFacetResult, emptyList());
         test.accept(viewModels);

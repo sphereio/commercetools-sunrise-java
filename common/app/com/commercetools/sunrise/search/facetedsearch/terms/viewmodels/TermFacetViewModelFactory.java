@@ -6,12 +6,10 @@ import com.commercetools.sunrise.search.facetedsearch.terms.TermFacetedSearchFor
 import com.commercetools.sunrise.search.facetedsearch.viewmodels.AbstractFacetWithOptionsViewModelFactory;
 import com.commercetools.sunrise.search.facetedsearch.viewmodels.FacetOptionViewModel;
 import io.sphere.sdk.search.TermFacetResult;
-import play.inject.Injector;
 import play.mvc.Http;
 
 import javax.inject.Inject;
 import java.util.List;
-import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
@@ -20,15 +18,13 @@ public class TermFacetViewModelFactory extends AbstractFacetWithOptionsViewModel
 
     private final Http.Context httpContext;
     private final TermFacetOptionViewModelFactory termFacetOptionViewModelFactory;
-    private final Injector injector;
 
     @Inject
     public TermFacetViewModelFactory(final I18nIdentifierResolver i18nIdentifierResolver, final Http.Context httpContext,
-                                     final TermFacetOptionViewModelFactory termFacetOptionViewModelFactory, final Injector injector) {
+                                     final TermFacetOptionViewModelFactory termFacetOptionViewModelFactory) {
         super(i18nIdentifierResolver);
         this.httpContext = httpContext;
         this.termFacetOptionViewModelFactory = termFacetOptionViewModelFactory;
-        this.injector = injector;
     }
 
     protected final TermFacetOptionViewModelFactory getTermFacetOptionViewModelFactory() {
@@ -37,10 +33,6 @@ public class TermFacetViewModelFactory extends AbstractFacetWithOptionsViewModel
 
     protected final Http.Context getHttpContext() {
         return httpContext;
-    }
-
-    protected final Injector getInjector() {
-        return injector;
     }
 
     @Override
@@ -83,14 +75,10 @@ public class TermFacetViewModelFactory extends AbstractFacetWithOptionsViewModel
         viewModel.setLimitedOptions(options);
     }
 
-    private List<FacetOptionViewModel> createOptions(final TermFacetedSearchFormSettings<?> settings, final TermFacetResult facetResult) {
+    protected List<FacetOptionViewModel> createOptions(final TermFacetedSearchFormSettings<?> settings, final TermFacetResult facetResult) {
         final List<String> selectedValues = settings.getAllSelectedValues(httpContext);
-        return Optional.ofNullable(settings.getMapperSettings())
-                .flatMap(mapperSettings -> Optional.ofNullable(mapperSettings.getType().mapper()))
-                .map(injector::instanceOf)
-                .map(mapper -> mapper.apply(settings, facetResult))
-                .orElseGet(() -> facetResult.getTerms().stream()
-                        .map(stats -> termFacetOptionViewModelFactory.create(stats, null, selectedValues))
-                        .collect(toList()));
+        return facetResult.getTerms().stream()
+                .map(stats -> termFacetOptionViewModelFactory.create(stats, selectedValues))
+                .collect(toList());
     }
 }

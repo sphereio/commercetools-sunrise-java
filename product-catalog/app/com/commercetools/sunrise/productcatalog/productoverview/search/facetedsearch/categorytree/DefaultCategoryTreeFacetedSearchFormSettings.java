@@ -5,6 +5,8 @@ import com.commercetools.sunrise.search.facetedsearch.AbstractFacetedSearchFormS
 import io.sphere.sdk.categories.Category;
 import io.sphere.sdk.models.Resource;
 import io.sphere.sdk.products.ProductProjection;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nullable;
 import java.util.Locale;
@@ -14,6 +16,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 public final class DefaultCategoryTreeFacetedSearchFormSettings extends AbstractFacetedSearchFormSettingsWithOptions<ProductProjection, SimpleCategoryTreeFacetedSearchFormSettings> implements CategoryTreeFacetedSearchFormSettings {
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(CategoryTreeFacetedSearchFormSettings.class);
 
     private final CategoryFinder categoryFinder;
 
@@ -42,7 +46,7 @@ public final class DefaultCategoryTreeFacetedSearchFormSettings extends Abstract
                 return categoryFinder.apply(categoryIdentifier)
                         .toCompletableFuture().get(5, TimeUnit.SECONDS);
             } catch (InterruptedException | ExecutionException | TimeoutException e) {
-                // Returns default empty
+                LOGGER.warn("Could not find category", e);
             }
         }
         return Optional.empty();

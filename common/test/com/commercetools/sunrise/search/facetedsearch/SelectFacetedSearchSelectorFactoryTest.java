@@ -7,13 +7,13 @@ public class SelectFacetedSearchSelectorFactoryTest {
 //
 //    @Test
 //    public void initializesFacet() throws Exception {
-//        final SelectFacetedSearchConfig config = SelectFacetedSearchConfig.of(facetBuilder("foo.bar").mapper(AlphabeticallySortedTermFacetMapper.of()), 1);
+//        final SelectFacetedSearchConfig config = SelectFacetedSearchConfig.of(facetBuilder("foo.bar").mapper(AlphabeticallySortedTermFacetViewModelFactory.of()), 1);
 //        final List<String> selectedValues = asList("foo", "bar");
 //        test(config, selectedValues, facetSelector -> {
 //            final Facet<ProductProjection> facet = facetSelector.getFacet(searchResult());
 //            assertThat(facet).as("class").isInstanceOf(SelectFacet.class);
 //            final SelectFacet<ProductProjection> selectFacet = (SelectFacet<ProductProjection>) facet;
-//            assertThat(selectFacet.getType()).as("type").isEqualTo(SunriseFacetUIType.LIST);
+//            assertThat(selectFacet.getName()).as("type").isEqualTo(SunriseFacetUIType.LIST);
 //            assertThat(selectFacet.getKey()).as("key").isEqualTo(KEY);
 //            assertThat(selectFacet.getLabel()).as("label").isEqualTo(LABEL);
 //            assertThat(selectFacet.isCountHidden()).as("count hidden").isTrue();
@@ -21,7 +21,7 @@ public class SelectFacetedSearchSelectorFactoryTest {
 //            assertThat(selectFacet.isMultiSelect()).as("multi select").isFalse();
 //            assertThat(selectFacet.getLimit()).as("limit").isEqualTo(3L);
 //            assertThat(selectFacet.getThreshold()).as("threshold").isEqualTo(2L);
-//            assertThat(selectFacet.getMapper()).as("mapper").isInstanceOf(AlphabeticallySortedTermFacetMapper.class);
+//            assertThat(selectFacet.getMapper()).as("mapper").isInstanceOf(AlphabeticallySortedTermFacetViewModelFactory.class);
 //            assertThat(selectFacet.getSelectedValues()).as("selected values").containsExactlyElementsOf(selectedValues);
 //        });
 //    }

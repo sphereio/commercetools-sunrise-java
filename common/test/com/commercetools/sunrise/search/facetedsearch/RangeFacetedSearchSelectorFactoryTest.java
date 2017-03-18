@@ -13,7 +13,7 @@ public class RangeFacetedSearchSelectorFactoryTest {
 //            final Facet<ProductProjection> facet = facetSelector.getFacet(searchResult());
 //            assertThat(facet).as("class").isInstanceOf(RangeFacet.class);
 //            final RangeFacet<ProductProjection> rangeFacet = (RangeFacet<ProductProjection>) facet;
-//            assertThat(rangeFacet.getType()).as("type").isEqualTo(SunriseFacetUIType.LIST);
+//            assertThat(rangeFacet.getName()).as("type").isEqualTo(SunriseFacetUIType.LIST);
 //            assertThat(rangeFacet.getKey()).as("key").isEqualTo(KEY);
 //            assertThat(rangeFacet.getFieldLabel()).as("label").isEqualTo(LABEL);
 //            assertThat(rangeFacet.isCountHidden()).as("count hidden").isTrue();

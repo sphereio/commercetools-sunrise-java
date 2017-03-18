@@ -33,7 +33,7 @@ public interface SimpleCategoryTreeFacetedSearchFormSettings extends SimpleTermF
     @Nullable
     @Override
     default TermFacetMapperSettings getMapperSettings() {
-        return TermFacetMapperSettings.of(ProductTermFacetMapperType.CATEGORY_TREE, null);
+        return TermFacetMapperSettings.of("categoryTree", null);
     }
 
     static SimpleCategoryTreeFacetedSearchFormSettings of(final String fieldName, final String fieldLabel, final String attributePath,
