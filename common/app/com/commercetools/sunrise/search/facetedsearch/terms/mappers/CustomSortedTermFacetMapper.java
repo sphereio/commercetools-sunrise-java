@@ -35,7 +35,7 @@ public final class CustomSortedTermFacetMapper implements TermFacetMapper {
         final List<String> customSortedValues = customSortedValues(settings);
         final List<String> selectedValues = settings.getAllSelectedValues(httpContext);
         return termFacetResult.getTerms().stream()
-                .map(term -> termFacetOptionViewModelFactory.create(term, selectedValues))
+                .map(term -> termFacetOptionViewModelFactory.create(term, null, selectedValues))
                 .sorted((left, right) -> comparePositions(left, right, customSortedValues))
                 .collect(toList());
     }

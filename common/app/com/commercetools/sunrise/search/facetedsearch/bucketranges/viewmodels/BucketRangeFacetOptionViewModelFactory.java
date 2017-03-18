@@ -2,16 +2,17 @@ package com.commercetools.sunrise.search.facetedsearch.bucketranges.viewmodels;
 
 import com.commercetools.sunrise.framework.injection.RequestScoped;
 import com.commercetools.sunrise.framework.template.i18n.I18nIdentifierResolver;
-import com.commercetools.sunrise.framework.viewmodels.ViewModelFactory;
 import com.commercetools.sunrise.search.facetedsearch.bucketranges.BucketRangeFacetedSearchFormOption;
+import com.commercetools.sunrise.search.facetedsearch.viewmodels.AbstractFacetOptionViewModelFactory;
 import com.commercetools.sunrise.search.facetedsearch.viewmodels.FacetOptionViewModel;
 import io.sphere.sdk.search.model.RangeStats;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import java.util.List;
 
 @RequestScoped
-public class BucketRangeFacetOptionViewModelFactory extends ViewModelFactory {
+public class BucketRangeFacetOptionViewModelFactory extends AbstractFacetOptionViewModelFactory<RangeStats, BucketRangeFacetedSearchFormOption, List<String>> {
 
     private final I18nIdentifierResolver i18nIdentifierResolver;
 
@@ -24,43 +25,35 @@ public class BucketRangeFacetOptionViewModelFactory extends ViewModelFactory {
         return i18nIdentifierResolver;
     }
 
-    protected FacetOptionViewModel newViewModelInstance(final BucketRangeFacetedSearchFormOption option,
-                                                        final RangeStats rangeStats, final List<String> selectedValues) {
-        return new FacetOptionViewModel();
+    @Override
+    public final FacetOptionViewModel create(final RangeStats stats, final BucketRangeFacetedSearchFormOption value, @Nullable final List<String> selectedValue) {
+        return super.create(stats, value, selectedValue);
     }
 
-    public FacetOptionViewModel create(final BucketRangeFacetedSearchFormOption option,
-                                       final RangeStats rangeStats, final List<String> selectedValues) {
-        final FacetOptionViewModel viewModel = newViewModelInstance(option, rangeStats, selectedValues);
-        initialize(viewModel, option, rangeStats, selectedValues);
-        return viewModel;
+    @Override
+    protected final void initialize(final FacetOptionViewModel viewModel, final RangeStats stats, final BucketRangeFacetedSearchFormOption value, @Nullable final List<String> selectedValue) {
+        super.initialize(viewModel, stats, value, selectedValue);
     }
 
-    protected final void initialize(final FacetOptionViewModel viewModel, final BucketRangeFacetedSearchFormOption option,
-                                    final RangeStats rangeStats, final List<String> selectedValues) {
-        fillLabel(viewModel, option, rangeStats, selectedValues);
-        fillValue(viewModel, option, rangeStats, selectedValues);
-        fillSelected(viewModel, option, rangeStats, selectedValues);
-        fillCount(viewModel, option, rangeStats, selectedValues);
-    }
-
-    protected void fillLabel(final FacetOptionViewModel viewModel, final BucketRangeFacetedSearchFormOption option,
-                             final RangeStats rangeStats, final List<String> selectedValues) {
+    @Override
+    protected void fillLabel(final FacetOptionViewModel viewModel, final RangeStats stats, final BucketRangeFacetedSearchFormOption option, @Nullable final List<String> selectedValues) {
         viewModel.setLabel(i18nIdentifierResolver.resolveOrKey(option.getFieldLabel()));
     }
 
-    protected void fillValue(final FacetOptionViewModel viewModel, final BucketRangeFacetedSearchFormOption option,
-                             final RangeStats rangeStats, final List<String> selectedValues) {
+    @Override
+    protected void fillValue(final FacetOptionViewModel viewModel, final RangeStats stats, final BucketRangeFacetedSearchFormOption option, @Nullable final List<String> selectedValues) {
         viewModel.setValue(option.getFieldValue());
     }
 
-    protected void fillSelected(final FacetOptionViewModel viewModel, final BucketRangeFacetedSearchFormOption option,
-                                final RangeStats rangeStats, final List<String> selectedValues) {
-        viewModel.setSelected(selectedValues.contains(option.getFieldValue()));
+    @Override
+    protected void fillSelected(final FacetOptionViewModel viewModel, final RangeStats stats, final BucketRangeFacetedSearchFormOption option, @Nullable final List<String> selectedValues) {
+        if (selectedValues != null) {
+            viewModel.setSelected(selectedValues.contains(option.getFieldValue()));
+        }
     }
 
-    protected void fillCount(final FacetOptionViewModel viewModel, final BucketRangeFacetedSearchFormOption option,
-                             final RangeStats rangeStats, final List<String> selectedValues) {
-        viewModel.setCount(rangeStats.getProductCount());
+    @Override
+    protected void fillCount(final FacetOptionViewModel viewModel, final RangeStats stats, final BucketRangeFacetedSearchFormOption option, @Nullable final List<String> selectedValue) {
+        viewModel.setCount(stats.getProductCount());
     }
 }

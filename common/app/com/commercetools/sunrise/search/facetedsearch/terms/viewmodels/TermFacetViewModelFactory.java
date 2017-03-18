@@ -90,7 +90,7 @@ public class TermFacetViewModelFactory extends AbstractFacetWithOptionsViewModel
                 .map(injector::instanceOf)
                 .map(mapper -> mapper.apply(settings, facetResult))
                 .orElseGet(() -> facetResult.getTerms().stream()
-                        .map(stats -> termFacetOptionViewModelFactory.create(stats, selectedValues))
+                        .map(stats -> termFacetOptionViewModelFactory.create(stats, null, selectedValues))
                         .collect(toList()));
     }
 }

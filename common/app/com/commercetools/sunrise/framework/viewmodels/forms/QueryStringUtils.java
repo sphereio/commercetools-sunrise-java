@@ -57,7 +57,15 @@ public final class QueryStringUtils {
      */
     public static String buildUri(final String path, final Map<String, List<String>> queryString) {
         final String queryStringAsString = buildQueryString(queryString);
-        return path + (queryStringAsString.isEmpty() ? "" : "?" + queryStringAsString);
+        final String connector;
+        if (queryStringAsString.isEmpty()) {
+            connector = "";
+        } else if (path.contains("?")) {
+            connector = "&";
+        } else {
+            connector = "?";
+        }
+        return path + connector + queryStringAsString;
     }
 
     private static String buildQueryString(final Map<String, List<String>> queryString) {

@@ -33,7 +33,7 @@ public final class AlphabeticallySortedTermFacetMapper implements TermFacetMappe
     public List<FacetOptionViewModel> apply(final TermFacetedSearchFormSettings<?> settings, final TermFacetResult facetResult) {
         final List<String> selectedValues = settings.getAllSelectedValues(httpContext);
         return facetResult.getTerms().stream()
-                .map(term -> termFacetOptionViewModelFactory.create(term, selectedValues))
+                .map(term -> termFacetOptionViewModelFactory.create(term, null, selectedValues))
                 .sorted(Comparator.comparing(FacetOptionViewModel::getLabel))
                 .collect(toList());
     }

@@ -75,7 +75,7 @@ public class BucketRangeFacetViewModelFactory extends AbstractFacetWithOptionsVi
                 .forEach(option -> optionToFacetRange(option)
                         .map(rangeToStatsMap::get)
                         .filter(Objects::nonNull)
-                        .ifPresent(rangeStats -> options.add(bucketRangeFacetOptionViewModelFactory.create(option, rangeStats, selectedValues))));
+                        .ifPresent(rangeStats -> options.add(bucketRangeFacetOptionViewModelFactory.create(rangeStats, option, selectedValues))));
         viewModel.setLimitedOptions(options);
     }
 }

@@ -1,46 +1,49 @@
 package com.commercetools.sunrise.search.facetedsearch.terms.viewmodels;
 
-import com.commercetools.sunrise.framework.viewmodels.forms.SelectableViewModelFactory;
+import com.commercetools.sunrise.search.facetedsearch.viewmodels.AbstractFacetOptionViewModelFactory;
 import com.commercetools.sunrise.search.facetedsearch.viewmodels.FacetOptionViewModel;
 import io.sphere.sdk.search.TermStats;
 
+import javax.annotation.Nullable;
 import javax.inject.Singleton;
 import java.util.List;
 
 @Singleton
-public class TermFacetOptionViewModelFactory extends SelectableViewModelFactory<FacetOptionViewModel, TermStats, List<String>> {
+public class TermFacetOptionViewModelFactory extends AbstractFacetOptionViewModelFactory<TermStats, Void, List<String>> {
 
     @Override
-    protected FacetOptionViewModel newViewModelInstance(final TermStats termStats, final List<String> selectedValues) {
-        return new FacetOptionViewModel();
+    public final FacetOptionViewModel create(final TermStats stats, final Void value, @Nullable final List<String> selectedValue) {
+        return super.create(stats, value, selectedValue);
+    }
+
+    public final FacetOptionViewModel create(final TermStats stats, @Nullable final List<String> selectedValue) {
+        return super.create(stats, null, selectedValue);
     }
 
     @Override
-    public final FacetOptionViewModel create(final TermStats termStats, final List<String> selectedValues) {
-        return super.create(termStats, selectedValues);
+    protected final void initialize(final FacetOptionViewModel viewModel, final TermStats stats, final Void value, @Nullable final List<String> selectedValue) {
+        super.initialize(viewModel, stats, value, selectedValue);
     }
 
     @Override
-    protected final void initialize(final FacetOptionViewModel viewModel, final TermStats termStats, final List<String> selectedValues) {
-        fillLabel(viewModel, termStats, selectedValues);
-        fillValue(viewModel, termStats, selectedValues);
-        fillSelected(viewModel, termStats, selectedValues);
-        fillCount(viewModel, termStats, selectedValues);
+    protected void fillLabel(final FacetOptionViewModel viewModel, final TermStats stats, final Void value, @Nullable final List<String> selectedValues) {
+        viewModel.setLabel(stats.getTerm());
     }
 
-    protected void fillLabel(final FacetOptionViewModel viewModel, final TermStats termStats, final List<String> selectedValues) {
-        viewModel.setLabel(termStats.getTerm());
+    @Override
+    protected void fillValue(final FacetOptionViewModel viewModel, final TermStats stats, final Void value, @Nullable final List<String> selectedValues) {
+        viewModel.setValue(stats.getTerm());
     }
 
-    protected void fillValue(final FacetOptionViewModel viewModel, final TermStats termStats, final List<String> selectedValues) {
-        viewModel.setValue(termStats.getTerm());
+    @Override
+    protected void fillSelected(final FacetOptionViewModel viewModel, final TermStats stats, final Void value, @Nullable final List<String> selectedValues) {
+        if (selectedValues != null) {
+            viewModel.setSelected(selectedValues.contains(stats.getTerm()));
+        }
     }
 
-    protected void fillSelected(final FacetOptionViewModel viewModel, final TermStats termStats, final List<String> selectedValues) {
-        viewModel.setSelected(selectedValues.contains(termStats.getTerm()));
-    }
-
-    protected void fillCount(final FacetOptionViewModel viewModel, final TermStats termStats, final List<String> selectedValues) {
-        viewModel.setCount(termStats.getProductCount());
+    @Override
+    protected void fillCount(final FacetOptionViewModel viewModel, final TermStats stats, final Void value, @Nullable final List<String> selectedValues) {
+        viewModel.setCount(stats.getProductCount());
     }
 }

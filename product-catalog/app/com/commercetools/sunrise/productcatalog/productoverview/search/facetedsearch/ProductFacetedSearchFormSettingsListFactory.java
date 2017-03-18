@@ -3,8 +3,8 @@ package com.commercetools.sunrise.productcatalog.productoverview.search.faceteds
 import com.commercetools.sunrise.framework.injection.RequestScoped;
 import com.commercetools.sunrise.framework.viewmodels.forms.PositionedSettings;
 import com.commercetools.sunrise.productcatalog.productoverview.CategoryFinder;
-import com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch.mappers.DefaultCategoryTreeFacetedSearchFormSettings;
-import com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch.mappers.SimpleCategoryTreeFacetedSearchFormSettings;
+import com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch.categorytree.DefaultCategoryTreeFacetedSearchFormSettings;
+import com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch.categorytree.SimpleCategoryTreeFacetedSearchFormSettings;
 import com.commercetools.sunrise.search.facetedsearch.FacetedSearchFormSettingsListFactory;
 import com.commercetools.sunrise.search.facetedsearch.terms.SimpleTermFacetedSearchFormSettings;
 import com.commercetools.sunrise.search.facetedsearch.terms.TermFacetedSearchFormSettings;

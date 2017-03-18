@@ -1,10 +1,12 @@
-package com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch.mappers;
+package com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch.categorytree;
 
 import com.commercetools.sunrise.productcatalog.productoverview.CategoryFinder;
 import com.commercetools.sunrise.search.facetedsearch.AbstractFacetedSearchFormSettingsWithOptions;
 import io.sphere.sdk.categories.Category;
+import io.sphere.sdk.models.Resource;
 import io.sphere.sdk.products.ProductProjection;
 
+import javax.annotation.Nullable;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
@@ -26,8 +28,15 @@ public final class DefaultCategoryTreeFacetedSearchFormSettings extends Abstract
         return getSettings().getFieldName();
     }
 
+    @Nullable
     @Override
-    public Optional<Category> findSelectedCategory(final String categoryIdentifier) {
+    public String mapFieldValueToValue(final String fieldValue) {
+        return findCategory(fieldValue)
+                .map(Resource::getId)
+                .orElse(null);
+    }
+
+    private Optional<Category> findCategory(final String categoryIdentifier) {
         if (!categoryIdentifier.isEmpty()) {
             try {
                 return categoryFinder.apply(categoryIdentifier)

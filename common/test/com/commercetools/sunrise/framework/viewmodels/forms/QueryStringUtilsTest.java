@@ -55,6 +55,18 @@ public class QueryStringUtilsTest {
     }
 
     @Test
+    public void buildsUriWhenItContainsQueryString() throws Exception {
+        final Map<String, List<String>> queryString = new HashMap<>();
+        queryString.put("foo", asList("jacket", "shirt", "shoes"));
+        final String expectedUri = "some-path?with=multiple&query=values&foo=jacket&foo=shirt&foo=shoes";
+        final String uri = buildUri("some-path?with=multiple&query=values", queryString);
+        assertThat(uri).isEqualTo(expectedUri);
+        assertThat(URLDecoder.decode(uri, "UTF-8"))
+                .as("Decoded URI stays the same")
+                .isEqualTo(expectedUri);
+    }
+
+    @Test
     public void buildsUri() throws Exception {
         final Map<String, List<String>> queryString = new HashMap<>();
         queryString.put("foo", asList("jacket", "shirt", "shoes"));

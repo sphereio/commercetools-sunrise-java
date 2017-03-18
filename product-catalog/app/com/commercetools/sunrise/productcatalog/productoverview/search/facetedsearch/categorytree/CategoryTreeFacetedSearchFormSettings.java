@@ -1,13 +1,9 @@
-package com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch.mappers;
+package com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch.categorytree;
 
 import com.commercetools.sunrise.framework.viewmodels.forms.FormSettings;
 import com.commercetools.sunrise.search.facetedsearch.terms.TermFacetedSearchFormSettings;
-import io.sphere.sdk.categories.Category;
-import io.sphere.sdk.models.Resource;
 import io.sphere.sdk.products.ProductProjection;
 import io.sphere.sdk.search.FilterExpression;
-import io.sphere.sdk.search.model.TermFilterSearchModel;
-import io.sphere.sdk.search.model.TypeSerializer;
 import play.mvc.Http;
 
 import javax.annotation.Nullable;
@@ -15,7 +11,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch.mappers.CategoryTreeMapperUtils.findCategoryIdentifierInPath;
+import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
 
@@ -26,13 +22,14 @@ public interface CategoryTreeFacetedSearchFormSettings extends SimpleCategoryTre
         return "";
     }
 
+    /**
+     * Maps the identifier of the category to its category ID, which is ultimately used for building filter expressions.
+     * @param fieldValue the identifier of the category as it is received in the HTTP request
+     * @return the ID of the category identified by that value
+     */
     @Nullable
     @Override
-    default String mapFieldValueToValue(final String fieldValue) {
-        return findSelectedCategory(fieldValue)
-                .map(Resource::getId)
-                .orElse(null);
-    }
+    String mapFieldValueToValue(final String fieldValue);
 
     @Override
     default boolean isValidValue(@Nullable final String value) {
@@ -41,7 +38,14 @@ public interface CategoryTreeFacetedSearchFormSettings extends SimpleCategoryTre
 
     @Override
     default List<String> getSelectedValuesAsRawList(final Http.Context httpContext) {
-        return findCategoryIdentifierInPath(httpContext)
+        return Optional.ofNullable(httpContext.args.get("ROUTE_PATTERN"))
+                .map(routePattern -> routePattern.toString().replaceAll("<[^>]+>", "")) // remove regex since splitting '$categoryIdentifier<[^/]+>' with '/' would create more words
+                .map(routePattern -> {
+                    final List<String> paths = asList(routePattern.split("/"));
+                    return paths.indexOf("$categoryIdentifier");
+                })
+                .filter(index -> index >= 0)
+                .map(index -> httpContext.request().path().split("/")[index])
                 .map(Collections::singletonList)
                 .orElseGet(Collections::emptyList);
     }
@@ -53,9 +57,7 @@ public interface CategoryTreeFacetedSearchFormSettings extends SimpleCategoryTre
             final String expression = String.format("%s: subtree(\"%s\")", getAttributePath(), categoryId);
             return singletonList(FilterExpression.of(expression));
         } else {
-            return TermFilterSearchModel.<ProductProjection, String>of(getAttributePath(), TypeSerializer.ofString()).isIn(emptyList());
+            return emptyList();
         }
     }
-
-    Optional<Category> findSelectedCategory(final String categoryIdentifier);
 }

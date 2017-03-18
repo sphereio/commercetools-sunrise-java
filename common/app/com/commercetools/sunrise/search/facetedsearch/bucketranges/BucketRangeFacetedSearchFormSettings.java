@@ -20,7 +20,7 @@ public interface BucketRangeFacetedSearchFormSettings<T> extends SimpleBucketRan
     @Override
     default RangeFacetExpression<T> buildFacetExpression() {
         return RangeTermFacetSearchModel.<T, String>of(getAttributePath(), TypeSerializer.ofString())
-                .withCountingProducts(true)
+                .withCountingProducts(isCountDisplayed())
                 .onlyRange(optionsToFacetRange(getOptions()));
     }
 

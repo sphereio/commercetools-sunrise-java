@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch.mappers;
+package com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch.categorytree;
 
 import com.commercetools.sunrise.search.facetedsearch.AbstractConfigurableFacetedSearchFormSettings;
 import io.sphere.sdk.products.ProductProjection;

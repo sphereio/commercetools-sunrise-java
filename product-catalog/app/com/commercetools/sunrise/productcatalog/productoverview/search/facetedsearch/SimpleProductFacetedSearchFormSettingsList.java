@@ -1,7 +1,7 @@
 package com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch;
 
 import com.commercetools.sunrise.framework.viewmodels.forms.PositionedSettings;
-import com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch.mappers.ConfigurableCategoryTreeFacetedSearchFormSettings;
+import com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch.categorytree.ConfigurableCategoryTreeFacetedSearchFormSettings;
 import com.commercetools.sunrise.search.facetedsearch.ConfigurableFacetedSearchFormSettingsList;
 import com.commercetools.sunrise.search.facetedsearch.bucketranges.SimpleBucketRangeFacetedSearchFormSettings;
 import com.commercetools.sunrise.search.facetedsearch.sliderranges.SimpleSliderRangeFacetedSearchFormSettings;

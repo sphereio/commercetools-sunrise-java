@@ -55,8 +55,9 @@ public interface TermFacetedSearchFormSettings<T> extends SimpleTermFacetedSearc
 
     @Override
     default TermFacetExpression<T> buildFacetExpression() {
-        return TermFacetSearchModel.<T, String>of(getAttributePath(), TypeSerializer.ofString())
-                .withCountingProducts(true)
+        final TermFacetSearchModel<T, String> searchModel = TermFacetSearchModel.<T, String>of(getAttributePath(), TypeSerializer.ofString());
+        return searchModel
+                .withCountingProducts(isCountDisplayed())
                 .allTerms();
     }
 

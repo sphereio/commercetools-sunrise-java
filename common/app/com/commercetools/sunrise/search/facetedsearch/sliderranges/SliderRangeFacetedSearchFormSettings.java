@@ -28,7 +28,7 @@ public interface SliderRangeFacetedSearchFormSettings<T> extends SimpleSliderRan
     @Override
     default RangeFacetExpression<T> buildFacetExpression() {
         return RangeTermFacetSearchModel.<T, String>of(getAttributePath(), TypeSerializer.ofString())
-                .withCountingProducts(true)
+                .withCountingProducts(isCountDisplayed())
                 .allRanges();
     }
 
