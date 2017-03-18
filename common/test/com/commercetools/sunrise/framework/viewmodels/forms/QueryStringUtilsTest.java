@@ -1,19 +1,18 @@
 package com.commercetools.sunrise.framework.viewmodels.forms;
 
 import org.junit.Test;
-import play.mvc.Http;
 
 import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
 
+import static com.commercetools.sunrise.framework.viewmodels.forms.FormTestUtils.someQueryString;
+import static com.commercetools.sunrise.framework.viewmodels.forms.FormTestUtils.testWithHttpContext;
 import static com.commercetools.sunrise.framework.viewmodels.forms.QueryStringUtils.*;
 import static java.util.Arrays.asList;
 import static java.util.Collections.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static play.test.Helpers.fakeRequest;
 
 public class QueryStringUtilsTest {
 
@@ -21,8 +20,8 @@ public class QueryStringUtilsTest {
     public void findsAllSelectedValues() throws Exception {
         final Map<String, List<String>> queryString = someQueryString();
         queryString.put("bar", asList("1", "2", "3", "4"));
-        testWithHttpRequest(queryString, httpRequest ->
-                assertThat(findAllSelectedValuesFromQueryString("bar", httpRequest))
+        testWithHttpContext(queryString, httpContext ->
+                assertThat(findAllSelectedValuesFromQueryString("bar", httpContext.request()))
                         .containsExactly("1", "2", "3", "4"));
     }
 
@@ -30,112 +29,28 @@ public class QueryStringUtilsTest {
     public void findsOneSelectedValue() throws Exception {
         final Map<String, List<String>> queryString = someQueryString();
         queryString.put("bar", asList("1", "2", "3", "4"));
-        testWithHttpRequest(queryString, httpRequest ->
-                assertThat(findSelectedValueFromQueryString("bar", httpRequest))
+        testWithHttpContext(queryString, httpContext ->
+                assertThat(findSelectedValueFromQueryString("bar", httpContext.request()))
                         .hasValueSatisfying(value -> assertThat(value).isIn("1", "2", "3", "4")));
     }
 
     @Test
     public void findsNoneIfValueNotPresent() throws Exception {
-        testWithHttpRequest(someQueryString(), httpRequest ->
-                assertThat(findAllSelectedValuesFromQueryString("bar", httpRequest))
+        testWithHttpContext(someQueryString(), httpContext ->
+                assertThat(findAllSelectedValuesFromQueryString("bar", httpContext.request()))
                         .isEmpty());
-        testWithHttpRequest(someQueryString(), httpRequest ->
-                assertThat(findSelectedValueFromQueryString("bar", httpRequest))
+        testWithHttpContext(someQueryString(), httpContext ->
+                assertThat(findSelectedValueFromQueryString("bar", httpContext.request()))
                         .isEmpty());
     }
 
     @Test
     public void findsNoneIfEmptyQueryString() throws Exception {
-        testWithHttpRequest(emptyMap(), httpRequest ->
-                assertThat(findAllSelectedValuesFromQueryString("bar", httpRequest))
+        testWithHttpContext(emptyMap(), httpContext ->
+                assertThat(findAllSelectedValuesFromQueryString("bar", httpContext.request()))
                         .isEmpty());
-        testWithHttpRequest(emptyMap(), httpRequest ->
-                assertThat(findSelectedValueFromQueryString("bar", httpRequest))
-                        .isEmpty());
-    }
-
-    @Test
-    public void findsSelectedValueFromForm() throws Exception {
-        final TestableFormSettings formSettings = new TestableFormSettings("bar", 10);
-        final Map<String, List<String>> queryString = someQueryString();
-        queryString.put("bar", asList("-1", "2", "0", "-5"));
-        testWithHttpRequest(queryString, httpRequest ->
-                assertThat(findSelectedValueFromQueryString(formSettings, httpRequest))
-                        .isEqualTo(2));
-    }
-
-    @Test
-    public void findsSelectedValueFromFormWithOptions() throws Exception {
-        final TestableFormSettingsWithOptions formSettings = new TestableFormSettingsWithOptions("bar", asList(
-                option(1, false),
-                option(10, true),
-                option(50, false)));
-        final Map<String, List<String>> queryString = someQueryString();
-        queryString.put("bar", asList("1", "2", "3", "4"));
-        testWithHttpRequest(queryString, httpRequest ->
-                assertThat(findSelectedValueFromQueryString(formSettings, httpRequest))
-                        .hasValueSatisfying(option -> assertThat(option.getValue()).isEqualTo(1)));
-    }
-
-    @Test
-    public void fallbacksToDefaultValueIfNoneSelected() throws Exception {
-        final TestableFormSettings formSettings = new TestableFormSettings("bar", 10);
-        testWithHttpRequest(someQueryString(), httpRequest ->
-                assertThat(findSelectedValueFromQueryString(formSettings, httpRequest))
-                        .isEqualTo(10));
-    }
-
-    @Test
-    public void fallbacksToDefaultOptionIfNoneSelected() throws Exception {
-        final TestableFormSettingsWithOptions formSettings = new TestableFormSettingsWithOptions("bar", asList(
-                option(1, false),
-                option(10, true),
-                option(50, false)));
-        testWithHttpRequest(someQueryString(), httpRequest ->
-                assertThat(findSelectedValueFromQueryString(formSettings, httpRequest))
-                        .hasValueSatisfying(option -> assertThat(option.getValue()).isEqualTo(10)));
-    }
-
-    @Test
-    public void fallbacksToDefaultValueIfNoValidValue() throws Exception {
-        final TestableFormSettings formSettings = new TestableFormSettings("bar", 10);
-        final Map<String, List<String>> queryString = someQueryString();
-        queryString.put("bar", asList("x", "y", "z"));
-        testWithHttpRequest(queryString, httpRequest ->
-                assertThat(findSelectedValueFromQueryString(formSettings, httpRequest))
-                        .isEqualTo(10));
-    }
-
-    @Test
-    public void fallbacksToDefaultOptionIfNoValidValue() throws Exception {
-        final TestableFormSettingsWithOptions formSettings = new TestableFormSettingsWithOptions("bar", asList(
-                option(1, false),
-                option(10, true),
-                option(50, false)));
-        final Map<String, List<String>> queryString = someQueryString();
-        queryString.put("bar", asList("x", "y", "z"));
-        testWithHttpRequest(queryString, httpRequest ->
-                assertThat(findSelectedValueFromQueryString(formSettings, httpRequest))
-                        .hasValueSatisfying(option -> assertThat(option.getValue()).isEqualTo(10)));
-    }
-
-    @Test
-    public void selectsFirstOptionIfNoDefaultOptionAndNoneSelected() throws Exception {
-        final TestableFormSettingsWithOptions formSettings = new TestableFormSettingsWithOptions("bar", asList(
-                option(1, false),
-                option(10, false),
-                option(50, false)));
-        testWithHttpRequest(someQueryString(), httpRequest ->
-                assertThat(findSelectedValueFromQueryString(formSettings, httpRequest))
-                    .hasValueSatisfying(option -> assertThat(option.getValue()).isEqualTo(1)));
-    }
-
-    @Test
-    public void emptyIfNoOptionsProvided() throws Exception {
-        final TestableFormSettingsWithOptions formSettings = new TestableFormSettingsWithOptions("bar", emptyList());
-        testWithHttpRequest(someQueryString(), httpRequest ->
-                assertThat(findSelectedValueFromQueryString(formSettings, httpRequest))
+        testWithHttpContext(emptyMap(), httpContext ->
+                assertThat(findSelectedValueFromQueryString("bar", httpContext.request()))
                         .isEmpty());
     }
 
@@ -170,65 +85,8 @@ public class QueryStringUtilsTest {
     @Test
     public void extractsQueryString() throws Exception {
         final Map<String, List<String>> queryString = someQueryString();
-        testWithHttpRequest(queryString, request ->
-                assertThat(extractQueryString(request))
+        testWithHttpContext(queryString, httpContext ->
+                assertThat(extractQueryString(httpContext.request()))
                         .isEqualTo(queryString));
-    }
-
-    private static Map<String, List<String>> someQueryString() {
-        final Map<String, List<String>> queryString = new HashMap<>();
-        queryString.put("foo", asList("x", "y", "z"));
-        queryString.put("qux", asList("v", "w"));
-        return queryString;
-    }
-
-    private static void testWithHttpRequest(final Map<String, List<String>> queryString, final Consumer<Http.Request> test) {
-        final Http.Request request = fakeRequest()
-                .uri(QueryStringUtils.buildUri("path", queryString))
-                .build();
-        test.accept(request);
-    }
-
-    private static TestableFormSettingsWithOptions formSettings(final TestableFormOption... options) {
-        return new TestableFormSettingsWithOptions("field-name", asList(options));
-    }
-
-    private static TestableFormOption option(final int num, final boolean isDefault) {
-        return new TestableFormOption("Option " + num, String.valueOf(num), num, isDefault);
-    }
-
-    private static class TestableFormSettings extends AbstractFormSettings<Integer> {
-
-        TestableFormSettings(final String fieldName, final Integer defaultValue) {
-            super(fieldName, defaultValue);
-        }
-
-        @Override
-        public Integer mapToValue(final String valueAsString) {
-            try {
-                return Integer.valueOf(valueAsString);
-            } catch (NumberFormatException e) {
-                return 0;
-            }
-        }
-
-        @Override
-        public boolean isValidValue(final Integer value) {
-            return value > 0;
-        }
-    }
-
-    private static class TestableFormSettingsWithOptions extends AbstractFormSettingsWithOptions<TestableFormOption> {
-
-        TestableFormSettingsWithOptions(final String fieldName, final List<TestableFormOption> options) {
-            super(fieldName, options);
-        }
-    }
-
-    private static class TestableFormOption extends AbstractFormOption<Integer> {
-
-        TestableFormOption(final String fieldLabel, final String fieldValue, final Integer value, final boolean isDefault) {
-            super(fieldLabel, fieldValue, value, isDefault);
-        }
     }
 }

@@ -3,6 +3,8 @@ package com.commercetools.sunrise.search.pagination;
 import com.commercetools.sunrise.framework.viewmodels.forms.FormSettings;
 import play.mvc.Http;
 
+import javax.annotation.Nullable;
+
 public interface PaginationSettings extends FormSettings<Integer> {
 
     int getDisplayedPages();
@@ -11,17 +13,18 @@ public interface PaginationSettings extends FormSettings<Integer> {
         return (getSelectedValue(httpContext) - 1) * limit;
     }
 
+    @Nullable
     @Override
-    default Integer mapToValue(final String valueAsString) {
+    default Integer mapFieldValueToValue(final String fieldValue) {
         try {
-            return Integer.valueOf(valueAsString);
+            return Integer.valueOf(fieldValue);
         } catch (NumberFormatException e) {
-            return getDefaultValue();
+            return null;
         }
     }
 
     @Override
-    default boolean isValidValue(final Integer value) {
+    default boolean isValidValue(@Nullable final Integer value) {
         return value != null && value > 0;
     }
 

@@ -1,10 +1,17 @@
 package com.commercetools.sunrise.search.searchbox;
 
-import com.commercetools.sunrise.framework.viewmodels.forms.AbstractFormSettings;
+import com.commercetools.sunrise.framework.SunriseModel;
 
-class SearchBoxSettingsImpl extends AbstractFormSettings<String> implements SearchBoxSettings {
+class SearchBoxSettingsImpl extends SunriseModel implements SearchBoxSettings {
+
+    private final String fieldName;
 
     SearchBoxSettingsImpl(final String fieldName) {
-        super(fieldName, "");
+        this.fieldName = fieldName;
+    }
+
+    @Override
+    public String getFieldName() {
+        return fieldName;
     }
 }

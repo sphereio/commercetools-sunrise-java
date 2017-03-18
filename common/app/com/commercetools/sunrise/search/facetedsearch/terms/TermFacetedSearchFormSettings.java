@@ -1,17 +1,35 @@
 package com.commercetools.sunrise.search.facetedsearch.terms;
 
+import com.commercetools.sunrise.framework.viewmodels.forms.FormSettings;
 import com.commercetools.sunrise.search.facetedsearch.FacetedSearchFormSettings;
 import io.sphere.sdk.search.*;
 import io.sphere.sdk.search.model.FacetedSearchSearchModel;
 import io.sphere.sdk.search.model.TermFacetSearchModel;
 import io.sphere.sdk.search.model.TermFacetedSearchSearchModel;
+import io.sphere.sdk.search.model.TypeSerializer;
 import play.mvc.Http;
 
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
 
-public interface TermFacetedSearchFormSettings<T> extends SimpleTermFacetedSearchFormSettings<T>, FacetedSearchFormSettings<T> {
+public interface TermFacetedSearchFormSettings<T> extends SimpleTermFacetedSearchFormSettings<T>, FacetedSearchFormSettings<T>, FormSettings<String> {
+
+    @Override
+    default String getDefaultValue() {
+        return "";
+    }
+
+    @Nullable
+    @Override
+    default String mapFieldValueToValue(final String fieldValue) {
+        return fieldValue;
+    }
+
+    @Override
+    default boolean isValidValue(@Nullable final String value) {
+        return value != null;
+    }
 
     @Override
     default TermFacetedSearchExpression<T> buildFacetedSearchExpression(final Http.Context httpContext) {
@@ -37,7 +55,7 @@ public interface TermFacetedSearchFormSettings<T> extends SimpleTermFacetedSearc
 
     @Override
     default TermFacetExpression<T> buildFacetExpression() {
-        return TermFacetSearchModel.<T, String>of(getAttributePath(), Function.identity())
+        return TermFacetSearchModel.<T, String>of(getAttributePath(), TypeSerializer.ofString())
                 .withCountingProducts(true)
                 .allTerms();
     }

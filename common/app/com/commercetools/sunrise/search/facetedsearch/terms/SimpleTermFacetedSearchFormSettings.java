@@ -1,12 +1,12 @@
 package com.commercetools.sunrise.search.facetedsearch.terms;
 
-import com.commercetools.sunrise.framework.viewmodels.forms.FormSettings;
+import com.commercetools.sunrise.framework.viewmodels.forms.WithFormFieldName;
 import com.commercetools.sunrise.search.facetedsearch.SimpleFacetedSearchFormSettingsWithOptions;
 import com.commercetools.sunrise.search.facetedsearch.terms.mappers.TermFacetMapperSettings;
 
 import javax.annotation.Nullable;
 
-public interface SimpleTermFacetedSearchFormSettings<T> extends SimpleFacetedSearchFormSettingsWithOptions<T>, FormSettings<String> {
+public interface SimpleTermFacetedSearchFormSettings<T> extends SimpleFacetedSearchFormSettingsWithOptions<T>, WithFormFieldName {
 
     /**
      * Gets the threshold indicating the minimum amount of options allowed to be displayed in the facet.
@@ -28,21 +28,6 @@ public interface SimpleTermFacetedSearchFormSettings<T> extends SimpleFacetedSea
      */
     @Nullable
     TermFacetMapperSettings getMapperSettings();
-
-    @Override
-    default String getDefaultValue() {
-        return "";
-    }
-
-    @Override
-    default String mapToValue(final String valueAsString) {
-        return valueAsString;
-    }
-
-    @Override
-    default boolean isValidValue(final String value) {
-        return true;
-    }
 
     static <T> SimpleTermFacetedSearchFormSettings<T> of(final String fieldName, final String label, final String expression,
                                                          final boolean isCountDisplayed, @Nullable final String uiType,

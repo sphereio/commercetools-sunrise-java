@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch;
+package com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch.mappers;
 
 import com.commercetools.sunrise.search.facetedsearch.terms.mappers.AlphabeticallySortedTermFacetMapper;
 import com.commercetools.sunrise.search.facetedsearch.terms.mappers.CustomSortedTermFacetMapper;

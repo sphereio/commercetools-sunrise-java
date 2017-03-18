@@ -1,6 +1,7 @@
 package com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch;
 
 import com.commercetools.sunrise.framework.viewmodels.forms.PositionedSettings;
+import com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch.mappers.ConfigurableCategoryTreeFacetedSearchFormSettings;
 import com.commercetools.sunrise.search.facetedsearch.ConfigurableFacetedSearchFormSettingsList;
 import com.commercetools.sunrise.search.facetedsearch.bucketranges.SimpleBucketRangeFacetedSearchFormSettings;
 import com.commercetools.sunrise.search.facetedsearch.sliderranges.SimpleSliderRangeFacetedSearchFormSettings;
@@ -43,7 +44,7 @@ public class SimpleProductFacetedSearchFormSettingsList extends ConfigurableFace
     @Override
     protected void handleUnknownFacet(final Configuration configuration, final String type, final int position) {
         if (type.equals(CONFIG_TYPE_CATEGORY_TREE)) {
-            getSimpleTermSettings().add(PositionedSettings.of(position, new SimpleCategoryTreeFacetedSearchFormSettings(configuration)));
+            getSimpleTermSettings().add(PositionedSettings.of(position, new ConfigurableCategoryTreeFacetedSearchFormSettings(configuration)));
         } else {
             super.handleUnknownFacet(configuration, type, position);
         }

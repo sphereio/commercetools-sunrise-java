@@ -2,6 +2,8 @@ package com.commercetools.sunrise.search.facetedsearch.sliderranges;
 
 import com.commercetools.sunrise.framework.viewmodels.forms.FormSettings;
 
+import javax.annotation.Nullable;
+
 public interface RangeEndpointFormSettings extends FormSettings<String> {
 
     @Override
@@ -9,14 +11,15 @@ public interface RangeEndpointFormSettings extends FormSettings<String> {
         return "*";
     }
 
+    @Nullable
     @Override
-    default String mapToValue(final String valueAsString) {
-        return "\"" + valueAsString + "\"";
+    default String mapFieldValueToValue(final String fieldValue) {
+        return fieldValue;
     }
 
     @Override
-    default boolean isValidValue(final String value) {
-        return true;
+    default boolean isValidValue(@Nullable final String value) {
+        return value != null;
     }
 
     /**

@@ -4,6 +4,7 @@ import com.commercetools.sunrise.framework.viewmodels.forms.FormSettings;
 import io.sphere.sdk.models.LocalizedStringEntry;
 import play.mvc.Http;
 
+import javax.annotation.Nullable;
 import java.util.Locale;
 
 public interface SearchBoxSettings extends FormSettings<String> {
@@ -14,13 +15,19 @@ public interface SearchBoxSettings extends FormSettings<String> {
     }
 
     @Override
-    default String mapToValue(final String valueAsString) {
-        return valueAsString;
+    default String getDefaultValue() {
+        return "";
+    }
+
+    @Nullable
+    @Override
+    default String mapFieldValueToValue(final String fieldValue) {
+        return fieldValue;
     }
 
     @Override
-    default boolean isValidValue(final String value) {
-        return value != null && !value.isEmpty();
+    default boolean isValidValue(@Nullable final String value) {
+        return value != null;
     }
 
     static SearchBoxSettings of(final String fieldName) {

@@ -2,18 +2,19 @@ package com.commercetools.sunrise.framework.viewmodels.forms;
 
 import play.mvc.Http;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
-import static com.commercetools.sunrise.framework.viewmodels.forms.QueryStringUtils.findAllSelectedValuesFromQueryString;
 import static java.util.stream.Collectors.toList;
 
 public interface FormSettings<T> extends WithFormFieldName {
 
     T getDefaultValue();
 
-    T mapToValue(final String valueAsString);
+    @Nullable
+    T mapFieldValueToValue(final String fieldValue);
 
-    boolean isValidValue(final T value);
+    boolean isValidValue(@Nullable final T value);
 
     /**
      * Finds all selected valid values for this form in the HTTP request.
@@ -21,8 +22,8 @@ public interface FormSettings<T> extends WithFormFieldName {
      * @return a list of valid selected values for this form
      */
     default List<T> getAllSelectedValues(final Http.Context httpContext) {
-        return findAllSelectedValuesFromQueryString(getFieldName(), httpContext.request()).stream()
-                .map(this::mapToValue)
+        return getSelectedValuesAsRawList(httpContext).stream()
+                .map(this::mapFieldValueToValue)
                 .filter(this::isValidValue)
                 .collect(toList());
     }

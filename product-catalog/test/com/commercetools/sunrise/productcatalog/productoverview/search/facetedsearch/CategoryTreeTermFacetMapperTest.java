@@ -1,8 +1,14 @@
-package com.commercetools.sunrise.productcatalog.productoverview.search;
+package com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch;
 
+import com.commercetools.sunrise.framework.localization.UserLanguage;
 import com.commercetools.sunrise.framework.reverserouters.productcatalog.product.ProductReverseRouter;
 import com.commercetools.sunrise.framework.viewmodels.forms.FormSelectableOptionViewModel;
-import com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch.CategoryTreeTermFacetMapper;
+import com.commercetools.sunrise.productcatalog.productoverview.CategoryFinder;
+import com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch.mappers.CategoryTreeTermFacetMapper;
+import com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch.mappers.DefaultCategoryTreeFacetedSearchFormSettings;
+import com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch.mappers.ProductTermFacetMapperType;
+import com.commercetools.sunrise.search.facetedsearch.terms.SimpleTermFacetedSearchFormSettings;
+import com.commercetools.sunrise.search.facetedsearch.terms.mappers.TermFacetMapperSettings;
 import com.commercetools.sunrise.search.facetedsearch.viewmodels.FacetOptionViewModel;
 import com.commercetools.sunrise.test.TestableCall;
 import io.sphere.sdk.categories.Category;
@@ -20,6 +26,7 @@ import java.util.function.Consumer;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
+import static java.util.concurrent.CompletableFuture.completedFuture;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
@@ -115,9 +122,23 @@ public class CategoryTreeTermFacetMapperTest {
     }
 
     private void test(final List<Category> categories, final List<TermStats> termStats, final Consumer<List<FacetOptionViewModel>> test) {
+        final TermFacetMapperSettings mapperSettings = TermFacetMapperSettings.of(ProductTermFacetMapperType.CATEGORY_TREE, null);
+        final SimpleTermFacetedSearchFormSettings<Object> bar = SimpleTermFacetedSearchFormSettings.of("bar", "", "", false, null, false, false, mapperSettings, null, null);
+        final UserLanguage userLanguage = new UserLanguage() {
+            @Override
+            public Locale locale() {
+                return Locale.ENGLISH;
+            }
+
+            @Override
+            public List<Locale> locales() {
+                return singletonList(Locale.ENGLISH);
+            }
+        };
         final CategoryTree categoryTree = CategoryTree.of(categories);
-        final List<Locale> locales = singletonList(Locale.ENGLISH);
-        final CategoryTreeTermFacetMapper mapper = new CategoryTreeTermFacetMapper(SELECTED_CATEGORIES, categoryTree, locales, reverseRouter());
+        final CategoryFinder categoryFinder = identifier -> completedFuture(categoryTree.findById(identifier));
+        final DefaultCategoryTreeFacetedSearchFormSettings settings = new DefaultCategoryTreeFacetedSearchFormSettings(bar, Locale.ENGLISH, categoryFinder);
+        final CategoryTreeTermFacetMapper mapper = new CategoryTreeTermFacetMapper(userLanguage, categoryTree, categoryFinder, reverseRouter());
         final TermFacetResult termFacetResult = TermFacetResult.of(0L, 0L, 0L, termStats);
         final List<FacetOptionViewModel> viewModels = mapper.apply(termFacetResult, emptyList());
         test.accept(viewModels);

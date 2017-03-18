@@ -1,8 +1,7 @@
 package com.commercetools.sunrise.search.pagination;
 
 import com.commercetools.sunrise.framework.viewmodels.forms.QueryStringUtils;
-import com.commercetools.sunrise.search.pagination.products.ProductSearchPaginationSettings;
-import com.commercetools.sunrise.search.pagination.products.ProductPaginationViewModelFactory;
+import com.commercetools.sunrise.search.pagination.viewmodels.AbstractPaginationViewModelFactory;
 import com.commercetools.sunrise.search.pagination.viewmodels.PaginationLinkViewModel;
 import com.commercetools.sunrise.search.pagination.viewmodels.PaginationViewModel;
 import io.sphere.sdk.products.ProductProjection;
@@ -99,11 +98,11 @@ public class ProductPaginationViewModelFactoryTest {
     }
 
     private PaginationViewModel createPaginationData(final int currentPage, final int displayedPages, final PagedResult<ProductProjection> searchResult) {
-        final Http.Request request = new Http.RequestBuilder()
+        final Http.Context context = new Http.Context(new Http.RequestBuilder()
                 .uri(QueryStringUtils.buildUri(URL_PATH, buildQueryString(currentPage)))
-                .build();
+                .build());
         final Configuration configuration = new Configuration(singletonMap("pop.pagination.displayedPages", displayedPages));
-        return new ProductPaginationViewModelFactory(configuration, new ProductSearchPaginationSettings(configuration), request).create(searchResult);
+        return new TestablePaginationViewModelFactory(new ConfigurablePaginationSettings(configuration), context).create(searchResult);
     }
 
     private PagedResult<ProductProjection> pagedResult(final int page, final int totalPages) {
@@ -144,5 +143,12 @@ public class ProductPaginationViewModelFactoryTest {
         queryString.put("foo", singletonList("bar"));
         queryString.put("page", singletonList(String.valueOf(currentPage)));
         return queryString;
+    }
+
+    private static class TestablePaginationViewModelFactory extends AbstractPaginationViewModelFactory {
+
+        public TestablePaginationViewModelFactory(final PaginationSettings settings, final Http.Context httpContext) {
+            super(settings, httpContext);
+        }
     }
 }

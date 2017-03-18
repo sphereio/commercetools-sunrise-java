@@ -8,11 +8,11 @@ import io.sphere.sdk.search.RangeFacetedSearchExpression;
 import io.sphere.sdk.search.model.RangeTermFacetSearchModel;
 import io.sphere.sdk.search.model.RangeTermFacetedSearchSearchModel;
 import io.sphere.sdk.search.model.SimpleRangeStats;
+import io.sphere.sdk.search.model.TypeSerializer;
 import play.mvc.Http;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
 
 import static com.commercetools.sunrise.search.facetedsearch.RangeUtils.parseFilterRange;
 
@@ -27,7 +27,7 @@ public interface SliderRangeFacetedSearchFormSettings<T> extends SimpleSliderRan
 
     @Override
     default RangeFacetExpression<T> buildFacetExpression() {
-        return RangeTermFacetSearchModel.<T, String>of(getAttributePath(), Function.identity())
+        return RangeTermFacetSearchModel.<T, String>of(getAttributePath(), TypeSerializer.ofString())
                 .withCountingProducts(true)
                 .allRanges();
     }

@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch;
+package com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch.mappers;
 
 import com.commercetools.sunrise.framework.injection.RequestScoped;
 import com.commercetools.sunrise.framework.localization.UserLanguage;
@@ -34,7 +34,7 @@ public class CategoryTreeTermFacetMapper implements TermFacetMapper {
     private final ProductReverseRouter productReverseRouter;
 
     @Inject
-    protected CategoryTreeTermFacetMapper(final UserLanguage userLanguage, final Http.Context httpContext,
+    CategoryTreeTermFacetMapper(final UserLanguage userLanguage, final Http.Context httpContext,
                                           final CategoryTree categoryTree, final CategoryFinder categoryFinder,
                                           final ProductReverseRouter productReverseRouter) {
         this.categoryFinder = categoryFinder;
@@ -107,7 +107,8 @@ public class CategoryTreeTermFacetMapper implements TermFacetMapper {
 
     private Optional<Category> findSelectedCategory(final TermFacetedSearchFormSettings<?> settings) {
         if (settings instanceof CategoryTreeFacetedSearchFormSettings) {
-            return ((CategoryTreeFacetedSearchFormSettings) settings).findSelectedCategory(httpContext);
+            final String categoryIdentifier = settings.getSelectedValue(httpContext);
+            return ((CategoryTreeFacetedSearchFormSettings) settings).findSelectedCategory(categoryIdentifier);
         }
         return Optional.empty();
     }

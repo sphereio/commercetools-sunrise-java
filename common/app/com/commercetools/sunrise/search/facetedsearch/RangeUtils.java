@@ -89,7 +89,7 @@ public final class RangeUtils {
     }
 
     private static String buildRange(@Nullable final String lowerEndpoint, @Nullable final String upperEndpoint) {
-        return String.format("(%s to %s)",
+        return String.format("(\"%s\" to \"%s\")",
                 boundEndpointOrAsterisk(lowerEndpoint),
                 boundEndpointOrAsterisk(upperEndpoint));
     }

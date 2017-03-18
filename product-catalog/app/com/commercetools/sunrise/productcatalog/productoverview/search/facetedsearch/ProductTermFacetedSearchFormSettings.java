@@ -1,5 +1,6 @@
 package com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch;
 
+import com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch.mappers.ProductTermFacetMapperType;
 import com.commercetools.sunrise.search.facetedsearch.terms.ConfigurableTermFacetedSearchFormSettings;
 import io.sphere.sdk.products.ProductProjection;
 import play.Configuration;

@@ -1,24 +1,25 @@
 package com.commercetools.sunrise.search.facetedsearch.bucketranges;
 
+import com.commercetools.sunrise.framework.viewmodels.forms.FormSettingsWithOptions;
 import com.commercetools.sunrise.search.facetedsearch.FacetedSearchFormSettings;
 import io.sphere.sdk.search.*;
 import io.sphere.sdk.search.model.FilterRange;
 import io.sphere.sdk.search.model.RangeTermFacetSearchModel;
 import io.sphere.sdk.search.model.RangeTermFacetedSearchSearchModel;
+import io.sphere.sdk.search.model.TypeSerializer;
 import play.mvc.Http;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
 
 import static com.commercetools.sunrise.search.facetedsearch.bucketranges.BucketRangeUtils.optionsToFacetRange;
 import static com.commercetools.sunrise.search.facetedsearch.bucketranges.BucketRangeUtils.optionsToFilterRange;
 
-public interface BucketRangeFacetedSearchFormSettings<T> extends SimpleBucketRangeFacetedSearchFormSettings<T>, FacetedSearchFormSettings<T> {
+public interface BucketRangeFacetedSearchFormSettings<T> extends SimpleBucketRangeFacetedSearchFormSettings<T>, FacetedSearchFormSettings<T>, FormSettingsWithOptions<BucketRangeFacetedSearchFormOption, String> {
 
     @Override
     default RangeFacetExpression<T> buildFacetExpression() {
-        return RangeTermFacetSearchModel.<T, String>of(getAttributePath(), Function.identity())
+        return RangeTermFacetSearchModel.<T, String>of(getAttributePath(), TypeSerializer.ofString())
                 .withCountingProducts(true)
                 .onlyRange(optionsToFacetRange(getOptions()));
     }

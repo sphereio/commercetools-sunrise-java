@@ -6,7 +6,6 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
 
-import static com.commercetools.sunrise.framework.viewmodels.forms.QueryStringUtils.findAllSelectedValuesFromQueryString;
 import static java.util.stream.Collectors.toList;
 
 public interface FormSettingsWithOptions<T extends FormOption<V>, V> extends WithFormFieldName, WithFormOptions<T, V> {
@@ -17,7 +16,7 @@ public interface FormSettingsWithOptions<T extends FormOption<V>, V> extends Wit
      * @return a list of valid selected options for this form
      */
     default List<T> getAllSelectedOptions(final Http.Context httpContext) {
-        final List<String> selectedValues = findAllSelectedValuesFromQueryString(getFieldName(), httpContext.request());
+        final List<String> selectedValues = getSelectedValuesAsRawList(httpContext);
         return getOptions().stream()
                 .filter(option -> selectedValues.contains(option.getFieldValue()))
                 .collect(toList());
