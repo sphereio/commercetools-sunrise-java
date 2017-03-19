@@ -10,7 +10,7 @@ import javax.inject.Inject;
 public class ProductSearchSortSelectorViewModelFactory extends AbstractSortSelectorViewModelFactory<ProductProjection> {
 
     @Inject
-    public ProductSearchSortSelectorViewModelFactory(final ProductSortFormSettings settings,
+    public ProductSearchSortSelectorViewModelFactory(final ProductSortFormSettingsFactory settings,
                                                      final SortFormSelectableOptionViewModelFactory sortFormSelectableOptionViewModelFactory,
                                                      final Http.Context httpContext) {
         super(settings, sortFormSelectableOptionViewModelFactory, httpContext);

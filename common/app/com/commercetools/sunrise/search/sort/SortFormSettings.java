@@ -11,7 +11,7 @@ import java.util.Locale;
 
 import static java.util.stream.Collectors.toList;
 
-public interface SortFormSettings<T> extends FormSettingsWithOptions<SortFormOption, List<String>> {
+public interface SortFormSettings<T> extends SimpleSortFormSettings, FormSettingsWithOptions<SortFormOption, List<String>> {
 
     default List<SortExpression<T>> buildSearchExpressions(final Http.Context httpContext, final Locale locale) {
         return getSelectedOption(httpContext)
@@ -27,9 +27,5 @@ public interface SortFormSettings<T> extends FormSettingsWithOptions<SortFormOpt
                         .map(QuerySort::<T>of)
                         .collect(toList()))
                 .orElseGet(Collections::emptyList);
-    }
-
-    static <T> SortFormSettings<T> of(final String fieldName, final List<SortFormOption> options) {
-        return new SortFormSettingsImpl<>(fieldName, options);
     }
 }

@@ -28,7 +28,7 @@ public final class ProductSearchSortSelectorControllerComponent extends Abstract
     private PagedResult<ProductProjection> pagedResult;
 
     @Inject
-    public ProductSearchSortSelectorControllerComponent(final ProductSortFormSettings productSortFormSettings,
+    public ProductSearchSortSelectorControllerComponent(final ProductSortFormSettingsFactory productSortFormSettings,
                                                         final ProductSearchSortSelectorViewModelFactory sortSelectorViewModelFactory,
                                                         final Http.Context httpContext, final Locale locale) {
         super(productSortFormSettings, sortSelectorViewModelFactory);
