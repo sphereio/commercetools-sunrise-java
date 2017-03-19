@@ -4,7 +4,7 @@ import com.commercetools.sunrise.framework.SunriseModel;
 
 import javax.annotation.Nullable;
 
-public abstract class AbstractSimpleFacetedSearchFormSettings<T> extends SunriseModel implements SimpleFacetedSearchFormSettings<T> {
+public abstract class AbstractSimpleFacetedSearchFormSettings extends SunriseModel implements SimpleFacetedSearchFormSettings {
 
     private final String label;
     private final String attributePath;

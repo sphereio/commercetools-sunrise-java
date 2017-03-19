@@ -4,7 +4,7 @@ import com.commercetools.sunrise.search.facetedsearch.AbstractSimpleFacetedSearc
 
 import javax.annotation.Nullable;
 
-class SimpleTermFacetedSearchFormSettingsImpl<T> extends AbstractSimpleFacetedSearchFormSettingsWithOptions<T> implements SimpleTermFacetedSearchFormSettings<T> {
+class SimpleTermFacetedSearchFormSettingsImpl extends AbstractSimpleFacetedSearchFormSettingsWithOptions implements SimpleTermFacetedSearchFormSettings {
 
     private final String fieldName;
     @Nullable

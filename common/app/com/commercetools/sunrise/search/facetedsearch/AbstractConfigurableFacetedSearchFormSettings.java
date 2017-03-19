@@ -6,7 +6,7 @@ import play.Configuration;
 import javax.annotation.Nullable;
 import java.util.Optional;
 
-public abstract class AbstractConfigurableFacetedSearchFormSettings<T> extends AbstractSimpleFacetedSearchFormSettings<T> {
+public abstract class AbstractConfigurableFacetedSearchFormSettings extends AbstractSimpleFacetedSearchFormSettings {
 
     private static final String CONFIG_FIELD_NAME = "fieldName";
     private static final String CONFIG_FIELD_LABEL = "fieldLabel";

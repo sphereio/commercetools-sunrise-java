@@ -2,7 +2,7 @@ package com.commercetools.sunrise.search.facetedsearch;
 
 import play.Configuration;
 
-public abstract class AbstractConfigurableFacetedSearchFormSettingsWithOptions<T> extends AbstractConfigurableFacetedSearchFormSettings<T> implements SimpleFacetedSearchFormSettingsWithOptions<T> {
+public abstract class AbstractConfigurableFacetedSearchFormSettingsWithOptions extends AbstractConfigurableFacetedSearchFormSettings implements SimpleFacetedSearchFormSettingsWithOptions {
 
     private static final String CONFIG_MULTI_SELECT = "multiSelect";
     private static final String CONFIG_MATCHING_ALL = "matchingAll";

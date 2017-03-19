@@ -4,7 +4,7 @@ import com.commercetools.sunrise.search.facetedsearch.AbstractConfigurableFacete
 import io.sphere.sdk.products.ProductProjection;
 import play.Configuration;
 
-public final class ConfigurableCategoryTreeFacetedSearchFormSettings extends AbstractConfigurableFacetedSearchFormSettings<ProductProjection> implements SimpleCategoryTreeFacetedSearchFormSettings {
+public final class ConfigurableCategoryTreeFacetedSearchFormSettings extends AbstractConfigurableFacetedSearchFormSettings implements SimpleCategoryTreeFacetedSearchFormSettings {
 
     private final String fieldName;
 

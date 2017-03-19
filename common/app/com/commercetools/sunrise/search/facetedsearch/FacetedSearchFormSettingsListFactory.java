@@ -1,28 +1,23 @@
 package com.commercetools.sunrise.search.facetedsearch;
 
-import com.commercetools.sunrise.framework.viewmodels.forms.PositionedSettings;
-import com.commercetools.sunrise.search.facetedsearch.bucketranges.BucketRangeFacetedSearchFormSettings;
 import com.commercetools.sunrise.search.facetedsearch.bucketranges.DefaultBucketRangeFacetedSearchFormSettings;
 import com.commercetools.sunrise.search.facetedsearch.bucketranges.SimpleBucketRangeFacetedSearchFormSettings;
 import com.commercetools.sunrise.search.facetedsearch.sliderranges.DefaultSliderRangeFacetedSearchFormSettings;
 import com.commercetools.sunrise.search.facetedsearch.sliderranges.SimpleSliderRangeFacetedSearchFormSettings;
-import com.commercetools.sunrise.search.facetedsearch.sliderranges.SliderRangeFacetedSearchFormSettings;
 import com.commercetools.sunrise.search.facetedsearch.terms.DefaultTermFacetedSearchFormSettings;
 import com.commercetools.sunrise.search.facetedsearch.terms.SimpleTermFacetedSearchFormSettings;
-import com.commercetools.sunrise.search.facetedsearch.terms.TermFacetedSearchFormSettings;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import static java.util.stream.Collectors.toList;
-
 public abstract class FacetedSearchFormSettingsListFactory<T> {
 
-    private final SimpleFacetedSearchFormSettingsList<T> settingsList;
+    private final SimpleFacetedSearchFormSettingsList simpleSettings;
     private final Locale locale;
 
-    protected FacetedSearchFormSettingsListFactory(final SimpleFacetedSearchFormSettingsList<T> settingsList, final Locale locale) {
-        this.settingsList = settingsList;
+    protected FacetedSearchFormSettingsListFactory(final SimpleFacetedSearchFormSettingsList simpleSettings, final Locale locale) {
+        this.simpleSettings = simpleSettings;
         this.locale = locale;
     }
 
@@ -30,28 +25,31 @@ public abstract class FacetedSearchFormSettingsListFactory<T> {
         return locale;
     }
 
-    public final FacetedSearchFormSettingsList<T> create() {
-        final List<PositionedSettings<TermFacetedSearchFormSettings<T>>> termSettings = settingsList.getSimpleTermSettings().stream()
-                .map(positioned -> PositionedSettings.of(positioned.getPosition(), createTermSettings(positioned, locale)))
-                .collect(toList());
-        final List<PositionedSettings<SliderRangeFacetedSearchFormSettings<T>>> sliderRangeSettings = settingsList.getSimpleSliderRangeSettings().stream()
-                .map(positioned -> PositionedSettings.of(positioned.getPosition(), createSliderRangeSettings(positioned, locale)))
-                .collect(toList());
-        final List<PositionedSettings<BucketRangeFacetedSearchFormSettings<T>>> bucketRangeSettings = settingsList.getSimpleBucketRangeSettings().stream()
-                .map(positioned -> PositionedSettings.of(positioned.getPosition(), createBucketRangeSettings(positioned, locale)))
-                .collect(toList());
-        return new DefaultFacetedSearchFormSettingsList<>(settingsList, termSettings, sliderRangeSettings, bucketRangeSettings);
+    public FacetedSearchFormSettingsList<T> create() {
+        final List<FacetedSearchFormSettings<T>> list = new ArrayList<>();
+        simpleSettings.getSimpleSettings().forEach(settings -> addSettingsToList(list, settings));
+        return new FacetedSearchFormSettingsListImpl<>(simpleSettings, list);
     }
 
-    protected TermFacetedSearchFormSettings<T> createTermSettings(final PositionedSettings<SimpleTermFacetedSearchFormSettings<T>> positioned, final Locale locale) {
-        return new DefaultTermFacetedSearchFormSettings<>(positioned.getSettings(), locale);
+    protected void addSettingsToList(final List<FacetedSearchFormSettings<T>> list, final SimpleFacetedSearchFormSettings settings) {
+        if (settings instanceof SimpleTermFacetedSearchFormSettings) {
+            list.add(createTermSettings((SimpleTermFacetedSearchFormSettings) settings));
+        } else if (settings instanceof SimpleSliderRangeFacetedSearchFormSettings) {
+            list.add(createSliderRangeSettings((SimpleSliderRangeFacetedSearchFormSettings) settings));
+        } else if (settings instanceof SimpleBucketRangeFacetedSearchFormSettings) {
+            list.add(createBucketRangeSettings((SimpleBucketRangeFacetedSearchFormSettings) settings));
+        }
     }
 
-    protected SliderRangeFacetedSearchFormSettings<T> createSliderRangeSettings(final PositionedSettings<SimpleSliderRangeFacetedSearchFormSettings<T>> positioned, final Locale locale) {
-        return new DefaultSliderRangeFacetedSearchFormSettings<>(positioned.getSettings(), locale);
+    protected FacetedSearchFormSettings<T> createTermSettings(final SimpleTermFacetedSearchFormSettings settings) {
+        return new DefaultTermFacetedSearchFormSettings<>(settings, locale);
     }
 
-    protected BucketRangeFacetedSearchFormSettings<T> createBucketRangeSettings(final PositionedSettings<SimpleBucketRangeFacetedSearchFormSettings<T>> positioned, final Locale locale) {
-        return new DefaultBucketRangeFacetedSearchFormSettings<>(positioned.getSettings(), locale);
+    protected FacetedSearchFormSettings<T> createSliderRangeSettings(final SimpleSliderRangeFacetedSearchFormSettings settings) {
+        return new DefaultSliderRangeFacetedSearchFormSettings<>(settings, locale);
+    }
+
+    protected FacetedSearchFormSettings<T> createBucketRangeSettings(final SimpleBucketRangeFacetedSearchFormSettings settings) {
+        return new DefaultBucketRangeFacetedSearchFormSettings<>(settings, locale);
     }
 }

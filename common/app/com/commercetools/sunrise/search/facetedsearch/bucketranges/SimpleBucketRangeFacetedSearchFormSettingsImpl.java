@@ -5,7 +5,7 @@ import com.commercetools.sunrise.search.facetedsearch.AbstractSimpleFacetedSearc
 import javax.annotation.Nullable;
 import java.util.List;
 
-class SimpleBucketRangeFacetedSearchFormSettingsImpl<T> extends AbstractSimpleFacetedSearchFormSettingsWithOptions<T> implements SimpleBucketRangeFacetedSearchFormSettings<T> {
+class SimpleBucketRangeFacetedSearchFormSettingsImpl extends AbstractSimpleFacetedSearchFormSettingsWithOptions implements SimpleBucketRangeFacetedSearchFormSettings {
 
     private final String fieldName;
     private final List<BucketRangeFacetedSearchFormOption> options;

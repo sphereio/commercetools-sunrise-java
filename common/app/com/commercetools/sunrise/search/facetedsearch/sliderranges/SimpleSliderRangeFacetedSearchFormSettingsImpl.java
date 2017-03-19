@@ -4,7 +4,7 @@ import com.commercetools.sunrise.search.facetedsearch.AbstractSimpleFacetedSearc
 
 import javax.annotation.Nullable;
 
-class SimpleSliderRangeFacetedSearchFormSettingsImpl<T> extends AbstractSimpleFacetedSearchFormSettings<T> implements SimpleSliderRangeFacetedSearchFormSettings<T> {
+class SimpleSliderRangeFacetedSearchFormSettingsImpl extends AbstractSimpleFacetedSearchFormSettings implements SimpleSliderRangeFacetedSearchFormSettings {
 
     private final RangeEndpointFormSettings lowerEndpointSettings;
     private final RangeEndpointFormSettings upperEndpointSettings;

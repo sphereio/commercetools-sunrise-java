@@ -2,7 +2,7 @@ package com.commercetools.sunrise.search.facetedsearch;
 
 import javax.annotation.Nullable;
 
-public abstract class AbstractSimpleFacetedSearchFormSettingsWithOptions<T> extends AbstractSimpleFacetedSearchFormSettings<T> implements SimpleFacetedSearchFormSettingsWithOptions<T> {
+public abstract class AbstractSimpleFacetedSearchFormSettingsWithOptions extends AbstractSimpleFacetedSearchFormSettings implements SimpleFacetedSearchFormSettingsWithOptions {
 
     private final boolean isMultiSelect;
     private final boolean isMatchingAll;

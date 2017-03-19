@@ -40,7 +40,7 @@ public final class RangeUtils {
     }
 
     /**
-     * Parses a range of the form {@code (x to y)} to a {@link FilterRange<String>}.
+     * Parses a range of the form {@code (x to y)} to a {@link FilterRange}.
      * @param rangeAsString range of the form {@code (x to y)}
      * @return the {@link FilterRange} corresponding to that range, or empty if it could not be parsed
      */
@@ -59,7 +59,7 @@ public final class RangeUtils {
     }
 
     /**
-     * Parses a range of the form {@code (x to y)} to a {@link FacetRange<String>}.
+     * Parses a range of the form {@code (x to y)} to a {@link FacetRange}.
      * @param rangeAsString range of the form {@code (x to y)}
      * @return the {@link FacetRange} corresponding to that range, or empty if it could not be parsed
      */

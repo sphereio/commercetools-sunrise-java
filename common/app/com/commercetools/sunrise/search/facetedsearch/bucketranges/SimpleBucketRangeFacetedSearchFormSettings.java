@@ -7,12 +7,12 @@ import com.commercetools.sunrise.search.facetedsearch.SimpleFacetedSearchFormSet
 import javax.annotation.Nullable;
 import java.util.List;
 
-public interface SimpleBucketRangeFacetedSearchFormSettings<T> extends SimpleFacetedSearchFormSettingsWithOptions<T>, WithFormFieldName, WithFormOptions<BucketRangeFacetedSearchFormOption, String> {
+public interface SimpleBucketRangeFacetedSearchFormSettings extends SimpleFacetedSearchFormSettingsWithOptions, WithFormFieldName, WithFormOptions<BucketRangeFacetedSearchFormOption, String> {
 
-    static <T> SimpleBucketRangeFacetedSearchFormSettings<T> of(final String fieldName, final String label, final String attributePath,
+    static <T> SimpleBucketRangeFacetedSearchFormSettings of(final String fieldName, final String label, final String attributePath,
                                                                 final boolean isCountDisplayed, @Nullable final String uiType,
                                                                 final boolean isMultiSelect, final boolean isMatchingAll,
                                                                 final List<BucketRangeFacetedSearchFormOption> options) {
-        return new SimpleBucketRangeFacetedSearchFormSettingsImpl<>(fieldName, label, attributePath, isCountDisplayed, uiType, isMultiSelect, isMatchingAll, options);
+        return new SimpleBucketRangeFacetedSearchFormSettingsImpl(fieldName, label, attributePath, isCountDisplayed, uiType, isMultiSelect, isMatchingAll, options);
     }
 }

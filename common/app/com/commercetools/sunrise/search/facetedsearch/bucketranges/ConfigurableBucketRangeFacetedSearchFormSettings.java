@@ -9,7 +9,7 @@ import java.util.function.Function;
 import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 
-public class ConfigurableBucketRangeFacetedSearchFormSettings<T> extends AbstractConfigurableFacetedSearchFormSettingsWithOptions<T> implements SimpleBucketRangeFacetedSearchFormSettings<T> {
+public class ConfigurableBucketRangeFacetedSearchFormSettings extends AbstractConfigurableFacetedSearchFormSettingsWithOptions implements SimpleBucketRangeFacetedSearchFormSettings {
 
     private static final String CONFIG_RANGES = "ranges";
 

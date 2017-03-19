@@ -7,7 +7,7 @@ import java.util.Locale;
 
 import static com.commercetools.sunrise.search.SearchUtils.localizeExpression;
 
-public abstract class AbstractFacetedSearchFormSettings<T, S extends SimpleFacetedSearchFormSettings<T>> extends SunriseModel implements SimpleFacetedSearchFormSettings<T> {
+public abstract class AbstractFacetedSearchFormSettings<S extends SimpleFacetedSearchFormSettings> extends SunriseModel implements SimpleFacetedSearchFormSettings {
 
     private final S settings;
     private final Locale locale;

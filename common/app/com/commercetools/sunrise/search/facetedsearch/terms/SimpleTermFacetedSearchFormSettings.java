@@ -5,7 +5,7 @@ import com.commercetools.sunrise.search.facetedsearch.SimpleFacetedSearchFormSet
 
 import javax.annotation.Nullable;
 
-public interface SimpleTermFacetedSearchFormSettings<T> extends SimpleFacetedSearchFormSettingsWithOptions<T>, WithFormFieldName {
+public interface SimpleTermFacetedSearchFormSettings extends SimpleFacetedSearchFormSettingsWithOptions, WithFormFieldName {
 
     /**
      * Gets the threshold indicating the minimum amount of options allowed to be displayed in the facet.
@@ -28,11 +28,11 @@ public interface SimpleTermFacetedSearchFormSettings<T> extends SimpleFacetedSea
     @Nullable
     TermFacetMapperSettings getMapperSettings();
 
-    static <T> SimpleTermFacetedSearchFormSettings<T> of(final String fieldName, final String label, final String expression,
+    static <T> SimpleTermFacetedSearchFormSettings of(final String fieldName, final String label, final String expression,
                                                          final boolean isCountDisplayed, @Nullable final String uiType,
                                                          final boolean isMultiSelect, final boolean isMatchingAll,
                                                          @Nullable final TermFacetMapperSettings mapper,
                                                          @Nullable final Long limit, @Nullable final Long threshold) {
-        return new SimpleTermFacetedSearchFormSettingsImpl<>(fieldName, label, expression, isCountDisplayed, uiType, isMultiSelect, isMatchingAll, mapper, limit, threshold);
+        return new SimpleTermFacetedSearchFormSettingsImpl(fieldName, label, expression, isCountDisplayed, uiType, isMultiSelect, isMatchingAll, mapper, limit, threshold);
     }
 }

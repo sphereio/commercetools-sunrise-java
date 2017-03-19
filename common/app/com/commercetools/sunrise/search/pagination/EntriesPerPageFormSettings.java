@@ -8,6 +8,9 @@ import java.util.Optional;
 
 public interface EntriesPerPageFormSettings extends FormSettingsWithOptions<EntriesPerPageFormOption, Integer> {
 
+    /**
+     * Default limit as defined in the CTP platform
+     */
     int DEFAULT_LIMIT = 20;
 
     default long getLimit(final Http.Context httpContext) {

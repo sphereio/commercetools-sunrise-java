@@ -2,7 +2,7 @@ package com.commercetools.sunrise.search.facetedsearch;
 
 import java.util.Locale;
 
-public abstract class AbstractFacetedSearchFormSettingsWithOptions<T, S extends SimpleFacetedSearchFormSettingsWithOptions<T>> extends AbstractFacetedSearchFormSettings<T, S> implements SimpleFacetedSearchFormSettingsWithOptions<T> {
+public abstract class AbstractFacetedSearchFormSettingsWithOptions<S extends SimpleFacetedSearchFormSettingsWithOptions> extends AbstractFacetedSearchFormSettings<S> implements SimpleFacetedSearchFormSettingsWithOptions {
 
     protected AbstractFacetedSearchFormSettingsWithOptions(final S settings, final Locale locale) {
         super(settings, locale);

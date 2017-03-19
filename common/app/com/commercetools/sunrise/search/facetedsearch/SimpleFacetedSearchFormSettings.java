@@ -2,7 +2,7 @@ package com.commercetools.sunrise.search.facetedsearch;
 
 import javax.annotation.Nullable;
 
-public interface SimpleFacetedSearchFormSettings<T> {
+public interface SimpleFacetedSearchFormSettings {
 
     /**
      * Gets the label displayed in the facet.

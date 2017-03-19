@@ -16,7 +16,7 @@ import java.util.Optional;
 
 import static com.commercetools.sunrise.search.facetedsearch.RangeUtils.parseFilterRange;
 
-public interface SliderRangeFacetedSearchFormSettings<T> extends SimpleSliderRangeFacetedSearchFormSettings<T>, FacetedSearchFormSettings<T> {
+public interface SliderRangeFacetedSearchFormSettings<T> extends SimpleSliderRangeFacetedSearchFormSettings, FacetedSearchFormSettings<T> {
 
     @Override
     default RangeFacetedSearchExpression<T> buildFacetedSearchExpression(final Http.Context httpContext) {

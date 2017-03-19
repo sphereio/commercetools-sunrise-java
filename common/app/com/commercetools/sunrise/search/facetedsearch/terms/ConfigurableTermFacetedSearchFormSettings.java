@@ -7,7 +7,7 @@ import play.Configuration;
 import javax.annotation.Nullable;
 import java.util.Optional;
 
-public class ConfigurableTermFacetedSearchFormSettings<T> extends AbstractConfigurableFacetedSearchFormSettingsWithOptions<T> implements SimpleTermFacetedSearchFormSettings<T> {
+public class ConfigurableTermFacetedSearchFormSettings extends AbstractConfigurableFacetedSearchFormSettingsWithOptions implements SimpleTermFacetedSearchFormSettings {
 
     private static final String CONFIG_MAPPER = "mapper";
     private static final String CONFIG_MAPPER_NAME = "type";

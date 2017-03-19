@@ -4,16 +4,16 @@ import com.commercetools.sunrise.search.facetedsearch.SimpleFacetedSearchFormSet
 
 import javax.annotation.Nullable;
 
-public interface SimpleSliderRangeFacetedSearchFormSettings<T> extends SimpleFacetedSearchFormSettings<T> {
+public interface SimpleSliderRangeFacetedSearchFormSettings extends SimpleFacetedSearchFormSettings {
 
     RangeEndpointFormSettings getLowerEndpointSettings();
 
     RangeEndpointFormSettings getUpperEndpointSettings();
 
-    static <T> SimpleSliderRangeFacetedSearchFormSettings<T> of(final String label, final String attributePath,
+    static <T> SimpleSliderRangeFacetedSearchFormSettings of(final String label, final String attributePath,
                                                                 final boolean isCountDisplayed, @Nullable final String uiType,
                                                                 final RangeEndpointFormSettings lowerEndpointSettings,
                                                                 final RangeEndpointFormSettings upperEndpointSettings) {
-        return new SimpleSliderRangeFacetedSearchFormSettingsImpl<>(label, attributePath, isCountDisplayed, uiType, lowerEndpointSettings, upperEndpointSettings);
+        return new SimpleSliderRangeFacetedSearchFormSettingsImpl(label, attributePath, isCountDisplayed, uiType, lowerEndpointSettings, upperEndpointSettings);
     }
 }

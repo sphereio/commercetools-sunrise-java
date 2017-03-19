@@ -1,13 +1,12 @@
 package com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch;
 
 import com.commercetools.sunrise.framework.injection.RequestScoped;
-import com.commercetools.sunrise.framework.viewmodels.forms.PositionedSettings;
 import com.commercetools.sunrise.productcatalog.productoverview.CategoryFinder;
 import com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch.categorytree.DefaultCategoryTreeFacetedSearchFormSettings;
 import com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch.categorytree.SimpleCategoryTreeFacetedSearchFormSettings;
+import com.commercetools.sunrise.search.facetedsearch.FacetedSearchFormSettings;
 import com.commercetools.sunrise.search.facetedsearch.FacetedSearchFormSettingsListFactory;
 import com.commercetools.sunrise.search.facetedsearch.terms.SimpleTermFacetedSearchFormSettings;
-import com.commercetools.sunrise.search.facetedsearch.terms.TermFacetedSearchFormSettings;
 import io.sphere.sdk.products.ProductProjection;
 
 import javax.inject.Inject;
@@ -19,19 +18,18 @@ public class ProductFacetedSearchFormSettingsListFactory extends FacetedSearchFo
     private final CategoryFinder categoryFinder;
 
     @Inject
-    public ProductFacetedSearchFormSettingsListFactory(final SimpleProductFacetedSearchFormSettingsList settingsList,
+    public ProductFacetedSearchFormSettingsListFactory(final SimpleProductFacetedSearchFormSettingsListFactory simpleSettingsFactory,
                                                        final Locale locale, final CategoryFinder categoryFinder) {
-        super(settingsList, locale);
+        super(simpleSettingsFactory.create(), locale);
         this.categoryFinder = categoryFinder;
     }
 
     @Override
-    protected TermFacetedSearchFormSettings<ProductProjection> createTermSettings(final PositionedSettings<SimpleTermFacetedSearchFormSettings<ProductProjection>> positioned, final Locale locale) {
-        if (positioned.getSettings() instanceof SimpleCategoryTreeFacetedSearchFormSettings) {
-            final SimpleCategoryTreeFacetedSearchFormSettings settings = (SimpleCategoryTreeFacetedSearchFormSettings) positioned.getSettings();
-            return new DefaultCategoryTreeFacetedSearchFormSettings(settings, locale, categoryFinder);
+    protected FacetedSearchFormSettings<ProductProjection> createTermSettings(final SimpleTermFacetedSearchFormSettings settings) {
+        if (settings instanceof SimpleCategoryTreeFacetedSearchFormSettings) {
+            return new DefaultCategoryTreeFacetedSearchFormSettings((SimpleCategoryTreeFacetedSearchFormSettings) settings, getLocale(), categoryFinder);
         } else {
-            return super.createTermSettings(positioned, locale);
+            return super.createTermSettings(settings);
         }
     }
 }

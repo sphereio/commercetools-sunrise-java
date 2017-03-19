@@ -13,7 +13,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
 
-public interface TermFacetedSearchFormSettings<T> extends SimpleTermFacetedSearchFormSettings<T>, FacetedSearchFormSettings<T>, FormSettings<String> {
+public interface TermFacetedSearchFormSettings<T> extends SimpleTermFacetedSearchFormSettings, FacetedSearchFormSettings<T>, FormSettings<String> {
 
     @Override
     default String getDefaultValue() {

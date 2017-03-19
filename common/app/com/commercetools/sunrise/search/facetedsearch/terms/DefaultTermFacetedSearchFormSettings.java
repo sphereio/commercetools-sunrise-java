@@ -5,9 +5,9 @@ import com.commercetools.sunrise.search.facetedsearch.AbstractFacetedSearchFormS
 import javax.annotation.Nullable;
 import java.util.Locale;
 
-public class DefaultTermFacetedSearchFormSettings<T> extends AbstractFacetedSearchFormSettingsWithOptions<T, SimpleTermFacetedSearchFormSettings<T>> implements TermFacetedSearchFormSettings<T> {
+public class DefaultTermFacetedSearchFormSettings<T> extends AbstractFacetedSearchFormSettingsWithOptions<SimpleTermFacetedSearchFormSettings> implements TermFacetedSearchFormSettings<T> {
 
-    public DefaultTermFacetedSearchFormSettings(final SimpleTermFacetedSearchFormSettings<T> settings, final Locale locale) {
+    public DefaultTermFacetedSearchFormSettings(final SimpleTermFacetedSearchFormSettings settings, final Locale locale) {
         super(settings, locale);
     }
 
