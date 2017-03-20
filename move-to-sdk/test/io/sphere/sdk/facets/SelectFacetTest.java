@@ -18,9 +18,9 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class SelectFacetTest {
     private static final TermFacetResult FACET_RESULT_WITH_THREE_TERMS = TermFacetResult.of(5L, 60L, 0L, asList(
-            TermStats.of("one", 30L),
-            TermStats.of("two", 20L),
-            TermStats.of("three", 10L)));
+            TermStats.of("one", 60L, 30L),
+            TermStats.of("two", 40L, 20L),
+            TermStats.of("three", 20L, 10L)));
     private static final List<String> SELECTED_VALUE_TWO = singletonList("two");
     private static final List<FacetOption> OPTIONS = asList(
             FacetOption.of("one", 30, false),
@@ -65,6 +65,7 @@ public class SelectFacetTest {
         final SelectFacet<ProductProjection> facet = selectFacet()
                 .selectedValues(SELECTED_VALUE_TWO)
                 .matchingAll(false)
+                .countHidden(true)
                 .build();
         final FacetedSearchExpression<ProductProjection> expr = facet.getFacetedSearchExpression();
         final TermFacetedSearchExpression<ProductProjection> expectedExpr = SEARCH_MODEL.containsAny(SELECTED_VALUE_TWO);
@@ -77,6 +78,7 @@ public class SelectFacetTest {
         final SelectFacet<ProductProjection> facet = selectFacet()
                 .selectedValues(SELECTED_VALUE_TWO)
                 .matchingAll(true)
+                .countHidden(true)
                 .build();
         final FacetedSearchExpression<ProductProjection> expr = facet.getFacetedSearchExpression();
         final TermFacetedSearchExpression<ProductProjection> expectedExpr = SEARCH_MODEL.containsAll(SELECTED_VALUE_TWO);
@@ -88,6 +90,7 @@ public class SelectFacetTest {
     public void doesNotFilter() throws Exception {
         final SelectFacet<ProductProjection> facet = selectFacet()
                 .matchingAll(true)
+                .countHidden(true)
                 .build();
         final FacetedSearchExpression<ProductProjection> expr = facet.getFacetedSearchExpression();
         final TermFacetedSearchExpression<ProductProjection> expectedExpr = SEARCH_MODEL.allTerms();
