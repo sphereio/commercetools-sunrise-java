@@ -85,6 +85,6 @@ public interface FacetOption {
     }
 
     static FacetOption ofTermStats(final TermStats termStats, final List<String> selectedValues) {
-        return FacetOption.of(termStats.getTerm(), termStats.getCount(), selectedValues.contains(termStats.getTerm()));
+        return FacetOption.of(termStats.getTerm(), termStats.getProductCount(), selectedValues.contains(termStats.getTerm()));
     }
 }
