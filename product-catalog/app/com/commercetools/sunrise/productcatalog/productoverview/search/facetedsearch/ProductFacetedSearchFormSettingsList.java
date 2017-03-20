@@ -5,6 +5,7 @@ import com.commercetools.sunrise.search.facetedsearch.FacetedSearchFormSettings;
 import com.commercetools.sunrise.search.facetedsearch.FacetedSearchFormSettingsList;
 import io.sphere.sdk.products.ProductProjection;
 
+import javax.inject.Inject;
 import java.util.List;
 
 @RequestScoped
@@ -12,6 +13,7 @@ public final class ProductFacetedSearchFormSettingsList implements FacetedSearch
 
     private final FacetedSearchFormSettingsList<ProductProjection> settingsList;
 
+    @Inject
     public ProductFacetedSearchFormSettingsList(final ConfiguredProductFacetedSearchFormSettingsList configurations,
                                                 final ProductFacetedSearchFormSettingsListFactory productFacetedSearchFormSettingsListFactory) {
         this.settingsList = productFacetedSearchFormSettingsListFactory.create(configurations);
