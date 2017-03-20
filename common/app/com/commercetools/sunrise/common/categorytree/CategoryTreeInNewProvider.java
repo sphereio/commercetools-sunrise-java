@@ -11,6 +11,7 @@ import javax.inject.Inject;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 public final class CategoryTreeInNewProvider implements Provider<CategoryTree> {
 
@@ -20,20 +21,28 @@ public final class CategoryTreeInNewProvider implements Provider<CategoryTree> {
     @Inject
     private CategoryTree categoryTree;
     @Inject
+    private CategoryTreeRefresher categoryTreeRefresher;
+    @Inject
     private Configuration configuration;
 
     @Override
     public CategoryTree get() {
-        final List<Category> categories = getCategoryNew()
-                .map(Collections::singletonList)
-                .orElseGet(Collections::emptyList);
-        final CategoryTree categoryTreeInNew = categoryTree.getSubtree(categories);
-        logger.info("Provide CategoryTreeInNew with " + categoryTreeInNew.getAllAsFlatList().size() + " categories");
-        return categoryTreeInNew;
+        return RefreshableCategorySubtree.of(buildStrategy(), categoryTreeRefresher);
     }
 
-    private Optional<Category> getCategoryNew() {
+    private Supplier<CategoryTree> buildStrategy() {
+        return () -> {
+            final List<Category> categories = getCategoryNew(categoryTree)
+                    .map(Collections::singletonList)
+                    .orElseGet(Collections::emptyList);
+            final CategoryTree categoryTreeInNew = categoryTree.getSubtree(categories);
+            logger.info("Provide CategoryTreeInNew with " + categoryTreeInNew.getAllAsFlatList().size() + " categories");
+            return categoryTreeInNew;
+        };
+    }
+
+    private Optional<Category> getCategoryNew(CategoryTree mainTree) {
         return Optional.ofNullable(configuration.getString(CONFIG_CATEGORY_NEW_EXT_ID))
-                .flatMap(extId -> categoryTree.findByExternalId(extId));
+                .flatMap(mainTree::findByExternalId);
     }
 }
