@@ -1,9 +1,9 @@
 package com.commercetools.sunrise.framework.checkout.shipping.viewmodels;
 
-import com.commercetools.sunrise.framework.viewmodels.forms.SelectableViewModelFactory;
-import com.commercetools.sunrise.framework.viewmodels.formatters.PriceFormatter;
 import com.commercetools.sunrise.framework.CartFinder;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
+import com.commercetools.sunrise.framework.viewmodels.formatters.PriceFormatter;
+import com.commercetools.sunrise.framework.viewmodels.forms.SelectableViewModelFactory;
 import io.sphere.sdk.carts.Cart;
 import io.sphere.sdk.client.SphereClient;
 import io.sphere.sdk.queries.PagedResult;
@@ -11,16 +11,22 @@ import io.sphere.sdk.shippingmethods.ShippingMethod;
 import io.sphere.sdk.zones.Location;
 import io.sphere.sdk.zones.Zone;
 import io.sphere.sdk.zones.queries.ZoneQuery;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 import java.util.Optional;
-import java.util.concurrent.CompletionStage;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import static com.commercetools.sunrise.framework.viewmodels.content.carts.CartPriceUtils.calculateApplicableShippingCosts;
 
 @RequestScoped
 public class ShippingFormSelectableOptionViewModelFactory extends SelectableViewModelFactory<ShippingFormSelectableOptionViewModel, ShippingMethod, String> {
+
+    private final Logger LOGGER = LoggerFactory.getLogger(ShippingFormSelectableOptionViewModelFactory.class);
 
     private final CartFinder cartFinder;
     private final PriceFormatter priceFormatter;
@@ -75,19 +81,32 @@ public class ShippingFormSelectableOptionViewModelFactory extends SelectableView
     protected void fillPrice(final ShippingFormSelectableOptionViewModel viewModel, final ShippingMethod option, @Nullable final String selectedValue) {
         // Need to do this since zones are not expanded in shipping methods yet (but will be soon)
         // Rather this (even though it's expensive -two requests per shipping method-) but it will mean less breaking changes in the future
-        cartFinder.get()
-                .thenAccept(cartOpt -> cartOpt
-                        .ifPresent(cart -> findLocation(cart)
-                                .ifPresent(location -> fetchZone(location)
-                                        .thenAccept(zoneOpt -> zoneOpt
-                                                .ifPresent(zone -> findShippingMethodPrice(option, zone, cart)
-                                                        .ifPresent(viewModel::setPrice))))));
+        findCart()
+                .ifPresent(cart -> findLocation(cart)
+                        .ifPresent(location -> fetchZone(location)
+                                .ifPresent(zone -> findShippingMethodPrice(option, zone, cart)
+                                        .ifPresent(viewModel::setPrice))));
     }
 
-    private CompletionStage<Optional<Zone>> fetchZone(final Location location) {
+    private Optional<Zone> fetchZone(final Location location) {
         final ZoneQuery request = ZoneQuery.of().byLocation(location);
-        return sphereClient.execute(request)
-                .thenApplyAsync(PagedResult::head);
+        try {
+            return sphereClient.execute(request)
+                    .thenApplyAsync(PagedResult::head)
+                    .toCompletableFuture().get(5, TimeUnit.SECONDS);
+        } catch (InterruptedException | ExecutionException | TimeoutException e) {
+            LOGGER.error("Could not fetch zone", e);
+            return Optional.empty();
+        }
+    }
+
+    private Optional<Cart> findCart() {
+        try {
+            return cartFinder.get().toCompletableFuture().get(5, TimeUnit.SECONDS);
+        } catch (InterruptedException | ExecutionException | TimeoutException e) {
+            LOGGER.error("Could not fetch cart", e);
+            return Optional.empty();
+        }
     }
 
     private Optional<Location> findLocation(final Cart cart) {
