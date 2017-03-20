@@ -19,7 +19,6 @@ import io.sphere.sdk.customers.errors.CustomerInvalidCredentials;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import play.data.Form;
-import play.libs.concurrent.HttpExecution;
 import play.mvc.Call;
 import play.mvc.Result;
 import play.twirl.api.Html;
@@ -88,7 +87,8 @@ public abstract class SunriseLogInController extends SunriseFrameworkController 
 
     @Override
     public CompletionStage<Result> handleSuccessfulAction(final LogInFormData formData, final Void context, final CustomerSignInResult result) {
-        return CustomerSignInResultLoadedHook.runHook(hooks(), result).thenComposeAsync(unused -> redirectToMyPersonalDetails(), HttpExecution.defaultContext());
+        CustomerSignInResultLoadedHook.runHook(hooks(), result);
+        return redirectToMyPersonalDetails();
     }
 
     @Override

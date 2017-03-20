@@ -189,8 +189,10 @@ public abstract class SunriseFrameworkController extends Controller {
     }
 
     protected CompletionStage<Result> doRequest(final Supplier<CompletionStage<Result>> nextSupplier) {
-        final CompletionStage<?> runHook = RequestStartedHook.runHook(hooks(), ctx());
-        final CompletionStage<Result> resultCompletionStage = runHook.thenComposeAsync(unused -> nextSupplier.get(), HttpExecution.defaultContext());
+        RequestStartedHook.runHook(hooks(), ctx());
+        final CompletionStage<Result> resultCompletionStage = nextSupplier.get()
+                .thenCompose(result -> hooks().allAsyncHooksCompletionStage()
+                       .thenApply(unused -> result));
         return CompletableFutureUtils.recoverWith(resultCompletionStage, e -> {
             final Throwable usefulException = e instanceof CompletionException && e.getCause() != null
                     ? e.getCause()
