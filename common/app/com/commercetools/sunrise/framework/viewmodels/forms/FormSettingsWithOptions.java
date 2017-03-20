@@ -2,7 +2,6 @@ package com.commercetools.sunrise.framework.viewmodels.forms;
 
 import play.mvc.Http;
 
-import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,18 +21,6 @@ public interface FormSettingsWithOptions<T extends FormOption<V>, V> extends Wit
                 .collect(toList());
     }
 
-    default List<String> getAllSelectedFieldValues(final Http.Context httpContext) {
-        return getAllSelectedOptions(httpContext).stream()
-                .map(FormOption::getFieldValue)
-                .collect(toList());
-    }
-
-    default List<V> getAllSelectedValues(final Http.Context httpContext) {
-        return getAllSelectedOptions(httpContext).stream()
-                .map(FormOption::getValue)
-                .collect(toList());
-    }
-
     /**
      * Finds one selected valid option for this form in the HTTP request.
      * If many valid values are selected, which one is going to be returned is non-deterministic.
@@ -45,19 +32,5 @@ public interface FormSettingsWithOptions<T extends FormOption<V>, V> extends Wit
                 .findAny()
                 .map(Optional::of)
                 .orElseGet(this::findDefaultOption);
-    }
-
-    @Nullable
-    default String getSelectedFieldValue(final Http.Context httpContext) {
-        return getSelectedOption(httpContext)
-                .map(FormOption::getFieldValue)
-                .orElse(null);
-    }
-
-    @Nullable
-    default V getSelectedValue(final Http.Context httpContext) {
-        return getSelectedOption(httpContext)
-                .map(FormOption::getValue)
-                .orElse(null);
     }
 }

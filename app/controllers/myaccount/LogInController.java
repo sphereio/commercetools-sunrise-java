@@ -50,6 +50,6 @@ public final class LogInController extends SunriseLogInController {
 
     @Override
     public CompletionStage<Result> handleSuccessfulAction(final CustomerSignInResult result, final LogInFormData formData) {
-        return redirectTo(myPersonalDetailsReverseRouter.myPersonalDetailsPageCall());
+        return redirectToCall(myPersonalDetailsReverseRouter.myPersonalDetailsPageCall());
     }
 }

@@ -28,8 +28,9 @@ public class PageMetaFactory extends SimpleViewModelFactory<PageMeta, PageConten
         return new PageMeta();
     }
 
-    public final PageMeta create(final PageContent content) {
-        return initializedViewModel(content);
+    @Override
+    public final PageMeta create(final PageContent pageContent) {
+        return super.create(pageContent);
     }
 
     @Override

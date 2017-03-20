@@ -39,7 +39,8 @@ public class SunriseDefaultHttpErrorHandler extends DefaultHttpErrorHandler {
                 .map(Throwable::getCause)
                 .filter(e -> e instanceof ProvisionException)
                 .map(e -> (ProvisionException) e)
-                .filter(e -> e.getErrorMessages().stream().anyMatch(m -> m.getCause() instanceof SphereClientCredentialsException))
+                .filter(e -> e.getErrorMessages().stream()
+                        .anyMatch(m -> m.getCause() instanceof SphereClientCredentialsException))
                 .map(e -> renderDevErrorPage(exception))
                 .orElseGet(() ->  super.onDevServerError(request, exception));
     }

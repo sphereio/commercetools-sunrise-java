@@ -25,7 +25,8 @@ import static java.util.Objects.requireNonNull;
  * Notice only pluralization forms similar to English are currently supported (1 is singular, the rest are plural).
  */
 public final class YamlI18nResolver extends Base implements I18nResolver {
-    private static final Logger logger = LoggerFactory.getLogger(YamlI18nResolver.class);
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(YamlI18nResolver.class);
 
     private final Map<String, Map> yamlMap = new HashMap<>();
 
@@ -36,7 +37,7 @@ public final class YamlI18nResolver extends Base implements I18nResolver {
         for (final Locale locale : locales) {
             buildYamlMap(filepath, bundles, locale);
         }
-        logger.info("Yaml i18n resolver: Loaded {} from filepath '{}'", yamlMap.keySet(), filepath);
+        LOGGER.info("Yaml i18n resolver: Loaded {} from filepath '{}'", yamlMap.keySet(), filepath);
     }
 
     @Override
@@ -105,7 +106,7 @@ public final class YamlI18nResolver extends Base implements I18nResolver {
                     yamlMap.put(yamlKey, yamlContent);
                 }
             } catch (final YAMLException e){
-                logger.debug("Yaml i18n resolver: Failed to load bundle '{}' for locale '{}' in filepath '{}'", bundle, locale, filepath);
+                LOGGER.debug("Yaml i18n resolver: Failed to load bundle '{}' for locale '{}' in filepath '{}'", bundle, locale, filepath);
             }
         }
     }

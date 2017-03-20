@@ -1,6 +1,7 @@
 package com.commercetools.sunrise.framework.template.engine.handlebars;
 
 import com.commercetools.sunrise.framework.SunriseConfigurationException;
+import com.commercetools.sunrise.framework.SunriseModel;
 import com.commercetools.sunrise.framework.template.i18n.I18nIdentifierFactory;
 import com.commercetools.sunrise.framework.template.i18n.I18nResolver;
 import com.github.jknack.handlebars.Handlebars;
@@ -8,7 +9,6 @@ import com.github.jknack.handlebars.cache.HighConcurrencyTemplateCache;
 import com.github.jknack.handlebars.io.ClassPathTemplateLoader;
 import com.github.jknack.handlebars.io.FileTemplateLoader;
 import com.github.jknack.handlebars.io.TemplateLoader;
-import io.sphere.sdk.models.Base;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import play.Configuration;
@@ -20,7 +20,7 @@ import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 
-public class HandlebarsFactory extends Base {
+public class HandlebarsFactory extends SunriseModel {
 
     private static final Logger logger = LoggerFactory.getLogger(HandlebarsFactory.class);
     private static final String CONFIG_TEMPLATE_LOADERS = "templateLoaders";

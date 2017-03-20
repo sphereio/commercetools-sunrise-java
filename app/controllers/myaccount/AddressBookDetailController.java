@@ -41,6 +41,6 @@ public final class AddressBookDetailController extends SunriseAddressBookDetailC
 
     @Override
     public CompletionStage<Result> handleNotFoundCustomer() {
-        return redirectTo(authenticationReverseRouter.logInPageCall());
+        return redirectToCall(authenticationReverseRouter.logInPageCall());
     }
 }

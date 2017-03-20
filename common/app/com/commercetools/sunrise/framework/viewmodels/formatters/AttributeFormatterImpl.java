@@ -44,7 +44,7 @@ final class AttributeFormatterImpl implements AttributeFormatter {
     }
 
     @Override
-    public String valueAsKey(final AttributeWithProductType attributeWithProductType) {
+    public String encodedValue(final AttributeWithProductType attributeWithProductType) {
         return ATTR_WHITELIST.matcher(value(attributeWithProductType)).replaceAll("");
     }
 }

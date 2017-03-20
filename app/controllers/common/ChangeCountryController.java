@@ -29,16 +29,16 @@ public final class ChangeCountryController extends SunriseChangeCountryControlle
 
     @Override
     public CompletionStage<Result> handleInvalidForm(final Void input, final Form<? extends ChangeCountryFormData> form) {
-        return redirectTo(homeReverseRouter.homePageCall());
+        return redirectToCall(homeReverseRouter.homePageCall());
     }
 
     @Override
     public CompletionStage<Result> handleClientErrorFailedAction(final Void input, final Form<? extends ChangeCountryFormData> form, final ClientErrorException clientErrorException) {
-        return redirectTo(homeReverseRouter.homePageCall());
+        return redirectToCall(homeReverseRouter.homePageCall());
     }
 
     @Override
     public CompletionStage<Result> handleSuccessfulAction(final Void output, final ChangeCountryFormData formData) {
-        return redirectTo(homeReverseRouter.homePageCall());
+        return redirectToCall(homeReverseRouter.homePageCall());
     }
 }

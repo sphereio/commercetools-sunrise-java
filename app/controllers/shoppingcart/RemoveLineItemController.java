@@ -48,11 +48,11 @@ public final class RemoveLineItemController extends SunriseRemoveLineItemControl
 
     @Override
     public CompletionStage<Result> handleNotFoundCart() {
-        return redirectTo(cartReverseRouter.cartDetailPageCall());
+        return redirectToCall(cartReverseRouter.cartDetailPageCall());
     }
 
     @Override
     public CompletionStage<Result> handleSuccessfulAction(final Cart updatedCart, final RemoveLineItemFormData formData) {
-        return redirectTo(cartReverseRouter.cartDetailPageCall());
+        return redirectToCall(cartReverseRouter.cartDetailPageCall());
     }
 }

@@ -52,11 +52,11 @@ public final class CheckoutAddressController extends SunriseCheckoutAddressContr
 
     @Override
     public CompletionStage<Result> handleNotFoundCart() {
-        return redirectTo(cartReverseRouter.cartDetailPageCall());
+        return redirectToCall(cartReverseRouter.cartDetailPageCall());
     }
 
     @Override
     public CompletionStage<Result> handleSuccessfulAction(final Cart updatedCart, final CheckoutAddressFormData formData) {
-        return redirectTo(checkoutReverseRouter.checkoutShippingPageCall());
+        return redirectToCall(checkoutReverseRouter.checkoutShippingPageCall());
     }
 }

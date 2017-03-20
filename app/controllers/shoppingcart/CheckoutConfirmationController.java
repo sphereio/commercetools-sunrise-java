@@ -52,11 +52,11 @@ public final class CheckoutConfirmationController extends SunriseCheckoutConfirm
 
     @Override
     public CompletionStage<Result> handleNotFoundCart() {
-        return redirectTo(cartReverseRouter.cartDetailPageCall());
+        return redirectToCall(cartReverseRouter.cartDetailPageCall());
     }
 
     @Override
     public CompletionStage<Result> handleSuccessfulAction(final Order order, final CheckoutConfirmationFormData formData) {
-        return redirectTo(checkoutReverseRouter.checkoutThankYouPageCall());
+        return redirectToCall(checkoutReverseRouter.checkoutThankYouPageCall());
     }
 }

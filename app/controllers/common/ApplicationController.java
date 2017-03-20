@@ -6,7 +6,7 @@ import play.mvc.Result;
 import javax.inject.Singleton;
 
 /**
- * Controller for main web pages like imprint and contact.
+ * Controller which only purpose is to enable both "some-url/" and "some-url" paths.
  */
 @Singleton
 public final class ApplicationController extends SunriseController {

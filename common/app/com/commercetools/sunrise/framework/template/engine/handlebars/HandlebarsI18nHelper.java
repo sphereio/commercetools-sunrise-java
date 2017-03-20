@@ -1,12 +1,12 @@
 package com.commercetools.sunrise.framework.template.engine.handlebars;
 
+import com.commercetools.sunrise.framework.SunriseModel;
 import com.commercetools.sunrise.framework.template.i18n.I18nIdentifier;
 import com.commercetools.sunrise.framework.template.i18n.I18nIdentifierFactory;
 import com.commercetools.sunrise.framework.template.i18n.I18nResolver;
 import com.github.jknack.handlebars.Context;
 import com.github.jknack.handlebars.Helper;
 import com.github.jknack.handlebars.Options;
-import io.sphere.sdk.models.Base;
 
 import java.io.IOException;
 import java.util.List;
@@ -15,7 +15,7 @@ import java.util.Locale;
 import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 
-final class HandlebarsI18nHelper extends Base implements Helper<String> {
+final class HandlebarsI18nHelper extends SunriseModel implements Helper<String> {
 
     static final String LANGUAGE_TAGS_IN_CONTEXT_KEY = "context-language-tags";
     private final I18nResolver i18nResolver;

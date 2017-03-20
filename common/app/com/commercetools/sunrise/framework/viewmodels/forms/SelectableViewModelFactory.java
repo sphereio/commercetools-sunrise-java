@@ -14,7 +14,7 @@ public abstract class SelectableViewModelFactory<M, O, S> extends ViewModelFacto
 
     protected abstract void initialize(final M viewModel, final O option, @Nullable final S selectedValue);
 
-    protected final M initializedViewModel(final O option, @Nullable final S selectedValue) {
+    private M initializedViewModel(final O option, @Nullable final S selectedValue) {
         final M viewModel = newViewModelInstance(option, selectedValue);
         initialize(viewModel, option, selectedValue);
         return viewModel;

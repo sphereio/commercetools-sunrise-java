@@ -44,14 +44,23 @@ public class Module extends AbstractModule {
 
     @Override
     protected void configure() {
-        bindUserContext();
+        // Binding for the client to connect commercetools
         bind(SphereClient.class).toProvider(SimpleMetricsSphereClientProvider.class).in(Singleton.class);
+
+        // Binding for the HTTP Authentication
+        bind(HttpAuthentication.class).toProvider(BasicAuthenticationProvider.class).in(Singleton.class);
+
+        // Binding for all template related, such as the engine, CMS and i18n
         bind(CmsService.class).toProvider(FileBasedCmsServiceProvider.class).in(Singleton.class);
         bind(TemplateEngine.class).toProvider(HandlebarsTemplateEngineProvider.class).in(Singleton.class);
         bind(I18nResolver.class).toProvider(ConfigurableI18nResolverProvider.class).in(Singleton.class);
-        bind(HttpAuthentication.class).toProvider(BasicAuthenticationProvider.class).in(Singleton.class);
-        bind(CategoryTree.class).annotatedWith(Names.named("new")).toProvider(CategoryTreeInNewProvider.class).in(Singleton.class);
-        bind(MiniCartViewModelFactory.class).to(TruncatedMiniCartViewModelFactory.class);
+
+        // Bindings for all user context related
+        bind(Locale.class).toProvider(LocaleFromUrlProvider.class).in(RequestScoped.class);
+        bind(CountryCode.class).toProvider(CountryFromSessionProvider.class).in(RequestScoped.class);
+        bind(CurrencyUnit.class).toProvider(CurrencyFromCountryProvider.class).in(RequestScoped.class);
+
+        // Bindings for the configured faceted search mappers
         bind(TermFacetViewModelFactory.class)
                 .annotatedWith(Names.named("alphabeticallySorted"))
                 .to(AlphabeticallySortedTermFacetViewModelFactory.class)
@@ -64,6 +73,14 @@ public class Module extends AbstractModule {
                 .annotatedWith(Names.named("categoryTree"))
                 .to(CategoryTreeFacetViewModelFactory.class)
                 .in(RequestScoped.class);
+
+        // Binding for the "new" category tree
+        bind(CategoryTree.class).annotatedWith(Names.named("new")).toProvider(CategoryTreeInNewProvider.class).in(Singleton.class);
+
+        // Binding to truncate mini cart to fit it into limited session space
+        bind(MiniCartViewModelFactory.class).to(TruncatedMiniCartViewModelFactory.class);
+
+        // Provide here your own bindings
     }
 
     @Provides
@@ -84,12 +101,6 @@ public class Module extends AbstractModule {
     @RequestScoped
     public DateTimeFormatter dateTimeFormatter(final Locale locale) {
         return DateTimeFormatter.ofPattern("MMM d, yyyy", locale);
-    }
-
-    private void bindUserContext() {
-        bind(Locale.class).toProvider(LocaleFromUrlProvider.class).in(RequestScoped.class);
-        bind(CountryCode.class).toProvider(CountryFromSessionProvider.class).in(RequestScoped.class);
-        bind(CurrencyUnit.class).toProvider(CurrencyFromCountryProvider.class).in(RequestScoped.class);
     }
 
     @Provides

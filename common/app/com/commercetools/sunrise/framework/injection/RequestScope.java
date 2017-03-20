@@ -9,7 +9,7 @@ import play.mvc.Http;
  *
  * Inspired by: http://stackoverflow.com/questions/25626264/how-to-use-play-frameworks-request-and-session-scope-in-google-guice/34981902#34981902
  */
-public class RequestScope implements Scope {
+public final class RequestScope implements Scope {
 
     private static final TypeLiteral<Http.Context> CONTEXT_TYPE_LITERAL = TypeLiteral.get(Http.Context.class);
 

@@ -8,5 +8,10 @@ import javax.money.MonetaryAmount;
 @FunctionalInterface
 public interface PriceFormatter {
 
+    /**
+     * Formats the given monetary amount into a human-readable version.
+     * @param monetaryAmount amount to be formatted
+     * @return the formatted version of the given amount
+     */
     String format(final MonetaryAmount monetaryAmount);
 }

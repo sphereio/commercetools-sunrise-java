@@ -54,16 +54,16 @@ public final class ChangeAddressController extends SunriseChangeAddressControlle
 
     @Override
     public CompletionStage<Result> handleNotFoundCustomer() {
-        return redirectTo(authenticationReverseRouter.logInPageCall());
+        return redirectToCall(authenticationReverseRouter.logInPageCall());
     }
 
     @Override
     public CompletionStage<Result> handleNotFoundAddress() {
-        return redirectTo(addressBookReverseRouter.addressBookDetailPageCall());
+        return redirectToCall(addressBookReverseRouter.addressBookDetailPageCall());
     }
 
     @Override
     public CompletionStage<Result> handleSuccessfulAction(final Customer updatedCustomer, final AddressFormData formData) {
-        return redirectTo(addressBookReverseRouter.addressBookDetailPageCall());
+        return redirectToCall(addressBookReverseRouter.addressBookDetailPageCall());
     }
 }

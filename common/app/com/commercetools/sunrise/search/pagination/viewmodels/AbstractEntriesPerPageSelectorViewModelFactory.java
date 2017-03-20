@@ -1,6 +1,7 @@
 package com.commercetools.sunrise.search.pagination.viewmodels;
 
 import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.forms.FormOption;
 import com.commercetools.sunrise.search.pagination.EntriesPerPageFormSettings;
 import io.sphere.sdk.queries.PagedResult;
 import play.mvc.Http;
@@ -19,7 +20,9 @@ public abstract class AbstractEntriesPerPageSelectorViewModelFactory extends Sim
     protected AbstractEntriesPerPageSelectorViewModelFactory(final EntriesPerPageFormSettings settings,
                                                              final EntriesPerPageFormSelectableOptionViewModelFactory entriesPerPageFormSelectableOptionViewModelFactory,
                                                              final Http.Context httpContext) {
-        this.selectedOptionValue = settings.getSelectedFieldValue(httpContext);
+        this.selectedOptionValue = settings.getSelectedOption(httpContext)
+                .map(FormOption::getFieldValue)
+                .orElse(null);
         this.settings = settings;
         this.entriesPerPageFormSelectableOptionViewModelFactory = entriesPerPageFormSelectableOptionViewModelFactory;
     }

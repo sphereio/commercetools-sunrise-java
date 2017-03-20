@@ -39,6 +39,6 @@ public final class CheckoutThankYouController extends SunriseCheckoutThankYouCon
 
     @Override
     public CompletionStage<Result> handleNotFoundOrderCreated() {
-        return redirectTo(homeReverseRouter.homePageCall());
+        return redirectToCall(homeReverseRouter.homePageCall());
     }
 }

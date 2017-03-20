@@ -47,11 +47,11 @@ public final class MyOrderDetailController extends SunriseMyOrderDetailControlle
 
     @Override
     public CompletionStage<Result> handleNotFoundCustomer() {
-        return redirectTo(authenticationReverseRouter.logInPageCall());
+        return redirectToCall(authenticationReverseRouter.logInPageCall());
     }
 
     @Override
     public CompletionStage<Result> handleNotFoundMyOrder() {
-        return redirectTo(myOrdersReverseRouter.myOrderListPageCall());
+        return redirectToCall(myOrdersReverseRouter.myOrderListPageCall());
     }
 }

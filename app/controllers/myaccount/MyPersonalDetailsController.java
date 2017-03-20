@@ -52,11 +52,11 @@ public final class MyPersonalDetailsController extends SunriseMyPersonalDetailsC
 
     @Override
     public CompletionStage<Result> handleSuccessfulAction(final Customer updatedCustomer, final MyPersonalDetailsFormData formData) {
-        return redirectTo(myPersonalDetailsReverseRouter.myPersonalDetailsPageCall());
+        return redirectToCall(myPersonalDetailsReverseRouter.myPersonalDetailsPageCall());
     }
 
     @Override
     public CompletionStage<Result> handleNotFoundCustomer() {
-        return redirectTo(authenticationReverseRouter.logInPageCall());
+        return redirectToCall(authenticationReverseRouter.logInPageCall());
     }
 }

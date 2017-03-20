@@ -38,7 +38,7 @@ public final class LocaleFromUrlProvider implements Provider<Locale> {
 
     private Optional<Integer> indexOfLanguageTagInRoutePattern() {
         return Optional.ofNullable(httpContext.args.get("ROUTE_PATTERN"))
-                .map(routePattern -> routePattern.toString().replaceAll("<[^>]+>", "")) //hack since splitting '$languageTag<[^/]+>' with '/' would create more words
+                .map(routePattern -> routePattern.toString().replaceAll("<[^>]+>", "")) // Remove regex because splitting '$languageTag<[^/]+>' with '/' would create more words
                 .map(routePattern -> {
                     final List<String> paths = asList(routePattern.split("/"));
                     return paths.indexOf("$languageTag");

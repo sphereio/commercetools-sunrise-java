@@ -10,7 +10,7 @@ public abstract class SimpleViewModelFactory<M extends ViewModel, I> extends Vie
 
     protected abstract void initialize(final M viewModel, final I input);
 
-    protected final M initializedViewModel(final I input) {
+    private M initializedViewModel(final I input) {
         final M viewModel = newViewModelInstance(input);
         initialize(viewModel, input);
         return viewModel;

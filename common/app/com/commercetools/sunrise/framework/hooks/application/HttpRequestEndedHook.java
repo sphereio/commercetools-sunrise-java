@@ -1,10 +1,14 @@
 package com.commercetools.sunrise.framework.hooks.application;
 
 import com.commercetools.sunrise.framework.hooks.HookRunner;
-import com.commercetools.sunrise.framework.hooks.ctpevents.CtpEventHook;
 import play.mvc.Result;
 
-public interface HttpRequestEndedHook extends CtpEventHook {
+/**
+ * The last hook to be run, right before the response is going to be sent to the customer.
+ *
+ * Enabled using {@code @EnableHooks} annotation.
+ */
+public interface HttpRequestEndedHook extends ApplicationHook {
 
     Result onHttpRequestEnded(final Result result);
 

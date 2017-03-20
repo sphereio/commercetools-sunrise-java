@@ -70,7 +70,7 @@ public class ProductVariantReferenceViewModelMapFactory extends SimpleViewModelF
         return productAttributeSettings.getSelectableAttributes().stream()
                 .map(variant::getAttribute)
                 .filter(Objects::nonNull)
-                .map(attribute -> attributeFormatter.valueAsKey(AttributeWithProductType.of(attribute, productTypeRef)))
+                .map(attribute -> attributeFormatter.encodedValue(AttributeWithProductType.of(attribute, productTypeRef)))
                 .collect(joining("-"));
     }
 

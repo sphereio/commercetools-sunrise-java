@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-public final class SphereClientMetricsObserver implements Observer {
+final class SphereClientMetricsObserver implements Observer {
 
     private final List<ObservedTotalDuration> metrics = new ArrayList<>();
 

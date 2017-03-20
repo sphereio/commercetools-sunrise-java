@@ -10,6 +10,7 @@ import java.util.function.Function;
 
 @ImplementedBy(HookContextImpl.class)
 public interface HookRunner {
+
     /**
      * Executes a hook which takes 0 to n parameters and returns a {@link CompletionStage}.
      * The execution (just the creation of the {@link CompletionStage}) is synchronous and each implementing component
@@ -17,7 +18,10 @@ public interface HookRunner {
      * The underlying computation to complete the {@link CompletionStage} can be asynchronous and should run in parallel for the components.
      * The result should be completed at some point and a successful completion can also contain the value {@code null}
      * hence the successful result is not used directly by the framework.
-     * Before the hook {@link PageDataReadyHook} is called, all asynchronous computations for the requests need to be completed successfully.
+     *
+     * Each execution will run in parallel until {@link RequestHookRunner#waitForHookedComponentsToFinish()} is called,
+     * in which moment all asynchronous computations for the requests need to be completed successfully.
+     * Typically this is triggered before the hooks {@link PageDataReadyHook} or {@link com.commercetools.sunrise.framework.hooks.application.HttpRequestEndedHook} are called.
      *
      * @param hookClass the class which represents the hook
      * @param f         a possible asynchronous computation using the hook

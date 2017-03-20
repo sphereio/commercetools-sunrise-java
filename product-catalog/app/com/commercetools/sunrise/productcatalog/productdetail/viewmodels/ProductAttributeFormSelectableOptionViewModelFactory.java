@@ -45,7 +45,7 @@ public class ProductAttributeFormSelectableOptionViewModelFactory extends Select
     }
 
     protected void fillValue(final ProductAttributeFormSelectableOptionViewModel viewModel, final AttributeWithProductType option, @Nullable final Attribute selectedAttribute) {
-        viewModel.setValue(attributeFormatter.valueAsKey(option));
+        viewModel.setValue(attributeFormatter.encodedValue(option));
     }
 
     protected void fillSelected(final ProductAttributeFormSelectableOptionViewModel viewModel, final AttributeWithProductType option, @Nullable final Attribute selectedAttribute) {

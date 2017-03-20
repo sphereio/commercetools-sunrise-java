@@ -29,16 +29,16 @@ public final class ChangeLanguageController extends SunriseChangeLanguageControl
 
     @Override
     public CompletionStage<Result> handleInvalidForm(final Void input, final Form<? extends ChangeLanguageFormData> form) {
-        return redirectTo(homeReverseRouter.homePageCall());
+        return redirectToCall(homeReverseRouter.homePageCall());
     }
 
     @Override
     public CompletionStage<Result> handleClientErrorFailedAction(final Void input, final Form<? extends ChangeLanguageFormData> form, final ClientErrorException clientErrorException) {
-        return redirectTo(homeReverseRouter.homePageCall());
+        return redirectToCall(homeReverseRouter.homePageCall());
     }
 
     @Override
     public CompletionStage<Result> handleSuccessfulAction(final Void output, final ChangeLanguageFormData formData) {
-        return redirectTo(homeReverseRouter.homePageCall(formData.locale().toLanguageTag()));
+        return redirectToCall(homeReverseRouter.homePageCall(formData.locale().toLanguageTag()));
     }
 }

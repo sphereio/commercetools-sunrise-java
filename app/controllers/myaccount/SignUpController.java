@@ -48,6 +48,6 @@ public final class SignUpController extends SunriseSignUpController {
 
     @Override
     public CompletionStage<Result> handleSuccessfulAction(final CustomerSignInResult result, final SignUpFormData formData) {
-        return redirectTo(myPersonalDetailsReverseRouter.myPersonalDetailsPageCall());
+        return redirectToCall(myPersonalDetailsReverseRouter.myPersonalDetailsPageCall());
     }
 }

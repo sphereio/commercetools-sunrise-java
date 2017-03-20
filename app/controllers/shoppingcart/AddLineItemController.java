@@ -50,6 +50,6 @@ public final class AddLineItemController extends SunriseAddLineItemController {
 
     @Override
     public CompletionStage<Result> handleSuccessfulAction(final Cart updatedCart, final AddLineItemFormData formData) {
-        return redirectTo(cartReverseRouter.cartDetailPageCall());
+        return redirectToCall(cartReverseRouter.cartDetailPageCall());
     }
 }

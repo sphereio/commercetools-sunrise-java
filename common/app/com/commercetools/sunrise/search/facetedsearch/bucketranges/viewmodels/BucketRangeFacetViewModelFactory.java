@@ -2,6 +2,7 @@ package com.commercetools.sunrise.search.facetedsearch.bucketranges.viewmodels;
 
 import com.commercetools.sunrise.framework.injection.RequestScoped;
 import com.commercetools.sunrise.framework.template.i18n.I18nIdentifierResolver;
+import com.commercetools.sunrise.framework.viewmodels.forms.FormOption;
 import com.commercetools.sunrise.search.facetedsearch.bucketranges.BucketRangeFacetedSearchFormSettings;
 import com.commercetools.sunrise.search.facetedsearch.viewmodels.AbstractFacetWithOptionsViewModelFactory;
 import com.commercetools.sunrise.search.facetedsearch.viewmodels.FacetOptionViewModel;
@@ -18,6 +19,7 @@ import java.util.Objects;
 
 import static com.commercetools.sunrise.search.facetedsearch.RangeUtils.mapRangeToStats;
 import static com.commercetools.sunrise.search.facetedsearch.bucketranges.BucketRangeUtils.optionToFacetRange;
+import static java.util.stream.Collectors.toList;
 
 @RequestScoped
 public class BucketRangeFacetViewModelFactory extends AbstractFacetWithOptionsViewModelFactory<BucketRangeFacetViewModel, BucketRangeFacetedSearchFormSettings<?>, RangeFacetResult> {
@@ -68,7 +70,9 @@ public class BucketRangeFacetViewModelFactory extends AbstractFacetWithOptionsVi
 
     @Override
     protected void fillLimitedOptions(final BucketRangeFacetViewModel viewModel, final BucketRangeFacetedSearchFormSettings<?> settings, final RangeFacetResult facetResult) {
-        final List<String> selectedValues = settings.getAllSelectedFieldValues(httpContext);
+        final List<String> selectedValues = settings.getAllSelectedOptions(httpContext).stream()
+                .map(FormOption::getFieldValue)
+                .collect(toList());
         final Map<FacetRange<String>, RangeStats> rangeToStatsMap = mapRangeToStats(facetResult);
         final List<FacetOptionViewModel> options = new ArrayList<>();
         settings.getOptions()

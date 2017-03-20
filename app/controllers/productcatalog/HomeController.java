@@ -48,6 +48,6 @@ public final class HomeController extends SunriseHomeController {
     }
 
     public CompletionStage<Result> index() {
-        return redirectTo(homeReverseRouter.homePageCall());
+        return redirectToCall(homeReverseRouter.homePageCall());
     }
 }

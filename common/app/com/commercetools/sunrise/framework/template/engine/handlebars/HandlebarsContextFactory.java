@@ -1,13 +1,13 @@
 package com.commercetools.sunrise.framework.template.engine.handlebars;
 
 import com.commercetools.sunrise.cms.CmsPage;
+import com.commercetools.sunrise.framework.SunriseModel;
 import com.commercetools.sunrise.framework.template.engine.TemplateContext;
 import com.github.jknack.handlebars.Context;
 import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.ValueResolver;
 import com.github.jknack.handlebars.context.JavaBeanValueResolver;
 import com.github.jknack.handlebars.context.MapValueResolver;
-import io.sphere.sdk.models.Base;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -19,7 +19,7 @@ import static com.commercetools.sunrise.framework.template.engine.handlebars.Han
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
 
-public class HandlebarsContextFactory extends Base {
+public class HandlebarsContextFactory extends SunriseModel {
 
     private final PlayJavaFormResolver playJavaFormResolver;
 

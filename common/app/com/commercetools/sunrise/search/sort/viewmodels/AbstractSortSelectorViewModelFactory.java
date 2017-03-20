@@ -1,6 +1,7 @@
 package com.commercetools.sunrise.search.sort.viewmodels;
 
 import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.forms.FormOption;
 import com.commercetools.sunrise.search.sort.SortFormSettings;
 import io.sphere.sdk.queries.PagedResult;
 import play.mvc.Http;
@@ -19,7 +20,9 @@ public abstract class AbstractSortSelectorViewModelFactory<T> extends SimpleView
     protected AbstractSortSelectorViewModelFactory(final SortFormSettings<T> settings,
                                                    final SortFormSelectableOptionViewModelFactory sortFormSelectableOptionViewModelFactory,
                                                    final Http.Context httpContext) {
-        this.selectedOptionValue = settings.getSelectedFieldValue(httpContext);
+        this.selectedOptionValue = settings.getSelectedOption(httpContext)
+                .map(FormOption::getFieldValue)
+                .orElse(null);
         this.settings = settings;
         this.sortFormSelectableOptionViewModelFactory = sortFormSelectableOptionViewModelFactory;
     }

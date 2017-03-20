@@ -25,6 +25,6 @@ public final class LogOutController extends SunriseLogOutController {
 
     @Override
     public CompletionStage<Result> handleSuccessfulAction(final Void output) {
-        return redirectTo(homeReverseRouter.homePageCall());
+        return redirectToCall(homeReverseRouter.homePageCall());
     }
 }

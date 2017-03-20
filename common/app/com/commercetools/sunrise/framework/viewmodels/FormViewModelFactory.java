@@ -12,7 +12,7 @@ public abstract class FormViewModelFactory<M extends ViewModel, I, F> extends Vi
 
     protected abstract void initialize(final M viewModel, final I input, final Form<? extends F> form);
 
-    protected final M initializedViewModel(final I input, final Form<? extends F> form) {
+    private M initializedViewModel(final I input, final Form<? extends F> form) {
         final M viewModel = newViewModelInstance(input, form);
         initialize(viewModel, input, form);
         return viewModel;

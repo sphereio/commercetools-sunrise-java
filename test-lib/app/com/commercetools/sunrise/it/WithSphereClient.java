@@ -1,35 +1,56 @@
 package com.commercetools.sunrise.it;
 
-import io.sphere.sdk.client.*;
+import com.google.inject.AbstractModule;
+import io.sphere.sdk.client.BlockingSphereClient;
+import io.sphere.sdk.client.SphereAsyncHttpClientFactory;
+import io.sphere.sdk.client.SphereClient;
+import io.sphere.sdk.client.SphereClientFactory;
 import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import play.Application;
+import play.inject.guice.GuiceApplicationBuilder;
+import play.test.WithApplication;
 
+import java.time.Duration;
 import java.util.Optional;
-import java.util.concurrent.TimeUnit;
 
-public abstract class WithSphereClient {
+public abstract class WithSphereClient extends WithApplication {
 
-    protected static final int ALLOWED_SEC_TIMEOUT = 20;
     private static final String IT_PREFIX = "SUNRISE_IT_";
     private static final String IT_CTP_PROJECT_KEY = IT_PREFIX + "CTP_PROJECT_KEY";
     private static final String IT_CTP_CLIENT_SECRET = IT_PREFIX + "CTP_CLIENT_SECRET";
     private static final String IT_CTP_CLIENT_ID = IT_PREFIX + "CTP_CLIENT_ID";
 
-    private static volatile BlockingSphereClient sphereClient;
+    protected static BlockingSphereClient sphereClient;
+
+    @Override
+    protected Application provideApplication() {
+        return new GuiceApplicationBuilder()
+                .overrides(new AbstractModule() {
+                    @Override
+                    protected void configure() {
+                        bind(SphereClient.class).toInstance(sphereClient);
+                    }
+                }).build();
+    }
+
+    protected static BlockingSphereClient provideSphereClient() {
+        final SphereClient client = SphereClientFactory.of(SphereAsyncHttpClientFactory::create)
+                .createClient(projectKey(), clientId(), clientSecret());
+        return BlockingSphereClient.of(client, Duration.ofSeconds(20));
+    }
+
+    @BeforeClass
+    public static void startSphereClient() {
+        sphereClient = provideSphereClient();
+    }
 
     @AfterClass
-    public static void stopJavaClient() {
+    public static void stopSphereClient() {
         if (sphereClient != null) {
             sphereClient.close();
             sphereClient = null;
         }
-    }
-
-    protected static <T> T execute(final SphereRequest<T> sphereRequest) {
-        return sphereClient().executeBlocking(sphereRequest);
-    }
-
-    protected static <T> T execute(final SphereRequest<T> sphereRequest, final long defaultTimeout, final TimeUnit unit) {
-        return sphereClient().executeBlocking(sphereRequest, defaultTimeout, unit);
     }
 
     protected static String projectKey() {
@@ -44,16 +65,7 @@ public abstract class WithSphereClient {
         return getValueForEnvVar(IT_CTP_CLIENT_SECRET);
     }
 
-    protected synchronized static BlockingSphereClient sphereClient() {
-        if (sphereClient == null) {
-            final SphereClient client = SphereClientFactory.of(SphereAsyncHttpClientFactory::create)
-                    .createClient(projectKey(), clientId(), clientSecret());
-            sphereClient = BlockingSphereClient.of(client, ALLOWED_SEC_TIMEOUT, TimeUnit.SECONDS);
-        }
-        return sphereClient;
-    }
-
-    private static String getValueForEnvVar(final String key) {
+    protected static String getValueForEnvVar(final String key) {
         return Optional.ofNullable(System.getenv(key))
                 .orElseThrow(() -> new RuntimeException(
                         "Missing environment variable " + key + ", please provide the following environment variables for the integration test:\n" +
