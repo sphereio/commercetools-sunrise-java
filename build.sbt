@@ -29,12 +29,11 @@ val childProjects: List[sbt.ProjectReference] =
 
 lazy val `commercetools-sunrise` = (project in file("."))
   .enablePlugins(PlayJava, JavaUnidocPlugin, SunriseThemeImporterPlugin)
-  .configs(IntegrationTest, TestCommon.PlayTest)
   .settings(unidocProjectFilter in (JavaUnidoc, unidoc) := inProjects(childProjects: _*))
-  .settings(Release.disablePublish ++ TestCommon.defaultSettings: _*)
+  .settings(Release.disablePublish: _*)
   .settings(Dependencies.sunriseDefaultTheme)
   .aggregate(childProjects: _*)
-  .dependsOn(`product-catalog`, `shopping-cart`, `my-account`, `test-lib` % "test")
+  .dependsOn(`product-catalog`, `shopping-cart`, `my-account`)
 
 lazy val common = project
   .enablePlugins(PlayJava, GenJavadocPlugin)

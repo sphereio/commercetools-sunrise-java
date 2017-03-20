@@ -1,4 +1,4 @@
-package controllers;
+package com.commercetools.sunrise;
 
 import com.commercetools.sunrise.it.WithSphereClient;
 import io.sphere.sdk.categories.Category;
