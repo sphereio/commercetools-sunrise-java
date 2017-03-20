@@ -11,21 +11,32 @@ import java.util.Locale;
 
 import static java.util.stream.Collectors.toList;
 
-public interface SortFormSettings<T> extends SimpleSortFormSettings, FormSettingsWithOptions<SortFormOption, List<String>> {
+public interface SortFormSettings<T> extends FormSettingsWithOptions<SortFormOption, List<String>> {
 
-    default List<SortExpression<T>> buildSearchExpressions(final Http.Context httpContext, final Locale locale) {
+    ConfiguredSortFormSettings configuration();
+
+    @Override
+    default String getFieldName() {
+        return configuration().getFieldName();
+    }
+
+    default List<SortExpression<T>> buildSearchExpressions(final Http.Context httpContext) {
         return getSelectedOption(httpContext)
-                .map(option -> option.getLocalizedValue(locale).stream()
+                .map(option -> option.getValue().stream()
                     .map(SortExpression::<T>of)
                     .collect(toList()))
                 .orElseGet(Collections::emptyList);
     }
 
-    default List<QuerySort<T>> buildQueryExpressions(final Http.Context httpContext, final Locale locale) {
+    default List<QuerySort<T>> buildQueryExpressions(final Http.Context httpContext) {
         return getSelectedOption(httpContext)
-                .map(option -> option.getLocalizedValue(locale).stream()
+                .map(option -> option.getValue().stream()
                         .map(QuerySort::<T>of)
                         .collect(toList()))
                 .orElseGet(Collections::emptyList);
+    }
+
+    static <T> SortFormSettings<T> of(final ConfiguredSortFormSettings configuration, final Locale locale) {
+        return new SortFormSettingsImpl<T>(configuration, locale);
     }
 }

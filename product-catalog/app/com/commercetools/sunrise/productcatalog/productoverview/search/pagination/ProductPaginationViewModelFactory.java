@@ -5,7 +5,7 @@ import play.mvc.Http;
 
 import javax.inject.Inject;
 
-public class ProductPaginationViewModelFactory extends AbstractPaginationViewModelFactory {
+public final class ProductPaginationViewModelFactory extends AbstractPaginationViewModelFactory {
 
     @Inject
     public ProductPaginationViewModelFactory(final ProductPaginationSettings settings, final Http.Context httpContext) {

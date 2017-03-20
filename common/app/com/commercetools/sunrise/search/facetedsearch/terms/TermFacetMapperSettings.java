@@ -11,6 +11,6 @@ public interface TermFacetMapperSettings {
     List<String> getValues();
 
     static TermFacetMapperSettings of(final String name, @Nullable final List<String> values) {
-        return new TermTermFacetMapperSettingsImpl(name, values);
+        return new TermFacetMapperSettingsImpl(name, values);
     }
 }

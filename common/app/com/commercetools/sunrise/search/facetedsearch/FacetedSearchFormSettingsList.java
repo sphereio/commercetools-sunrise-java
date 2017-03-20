@@ -7,7 +7,7 @@ import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
-public interface FacetedSearchFormSettingsList<T> extends SimpleFacetedSearchFormSettingsList {
+public interface FacetedSearchFormSettingsList<T> {
 
     List<? extends FacetedSearchFormSettings<T>> getSettings();
 
@@ -17,8 +17,7 @@ public interface FacetedSearchFormSettingsList<T> extends SimpleFacetedSearchFor
                 .collect(toList());
     }
 
-    static <T> FacetedSearchFormSettingsList<T> of(final SimpleFacetedSearchFormSettingsList simpleSettings,
-                                                   final List<? extends FacetedSearchFormSettings<T>> settings) {
-        return new FacetedSearchFormSettingsListImpl<>(simpleSettings, settings);
+    static <T> FacetedSearchFormSettingsList<T> of(final List<? extends FacetedSearchFormSettings<T>> settings) {
+        return new FacetedSearchFormSettingsListImpl<>(settings);
     }
 }

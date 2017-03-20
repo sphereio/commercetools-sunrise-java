@@ -6,7 +6,7 @@ import play.mvc.Http;
 
 import javax.inject.Inject;
 
-public class ProductsPerPageSelectorViewModelFactory extends AbstractEntriesPerPageSelectorViewModelFactory {
+public final class ProductsPerPageSelectorViewModelFactory extends AbstractEntriesPerPageSelectorViewModelFactory {
 
     @Inject
     public ProductsPerPageSelectorViewModelFactory(final ProductsPerPageFormSettings settings,

@@ -2,17 +2,17 @@ package com.commercetools.sunrise.search.facetedsearch;
 
 import java.util.Locale;
 
-public abstract class AbstractFacetedSearchFormSettingsWithOptions<S extends SimpleFacetedSearchFormSettingsWithOptions> extends AbstractFacetedSearchFormSettings<S> implements SimpleFacetedSearchFormSettingsWithOptions {
+public abstract class AbstractFacetedSearchFormSettingsWithOptions<C extends ConfiguredFacetedSearchFormSettingsWithOptions> extends AbstractFacetedSearchFormSettings<C> implements ConfiguredFacetedSearchFormSettingsWithOptions {
 
-    protected AbstractFacetedSearchFormSettingsWithOptions(final S settings, final Locale locale) {
-        super(settings, locale);
+    protected AbstractFacetedSearchFormSettingsWithOptions(final C configuration, final Locale locale) {
+        super(configuration, locale);
     }
 
     public boolean isMultiSelect() {
-        return getSettings().isMultiSelect();
+        return configuration().isMultiSelect();
     }
 
     public boolean isMatchingAll() {
-        return getSettings().isMatchingAll();
+        return configuration().isMatchingAll();
     }
 }

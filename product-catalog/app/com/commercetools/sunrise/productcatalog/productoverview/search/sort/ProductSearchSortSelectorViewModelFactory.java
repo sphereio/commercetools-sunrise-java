@@ -7,10 +7,10 @@ import play.mvc.Http;
 
 import javax.inject.Inject;
 
-public class ProductSearchSortSelectorViewModelFactory extends AbstractSortSelectorViewModelFactory<ProductProjection> {
+public final class ProductSearchSortSelectorViewModelFactory extends AbstractSortSelectorViewModelFactory<ProductProjection> {
 
     @Inject
-    public ProductSearchSortSelectorViewModelFactory(final ProductSortFormSettingsFactory settings,
+    public ProductSearchSortSelectorViewModelFactory(final ProductSortFormSettings settings,
                                                      final SortFormSelectableOptionViewModelFactory sortFormSelectableOptionViewModelFactory,
                                                      final Http.Context httpContext) {
         super(settings, sortFormSelectableOptionViewModelFactory, httpContext);

@@ -1,6 +1,5 @@
 package com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch.categorytree;
 
-import com.commercetools.sunrise.framework.viewmodels.forms.FormSettings;
 import com.commercetools.sunrise.search.facetedsearch.terms.TermFacetedSearchFormSettings;
 import io.sphere.sdk.products.ProductProjection;
 import io.sphere.sdk.search.FilterExpression;
@@ -15,7 +14,9 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
 
-public interface CategoryTreeFacetedSearchFormSettings extends SimpleCategoryTreeFacetedSearchFormSettings, TermFacetedSearchFormSettings<ProductProjection>, FormSettings<String> {
+public interface CategoryTreeFacetedSearchFormSettings extends ConfiguredCategoryTreeFacetedSearchFormSettings, TermFacetedSearchFormSettings<ProductProjection> {
+
+    ConfiguredCategoryTreeFacetedSearchFormSettings configuration();
 
     @Override
     default String getDefaultValue() {

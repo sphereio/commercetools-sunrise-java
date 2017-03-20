@@ -7,7 +7,7 @@ import play.mvc.Http;
 
 import java.util.List;
 
-public interface FacetedSearchFormSettings<T> extends SimpleFacetedSearchFormSettings {
+public interface FacetedSearchFormSettings<T> extends BaseFacetedSearchFormSettings {
 
     FacetExpression<T> buildFacetExpression();
 

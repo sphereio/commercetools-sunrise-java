@@ -66,7 +66,7 @@ public abstract class AbstractFacetSelectorListViewModelFactory<T> extends Simpl
 
     protected void fillList(final FacetSelectorListViewModel viewModel, final PagedSearchResult<T> pagedSearchResult) {
         final List<FacetSelectorViewModel> list = new ArrayList<>();
-        settingsList.getAllSettingsSorted().forEach(settings -> {
+        settingsList.getSettings().forEach(settings -> {
             if (settings instanceof TermFacetedSearchFormSettings) {
                 createViewModel((TermFacetedSearchFormSettings<T>) settings, pagedSearchResult).ifPresent(list::add);
             } else if (settings instanceof SliderRangeFacetedSearchFormSettings) {

@@ -11,10 +11,10 @@ import javax.inject.Inject;
 public class ProductFacetSelectorListViewModelFactory extends AbstractFacetSelectorListViewModelFactory<ProductProjection> {
 
     @Inject
-    public ProductFacetSelectorListViewModelFactory(final ProductFacetedSearchFormSettingsListFactory settingsFactory,
+    public ProductFacetSelectorListViewModelFactory(final ProductFacetedSearchFormSettingsList settingsList,
                                                     final TermFacetSelectorViewModelFactory termFacetSelectorViewModelFactory,
                                                     final BucketRangeFacetSelectorViewModelFactory bucketRangeFacetSelectorViewModelFactory,
                                                     final SliderRangeFacetSelectorViewModelFactory sliderRangeFacetSelectorViewModelFactory) {
-        super(settingsFactory.create(), termFacetSelectorViewModelFactory, bucketRangeFacetSelectorViewModelFactory, sliderRangeFacetSelectorViewModelFactory);
+        super(settingsList, termFacetSelectorViewModelFactory, bucketRangeFacetSelectorViewModelFactory, sliderRangeFacetSelectorViewModelFactory);
     }
 }

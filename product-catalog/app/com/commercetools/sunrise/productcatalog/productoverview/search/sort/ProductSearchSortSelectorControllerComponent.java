@@ -14,7 +14,6 @@ import play.mvc.Http;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 import java.util.List;
-import java.util.Locale;
 import java.util.concurrent.CompletionStage;
 
 import static java.util.concurrent.CompletableFuture.completedFuture;
@@ -28,11 +27,11 @@ public final class ProductSearchSortSelectorControllerComponent extends Abstract
     private PagedResult<ProductProjection> pagedResult;
 
     @Inject
-    public ProductSearchSortSelectorControllerComponent(final ProductSortFormSettingsFactory productSortFormSettings,
+    public ProductSearchSortSelectorControllerComponent(final ProductSortFormSettings productSortFormSettings,
                                                         final ProductSearchSortSelectorViewModelFactory sortSelectorViewModelFactory,
-                                                        final Http.Context httpContext, final Locale locale) {
+                                                        final Http.Context httpContext) {
         super(productSortFormSettings, sortSelectorViewModelFactory);
-        this.sortExpressions = productSortFormSettings.buildSearchExpressions(httpContext, locale);
+        this.sortExpressions = productSortFormSettings.buildSearchExpressions(httpContext);
     }
 
     @Nullable

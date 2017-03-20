@@ -1,7 +1,8 @@
 package com.commercetools.sunrise.productcatalog.productoverview.search.searchbox;
 
 import com.commercetools.sunrise.framework.SunriseConfigurationException;
-import com.commercetools.sunrise.search.searchbox.ConfigurableSearchBoxSettings;
+import com.commercetools.sunrise.search.searchbox.SearchBoxSettings;
+import com.commercetools.sunrise.search.searchbox.SearchBoxSettingsFactory;
 import play.Configuration;
 
 import javax.inject.Inject;
@@ -9,13 +10,20 @@ import javax.inject.Singleton;
 import java.util.Optional;
 
 @Singleton
-public class ProductSearchBoxSettings extends ConfigurableSearchBoxSettings {
+public final class ProductSearchBoxSettings implements SearchBoxSettings {
 
     private static final String CONFIG = "pop.searchTerm";
 
+    private final SearchBoxSettings settings;
+
     @Inject
-    public ProductSearchBoxSettings(final Configuration configuration) {
-        super(configuration(configuration));
+    public ProductSearchBoxSettings(final Configuration configuration, final SearchBoxSettingsFactory searchBoxSettingsFactory) {
+        this.settings = searchBoxSettingsFactory.create(configuration(configuration));
+    }
+
+    @Override
+    public String getFieldName() {
+        return settings.getFieldName();
     }
 
     private static Configuration configuration(final Configuration configuration) {

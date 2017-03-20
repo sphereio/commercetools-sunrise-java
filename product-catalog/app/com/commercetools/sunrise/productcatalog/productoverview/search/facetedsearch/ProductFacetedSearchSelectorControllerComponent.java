@@ -26,10 +26,10 @@ public final class ProductFacetedSearchSelectorControllerComponent extends Abstr
     private PagedSearchResult<ProductProjection> pagedSearchResult;
 
     @Inject
-    public ProductFacetedSearchSelectorControllerComponent(final ProductFacetedSearchFormSettingsListFactory settingsFactory,
+    public ProductFacetedSearchSelectorControllerComponent(final ProductFacetedSearchFormSettingsList settingsList,
                                                            final ProductFacetSelectorListViewModelFactory productFacetSelectorListViewModelFactory,
                                                            final Http.Context httpContext) {
-        super(settingsFactory.create(), productFacetSelectorListViewModelFactory);
+        super(settingsList, productFacetSelectorListViewModelFactory);
         this.facetedSearchExpressions = getSettings().buildFacetedSearchExpressions(httpContext);
     }
 

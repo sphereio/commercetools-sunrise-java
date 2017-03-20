@@ -151,7 +151,7 @@ public class ProductPaginationViewModelFactoryTest {
                 .uri(QueryStringUtils.buildUri(URL_PATH, buildQueryString(currentPage)))
                 .build());
         final Configuration configuration = new Configuration(singletonMap("displayedPages", displayedPages));
-        return new TestablePaginationViewModelFactory(new ConfigurablePaginationSettings(configuration), context).create(searchResult);
+        return new TestablePaginationViewModelFactory(new PaginationSettingsFactory(configuration), context).create(searchResult);
     }
 
     private PagedResult<ProductProjection> pagedResult(final int page, final int totalPages) {

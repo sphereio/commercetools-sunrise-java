@@ -15,7 +15,9 @@ import java.util.Optional;
 import static com.commercetools.sunrise.search.facetedsearch.bucketranges.BucketRangeUtils.optionsToFacetRange;
 import static com.commercetools.sunrise.search.facetedsearch.bucketranges.BucketRangeUtils.optionsToFilterRange;
 
-public interface BucketRangeFacetedSearchFormSettings<T> extends SimpleBucketRangeFacetedSearchFormSettings, FacetedSearchFormSettings<T>, FormSettingsWithOptions<BucketRangeFacetedSearchFormOption, String> {
+public interface BucketRangeFacetedSearchFormSettings<T> extends ConfiguredBucketRangeFacetedSearchFormSettings, FacetedSearchFormSettings<T>, FormSettingsWithOptions<BucketRangeFacetedSearchFormOption, String> {
+
+    ConfiguredBucketRangeFacetedSearchFormSettings configuration();
 
     @Override
     default RangeFacetExpression<T> buildFacetExpression() {
