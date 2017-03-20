@@ -3,7 +3,7 @@ package com.commercetools.sunrise.myaccount.mydetails;
 import com.commercetools.sunrise.framework.viewmodels.content.PageContent;
 import com.commercetools.sunrise.framework.controllers.SunriseTemplateFormController;
 import com.commercetools.sunrise.framework.controllers.WithTemplateFormFlow;
-import com.commercetools.sunrise.framework.hooks.RunRequestStartedHook;
+import com.commercetools.sunrise.framework.hooks.EnableHooks;
 import com.commercetools.sunrise.framework.reverserouters.SunriseRoute;
 import com.commercetools.sunrise.framework.reverserouters.myaccount.mydetails.MyPersonalDetailsReverseRouter;
 import com.commercetools.sunrise.framework.template.engine.TemplateRenderer;
@@ -47,13 +47,13 @@ public abstract class SunriseMyPersonalDetailsController extends SunriseTemplate
         return customerFinder;
     }
 
-    @RunRequestStartedHook
+    @EnableHooks
     @SunriseRoute(MyPersonalDetailsReverseRouter.MY_PERSONAL_DETAILS_PAGE)
     public CompletionStage<Result> show(final String languageTag) {
         return requireCustomer(customer -> showFormPage(customer, formData));
     }
 
-    @RunRequestStartedHook
+    @EnableHooks
     @SunriseRoute(MyPersonalDetailsReverseRouter.MY_PERSONAL_DETAILS_PROCESS)
     public CompletionStage<Result> process(final String languageTag) {
         return requireCustomer(this::processForm);

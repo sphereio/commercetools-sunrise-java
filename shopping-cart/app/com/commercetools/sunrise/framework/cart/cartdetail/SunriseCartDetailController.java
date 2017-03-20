@@ -3,7 +3,7 @@ package com.commercetools.sunrise.framework.cart.cartdetail;
 import com.commercetools.sunrise.framework.viewmodels.content.PageContent;
 import com.commercetools.sunrise.framework.controllers.SunriseTemplateController;
 import com.commercetools.sunrise.framework.controllers.WithQueryFlow;
-import com.commercetools.sunrise.framework.hooks.RunRequestStartedHook;
+import com.commercetools.sunrise.framework.hooks.EnableHooks;
 import com.commercetools.sunrise.framework.reverserouters.SunriseRoute;
 import com.commercetools.sunrise.framework.reverserouters.shoppingcart.cart.CartReverseRouter;
 import com.commercetools.sunrise.framework.template.engine.TemplateRenderer;
@@ -33,7 +33,7 @@ public abstract class SunriseCartDetailController extends SunriseTemplateControl
         return cartFinder;
     }
 
-    @RunRequestStartedHook
+    @EnableHooks
     @SunriseRoute(CartReverseRouter.CART_DETAIL_PAGE)
     public CompletionStage<Result> show(final String languageTag) {
         return requireCart(this::showPage);

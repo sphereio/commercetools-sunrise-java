@@ -1,7 +1,7 @@
 package com.commercetools.sunrise.framework.viewmodels.header;
 
 import com.commercetools.sunrise.framework.components.controllers.ControllerComponent;
-import com.commercetools.sunrise.framework.hooks.consumers.PageDataReadyHook;
+import com.commercetools.sunrise.framework.hooks.application.PageDataReadyHook;
 import com.commercetools.sunrise.framework.viewmodels.PageData;
 
 import javax.inject.Inject;

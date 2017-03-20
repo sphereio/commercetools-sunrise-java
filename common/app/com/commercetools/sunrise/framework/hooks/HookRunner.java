@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.framework.hooks;
 
-import com.commercetools.sunrise.framework.hooks.consumers.PageDataReadyHook;
+import com.commercetools.sunrise.framework.hooks.application.PageDataReadyHook;
 import com.google.inject.ImplementedBy;
 
 import java.util.concurrent.CompletionStage;

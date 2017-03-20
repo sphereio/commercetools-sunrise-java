@@ -1,7 +1,7 @@
 package com.commercetools.sunrise.search.pagination;
 
 import com.commercetools.sunrise.framework.components.controllers.ControllerComponent;
-import com.commercetools.sunrise.framework.hooks.consumers.PageDataReadyHook;
+import com.commercetools.sunrise.framework.hooks.application.PageDataReadyHook;
 import com.commercetools.sunrise.framework.viewmodels.PageData;
 import com.commercetools.sunrise.search.pagination.viewmodels.AbstractEntriesPerPageSelectorViewModelFactory;
 import com.commercetools.sunrise.search.pagination.viewmodels.AbstractPaginationViewModelFactory;

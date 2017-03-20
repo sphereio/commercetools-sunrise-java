@@ -6,7 +6,7 @@ import com.commercetools.sunrise.framework.WithRequiredCart;
 import com.commercetools.sunrise.framework.checkout.shipping.viewmodels.CheckoutShippingPageContentFactory;
 import com.commercetools.sunrise.framework.controllers.SunriseTemplateFormController;
 import com.commercetools.sunrise.framework.controllers.WithTemplateFormFlow;
-import com.commercetools.sunrise.framework.hooks.RunRequestStartedHook;
+import com.commercetools.sunrise.framework.hooks.EnableHooks;
 import com.commercetools.sunrise.framework.reverserouters.SunriseRoute;
 import com.commercetools.sunrise.framework.reverserouters.shoppingcart.checkout.CheckoutReverseRouter;
 import com.commercetools.sunrise.framework.template.engine.TemplateRenderer;
@@ -55,7 +55,7 @@ public abstract class SunriseCheckoutShippingController extends SunriseTemplateF
         return cartFinder;
     }
 
-    @RunRequestStartedHook
+    @EnableHooks
     @SunriseRoute(CheckoutReverseRouter.CHECKOUT_SHIPPING_PAGE)
     public CompletionStage<Result> show(final String languageTag) {
         return requireNonEmptyCart(cart ->
@@ -63,7 +63,7 @@ public abstract class SunriseCheckoutShippingController extends SunriseTemplateF
                         showFormPage(ShippingMethodsWithCart.of(shippingMethods, cart), formData)));
     }
 
-    @RunRequestStartedHook
+    @EnableHooks
     @SunriseRoute(CheckoutReverseRouter.CHECKOUT_SHIPPING_PROCESS)
     public CompletionStage<Result> process(final String languageTag) {
         return requireNonEmptyCart(cart ->

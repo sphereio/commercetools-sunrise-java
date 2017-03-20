@@ -1,11 +1,11 @@
 package com.commercetools.sunrise.sessions.cart;
 
-import com.commercetools.sunrise.framework.injection.RequestScoped;
 import com.commercetools.sunrise.framework.components.controllers.ControllerComponent;
-import com.commercetools.sunrise.framework.hooks.events.CartCreatedHook;
-import com.commercetools.sunrise.framework.hooks.events.CartLoadedHook;
-import com.commercetools.sunrise.framework.hooks.events.CartUpdatedHook;
-import com.commercetools.sunrise.framework.hooks.events.CustomerSignInResultLoadedHook;
+import com.commercetools.sunrise.framework.hooks.ctpevents.CartCreatedHook;
+import com.commercetools.sunrise.framework.hooks.ctpevents.CartLoadedHook;
+import com.commercetools.sunrise.framework.hooks.ctpevents.CartUpdatedHook;
+import com.commercetools.sunrise.framework.hooks.ctpevents.CustomerSignInResultLoadedHook;
+import com.commercetools.sunrise.framework.injection.RequestScoped;
 import io.sphere.sdk.carts.Cart;
 import io.sphere.sdk.customers.CustomerSignInResult;
 

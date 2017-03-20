@@ -2,8 +2,8 @@ package com.commercetools.sunrise.productcatalog.productdetail;
 
 import com.commercetools.sunrise.framework.controllers.AbstractSphereRequestExecutor;
 import com.commercetools.sunrise.framework.hooks.HookRunner;
-import com.commercetools.sunrise.framework.hooks.events.ProductProjectionLoadedHook;
-import com.commercetools.sunrise.framework.hooks.requests.ProductProjectionSearchHook;
+import com.commercetools.sunrise.framework.hooks.ctpevents.ProductProjectionLoadedHook;
+import com.commercetools.sunrise.framework.hooks.ctprequests.ProductProjectionSearchHook;
 import io.sphere.sdk.client.SphereClient;
 import io.sphere.sdk.products.ProductProjection;
 import io.sphere.sdk.products.search.ProductProjectionSearch;

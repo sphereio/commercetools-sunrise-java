@@ -1,7 +1,7 @@
 package com.commercetools.sunrise.framework.components.controllers;
 
-import com.commercetools.sunrise.framework.hooks.actions.CartLoadedActionHook;
-import com.commercetools.sunrise.framework.hooks.actions.CustomerSignedInActionHook;
+import com.commercetools.sunrise.framework.hooks.ctpactions.CartLoadedActionHook;
+import com.commercetools.sunrise.framework.hooks.ctpactions.CustomerSignedInActionHook;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
 import com.neovisionaries.i18n.CountryCode;
 import io.sphere.sdk.carts.Cart;

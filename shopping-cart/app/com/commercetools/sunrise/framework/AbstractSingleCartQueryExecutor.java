@@ -2,8 +2,8 @@ package com.commercetools.sunrise.framework;
 
 import com.commercetools.sunrise.framework.controllers.AbstractSphereRequestExecutor;
 import com.commercetools.sunrise.framework.hooks.HookRunner;
-import com.commercetools.sunrise.framework.hooks.events.CartLoadedHook;
-import com.commercetools.sunrise.framework.hooks.requests.CartQueryHook;
+import com.commercetools.sunrise.framework.hooks.ctpevents.CartLoadedHook;
+import com.commercetools.sunrise.framework.hooks.ctprequests.CartQueryHook;
 import io.sphere.sdk.carts.Cart;
 import io.sphere.sdk.carts.queries.CartQuery;
 import io.sphere.sdk.client.SphereClient;

@@ -4,7 +4,7 @@ package com.commercetools.sunrise.myaccount.addressbook.addressbookdetail;
 import com.commercetools.sunrise.framework.viewmodels.content.PageContent;
 import com.commercetools.sunrise.framework.controllers.SunriseTemplateController;
 import com.commercetools.sunrise.framework.controllers.WithQueryFlow;
-import com.commercetools.sunrise.framework.hooks.RunRequestStartedHook;
+import com.commercetools.sunrise.framework.hooks.EnableHooks;
 import com.commercetools.sunrise.framework.reverserouters.SunriseRoute;
 import com.commercetools.sunrise.framework.reverserouters.myaccount.addressbook.AddressBookReverseRouter;
 import com.commercetools.sunrise.framework.template.engine.TemplateRenderer;
@@ -35,7 +35,7 @@ public abstract class SunriseAddressBookDetailController extends SunriseTemplate
         return customerFinder;
     }
 
-    @RunRequestStartedHook
+    @EnableHooks
     @SunriseRoute(AddressBookReverseRouter.ADDRESS_BOOK_DETAIL_PAGE)
     public CompletionStage<Result> show(final String languageTag) {
         return requireCustomer(this::showPage);

@@ -6,7 +6,7 @@ import com.commercetools.sunrise.framework.WithRequiredCart;
 import com.commercetools.sunrise.framework.cart.cartdetail.viewmodels.CartDetailPageContentFactory;
 import com.commercetools.sunrise.framework.controllers.SunriseTemplateFormController;
 import com.commercetools.sunrise.framework.controllers.WithTemplateFormFlow;
-import com.commercetools.sunrise.framework.hooks.RunRequestStartedHook;
+import com.commercetools.sunrise.framework.hooks.EnableHooks;
 import com.commercetools.sunrise.framework.reverserouters.SunriseRoute;
 import com.commercetools.sunrise.framework.reverserouters.shoppingcart.cart.CartReverseRouter;
 import com.commercetools.sunrise.framework.template.engine.TemplateRenderer;
@@ -54,7 +54,7 @@ public abstract class SunriseAddLineItemController extends SunriseTemplateFormCo
         return cartCreator;
     }
 
-    @RunRequestStartedHook
+    @EnableHooks
     @SunriseRoute(CartReverseRouter.ADD_LINE_ITEM_PROCESS)
     public CompletionStage<Result> process(final String languageTag) {
         return requireCart(this::processForm);

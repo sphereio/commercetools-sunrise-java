@@ -3,7 +3,7 @@ package com.commercetools.sunrise.productcatalog.productoverview;
 import com.commercetools.sunrise.framework.viewmodels.content.PageContent;
 import com.commercetools.sunrise.framework.controllers.SunriseTemplateController;
 import com.commercetools.sunrise.framework.controllers.WithQueryFlow;
-import com.commercetools.sunrise.framework.hooks.RunRequestStartedHook;
+import com.commercetools.sunrise.framework.hooks.EnableHooks;
 import com.commercetools.sunrise.framework.reverserouters.SunriseRoute;
 import com.commercetools.sunrise.framework.reverserouters.productcatalog.product.ProductReverseRouter;
 import com.commercetools.sunrise.framework.template.engine.TemplateRenderer;
@@ -40,7 +40,7 @@ public abstract class SunriseProductOverviewController extends SunriseTemplateCo
         return categoryFinder;
     }
 
-    @RunRequestStartedHook
+    @EnableHooks
     @SunriseRoute(ProductReverseRouter.PRODUCT_OVERVIEW_PAGE)
     public CompletionStage<Result> process(final String languageTag, final String categoryIdentifier) {
         return requireCategory(categoryIdentifier, category ->

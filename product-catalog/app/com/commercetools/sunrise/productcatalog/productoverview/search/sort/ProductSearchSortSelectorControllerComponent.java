@@ -1,8 +1,8 @@
 package com.commercetools.sunrise.productcatalog.productoverview.search.sort;
 
 import com.commercetools.sunrise.framework.components.controllers.ControllerComponent;
-import com.commercetools.sunrise.framework.hooks.events.ProductProjectionPagedSearchResultLoadedHook;
-import com.commercetools.sunrise.framework.hooks.requests.ProductProjectionSearchHook;
+import com.commercetools.sunrise.framework.hooks.ctpevents.ProductProjectionPagedSearchResultLoadedHook;
+import com.commercetools.sunrise.framework.hooks.ctprequests.ProductProjectionSearchHook;
 import com.commercetools.sunrise.search.sort.AbstractSortSelectorControllerComponent;
 import io.sphere.sdk.products.ProductProjection;
 import io.sphere.sdk.products.search.ProductProjectionSearch;

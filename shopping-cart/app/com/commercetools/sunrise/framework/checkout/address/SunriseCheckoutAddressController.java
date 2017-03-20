@@ -6,7 +6,7 @@ import com.commercetools.sunrise.framework.WithRequiredCart;
 import com.commercetools.sunrise.framework.checkout.address.viewmodels.CheckoutAddressPageContentFactory;
 import com.commercetools.sunrise.framework.controllers.SunriseTemplateFormController;
 import com.commercetools.sunrise.framework.controllers.WithTemplateFormFlow;
-import com.commercetools.sunrise.framework.hooks.RunRequestStartedHook;
+import com.commercetools.sunrise.framework.hooks.EnableHooks;
 import com.commercetools.sunrise.framework.reverserouters.SunriseRoute;
 import com.commercetools.sunrise.framework.reverserouters.shoppingcart.checkout.CheckoutReverseRouter;
 import com.commercetools.sunrise.framework.template.engine.TemplateRenderer;
@@ -47,13 +47,13 @@ public abstract class SunriseCheckoutAddressController extends SunriseTemplateFo
         return cartFinder;
     }
 
-    @RunRequestStartedHook
+    @EnableHooks
     @SunriseRoute(CheckoutReverseRouter.CHECKOUT_ADDRESS_PAGE)
     public CompletionStage<Result> show(final String languageTag) {
         return requireNonEmptyCart(cart -> showFormPage(cart, formData));
     }
 
-    @RunRequestStartedHook
+    @EnableHooks
     @SunriseRoute(CheckoutReverseRouter.CHECKOUT_ADDRESS_PROCESS)
     public CompletionStage<Result> process(final String languageTag) {
         return requireNonEmptyCart(this::processForm);

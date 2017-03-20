@@ -2,8 +2,8 @@ package com.commercetools.sunrise.framework.checkout.thankyou;
 
 import com.commercetools.sunrise.framework.controllers.AbstractSphereRequestExecutor;
 import com.commercetools.sunrise.framework.hooks.HookRunner;
-import com.commercetools.sunrise.framework.hooks.events.OrderLoadedHook;
-import com.commercetools.sunrise.framework.hooks.requests.OrderQueryHook;
+import com.commercetools.sunrise.framework.hooks.ctpevents.OrderLoadedHook;
+import com.commercetools.sunrise.framework.hooks.ctprequests.OrderQueryHook;
 import io.sphere.sdk.client.SphereClient;
 import io.sphere.sdk.orders.Order;
 import io.sphere.sdk.orders.queries.OrderQuery;

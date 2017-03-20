@@ -3,7 +3,7 @@ package com.commercetools.sunrise.myaccount.myorders.myorderlist;
 import com.commercetools.sunrise.framework.viewmodels.content.PageContent;
 import com.commercetools.sunrise.framework.controllers.SunriseTemplateController;
 import com.commercetools.sunrise.framework.controllers.WithQueryFlow;
-import com.commercetools.sunrise.framework.hooks.RunRequestStartedHook;
+import com.commercetools.sunrise.framework.hooks.EnableHooks;
 import com.commercetools.sunrise.framework.reverserouters.SunriseRoute;
 import com.commercetools.sunrise.framework.reverserouters.myaccount.myorders.MyOrdersReverseRouter;
 import com.commercetools.sunrise.framework.template.engine.TemplateRenderer;
@@ -41,7 +41,7 @@ public abstract class SunriseMyOrderListController extends SunriseTemplateContro
         return customerFinder;
     }
 
-    @RunRequestStartedHook
+    @EnableHooks
     @SunriseRoute(MyOrdersReverseRouter.MY_ORDER_LIST_PAGE)
     public CompletionStage<Result> show(final String languageTag) {
         return requireCustomer(customer ->

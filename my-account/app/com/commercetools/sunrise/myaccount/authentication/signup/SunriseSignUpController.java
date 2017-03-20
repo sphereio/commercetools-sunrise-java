@@ -3,7 +3,7 @@ package com.commercetools.sunrise.myaccount.authentication.signup;
 import com.commercetools.sunrise.framework.viewmodels.content.PageContent;
 import com.commercetools.sunrise.framework.controllers.SunriseTemplateFormController;
 import com.commercetools.sunrise.framework.controllers.WithTemplateFormFlow;
-import com.commercetools.sunrise.framework.hooks.RunRequestStartedHook;
+import com.commercetools.sunrise.framework.hooks.EnableHooks;
 import com.commercetools.sunrise.framework.reverserouters.SunriseRoute;
 import com.commercetools.sunrise.framework.reverserouters.myaccount.authentication.AuthenticationReverseRouter;
 import com.commercetools.sunrise.framework.template.engine.TemplateRenderer;
@@ -40,7 +40,7 @@ public abstract class SunriseSignUpController extends SunriseTemplateFormControl
         return formData.getClass();
     }
 
-    @RunRequestStartedHook
+    @EnableHooks
     @SunriseRoute(AuthenticationReverseRouter.SIGN_UP_PROCESS)
     public CompletionStage<Result> process(final String languageTag) {
         return processForm(null);

@@ -5,7 +5,7 @@ import com.commercetools.sunrise.framework.controllers.WithQueryFlow;
 import com.commercetools.sunrise.framework.viewmodels.content.PageContent;
 import com.commercetools.sunrise.framework.template.engine.TemplateRenderer;
 import com.commercetools.sunrise.framework.reverserouters.SunriseRoute;
-import com.commercetools.sunrise.framework.hooks.RunRequestStartedHook;
+import com.commercetools.sunrise.framework.hooks.EnableHooks;
 import com.commercetools.sunrise.framework.reverserouters.shoppingcart.checkout.CheckoutReverseRouter;
 import com.commercetools.sunrise.framework.checkout.thankyou.viewmodels.CheckoutThankYouPageContentFactory;
 import io.sphere.sdk.orders.Order;
@@ -35,7 +35,7 @@ public abstract class SunriseCheckoutThankYouController extends SunriseTemplateC
         return orderCreatedFinder;
     }
 
-    @RunRequestStartedHook
+    @EnableHooks
     @SunriseRoute(CheckoutReverseRouter.CHECKOUT_THANK_YOU_PAGE)
     public CompletionStage<Result> show(final String languageTag) {
         return requireOrderCreated(this::showPage);

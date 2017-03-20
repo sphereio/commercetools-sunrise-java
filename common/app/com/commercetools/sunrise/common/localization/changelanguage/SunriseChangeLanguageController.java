@@ -2,7 +2,7 @@ package com.commercetools.sunrise.common.localization.changelanguage;
 
 import com.commercetools.sunrise.framework.controllers.SunriseFormController;
 import com.commercetools.sunrise.framework.controllers.WithFormFlow;
-import com.commercetools.sunrise.framework.hooks.RunRequestStartedHook;
+import com.commercetools.sunrise.framework.hooks.EnableHooks;
 import com.commercetools.sunrise.framework.reverserouters.SunriseRoute;
 import com.commercetools.sunrise.framework.reverserouters.common.localization.LocalizationReverseRouter;
 import play.data.FormFactory;
@@ -30,7 +30,7 @@ public abstract class SunriseChangeLanguageController extends SunriseFormControl
         return formData.getClass();
     }
 
-    @RunRequestStartedHook
+    @EnableHooks
     @SunriseRoute(LocalizationReverseRouter.CHANGE_LANGUAGE_PROCESS)
     public CompletionStage<Result> process() {
         return processForm(null);

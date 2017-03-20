@@ -4,7 +4,7 @@ import com.commercetools.sunrise.framework.viewmodels.content.addresses.AddressW
 import com.commercetools.sunrise.framework.viewmodels.content.PageContent;
 import com.commercetools.sunrise.framework.controllers.SunriseTemplateFormController;
 import com.commercetools.sunrise.framework.controllers.WithTemplateFormFlow;
-import com.commercetools.sunrise.framework.hooks.RunRequestStartedHook;
+import com.commercetools.sunrise.framework.hooks.EnableHooks;
 import com.commercetools.sunrise.framework.reverserouters.SunriseRoute;
 import com.commercetools.sunrise.framework.reverserouters.myaccount.addressbook.AddressBookReverseRouter;
 import com.commercetools.sunrise.framework.template.engine.TemplateRenderer;
@@ -58,7 +58,7 @@ public abstract class SunriseRemoveAddressController extends SunriseTemplateForm
         return addressFinder;
     }
 
-    @RunRequestStartedHook
+    @EnableHooks
     @SunriseRoute(AddressBookReverseRouter.REMOVE_ADDRESS_PROCESS)
     public CompletionStage<Result> process(final String languageTag, final String addressIdentifier) {
         return requireCustomer(customer ->

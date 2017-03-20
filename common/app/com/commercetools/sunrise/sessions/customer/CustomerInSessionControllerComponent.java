@@ -2,10 +2,10 @@ package com.commercetools.sunrise.sessions.customer;
 
 import com.commercetools.sunrise.framework.viewmodels.PageData;
 import com.commercetools.sunrise.framework.components.controllers.ControllerComponent;
-import com.commercetools.sunrise.framework.hooks.consumers.PageDataReadyHook;
-import com.commercetools.sunrise.framework.hooks.events.CustomerLoadedHook;
-import com.commercetools.sunrise.framework.hooks.events.CustomerSignInResultLoadedHook;
-import com.commercetools.sunrise.framework.hooks.events.CustomerUpdatedHook;
+import com.commercetools.sunrise.framework.hooks.application.PageDataReadyHook;
+import com.commercetools.sunrise.framework.hooks.ctpevents.CustomerLoadedHook;
+import com.commercetools.sunrise.framework.hooks.ctpevents.CustomerSignInResultLoadedHook;
+import com.commercetools.sunrise.framework.hooks.ctpevents.CustomerUpdatedHook;
 import io.sphere.sdk.customers.Customer;
 import io.sphere.sdk.customers.CustomerSignInResult;
 

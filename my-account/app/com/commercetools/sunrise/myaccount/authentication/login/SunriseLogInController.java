@@ -3,7 +3,7 @@ package com.commercetools.sunrise.myaccount.authentication.login;
 import com.commercetools.sunrise.framework.viewmodels.content.PageContent;
 import com.commercetools.sunrise.framework.controllers.SunriseTemplateFormController;
 import com.commercetools.sunrise.framework.controllers.WithTemplateFormFlow;
-import com.commercetools.sunrise.framework.hooks.RunRequestStartedHook;
+import com.commercetools.sunrise.framework.hooks.EnableHooks;
 import com.commercetools.sunrise.framework.reverserouters.SunriseRoute;
 import com.commercetools.sunrise.framework.reverserouters.myaccount.authentication.AuthenticationReverseRouter;
 import com.commercetools.sunrise.framework.template.engine.TemplateRenderer;
@@ -40,13 +40,13 @@ public abstract class SunriseLogInController extends SunriseTemplateFormControll
         return formData.getClass();
     }
 
-    @RunRequestStartedHook
+    @EnableHooks
     @SunriseRoute(AuthenticationReverseRouter.LOG_IN_PAGE)
     public CompletionStage<Result> show(final String languageTag) {
         return showFormPage(null, formData);
     }
 
-    @RunRequestStartedHook
+    @EnableHooks
     @SunriseRoute(AuthenticationReverseRouter.LOG_IN_PROCESS)
     public CompletionStage<Result> process(final String languageTag) {
         return processForm(null);

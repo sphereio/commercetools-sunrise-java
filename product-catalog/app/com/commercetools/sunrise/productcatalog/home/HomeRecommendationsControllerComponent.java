@@ -3,8 +3,8 @@ package com.commercetools.sunrise.productcatalog.home;
 import com.commercetools.sunrise.framework.viewmodels.PageData;
 import com.commercetools.sunrise.recommendations.ProductRecommender;
 import com.commercetools.sunrise.framework.components.controllers.ControllerComponent;
-import com.commercetools.sunrise.framework.hooks.consumers.PageDataReadyHook;
-import com.commercetools.sunrise.framework.hooks.events.RequestStartedHook;
+import com.commercetools.sunrise.framework.hooks.application.PageDataReadyHook;
+import com.commercetools.sunrise.framework.hooks.application.HttpRequestStartedHook;
 import com.commercetools.sunrise.productcatalog.home.viewmodels.HomePageContent;
 import com.commercetools.sunrise.productcatalog.productoverview.viewmodels.ProductListViewModelFactory;
 import io.sphere.sdk.categories.Category;
@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 import static java.util.Collections.emptyList;
 import static java.util.concurrent.CompletableFuture.completedFuture;
 
-public final class HomeRecommendationsControllerComponent implements ControllerComponent, RequestStartedHook, PageDataReadyHook {
+public final class HomeRecommendationsControllerComponent implements ControllerComponent, HttpRequestStartedHook, PageDataReadyHook {
 
     private static final Logger logger = LoggerFactory.getLogger(HomeRecommendationsControllerComponent.class);
 
@@ -48,7 +48,7 @@ public final class HomeRecommendationsControllerComponent implements ControllerC
 
 
     @Override
-    public CompletionStage<?> onRequestStarted(final Http.Context context) {
+    public CompletionStage<?> onHttpRequestStarted(final Http.Context context) {
         final List<Category> suggestedCategories = suggestionsExternalIds.stream()
                 .map(categoryTree::findByExternalId)
                 .filter(Optional::isPresent)

@@ -1,9 +1,9 @@
 import com.commercetools.sunrise.framework.injection.RequestScope;
 import com.commercetools.sunrise.framework.components.controllers.ControllerComponent;
 import com.commercetools.sunrise.framework.hooks.Hook;
-import com.commercetools.sunrise.framework.hooks.consumers.PageDataReadyHook;
-import com.commercetools.sunrise.framework.hooks.events.RequestStartedHook;
-import com.commercetools.sunrise.framework.hooks.requests.ProductProjectionSearchHook;
+import com.commercetools.sunrise.framework.hooks.application.PageDataReadyHook;
+import com.commercetools.sunrise.framework.hooks.application.HttpRequestStartedHook;
+import com.commercetools.sunrise.framework.hooks.ctprequests.ProductProjectionSearchHook;
 import com.commercetools.sunrise.productcatalog.home.SunriseHomeController;
 import com.commercetools.sunrise.productcatalog.productdetail.SunriseProductDetailController;
 import com.commercetools.sunrise.productcatalog.productoverview.SunriseProductOverviewController;
@@ -29,7 +29,7 @@ import java.util.Locale;
  * via dependency-injected fields like {@link Locale} and on the other hand via {@link Hook}s of the controller.
  * A controller component instance lives in the {@link RequestScope} so they assist with one HTTP request and then for the next HTTP request another instance is created.
  * Controller components implement the hooks of the controllers where they need to do sth. for example implementing {@link PageDataReadyHook}
- * enables to change the content that will be rendered, the hook is called when all asynchronous requests are completed. The hook {@link RequestStartedHook} enables to do sth. when a request comes in like log stuff, call external systems.
+ * enables to change the content that will be rendered, the hook is called when all asynchronous requests are completed. The hook {@link HttpRequestStartedHook} enables to do sth. when a request comes in like log stuff, call external systems.
  * The hook {@link ProductProjectionSearchHook} enables to modify a search request for example to add extension paths.
  * For a good explanation how such a component works look into the <strong>source code</strong> of {@link ProductRecommendationsControllerComponent}.
  *

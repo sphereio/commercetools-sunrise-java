@@ -2,10 +2,10 @@ package com.commercetools.sunrise.myaccount.authentication;
 
 import com.commercetools.sunrise.framework.controllers.AbstractSphereRequestExecutor;
 import com.commercetools.sunrise.framework.hooks.HookRunner;
-import com.commercetools.sunrise.framework.hooks.actions.CustomerSignedInActionHook;
-import com.commercetools.sunrise.framework.hooks.events.CustomerSignInResultLoadedHook;
-import com.commercetools.sunrise.framework.hooks.requests.CustomerCreateCommandHook;
-import com.commercetools.sunrise.framework.hooks.requests.CustomerSignInCommandHook;
+import com.commercetools.sunrise.framework.hooks.ctpactions.CustomerSignedInActionHook;
+import com.commercetools.sunrise.framework.hooks.ctpevents.CustomerSignInResultLoadedHook;
+import com.commercetools.sunrise.framework.hooks.ctprequests.CustomerCreateCommandHook;
+import com.commercetools.sunrise.framework.hooks.ctprequests.CustomerSignInCommandHook;
 import io.sphere.sdk.client.SphereClient;
 import io.sphere.sdk.client.SphereRequest;
 import io.sphere.sdk.customers.CustomerSignInResult;
