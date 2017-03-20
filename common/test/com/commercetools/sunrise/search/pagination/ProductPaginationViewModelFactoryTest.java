@@ -7,7 +7,6 @@ import com.commercetools.sunrise.search.pagination.viewmodels.PaginationViewMode
 import io.sphere.sdk.products.ProductProjection;
 import io.sphere.sdk.queries.PagedResult;
 import org.junit.Test;
-import play.Configuration;
 import play.mvc.Http;
 
 import java.util.Collections;
@@ -16,7 +15,6 @@ import java.util.List;
 import java.util.Map;
 
 import static java.util.Collections.singletonList;
-import static java.util.Collections.singletonMap;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ProductPaginationViewModelFactoryTest {
@@ -150,8 +148,8 @@ public class ProductPaginationViewModelFactoryTest {
         final Http.Context context = new Http.Context(new Http.RequestBuilder()
                 .uri(QueryStringUtils.buildUri(URL_PATH, buildQueryString(currentPage)))
                 .build());
-        final Configuration configuration = new Configuration(singletonMap("displayedPages", displayedPages));
-        return new TestablePaginationViewModelFactory(new PaginationSettingsFactory(configuration), context).create(searchResult);
+        final PaginationSettings settings = PaginationSettings.of("page", displayedPages);
+        return new TestablePaginationViewModelFactory(settings, context).create(searchResult);
     }
 
     private PagedResult<ProductProjection> pagedResult(final int page, final int totalPages) {

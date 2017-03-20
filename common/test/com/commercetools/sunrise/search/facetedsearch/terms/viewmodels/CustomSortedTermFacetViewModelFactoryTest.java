@@ -1,8 +1,9 @@
 package com.commercetools.sunrise.search.facetedsearch.terms.viewmodels;
 
-import com.commercetools.sunrise.search.facetedsearch.terms.DefaultTermFacetedSearchFormSettings;
 import com.commercetools.sunrise.search.facetedsearch.terms.ConfiguredTermFacetedSearchFormSettings;
 import com.commercetools.sunrise.search.facetedsearch.terms.TermFacetMapperSettings;
+import com.commercetools.sunrise.search.facetedsearch.terms.TermFacetedSearchFormSettings;
+import com.commercetools.sunrise.search.facetedsearch.terms.TermFacetedSearchFormSettingsFactory;
 import com.commercetools.sunrise.search.facetedsearch.viewmodels.FacetOptionViewModel;
 import io.sphere.sdk.search.TermFacetResult;
 import io.sphere.sdk.search.TermStats;
@@ -84,8 +85,8 @@ public class CustomSortedTermFacetViewModelFactoryTest {
 
     private void testCustomSortedMapper(final List<String> customSortedValues, final List<String> terms, final Consumer<List<String>> test) {
         final TermFacetMapperSettings mapperSettings = TermFacetMapperSettings.of("customSorted", customSortedValues);
-        final ConfiguredTermFacetedSearchFormSettings<?> simpleSettings = ConfiguredTermFacetedSearchFormSettings.of("bar", "", "", false, null, false, false, mapperSettings, null, null);
-        final DefaultTermFacetedSearchFormSettings<?> settings = new DefaultTermFacetedSearchFormSettings<>(simpleSettings, Locale.ENGLISH);
+        final ConfiguredTermFacetedSearchFormSettings configuration = ConfiguredTermFacetedSearchFormSettings.of("bar", "", "", false, null, false, false, mapperSettings, null, null);
+        final TermFacetedSearchFormSettings<?> settings = new TermFacetedSearchFormSettingsFactory(Locale.ENGLISH).create(configuration);
         final List<TermStats> termStats = terms.stream()
                 .map(term -> TermStats.of(term, 0L))
                 .collect(toList());
