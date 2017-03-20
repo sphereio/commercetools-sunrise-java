@@ -49,7 +49,7 @@ public class CartComponent implements ControllerComponent, CustomerSignInResultL
         return Optional.ofNullable(customerSignInResult.getCart())
                 .map(cart -> updateCartWithMissingInfoOnSignIn(cart, customerSignInResult.getCustomer()))
                 .orElseGet(() -> completedFuture(null))
-                .thenAcceptAsync(cart -> overwriteCartInSession(cart), HttpExecution.defaultContext());
+                .thenAcceptAsync(this::overwriteCartInSession, HttpExecution.defaultContext());
     }
 
     @Override
