@@ -49,10 +49,10 @@ public class RequestScopedTest extends WithApplication {
 
     @Test
     public void singletonIsNotAffected() throws Exception {
-        final NotRequestScopedClass instance1 = invokeWithContext(fakeRequest(), () ->
-                app.injector().instanceOf(NotRequestScopedClass.class));
-        final NotRequestScopedClass instance2 = invokeWithContext(fakeRequest(), () ->
-                app.injector().instanceOf(NotRequestScopedClass.class));
+        final SingletonScopedClass instance1 = invokeWithContext(fakeRequest(), () ->
+                app.injector().instanceOf(SingletonScopedClass.class));
+        final SingletonScopedClass instance2 = invokeWithContext(fakeRequest(), () ->
+                app.injector().instanceOf(SingletonScopedClass.class));
         assertThat(instance1)
                 .as("Singletons are reused among requests")
                 .isSameAs(instance2);
@@ -108,7 +108,7 @@ public class RequestScopedTest extends WithApplication {
     }
 
     @Singleton
-    private static class NotRequestScopedClass {
+    private static class SingletonScopedClass {
         @Inject
         private Configuration configuration;
 
