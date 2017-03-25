@@ -45,6 +45,14 @@ public class UserLanguageImplTest extends WithApplication {
                         .containsExactly("en"));
     }
 
+    @Test
+    public void doesNotFailOnHttpContextNotAvailable() throws Exception {
+        final ProjectContext projectContext = mock(ProjectContext.class);
+        assertThat(userLanguageWithEnglishSelected(projectContext).locales())
+                .extracting(Locale::toLanguageTag)
+                .containsExactly("en");
+    }
+
     private UserLanguage userLanguageWithEnglishSelected(final ProjectContext projectContext) {
         return new UserLanguageImpl(Locale.forLanguageTag("en"), projectContext);
     }
