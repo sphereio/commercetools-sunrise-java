@@ -1,7 +1,5 @@
 package com.commercetools.sunrise.framework.injection;
 
-import com.commercetools.sunrise.framework.injection.RequestScope;
-import com.commercetools.sunrise.framework.injection.RequestScoped;
 import com.google.inject.AbstractModule;
 import com.google.inject.Module;
 import com.google.inject.Provides;
@@ -12,6 +10,7 @@ import play.inject.guice.GuiceApplicationBuilder;
 import play.mvc.Http;
 import play.test.WithApplication;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -59,6 +58,15 @@ public class RequestScopedTest extends WithApplication {
                 .isSameAs(instance2);
     }
 
+    @Test
+    public void createsNewInstanceWhenNoHttpContextAvailable() throws Exception {
+        final RequestScopedClass instance1 = app.injector().instanceOf(RequestScopedClass.class);
+        final RequestScopedClass instance2 = app.injector().instanceOf(RequestScopedClass.class);
+        assertThat(instance1)
+                .as("New request scoped instances are created when no HTTP context available")
+                .isNotSameAs(instance2);
+    }
+
     @Override
     protected Application provideApplication() {
         final Module module = new AbstractModule() {
@@ -68,10 +76,11 @@ public class RequestScopedTest extends WithApplication {
                 bindScope(RequestScoped.class, requestScope);
             }
 
+            @Nullable
             @Provides
             @RequestScoped
             public Http.Context httpContext() {
-                return Http.Context.current();
+                return Http.Context.current.get();
             }
         };
         return new GuiceApplicationBuilder()
@@ -83,13 +92,16 @@ public class RequestScopedTest extends WithApplication {
     private static class RequestScopedClass {
         @Inject
         private Configuration configuration;
+
         @Inject
+        @Nullable
         private Http.Context context;
 
         public Configuration getConfiguration() {
             return configuration;
         }
 
+        @Nullable
         public Http.Context getContext() {
             return context;
         }
