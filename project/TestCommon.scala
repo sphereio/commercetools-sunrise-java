@@ -13,7 +13,7 @@ object TestCommon {
 
   private val itBaseTestSettings = Defaults.itSettings ++ configTestDirs(IntegrationTest, "it")
 
-  private val ptBaseTestSettings = inConfig(PlayTest)(Defaults.testSettings) ++ configTestDirs(PlayTest, "pt") ++ configJavaWsDependency("pt")
+  private val ptBaseTestSettings = inConfig(PlayTest)(Defaults.testSettings) ++ configTestDirs(PlayTest, "pt") ++ configPlayDependencies("pt")
 
   def configTestDirs(config: Configuration, folderName: String) = Seq(
     javaSource in config := baseDirectory.value / folderName,
@@ -23,21 +23,24 @@ object TestCommon {
 
   def configCommonTestSettings(scopes: String) = Seq(
     testOptions += Tests.Argument(TestFrameworks.JUnit, "-v"),
-    javaOptions in Test += "-Dlogger.resource=logback-test.xml",
+    javaOptions in PlayTest += "-Dlogger.resource=logback-test.xml",
+    testOptions in IntegrationTest += Tests.Setup(() =>
+      if (sys.props.get("logger.resource").isEmpty)
+        sys.props.put("logger.resource", "logback-test.xml")
+    ),
     libraryDependencies ++= Seq (
-      "org.assertj" % "assertj-core" % "3.0.0" % scopes,
-      "com.commercetools.sdk.jvm.core" % "commercetools-test-lib" % "1.0.0-RC2" % scopes,
-      "org.mockito" % "mockito-core" % "2.7.9",
-        PlayImport.component("play-test") % scopes
+      "org.assertj" % "assertj-core" % "3.6.2" % scopes,
+      "org.mockito" % "mockito-core" % "2.7.9" % scopes
     ),
     dependencyOverrides ++= Set (
       "junit" % "junit" % "4.12" % scopes
     )
   )
 
-  def configJavaWsDependency(scopes: String) = Seq(
+  def configPlayDependencies(scopes: String) = Seq(
     libraryDependencies ++= Seq (
-      javaWs % scopes
+      javaWs % scopes,
+      PlayImport.component("play-test") % scopes
     )
   )
 }
