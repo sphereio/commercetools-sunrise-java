@@ -23,7 +23,11 @@ object TestCommon {
 
   def configCommonTestSettings(scopes: String) = Seq(
     testOptions += Tests.Argument(TestFrameworks.JUnit, "-v"),
+    // In PlayTest there are Play apps being initialized which do not take into account logback-test.xml
+    // It can only be overridden by java options
     javaOptions in PlayTest += "-Dlogger.resource=logback-test.xml",
+    // In IntegrationTest same as PlayTest applies plus fork is not used, so java options are ignored
+    // It can only be overridden by system properties
     testOptions in IntegrationTest += Tests.Setup(() =>
       if (sys.props.get("logger.resource").isEmpty)
         sys.props.put("logger.resource", "logback-test.xml")
