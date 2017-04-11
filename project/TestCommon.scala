@@ -7,13 +7,13 @@ object TestCommon {
 
   lazy val PlayTest: sbt.Configuration = config("pt") extend Test
 
-  lazy val defaultSettings: Def.SettingsDefinition = itBaseTestSettings ++ ptBaseTestSettings ++ configCommonTestSettings("test,it,pt")
+  lazy val defaultSettings: Def.SettingsDefinition = itBaseTestSettings ++ ptBaseTestSettings ++ configCommonTestSettings("test,it,pt") ++ configPlayDependencies("it,pt")
 
-  lazy val settingsWithoutPlayTest: Def.SettingsDefinition = itBaseTestSettings ++ configCommonTestSettings("test,it")
+  lazy val settingsWithoutPlayTest: Def.SettingsDefinition = itBaseTestSettings ++ configCommonTestSettings("test,it") ++ configPlayDependencies("it")
 
   private val itBaseTestSettings = Defaults.itSettings ++ configTestDirs(IntegrationTest, "it")
 
-  private val ptBaseTestSettings = inConfig(PlayTest)(Defaults.testSettings) ++ configTestDirs(PlayTest, "pt") ++ configPlayDependencies("pt")
+  private val ptBaseTestSettings = inConfig(PlayTest)(Defaults.testSettings) ++ configTestDirs(PlayTest, "pt")
 
   def configTestDirs(config: Configuration, folderName: String) = Seq(
     javaSource in config := baseDirectory.value / folderName,
