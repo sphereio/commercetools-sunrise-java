@@ -1,5 +1,6 @@
 package com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch.categorytree.viewmodels;
 
+import com.commercetools.sunrise.categorytree.navigation.NavigationCategoryTree;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
 import com.commercetools.sunrise.framework.localization.UserLanguage;
 import com.commercetools.sunrise.framework.reverserouters.productcatalog.product.ProductReverseRouter;
@@ -26,7 +27,7 @@ public class CategoryTreeFacetOptionViewModelFactory extends AbstractFacetOption
     private final ProductReverseRouter productReverseRouter;
 
     @Inject
-    public CategoryTreeFacetOptionViewModelFactory(final UserLanguage userLanguage, final CategoryTree categoryTree,
+    public CategoryTreeFacetOptionViewModelFactory(final UserLanguage userLanguage, @NavigationCategoryTree final CategoryTree categoryTree,
                                                    final ProductReverseRouter productReverseRouter) {
         this.locales = userLanguage.locales();
         this.categoryTree = categoryTree;

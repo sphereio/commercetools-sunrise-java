@@ -1,5 +1,6 @@
 package com.commercetools.sunrise.framework.viewmodels.content.categories;
 
+import com.commercetools.sunrise.categorytree.navigation.NavigationCategoryTree;
 import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
 import com.commercetools.sunrise.framework.reverserouters.productcatalog.product.ProductReverseRouter;
@@ -23,7 +24,7 @@ public class CategoryViewModelFactory extends SimpleViewModelFactory<CategoryVie
     private final ProductReverseRouter productReverseRouter;
 
     @Inject
-    public CategoryViewModelFactory(final Configuration configuration, final CategoryTree categoryTree,
+    public CategoryViewModelFactory(final Configuration configuration, @NavigationCategoryTree final CategoryTree categoryTree,
                                     final ProductReverseRouter productReverseRouter) {
         this.saleCategoryExtId = configuration.getString("common.saleCategoryExternalId");
         this.categoryTree = categoryTree;

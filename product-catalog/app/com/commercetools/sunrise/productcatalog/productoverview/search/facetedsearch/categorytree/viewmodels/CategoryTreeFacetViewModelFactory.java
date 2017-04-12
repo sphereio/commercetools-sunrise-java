@@ -1,5 +1,6 @@
 package com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch.categorytree.viewmodels;
 
+import com.commercetools.sunrise.categorytree.navigation.NavigationCategoryTree;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
 import com.commercetools.sunrise.framework.template.i18n.I18nIdentifierResolver;
 import com.commercetools.sunrise.search.facetedsearch.terms.TermFacetedSearchFormSettings;
@@ -28,7 +29,7 @@ public final class CategoryTreeFacetViewModelFactory extends TermFacetViewModelF
     @Inject
     public CategoryTreeFacetViewModelFactory(final I18nIdentifierResolver i18nIdentifierResolver,
                                              final TermFacetOptionViewModelFactory termFacetOptionViewModelFactory,
-                                             final CategoryTree categoryTree,
+                                             @NavigationCategoryTree final CategoryTree categoryTree,
                                              final CategoryTreeFacetOptionViewModelFactory categoryTreeFacetOptionViewModelFactory) {
         super(i18nIdentifierResolver, termFacetOptionViewModelFactory);
         this.categoryTree = categoryTree;
@@ -38,7 +39,7 @@ public final class CategoryTreeFacetViewModelFactory extends TermFacetViewModelF
     @Override
     protected List<FacetOptionViewModel> createOptions(final TermFacetedSearchFormSettings<?> settings, final TermFacetResult facetResult) {
         final String selectedValue = settings.getSelectedValue(Http.Context.current());
-        return categoryTree.getRoots().stream()
+        return categoryTree.getSubtreeRoots().stream()
                 .map(root -> categoryTreeFacetOptionViewModelFactory.create(facetResult, root, selectedValue))
                 .filter(root -> root.getCount() > 0)
                 .collect(toList());

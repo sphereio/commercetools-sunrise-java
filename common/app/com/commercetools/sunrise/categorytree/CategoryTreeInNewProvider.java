@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.common.categorytree;
+package com.commercetools.sunrise.categorytree;
 
 import com.google.inject.Provider;
 import io.sphere.sdk.categories.Category;
