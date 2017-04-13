@@ -28,7 +28,7 @@ public class CategoriesRefreshController extends Controller {
 
     public Result refresh() {
         cacheApi.remove(configuration.cacheKey());
-        LOGGER.info("Cached category trees removed");
+        LOGGER.info("Cached category tree removed");
         return redirect(homeReverseRouter.homePageCall());
     }
 }
