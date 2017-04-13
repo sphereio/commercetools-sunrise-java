@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.categorytree.navigation;
+package com.commercetools.sunrise.categorytree;
 
 import javax.inject.Named;
 import javax.inject.Qualifier;

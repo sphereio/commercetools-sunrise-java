@@ -1,7 +1,7 @@
 import com.commercetools.sunrise.categorytree.CachedCategoryTreeProvider;
+import com.commercetools.sunrise.categorytree.CategoryTreeConfiguration;
 import com.commercetools.sunrise.categorytree.CategoryTreeInNewProvider;
-import com.commercetools.sunrise.categorytree.navigation.CachedNavigationCategoryTreeProvider;
-import com.commercetools.sunrise.categorytree.navigation.NavigationCategoryTree;
+import com.commercetools.sunrise.categorytree.NavigationCategoryTree;
 import com.commercetools.sunrise.cms.CmsService;
 import com.commercetools.sunrise.framework.controllers.metrics.SimpleMetricsSphereClientProvider;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
@@ -69,9 +69,6 @@ public class Module extends AbstractModule {
         // Binding for category tree
         bind(CategoryTree.class).toProvider(CachedCategoryTreeProvider.class);
         bind(CategoryTree.class)
-                .annotatedWith(NavigationCategoryTree.class)
-                .toProvider(CachedNavigationCategoryTreeProvider.class);
-        bind(CategoryTree.class)
                 .annotatedWith(Names.named("new"))
                 .toProvider(CategoryTreeInNewProvider.class).in(Singleton.class);
 
@@ -115,6 +112,17 @@ public class Module extends AbstractModule {
         bind(MiniCartViewModelFactory.class).to(TruncatedMiniCartViewModelFactory.class);
 
         // Provide here your own bindings
+    }
+
+    @Provides
+    @RequestScoped
+    @NavigationCategoryTree
+    private CategoryTree provideNavigationCategoryTree(final CategoryTreeConfiguration configuration, final CategoryTree categoryTree) {
+        return configuration.rootExternalId()
+                .flatMap(categoryTree::findByExternalId)
+                .map(categoryTree::findChildren)
+                .map(categoryTree::getSubtree)
+                .orElse(categoryTree);
     }
 
     @Provides

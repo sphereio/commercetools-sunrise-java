@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.framework.viewmodels.content.categories;
 
-import com.commercetools.sunrise.categorytree.navigation.NavigationCategoryTree;
+import com.commercetools.sunrise.categorytree.NavigationCategoryTree;
 import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
 import com.commercetools.sunrise.framework.reverserouters.productcatalog.product.ProductReverseRouter;
