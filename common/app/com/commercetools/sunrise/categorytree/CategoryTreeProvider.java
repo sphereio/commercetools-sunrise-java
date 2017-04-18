@@ -57,7 +57,7 @@ public final class CategoryTreeProvider implements Provider<CategoryTree> {
         if (facetResult == null) {
             LOGGER.error("Could not discard categories due to missing facet in the result");
         } else if (facetResult.getOther() > 0) {
-            LOGGER.warn("Could not discard categories as some were not represented in the facet result due to the existing limit");
+            LOGGER.warn("Could not discard categories as some were not represented in the facet result due to the existing terms limit");
         } else {
             final List<Category> categories = categoryTree.getAllAsFlatList().stream()
                     .filter(category -> !isLeafWithNoProducts(category, facetResult, categoryTree))

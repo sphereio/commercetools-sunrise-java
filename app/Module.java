@@ -1,7 +1,7 @@
 import com.commercetools.sunrise.categorytree.CachedCategoryTreeProvider;
 import com.commercetools.sunrise.categorytree.CategoryTreeConfiguration;
-import com.commercetools.sunrise.categorytree.CategoryTreeInNewProvider;
 import com.commercetools.sunrise.categorytree.NavigationCategoryTree;
+import com.commercetools.sunrise.categorytree.NewCategoryTree;
 import com.commercetools.sunrise.cms.CmsService;
 import com.commercetools.sunrise.framework.controllers.metrics.SimpleMetricsSphereClientProvider;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
@@ -41,6 +41,7 @@ import java.util.concurrent.TimeUnit;
 
 import static io.sphere.sdk.client.SphereClientUtils.blockingWait;
 import static io.sphere.sdk.queries.QueryExecutionUtils.queryAll;
+import static java.util.Collections.emptyList;
 
 /**
  * This class is a Guice module that tells Guice how to bind several
@@ -68,9 +69,6 @@ public class Module extends AbstractModule {
 
         // Binding for category tree
         bind(CategoryTree.class).toProvider(CachedCategoryTreeProvider.class);
-        bind(CategoryTree.class)
-                .annotatedWith(Names.named("new"))
-                .toProvider(CategoryTreeInNewProvider.class).in(Singleton.class);
 
         // Binding for all template related, such as the engine, CMS and i18n
         bind(CmsService.class)
@@ -118,11 +116,22 @@ public class Module extends AbstractModule {
     @RequestScoped
     @NavigationCategoryTree
     private CategoryTree provideNavigationCategoryTree(final CategoryTreeConfiguration configuration, final CategoryTree categoryTree) {
-        return configuration.rootExternalId()
+        return configuration.navigationExternalId()
                 .flatMap(categoryTree::findByExternalId)
                 .map(categoryTree::findChildren)
                 .map(categoryTree::getSubtree)
                 .orElse(categoryTree);
+    }
+
+    @Provides
+    @RequestScoped
+    @NewCategoryTree
+    private CategoryTree provideNewCategoryTree(final CategoryTreeConfiguration configuration, final CategoryTree categoryTree) {
+        return configuration.newExtId()
+                .flatMap(categoryTree::findByExternalId)
+                .map(categoryTree::findChildren)
+                .map(categoryTree::getSubtree)
+                .orElseGet(() -> CategoryTree.of(emptyList()));
     }
 
     @Provides

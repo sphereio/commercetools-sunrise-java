@@ -23,7 +23,8 @@ public class CategoryTreeConfigurationTest extends WithApplication {
         assertThat(configuration.cacheExpiration()).isEmpty();
         assertThat(configuration.cacheKey()).isNotNull();
         assertThat(configuration.discardEmpty()).isFalse();
-        assertThat(configuration.rootExternalId()).isEmpty();
         assertThat(configuration.sortExpressions()).isNotEmpty();
+        assertThat(configuration.navigationExternalId()).isEmpty();
+        assertThat(configuration.newExtId()).isEmpty();
     }
 }
