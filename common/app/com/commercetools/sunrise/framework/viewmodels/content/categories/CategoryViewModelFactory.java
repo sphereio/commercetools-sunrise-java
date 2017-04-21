@@ -2,15 +2,15 @@ package com.commercetools.sunrise.framework.viewmodels.content.categories;
 
 import com.commercetools.sunrise.categorytree.CategoryTreeConfiguration;
 import com.commercetools.sunrise.categorytree.NavigationCategoryTree;
-import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
+import com.commercetools.sunrise.categorytree.SpecialCategoryConfiguration;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
 import com.commercetools.sunrise.framework.reverserouters.productcatalog.product.ProductReverseRouter;
+import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
 import io.sphere.sdk.categories.Category;
 import io.sphere.sdk.categories.CategoryTree;
 import play.mvc.Call;
 
 import javax.inject.Inject;
-import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
@@ -71,7 +71,10 @@ public class CategoryViewModelFactory extends SimpleViewModelFactory<CategoryVie
     }
 
     protected void fillSale(final CategoryViewModel viewModel, final Category category) {
-        viewModel.setSale(Optional.ofNullable(category.getExternalId()).equals(categoryTreeConfiguration.onSaleExtId()));
+        final boolean isSale = categoryTreeConfiguration.specialCategories().stream()
+                .filter(SpecialCategoryConfiguration::isSale)
+                .anyMatch(specialCategory -> specialCategory.externalId().equals(category.getExternalId()));
+        viewModel.setSale(isSale);
     }
 
     protected void fillChildren(final CategoryViewModel viewModel, final Category category) {

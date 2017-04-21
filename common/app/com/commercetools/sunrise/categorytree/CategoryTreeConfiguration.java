@@ -9,6 +9,9 @@ import javax.inject.Singleton;
 import java.util.List;
 import java.util.Optional;
 
+import static java.util.Collections.emptyList;
+import static java.util.stream.Collectors.toList;
+
 @Singleton
 public final class CategoryTreeConfiguration extends Base {
 
@@ -20,9 +23,7 @@ public final class CategoryTreeConfiguration extends Base {
     private final String navigationExtId;
     @Nullable
     private final String newExtId;
-    @Nullable
-    private final String onSaleExtId;
-    private final String onSaleExpression;
+    private final List<SpecialCategoryConfiguration> specialCategories;
 
     @Inject
     CategoryTreeConfiguration(final Configuration configuration) {
@@ -32,8 +33,9 @@ public final class CategoryTreeConfiguration extends Base {
         this.sortExpressions = configuration.getStringList("categoryTree.sortExpressions");
         this.navigationExtId = configuration.getString("categoryTree.navigationExternalId");
         this.newExtId = configuration.getString("categoryTree.newExternalId");
-        this.onSaleExtId = configuration.getString("categoryTree.onSaleExternalId");
-        this.onSaleExpression = configuration.getString("categoryTree.onSaleExpression");
+        this.specialCategories = configuration.getConfigList("categoryTree.specialCategories", emptyList()).stream()
+                .map(SpecialCategoryConfiguration::new)
+                .collect(toList());
     }
 
     public String cacheKey() {
@@ -60,11 +62,7 @@ public final class CategoryTreeConfiguration extends Base {
         return Optional.ofNullable(newExtId);
     }
 
-    public Optional<String> onSaleExtId() {
-        return Optional.ofNullable(onSaleExtId);
-    }
-
-    public String onSaleExpression() {
-        return onSaleExpression;
+    public List<SpecialCategoryConfiguration> specialCategories() {
+        return specialCategories;
     }
 }

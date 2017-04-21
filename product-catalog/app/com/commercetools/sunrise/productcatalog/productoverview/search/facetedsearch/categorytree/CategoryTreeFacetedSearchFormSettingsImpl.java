@@ -1,9 +1,12 @@
 package com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch.categorytree;
 
 import com.commercetools.sunrise.categorytree.CategoryTreeConfiguration;
+import com.commercetools.sunrise.categorytree.SpecialCategoryConfiguration;
 import com.commercetools.sunrise.productcatalog.productoverview.CategoryFinder;
+import com.commercetools.sunrise.search.SearchUtils;
 import com.commercetools.sunrise.search.facetedsearch.AbstractFacetedSearchFormSettingsWithOptions;
 import io.sphere.sdk.categories.Category;
+import io.sphere.sdk.categories.CategoryTree;
 import io.sphere.sdk.products.ProductProjection;
 import io.sphere.sdk.search.FilterExpression;
 import org.slf4j.Logger;
@@ -17,7 +20,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-import static java.util.Collections.singletonList;
+import static java.util.stream.Collectors.toList;
 
 final class CategoryTreeFacetedSearchFormSettingsImpl extends AbstractFacetedSearchFormSettingsWithOptions<ConfiguredCategoryTreeFacetedSearchFormSettings> implements CategoryTreeFacetedSearchFormSettings {
 
@@ -25,13 +28,15 @@ final class CategoryTreeFacetedSearchFormSettingsImpl extends AbstractFacetedSea
 
     private final CategoryFinder categoryFinder;
     private final CategoryTreeConfiguration categoryTreeConfiguration;
+    private final CategoryTree categoryTree;
 
     CategoryTreeFacetedSearchFormSettingsImpl(final ConfiguredCategoryTreeFacetedSearchFormSettings settings,
                                               final Locale locale, final CategoryFinder categoryFinder,
-                                              final CategoryTreeConfiguration categoryTreeConfiguration) {
+                                              final CategoryTreeConfiguration categoryTreeConfiguration, final CategoryTree categoryTree) {
         super(settings, locale);
         this.categoryFinder = categoryFinder;
         this.categoryTreeConfiguration = categoryTreeConfiguration;
+        this.categoryTree = categoryTree;
     }
 
     @Override
@@ -54,10 +59,20 @@ final class CategoryTreeFacetedSearchFormSettingsImpl extends AbstractFacetedSea
 
     @Override
     public List<FilterExpression<ProductProjection>> buildFilterExpressions(final Http.Context httpContext) {
-        return categoryTreeConfiguration.onSaleExtId()
-                .flatMap(onSaleExtId -> getSelectedValue(httpContext)
-                        .filter(category -> onSaleExtId.equals(category.getExternalId()))
-                        .map(category -> singletonList(FilterExpression.<ProductProjection>of(categoryTreeConfiguration.onSaleExpression()))))
-                .orElseGet(() -> CategoryTreeFacetedSearchFormSettings.super.buildFilterExpressions(httpContext));
+        final List<SpecialCategoryConfiguration> specialCategories = categoryTreeConfiguration.specialCategories();
+        if (!specialCategories.isEmpty()) {
+            final Optional<Category> selectedCategory = getSelectedValue(httpContext);
+            if (selectedCategory.isPresent()) {
+                return specialCategories.stream()
+                        .filter(config -> config.externalId().equals(selectedCategory.get().getExternalId()))
+                        .findAny()
+                        .map(config -> config.filterExpressions().stream()
+                                .map(expression -> SearchUtils.replaceCategoryExternalId(expression, categoryTree))
+                                .map(FilterExpression::<ProductProjection>of)
+                                .collect(toList()))
+                        .orElseGet(() -> CategoryTreeFacetedSearchFormSettings.super.buildFilterExpressions(httpContext));
+            }
+        }
+        return CategoryTreeFacetedSearchFormSettings.super.buildFilterExpressions(httpContext);
     }
 }
