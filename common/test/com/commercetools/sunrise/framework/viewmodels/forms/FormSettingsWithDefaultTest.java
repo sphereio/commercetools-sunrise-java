@@ -11,50 +11,40 @@ import static com.commercetools.sunrise.framework.viewmodels.forms.FormTestUtils
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class FormSettingsTest {
+public class FormSettingsWithDefaultTest {
 
     @Test
     public void findsSelectedValueFromForm() throws Exception {
-        final TestableFormSettings formSettings = new TestableFormSettings("bar");
+        final TestableFormSettingsWithDefault formSettings = new TestableFormSettingsWithDefault("bar", 10);
         final Map<String, List<String>> queryString = someQueryString();
         queryString.put("bar", asList("-1", "2", "0", "-5"));
         testWithHttpContext(queryString, httpContext ->
-                assertThat(formSettings.getSelectedValue(httpContext))
-                        .contains(2));
+                assertThat(formSettings.getSelectedValueOrDefault(httpContext))
+                        .isEqualTo(2));
     }
 
     @Test
-    public void findsAllSelectedValuesFromForm() throws Exception {
-        final TestableFormSettings formSettings = new TestableFormSettings("bar");
-        final Map<String, List<String>> queryString = someQueryString();
-        queryString.put("bar", asList("-1", "2", "0", "3"));
-        testWithHttpContext(queryString, httpContext ->
-                assertThat(formSettings.getAllSelectedValues(httpContext))
-                        .containsExactly(2, 3));
-    }
-
-    @Test
-    public void emptyIfNoneSelected() throws Exception {
-        final TestableFormSettings formSettings = new TestableFormSettings("bar");
+    public void fallbacksToDefaultValueIfNoneSelected() throws Exception {
+        final TestableFormSettingsWithDefault formSettings = new TestableFormSettingsWithDefault("bar", 10);
         testWithHttpContext(someQueryString(), httpContext ->
-                assertThat(formSettings.getSelectedValue(httpContext))
-                        .isEmpty());
+                assertThat(formSettings.getSelectedValueOrDefault(httpContext))
+                        .isEqualTo(10));
     }
 
     @Test
-    public void emptyIfNoValidValue() throws Exception {
-        final TestableFormSettings formSettings = new TestableFormSettings("bar");
+    public void fallbacksToDefaultValueIfNoValidValue() throws Exception {
+        final TestableFormSettingsWithDefault formSettings = new TestableFormSettingsWithDefault("bar", 10);
         final Map<String, List<String>> queryString = someQueryString();
         queryString.put("bar", asList("x", "y", "z"));
         testWithHttpContext(queryString, httpContext ->
-                assertThat(formSettings.getSelectedValue(httpContext))
-                        .isEmpty());
+                assertThat(formSettings.getSelectedValueOrDefault(httpContext))
+                        .isEqualTo(10));
     }
 
-    private static class TestableFormSettings extends AbstractFormSettings<Integer> {
+    private static class TestableFormSettingsWithDefault extends AbstractFormSettingsWithDefault<Integer> {
 
-        TestableFormSettings(final String fieldName) {
-            super(fieldName);
+        TestableFormSettingsWithDefault(final String fieldName, final Integer defaultValue) {
+            super(fieldName, defaultValue);
         }
 
         @Override

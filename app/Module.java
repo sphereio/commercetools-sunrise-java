@@ -101,10 +101,6 @@ public class Module extends AbstractModule {
                 .annotatedWith(Names.named("customSorted"))
                 .to(CustomSortedTermFacetViewModelFactory.class)
                 .in(RequestScoped.class);
-        bind(TermFacetViewModelFactory.class)
-                .annotatedWith(Names.named("categoryTree"))
-                .to(CategoryTreeFacetViewModelFactory.class)
-                .in(RequestScoped.class);
 
         // Binding to truncate mini cart to fit it into limited session space
         bind(MiniCartViewModelFactory.class).to(TruncatedMiniCartViewModelFactory.class);

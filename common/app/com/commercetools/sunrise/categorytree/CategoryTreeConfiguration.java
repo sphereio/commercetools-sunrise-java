@@ -20,6 +20,9 @@ public final class CategoryTreeConfiguration extends Base {
     private final String navigationExtId;
     @Nullable
     private final String newExtId;
+    @Nullable
+    private final String onSaleExtId;
+    private final String onSaleExpression;
 
     @Inject
     CategoryTreeConfiguration(final Configuration configuration) {
@@ -29,7 +32,8 @@ public final class CategoryTreeConfiguration extends Base {
         this.sortExpressions = configuration.getStringList("categoryTree.sortExpressions");
         this.navigationExtId = configuration.getString("categoryTree.navigationExternalId");
         this.newExtId = configuration.getString("categoryTree.newExternalId");
-
+        this.onSaleExtId = configuration.getString("categoryTree.onSaleExternalId");
+        this.onSaleExpression = configuration.getString("categoryTree.onSaleExpression");
     }
 
     public String cacheKey() {
@@ -54,5 +58,13 @@ public final class CategoryTreeConfiguration extends Base {
 
     public Optional<String> newExtId() {
         return Optional.ofNullable(newExtId);
+    }
+
+    public Optional<String> onSaleExtId() {
+        return Optional.ofNullable(onSaleExtId);
+    }
+
+    public String onSaleExpression() {
+        return onSaleExpression;
     }
 }
