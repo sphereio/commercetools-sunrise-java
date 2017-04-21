@@ -20,11 +20,26 @@ public class CategoryTreeConfigurationTest extends WithApplication {
     @Test
     public void fallbacksToDefaultValues() throws Exception {
         final CategoryTreeConfiguration configuration = app.injector().instanceOf(CategoryTreeConfiguration.class);
-        assertThat(configuration.cacheExpiration()).isEmpty();
-        assertThat(configuration.cacheKey()).isNotNull();
-        assertThat(configuration.discardEmpty()).isFalse();
-        assertThat(configuration.sortExpressions()).isNotEmpty();
-        assertThat(configuration.navigationExternalId()).isEmpty();
-        assertThat(configuration.newExtId()).isEmpty();
+        assertThat(configuration.cacheExpiration())
+                .as("Cache expiration")
+                .isEmpty();
+        assertThat(configuration.cacheKey())
+                .as("Cache key")
+                .isNotNull();
+        assertThat(configuration.discardEmpty())
+                .as("Discard empty")
+                .isFalse();
+        assertThat(configuration.sortExpressions())
+                .as("Sort expressions")
+                .isEmpty();
+        assertThat(configuration.navigationExternalId())
+                .as("Navigation external ID")
+                .isEmpty();
+        assertThat(configuration.newExtId())
+                .as("New external ID")
+                .isEmpty();
+        assertThat(configuration.specialCategories())
+                .as("Special categories")
+                .isEmpty();
     }
 }
