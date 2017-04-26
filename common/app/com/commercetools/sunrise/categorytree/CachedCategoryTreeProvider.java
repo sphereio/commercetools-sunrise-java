@@ -5,7 +5,9 @@ import play.cache.CacheApi;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
+import javax.inject.Singleton;
 
+@Singleton
 public final class CachedCategoryTreeProvider implements Provider<CategoryTree> {
 
     private final CacheApi cacheApi;

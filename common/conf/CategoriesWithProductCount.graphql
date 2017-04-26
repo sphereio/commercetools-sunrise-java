@@ -1,0 +1,9 @@
+query CategoriesWithProductCount($limit: Int!) {
+    categories(limit: $limit) {
+        total
+        results {
+            id
+            productCount
+        }
+    }
+}

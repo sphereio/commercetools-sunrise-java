@@ -13,11 +13,11 @@ import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 
 @Singleton
-public final class CategoryTreeConfiguration extends Base {
+public class CategoryTreeConfiguration extends Base {
 
     private final Integer cacheExpiration;
     private final String cacheKey;
-    private final boolean discardEmpty;
+    private final Boolean discardEmpty;
     private List<String> sortExpressions;
     @Nullable
     private final String navigationExtId;
@@ -46,7 +46,7 @@ public final class CategoryTreeConfiguration extends Base {
         return Optional.ofNullable(cacheExpiration);
     }
 
-    public boolean discardEmpty() {
+    public Boolean discardEmpty() {
         return discardEmpty;
     }
 
