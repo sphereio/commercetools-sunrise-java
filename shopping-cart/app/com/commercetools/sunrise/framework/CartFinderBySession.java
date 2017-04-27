@@ -52,7 +52,6 @@ final class CartFinderBySession extends AbstractSingleCartQueryExecutor implemen
     }
 
     private CartQuery decorateQueryWithAdditionalInfo(final CartQuery query) {
-
         return query
                 .plusPredicates(cart -> cart.cartState().is(CartState.ACTIVE))
                 .withSort(cart -> cart.lastModifiedAt().sort().desc())
