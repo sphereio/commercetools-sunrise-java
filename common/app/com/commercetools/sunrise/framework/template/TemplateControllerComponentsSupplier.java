@@ -1,17 +1,18 @@
 package com.commercetools.sunrise.framework.template;
 
+import com.commercetools.sunrise.framework.components.controllers.ControllerComponent;
+import com.commercetools.sunrise.framework.components.controllers.ControllerComponentSupplier;
 import com.commercetools.sunrise.framework.reverserouters.common.assets.AssetsLinksControllerComponent;
 import com.commercetools.sunrise.framework.reverserouters.common.localization.LocalizationLinksControllerComponent;
 import com.commercetools.sunrise.framework.reverserouters.myaccount.addressbook.AddressBookLinksControllerComponent;
 import com.commercetools.sunrise.framework.reverserouters.myaccount.authentication.AuthenticationLinksControllerComponent;
-import com.commercetools.sunrise.framework.reverserouters.myaccount.myorders.MyOrdersLinksControllerComponent;
 import com.commercetools.sunrise.framework.reverserouters.myaccount.mydetails.MyPersonalDetailsLinksControllerComponent;
+import com.commercetools.sunrise.framework.reverserouters.myaccount.myorders.MyOrdersLinksControllerComponent;
+import com.commercetools.sunrise.framework.reverserouters.myaccount.wishlist.WishlistLinksControllerComponent;
 import com.commercetools.sunrise.framework.reverserouters.productcatalog.home.HomeLinksControllerComponent;
 import com.commercetools.sunrise.framework.reverserouters.productcatalog.product.ProductLinksControllerComponent;
 import com.commercetools.sunrise.framework.reverserouters.shoppingcart.cart.CartLinksControllerComponent;
 import com.commercetools.sunrise.framework.reverserouters.shoppingcart.checkout.CheckoutLinksControllerComponent;
-import com.commercetools.sunrise.framework.components.controllers.ControllerComponent;
-import com.commercetools.sunrise.framework.components.controllers.ControllerComponentSupplier;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -31,7 +32,8 @@ public class TemplateControllerComponentsSupplier implements ControllerComponent
                                                 final HomeLinksControllerComponent homeLinksControllerComponent,
                                                 final ProductLinksControllerComponent productLinksControllerComponent,
                                                 final CartLinksControllerComponent cartLinksControllerComponent,
-                                                final CheckoutLinksControllerComponent checkoutLinksControllerComponent) {
+                                                final CheckoutLinksControllerComponent checkoutLinksControllerComponent,
+                                                final WishlistLinksControllerComponent wishlistLinksControllerComponent) {
         controllerComponents.add(localizationLinksControllerComponent);
         controllerComponents.add(assetsLinksControllerComponent);
         controllerComponents.add(addressBookLinksControllerComponent);
@@ -42,6 +44,7 @@ public class TemplateControllerComponentsSupplier implements ControllerComponent
         controllerComponents.add(productLinksControllerComponent);
         controllerComponents.add(cartLinksControllerComponent);
         controllerComponents.add(checkoutLinksControllerComponent);
+        controllerComponents.add(wishlistLinksControllerComponent);
     }
 
     @Override
