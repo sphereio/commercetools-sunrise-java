@@ -17,12 +17,14 @@ import static java.util.stream.Collectors.joining;
 public abstract class GraphQLRequestBase<T> extends Base implements GraphQLRequest<T> {
 
     private final String rootField;
+    private TypeReference<T> typeReference;
     private final String query;
     @Nullable
     private final JsonNode variables;
 
-    protected GraphQLRequestBase(final String rootField, final String query, @Nullable final JsonNode variables) {
+    protected GraphQLRequestBase(final String rootField, final TypeReference<T> typeReference, final String query, @Nullable final JsonNode variables) {
         this.rootField = rootField;
+        this.typeReference = typeReference;
         this.query = query;
         this.variables = variables;
     }
@@ -34,7 +36,6 @@ public abstract class GraphQLRequestBase<T> extends Base implements GraphQLReque
         if (rootJsonNode.has("data")) {
             final JsonNode data = rootJsonNode.get("data");
             if (data.has(rootField)) {
-                final TypeReference<T> typeReference = typeReference();
                 return SphereJsonUtils.readObject(data.get(rootField), typeReference);
             } else {
                 throw new GraphQLException("No field " + rootField + " in response", httpResponse);

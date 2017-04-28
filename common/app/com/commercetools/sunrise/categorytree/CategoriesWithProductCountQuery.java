@@ -9,11 +9,15 @@ import static com.commercetools.sunrise.ctp.graphql.GraphQLUtils.readFromResourc
 public final class CategoriesWithProductCountQuery extends GraphQLRequestBase<CategoriesWithProductCountQueryResult> {
 
     public CategoriesWithProductCountQuery(final int limit) {
-        super("categories", readFromResource("CategoriesWithProductCount.graphql"), Json.newObject().put("limit", limit));
+        super("categories", resultTypeReference(), readFromResource("CategoriesWithProductCount.graphql"), Json.newObject().put("limit", limit));
     }
 
-    @Override
-    public TypeReference<CategoriesWithProductCountQueryResult> typeReference() {
-        return new TypeReference<CategoriesWithProductCountQueryResult>() {};
+    public static TypeReference<CategoriesWithProductCountQueryResult> resultTypeReference() {
+        return new TypeReference<CategoriesWithProductCountQueryResult>() {
+            @Override
+            public String toString() {
+                return "TypeReference<CategoriesWithProductCountQueryResult>";
+            }
+        };
     }
 }
