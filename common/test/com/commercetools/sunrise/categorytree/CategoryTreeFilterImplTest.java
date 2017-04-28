@@ -1,19 +1,17 @@
 package com.commercetools.sunrise.categorytree;
 
-import com.commercetools.sunrise.test.JsonUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
 import io.sphere.sdk.categories.Category;
 import io.sphere.sdk.categories.CategoryTree;
-import io.sphere.sdk.categories.queries.CategoryQuery;
 import io.sphere.sdk.client.SphereClient;
 import io.sphere.sdk.queries.PagedQueryResult;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Locale;
 
+import static com.commercetools.sunrise.test.JsonUtils.readCtpObject;
 import static java.util.concurrent.CompletableFuture.completedFuture;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -22,8 +20,8 @@ import static org.mockito.Mockito.when;
 
 public class CategoryTreeFilterImplTest {
 
-    private static List<Category> categoryList = JsonUtils.readCtpObject("categorytree/filterCategoryList.json", new TypeReference<List<Category>>() {});
-    private static CategoriesWithProductCountQueryResult categoriesWithProductCountQueryResult = JsonUtils.readCtpObject("categorytree/categoriesWithProductCountQueryResult.json", CategoriesWithProductCountQuery.resultTypeReference());
+    private static List<Category> categoryList = readCtpObject("categorytree/filterCategoryList.json", new TypeReference<List<Category>>() {});
+    private static PagedQueryResult<CategoryWithProductCount> categoriesWithProductCountQueryResult = readCtpObject("categorytree/categoriesWithProductCountQueryResult.json", CategoriesWithProductCountQuery.resultTypeReference());
 
     private SphereClient sphereClient;
     private CategoryTreeConfiguration configuration;

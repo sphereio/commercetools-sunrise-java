@@ -16,7 +16,7 @@ import static java.util.stream.Collectors.toList;
 class CategoryTreeFilterImpl implements CategoryTreeFilter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CategoryTreeFilter.class);
-    private static final int CATEGORIES_LIMIT = 500;
+    private static final long CATEGORIES_LIMIT = 500;
 
     private final CategoryTreeConfiguration configuration;
     private final SphereClient sphereClient;
@@ -38,7 +38,7 @@ class CategoryTreeFilterImpl implements CategoryTreeFilter {
     }
 
     private CompletionStage<List<String>> fetchEmptyCategoryIds() {
-        final CategoriesWithProductCountQuery query = new CategoriesWithProductCountQuery(CATEGORIES_LIMIT);
+        final CategoriesWithProductCountQuery query = new CategoriesWithProductCountQuery(CATEGORIES_LIMIT, 0L);
         return sphereClient.execute(query)
                 .thenApply(result -> {
                     if (result.getTotal() > CATEGORIES_LIMIT) {
