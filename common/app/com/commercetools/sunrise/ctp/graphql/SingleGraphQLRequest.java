@@ -14,19 +14,14 @@ import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.joining;
 
-public abstract class GraphQLRequestBase<T> extends Base implements GraphQLRequest<T> {
+public abstract class SingleGraphQLRequest<T> extends Base implements GraphQLRequest<T> {
 
     private final String fieldName;
-    private TypeReference<T> typeReference;
-    private final String query;
-    @Nullable
-    private final JsonNode variables;
+    private final TypeReference<T> typeReference;
 
-    protected GraphQLRequestBase(final String fieldName, final TypeReference<T> typeReference, final String query, @Nullable final JsonNode variables) {
+    protected SingleGraphQLRequest(final TypeReference<T> typeReference, final String fieldName) {
         this.fieldName = fieldName;
         this.typeReference = typeReference;
-        this.query = query;
-        this.variables = variables;
     }
 
     @Nullable
@@ -47,20 +42,12 @@ public abstract class GraphQLRequestBase<T> extends Base implements GraphQLReque
 
     @Override
     public HttpRequestIntent httpRequestIntent() {
+        final JsonNode variables = getVariables();
         final String variablesPart = variables == null ? null : String.format("\"variables\": %s", variables);
-        final String queryPart = String.format("\"query\": \"%s\"", query.replace("\n", "\\n").replace("\"", "\\\""));
+        final String queryPart = String.format("\"query\": \"%s\"", getQuery().replace("\n", "\\n").replace("\"", "\\\""));
         final String body = Stream.of(queryPart, variablesPart)
                 .filter(Objects::nonNull)
                 .collect(joining(",", "{", "}"));
         return HttpRequestIntent.of(HttpMethod.POST, "/graphql", body);
-    }
-
-    public String getQuery() {
-        return query;
-    }
-
-    @Nullable
-    public JsonNode getVariables() {
-        return variables;
     }
 }

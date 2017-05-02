@@ -5,6 +5,8 @@ import io.sphere.sdk.models.ResourceIdentifiable;
 import io.sphere.sdk.products.*;
 import io.sphere.sdk.products.commands.ProductCreateCommand;
 import io.sphere.sdk.products.commands.ProductDeleteCommand;
+import io.sphere.sdk.products.commands.ProductUpdateCommand;
+import io.sphere.sdk.products.commands.updateactions.Unpublish;
 import io.sphere.sdk.producttypes.ProductType;
 
 import java.util.function.Function;
@@ -31,6 +33,15 @@ public final class ProductTestFixtures {
     }
 
     public static void deleteProductWithRetry(final BlockingSphereClient client, final Product productAfterTest) {
-        deleteWithRetry(client, productAfterTest, ProductDeleteCommand::of, DEFAULT_DELETE_TTL);
+        final Product unpublishedProduct = unpublishProduct(client, productAfterTest);
+        deleteWithRetry(client, unpublishedProduct, ProductDeleteCommand::of, DEFAULT_DELETE_TTL);
+    }
+
+    public static Product unpublishProduct(final BlockingSphereClient client, final Product productAfterTest) {
+        if (productAfterTest.getMasterData().isPublished()) {
+            return client.executeBlocking(ProductUpdateCommand.of(productAfterTest, Unpublish.of()));
+        } else {
+            return productAfterTest;
+        }
     }
 }
