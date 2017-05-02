@@ -20,8 +20,14 @@ public class CategoryWithProductCountTest {
     public void readsCategoryWithoutProducts() throws Exception {
         final JsonNode categoryWithoutProducts = provideCategoryResponse(0);
         final CategoryWithProductCount object = SphereJsonUtils.readObject(categoryWithoutProducts, CategoryWithProductCount.class);
-        assertThat(object.getId()).isEqualTo("9d7b89e7-dca4-47e3-b97c-d71a7a104391");
         assertThat(object.hasProducts()).isFalse();
+    }
+
+    @Test
+    public void readsCategoryWithOneProduct() throws Exception {
+        final JsonNode categoryWithoutProducts = provideCategoryResponse(1);
+        final CategoryWithProductCount object = SphereJsonUtils.readObject(categoryWithoutProducts, CategoryWithProductCount.class);
+        assertThat(object.hasProducts()).isTrue();
     }
 
     private JsonNode provideCategoryResponse(final int productCount) {
