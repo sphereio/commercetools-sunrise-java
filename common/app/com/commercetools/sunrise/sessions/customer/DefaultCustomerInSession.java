@@ -1,8 +1,8 @@
 package com.commercetools.sunrise.sessions.customer;
 
+import com.commercetools.sunrise.framework.injection.RequestScoped;
 import com.commercetools.sunrise.framework.viewmodels.content.customers.UserInfoViewModel;
 import com.commercetools.sunrise.framework.viewmodels.content.customers.UserInfoViewModelFactory;
-import com.commercetools.sunrise.framework.injection.RequestScoped;
 import com.commercetools.sunrise.sessions.DataFromResourceStoringOperations;
 import com.commercetools.sunrise.sessions.ObjectStoringSessionStrategy;
 import io.sphere.sdk.customers.Customer;
@@ -32,7 +32,7 @@ public class DefaultCustomerInSession extends DataFromResourceStoringOperations<
     private final UserInfoViewModelFactory userInfoViewModelFactory;
 
     @Inject
-    public DefaultCustomerInSession(final Configuration configuration, final ObjectStoringSessionStrategy session, final UserInfoViewModelFactory userInfoViewModelFactory) {
+    protected DefaultCustomerInSession(final Configuration configuration, final ObjectStoringSessionStrategy session, final UserInfoViewModelFactory userInfoViewModelFactory) {
         this.customerIdSessionKey = configuration.getString("session.customer.customerId", DEFAULT_CUSTOMER_ID_SESSION_KEY);
         this.customerEmailSessionKey = configuration.getString("session.customer.customerEmail", DEFAULT_CUSTOMER_EMAIL_SESSION_KEY);
         this.userInfoSessionKey = configuration.getString("session.customer.userInfo", DEFAULT_USER_INFO_SESSION_KEY);
@@ -76,7 +76,7 @@ public class DefaultCustomerInSession extends DataFromResourceStoringOperations<
     }
 
     @Override
-    public Optional<UserInfoViewModel> findUserInfo() {
+    public Optional<? extends UserInfoViewModel> findUserInfo() {
         return session.findObjectByKey(userInfoSessionKey, UserInfoViewModel.class);
     }
 

@@ -18,7 +18,7 @@ public interface CustomerInSession extends ResourceStoringOperations<Customer> {
 
     Optional<String> findCustomerEmail();
 
-    Optional<UserInfoViewModel> findUserInfo();
+    Optional<? extends UserInfoViewModel> findUserInfo();
 
     @Override
     void store(@Nullable final Customer customer);

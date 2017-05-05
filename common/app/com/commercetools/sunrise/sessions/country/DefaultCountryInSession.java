@@ -25,7 +25,7 @@ public class DefaultCountryInSession extends DataFromResourceStoringOperations<C
     private final SessionStrategy session;
 
     @Inject
-    public DefaultCountryInSession(final SessionStrategy session, final Configuration configuration) {
+    protected DefaultCountryInSession(final SessionStrategy session, final Configuration configuration) {
         this.countrySessionKey = configuration.getString("session.country", DEFAULT_COUNTRY_SESSION_KEY);
         this.session = session;
     }

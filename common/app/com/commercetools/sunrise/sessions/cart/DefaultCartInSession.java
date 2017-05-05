@@ -64,7 +64,7 @@ public class DefaultCartInSession extends DataFromResourceStoringOperations<Cart
     }
 
     @Override
-    public Optional<MiniCartViewModel> findMiniCart() {
+    public Optional<? extends MiniCartViewModel> findMiniCart() {
         return session.findObjectByKey(miniCartSessionKey, MiniCartViewModel.class);
     }
 
