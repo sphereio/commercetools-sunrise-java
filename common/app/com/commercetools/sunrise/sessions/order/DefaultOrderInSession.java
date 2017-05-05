@@ -25,7 +25,7 @@ public class DefaultOrderInSession extends DataFromResourceStoringOperations<Ord
     private final SessionStrategy session;
 
     @Inject
-    public DefaultOrderInSession(final SessionStrategy session, final Configuration configuration) {
+    protected DefaultOrderInSession(final SessionStrategy session, final Configuration configuration) {
         this.lastOrderIdSessionKey = configuration.getString("session.order.lastOrderId", DEFAULT_LAST_ORDER_ID_SESSION_KEY);
         this.session = session;
     }

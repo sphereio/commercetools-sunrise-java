@@ -25,7 +25,7 @@ public class DefaultLanguageInSession extends DataFromResourceStoringOperations<
     private final SessionStrategy session;
 
     @Inject
-    public DefaultLanguageInSession(final SessionStrategy session, final Configuration configuration) {
+    protected DefaultLanguageInSession(final SessionStrategy session, final Configuration configuration) {
         this.languageSessionKey = configuration.getString("session.language", DEFAULT_LANGUAGE_SESSION_KEY);
         this.session = session;
     }
