@@ -11,6 +11,6 @@ public class GraphQLException extends RuntimeException  {
     }
 
     public GraphQLException(final String message, final HttpResponse httpResponse) {
-        super(message);
+        super(message + "\n" + httpResponse.toString());
     }
 }

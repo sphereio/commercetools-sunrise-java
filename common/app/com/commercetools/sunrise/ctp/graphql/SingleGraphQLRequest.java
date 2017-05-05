@@ -7,6 +7,7 @@ import io.sphere.sdk.http.HttpMethod;
 import io.sphere.sdk.http.HttpResponse;
 import io.sphere.sdk.json.SphereJsonUtils;
 import io.sphere.sdk.models.Base;
+import play.libs.Json;
 
 import javax.annotation.Nullable;
 import java.util.Objects;
@@ -43,7 +44,7 @@ public abstract class SingleGraphQLRequest<T> extends Base implements GraphQLReq
     @Override
     public HttpRequestIntent httpRequestIntent() {
         final JsonNode variables = getVariables();
-        final String variablesPart = variables == null ? null : String.format("\"variables\": %s", variables);
+        final String variablesPart = variables == null ? null : String.format("\"variables\": %s", Json.stringify(variables));
         final String queryPart = String.format("\"query\": \"%s\"", getQuery().replace("\n", "\\n").replace("\"", "\\\""));
         final String body = Stream.of(queryPart, variablesPart)
                 .filter(Objects::nonNull)
