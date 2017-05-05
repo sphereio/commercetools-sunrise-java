@@ -23,7 +23,7 @@ public class DefaultCustomerInSession extends DataFromResourceStoringOperations<
     private static final Logger LOGGER = LoggerFactory.getLogger(CustomerInSession.class);
     private static final String DEFAULT_CUSTOMER_ID_SESSION_KEY = "sunrise-customer-id";
     private static final String DEFAULT_CUSTOMER_EMAIL_SESSION_KEY = "sunrise-customer-email";
-    private static final String DEFAULT_CUSTOMER_GROUP_SESSION_KEY = "sunrise-customer-group";
+    private static final String DEFAULT_CUSTOMER_GROUP_SESSION_KEY = "sunrise-customer-group-id";
     private static final String DEFAULT_USER_INFO_SESSION_KEY = "sunrise-user-info";
 
     private final String customerIdSessionKey;
@@ -37,7 +37,7 @@ public class DefaultCustomerInSession extends DataFromResourceStoringOperations<
     public DefaultCustomerInSession(final Configuration configuration, final ObjectStoringSessionStrategy session, final UserInfoViewModelFactory userInfoViewModelFactory) {
         this.customerIdSessionKey = configuration.getString("session.customer.customerId", DEFAULT_CUSTOMER_ID_SESSION_KEY);
         this.customerEmailSessionKey = configuration.getString("session.customer.customerEmail", DEFAULT_CUSTOMER_EMAIL_SESSION_KEY);
-        this.customerGroupIdSessionKey = configuration.getString("session.customer.customerGroup", DEFAULT_CUSTOMER_GROUP_SESSION_KEY);
+        this.customerGroupIdSessionKey = configuration.getString("session.customer.customerGroupId", DEFAULT_CUSTOMER_GROUP_SESSION_KEY);
         this.userInfoSessionKey = configuration.getString("session.customer.userInfo", DEFAULT_USER_INFO_SESSION_KEY);
         this.session = session;
         this.userInfoViewModelFactory = userInfoViewModelFactory;
