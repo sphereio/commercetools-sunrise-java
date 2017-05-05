@@ -1,0 +1,17 @@
+{
+  "name": "commercetools-sunrise-java",
+  "env": {
+    "APPLICATION_SECRET": {
+      "generator": "secret"
+    },
+    "CTP_CLIENT_ID": {
+      "required": true
+    },
+    "CTP_CLIENT_SECRET": {
+      "required": true
+    },
+    "CTP_PROJECT_KEY": {
+      "required": true
+    }
+  }
+}
