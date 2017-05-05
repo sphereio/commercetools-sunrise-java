@@ -8,6 +8,7 @@ import com.commercetools.sunrise.framework.template.engine.ContentRenderer;
 import com.commercetools.sunrise.framework.viewmodels.content.PageContent;
 import com.commercetools.sunrise.myaccount.MyAccountController;
 import com.commercetools.sunrise.myaccount.wishlist.viewmodels.WishlistPageContentFactory;
+import com.commercetools.sunrise.sessions.wishlist.WishlistInSession;
 import com.google.inject.Inject;
 import io.sphere.sdk.shoppinglists.ShoppingList;
 import io.sphere.sdk.utils.CompletableFutureUtils;
@@ -18,24 +19,32 @@ import javax.annotation.Nullable;
 import java.util.concurrent.CompletionStage;
 
 public class SunriseWishlistController extends SunriseContentController implements MyAccountController, WithQueryFlow<ShoppingList> {
-    private final MyWishlistCreator wishlistCreator;
+    private final WishlistInSession wishlistInSession;
+    private final WishlistCreator wishlistCreator;
+    private final WishlistFinder wishlistFinder;
     private final WishlistPageContentFactory wishlistPageContentFactory;
 
     @Inject
-    protected SunriseWishlistController(final MyWishlistCreator wishlistCreator, final ContentRenderer contentRenderer, final WishlistPageContentFactory wishlistPageContentFactory) {
+    protected SunriseWishlistController(final WishlistInSession wishlistInSession, final WishlistCreator wishlistCreator,
+                                        final WishlistFinder wishlistFinder, final ContentRenderer contentRenderer,
+                                        final WishlistPageContentFactory wishlistPageContentFactory) {
         super(contentRenderer);
+        this.wishlistInSession = wishlistInSession;
         this.wishlistCreator = wishlistCreator;
+        this.wishlistFinder = wishlistFinder;
         this.wishlistPageContentFactory = wishlistPageContentFactory;
     }
 
+    @SunriseRoute(MyWishlistReverseRouter.MY_WISHLIST_PAGE_CALL)
     public CompletionStage<Result> show(final String languageTag) {
-        return wishlistCreator.get().thenComposeAsync(this::showPage, HttpExecution.defaultContext());
+        return wishlistInSession.findWishlistId()
+                .map(wishlistFinder::findById)
+                .orElseGet(() -> wishlistCreator.get())
+                .thenComposeAsync(this::showPage, HttpExecution.defaultContext());
     }
-
 
     @SunriseRoute(MyWishlistReverseRouter.ADD_TO_WISHLIST)
     public CompletionStage<Result> addToWishlist(final String languageTag) {
-        System.out.println("hhh");
         return CompletableFutureUtils.successful(null);
     }
 

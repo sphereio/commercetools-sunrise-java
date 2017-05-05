@@ -5,10 +5,12 @@ import com.commercetools.sunrise.framework.components.controllers.RegisteredComp
 import com.commercetools.sunrise.framework.controllers.cache.NoCache;
 import com.commercetools.sunrise.framework.template.TemplateControllerComponentsSupplier;
 import com.commercetools.sunrise.framework.template.engine.ContentRenderer;
-import com.commercetools.sunrise.myaccount.wishlist.MyWishlistCreator;
 import com.commercetools.sunrise.myaccount.wishlist.SunriseWishlistController;
+import com.commercetools.sunrise.myaccount.wishlist.WishlistCreator;
+import com.commercetools.sunrise.myaccount.wishlist.WishlistFinder;
 import com.commercetools.sunrise.myaccount.wishlist.viewmodels.WishlistPageContentFactory;
 import com.commercetools.sunrise.sessions.customer.CustomerOperationsControllerComponentSupplier;
+import com.commercetools.sunrise.sessions.wishlist.WishlistInSession;
 import com.google.inject.Inject;
 
 @NoCache
@@ -20,7 +22,8 @@ import com.google.inject.Inject;
 public class MyWishListController extends SunriseWishlistController {
 
     @Inject
-    public MyWishListController(final MyWishlistCreator wishlistCreator, final ContentRenderer contentRenderer, final WishlistPageContentFactory wishlistPageContentFactory) {
-        super(wishlistCreator, contentRenderer, wishlistPageContentFactory);
+    public MyWishListController(final WishlistInSession wishlistInSession, final WishlistCreator wishlistCreator, final WishlistFinder wishlistFinder,
+                                final ContentRenderer contentRenderer, final WishlistPageContentFactory wishlistPageContentFactory) {
+        super(wishlistInSession, wishlistCreator, wishlistFinder, contentRenderer, wishlistPageContentFactory);
     }
 }

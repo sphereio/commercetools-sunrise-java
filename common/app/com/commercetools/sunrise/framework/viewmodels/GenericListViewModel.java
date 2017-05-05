@@ -1,6 +1,4 @@
-package com.commercetools.sunrise.myaccount.wishlist.viewmodels;
-
-import com.commercetools.sunrise.framework.viewmodels.ViewModel;
+package com.commercetools.sunrise.framework.viewmodels;
 
 import java.util.List;
 

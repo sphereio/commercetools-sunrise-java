@@ -1,7 +1,10 @@
 package com.commercetools.sunrise.myaccount.wishlist.viewmodels;
 
+import com.commercetools.sunrise.framework.viewmodels.GenericListViewModel;
 import com.commercetools.sunrise.framework.viewmodels.PageTitleResolver;
 import com.commercetools.sunrise.framework.viewmodels.content.PageContentFactory;
+import com.commercetools.sunrise.framework.viewmodels.content.wishlist.WishlistThumbnailViewModel;
+import com.commercetools.sunrise.framework.viewmodels.content.wishlist.WishlistThumbnailViewModelFactory;
 import com.google.inject.Inject;
 import io.sphere.sdk.shoppinglists.ShoppingList;
 

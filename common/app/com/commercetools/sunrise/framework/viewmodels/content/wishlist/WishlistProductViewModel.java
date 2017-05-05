@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.myaccount.wishlist.viewmodels;
+package com.commercetools.sunrise.framework.viewmodels.content.wishlist;
 
 import com.commercetools.sunrise.framework.viewmodels.ViewModel;
 import com.commercetools.sunrise.framework.viewmodels.content.products.ProductVariantViewModel;
