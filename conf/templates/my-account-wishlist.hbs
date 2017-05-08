@@ -1,0 +1,79 @@
+<!-- start my-account-wishlist.hbs -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {{> common/htmlhead}}
+</head>
+
+<body>
+  <div class="darkbg hidden"></div>
+  {{> common/header}}
+  <div class="my-orders">
+    <div class="container">
+      <div class="my-account-title">
+        <span class="my-account-title-text icon-user">{{i18n "my-account:myAccount.title"}}</span>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="my-orders-wrapper">
+            <div class="row">
+              <div class="col-sm-3">
+                {{> myaccount/my-account-sidebar myWishlistTab=true}}
+              </div>
+              <div id="my-account-desktop-content" class="col-sm-9">
+                <div class="my-orders-order-content">
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <div class="my-orders-title hidden-xs">
+                        <span>{{content.contentTitle}}</span>
+                        <span class="my-account-wishlist-items-number">{{content.itemsInTotal}}</span>
+                      </div>
+                    </div>
+                  </div>
+                  {{> myaccount/my-account-wishlist-pagination}}
+                  <div class="my-account-wishlist-items-wrapper">
+                    <div class="row">
+                      {{#each content.products.list}}
+                          <div class="col-sm-6 col-md-4">
+                              {{> catalog/product-thumbnail thumbnail=this index=@index wishlist=true}}
+                              <form action="{{@root.meta._links.removeFromWishlist.href}}" method="post">
+                                  <input type="hidden" name="csrfToken" value="{{@root.meta.csrfToken}}"/>
+                                  <input type="hidden" name="lineItemId" value="{{lineItemId}}">
+
+                                  <div class="my-account-wishlist-remove-btn">
+                                      <button type="submit">{{i18n "catalog:removeBtn.title"}}</button>
+                                  </div>
+                              </form>
+                          </div>
+                      {{/each}}
+                    </div>
+                  </div>
+                  <div class="my-account-wishlist-pagination-bottom">
+                    <div class="row">
+                      <div class="col-sm-12 hidden-xs text-center custom-pagination">
+                        <ul class="page-numbers">
+                          {{> common/pagination pagination=content.pagination}}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="my-account-wishlist-clear-btn">
+                    <button>{{content.clearWishlistBtn}}</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{!-- {{> common/wishlist}} --}}
+  {{> common/footer}}
+  {{> common/htmlscripts}}
+</body>
+
+</html>
+<!-- end my-account-wishlist.hbs -->

@@ -20,5 +20,6 @@ public class ShoppingListThumbnailViewModelFactory extends SimpleViewModelFactor
     @Override
     protected void initialize(final ShoppingListThumbnailViewModel viewModel, final LineItem input) {
         viewModel.setProduct(productViewModelFactory.create(input));
+        viewModel.setLineItemId(input.getId());
     }
 }
