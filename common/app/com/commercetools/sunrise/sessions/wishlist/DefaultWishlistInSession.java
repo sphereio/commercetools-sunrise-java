@@ -40,7 +40,7 @@ public class DefaultWishlistInSession extends DataFromResourceStoringOperations<
 
     @Override
     protected void storeAssociatedData(@NotNull final ShoppingList value) {
-        session.overwriteObjectByKey(wishlistIdSessionKey, shoppingListViewModelFactory.create(value));
+        session.overwriteValueByKey(wishlistIdSessionKey, value.getId());
     }
 
     @Override

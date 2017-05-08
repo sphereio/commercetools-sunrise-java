@@ -16,7 +16,8 @@ public class WishlistFinder extends AbstractSphereRequestExecutor {
     }
 
     public CompletionStage<ShoppingList> findById(final String id) {
-        final ShoppingListByIdGet get = ShoppingListByIdGet.of(id);
+        final ShoppingListByIdGet get = ShoppingListByIdGet.of(id)
+                .withExpansionPaths(m -> m.lineItems().variant());
         return getSphereClient().execute(get);
     }
 }

@@ -43,11 +43,6 @@ public class SunriseWishlistController extends SunriseContentController implemen
                 .thenComposeAsync(this::showPage, HttpExecution.defaultContext());
     }
 
-    @SunriseRoute(MyWishlistReverseRouter.ADD_TO_WISHLIST)
-    public CompletionStage<Result> addToWishlist(final String languageTag) {
-        return CompletableFutureUtils.successful(null);
-    }
-
     @Nullable
     @Override
     public String getTemplateName() {

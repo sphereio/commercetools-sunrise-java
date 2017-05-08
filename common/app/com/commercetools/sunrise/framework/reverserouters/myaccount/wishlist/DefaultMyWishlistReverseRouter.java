@@ -13,7 +13,7 @@ public class DefaultMyWishlistReverseRouter extends AbstractReflectionReverseRou
 
     @Inject
     public DefaultMyWishlistReverseRouter(final ParsedRoutes parsedRoutes) {
-        addToWishlistCaller = getReverseCallerForSunriseRoute(ADD_TO_WISHLIST, parsedRoutes);
+        addToWishlistCaller = getReverseCallerForSunriseRoute(ADD_TO_WISHLIST_PROCESS, parsedRoutes);
         wishlistPageCaller = getReverseCallerForSunriseRoute(MY_WISHLIST_PAGE_CALL, parsedRoutes);
     }
 
@@ -23,7 +23,7 @@ public class DefaultMyWishlistReverseRouter extends AbstractReflectionReverseRou
     }
 
     @Override
-    public Call addToWishlist(final String languageTag) {
+    public Call addToWishlistProcess(final String languageTag) {
         return addToWishlistCaller.call(languageTag);
     }
 }
