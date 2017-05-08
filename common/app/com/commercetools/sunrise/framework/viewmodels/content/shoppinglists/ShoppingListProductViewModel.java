@@ -1,9 +1,9 @@
-package com.commercetools.sunrise.framework.viewmodels.content.wishlist;
+package com.commercetools.sunrise.framework.viewmodels.content.shoppinglists;
 
 import com.commercetools.sunrise.framework.viewmodels.ViewModel;
 import com.commercetools.sunrise.framework.viewmodels.content.products.ProductVariantViewModel;
 
-public class WishlistProductViewModel extends ViewModel {
+public class ShoppingListProductViewModel extends ViewModel {
     private ProductVariantViewModel variant;
 
     public ProductVariantViewModel getVariant() {

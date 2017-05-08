@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.framework.viewmodels.content.wishlist;
+package com.commercetools.sunrise.framework.viewmodels.content.shoppinglists;
 
 import com.commercetools.sunrise.framework.viewmodels.GenericListViewModel;
 import com.commercetools.sunrise.framework.viewmodels.ViewModel;
@@ -6,16 +6,16 @@ import com.commercetools.sunrise.framework.viewmodels.ViewModel;
 /**
  * This view model is responsible for storing the wishlist.
  */
-public class WishlistViewModel extends ViewModel {
+public class ShoppingListViewModel extends ViewModel {
     private String name;
 
-    private GenericListViewModel<WishlistThumbnailViewModel> products;
+    private GenericListViewModel<ShoppingListThumbnailViewModel> products;
 
-    public GenericListViewModel<WishlistThumbnailViewModel> getProducts() {
+    public GenericListViewModel<ShoppingListThumbnailViewModel> getProducts() {
         return products;
     }
 
-    public void setProducts(final GenericListViewModel<WishlistThumbnailViewModel> products) {
+    public void setProducts(final GenericListViewModel<ShoppingListThumbnailViewModel> products) {
         this.products = products;
     }
 

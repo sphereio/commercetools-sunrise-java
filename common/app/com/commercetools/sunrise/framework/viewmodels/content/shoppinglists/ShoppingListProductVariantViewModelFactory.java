@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.framework.viewmodels.content.wishlist;
+package com.commercetools.sunrise.framework.viewmodels.content.shoppinglists;
 
 import com.commercetools.sunrise.framework.reverserouters.productcatalog.product.ProductReverseRouter;
 import com.commercetools.sunrise.framework.viewmodels.content.products.AbstractProductVariantViewModelFactory;
@@ -9,14 +9,14 @@ import io.sphere.sdk.products.ProductVariant;
 import io.sphere.sdk.shoppinglists.LineItem;
 
 /**
- * The factory class for creating {@link ProductVariantViewModel}.
+ * The factory class for creating {@link ProductVariantViewModel} used by shopping lists.
  */
-public class WishlistProductVariantViewModelFactory extends AbstractProductVariantViewModelFactory<LineItem> {
+public class ShoppingListProductVariantViewModelFactory extends AbstractProductVariantViewModelFactory<LineItem> {
     private final PriceFormatter priceFormatter;
     private final ProductReverseRouter productReverseRouter;
 
     @Inject
-    public WishlistProductVariantViewModelFactory(final PriceFormatter priceFormatter, final ProductReverseRouter productReverseRouter) {
+    public ShoppingListProductVariantViewModelFactory(final PriceFormatter priceFormatter, final ProductReverseRouter productReverseRouter) {
         this.priceFormatter = priceFormatter;
         this.productReverseRouter = productReverseRouter;
     }

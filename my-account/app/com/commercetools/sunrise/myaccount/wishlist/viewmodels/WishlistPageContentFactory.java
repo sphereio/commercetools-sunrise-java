@@ -3,8 +3,8 @@ package com.commercetools.sunrise.myaccount.wishlist.viewmodels;
 import com.commercetools.sunrise.framework.viewmodels.GenericListViewModel;
 import com.commercetools.sunrise.framework.viewmodels.PageTitleResolver;
 import com.commercetools.sunrise.framework.viewmodels.content.PageContentFactory;
-import com.commercetools.sunrise.framework.viewmodels.content.wishlist.WishlistThumbnailViewModel;
-import com.commercetools.sunrise.framework.viewmodels.content.wishlist.WishlistThumbnailViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.content.shoppinglists.ShoppingListThumbnailViewModel;
+import com.commercetools.sunrise.framework.viewmodels.content.shoppinglists.ShoppingListThumbnailViewModelFactory;
 import com.google.inject.Inject;
 import io.sphere.sdk.shoppinglists.ShoppingList;
 
@@ -16,10 +16,10 @@ import java.util.stream.Collectors;
  */
 public class WishlistPageContentFactory extends PageContentFactory<WishlistPageContent, ShoppingList> {
     private final PageTitleResolver pageTitleResolver;
-    private final WishlistThumbnailViewModelFactory thumbnailViewModelFactory;
+    private final ShoppingListThumbnailViewModelFactory thumbnailViewModelFactory;
 
     @Inject
-    public WishlistPageContentFactory(final PageTitleResolver pageTitleResolver, final WishlistThumbnailViewModelFactory thumbnailViewModelFactory) {
+    public WishlistPageContentFactory(final PageTitleResolver pageTitleResolver, final ShoppingListThumbnailViewModelFactory thumbnailViewModelFactory) {
         this.pageTitleResolver = pageTitleResolver;
         this.thumbnailViewModelFactory = thumbnailViewModelFactory;
     }
@@ -32,8 +32,8 @@ public class WishlistPageContentFactory extends PageContentFactory<WishlistPageC
     @Override
     protected void initialize(final WishlistPageContent viewModel, final ShoppingList input) {
         super.initialize(viewModel, input);
-        final GenericListViewModel<WishlistThumbnailViewModel> products = new GenericListViewModel<>();
-        final List<WishlistThumbnailViewModel> list = input.getLineItems().stream()
+        final GenericListViewModel<ShoppingListThumbnailViewModel> products = new GenericListViewModel<>();
+        final List<ShoppingListThumbnailViewModel> list = input.getLineItems().stream()
                 .map(thumbnailViewModelFactory::create)
                 .collect(Collectors.toList());
         products.setList(list);

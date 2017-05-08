@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.sessions.wishlist;
 
-import com.commercetools.sunrise.framework.viewmodels.content.wishlist.WishlistViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.content.shoppinglists.ShoppingListViewModelFactory;
 import com.commercetools.sunrise.sessions.DataFromResourceStoringOperations;
 import com.commercetools.sunrise.sessions.ObjectStoringSessionStrategy;
 import io.sphere.sdk.shoppinglists.ShoppingList;
@@ -18,14 +18,14 @@ public class DefaultWishlistInSession extends DataFromResourceStoringOperations<
 
     private final String wishlistIdSessionKey;
     private final ObjectStoringSessionStrategy session;
-    private final WishlistViewModelFactory wishlistViewModelFactory;
+    private final ShoppingListViewModelFactory shoppingListViewModelFactory;
 
     @Inject
     public DefaultWishlistInSession(final Configuration configuration, final ObjectStoringSessionStrategy session,
-                                    final WishlistViewModelFactory wishlistViewModelFactory) {
+                                    final ShoppingListViewModelFactory shoppingListViewModelFactory) {
         this.wishlistIdSessionKey = configuration.getString("session.wishlist.wishlistId", DEFAULT_WISHLIST_ID_SESSION_KEY);
         this.session = session;
-        this.wishlistViewModelFactory = wishlistViewModelFactory;
+        this.shoppingListViewModelFactory = shoppingListViewModelFactory;
     }
 
     @Override
@@ -40,7 +40,7 @@ public class DefaultWishlistInSession extends DataFromResourceStoringOperations<
 
     @Override
     protected void storeAssociatedData(@NotNull final ShoppingList value) {
-        session.overwriteObjectByKey(wishlistIdSessionKey, wishlistViewModelFactory.create(value));
+        session.overwriteObjectByKey(wishlistIdSessionKey, shoppingListViewModelFactory.create(value));
     }
 
     @Override
