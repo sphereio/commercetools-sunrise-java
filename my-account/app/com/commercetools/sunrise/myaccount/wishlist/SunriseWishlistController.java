@@ -22,16 +22,18 @@ public class SunriseWishlistController extends SunriseContentController implemen
     private final WishlistInSession wishlistInSession;
     private final WishlistCreator wishlistCreator;
     private final WishlistFinder wishlistFinder;
+    private final ClearWishlistControllerAction controllerAction;
     private final WishlistPageContentFactory wishlistPageContentFactory;
 
     @Inject
     protected SunriseWishlistController(final WishlistInSession wishlistInSession, final WishlistCreator wishlistCreator,
-                                        final WishlistFinder wishlistFinder, final ContentRenderer contentRenderer,
+                                        final WishlistFinder wishlistFinder, final ClearWishlistControllerAction controllerAction, final ContentRenderer contentRenderer,
                                         final WishlistPageContentFactory wishlistPageContentFactory) {
         super(contentRenderer);
         this.wishlistInSession = wishlistInSession;
         this.wishlistCreator = wishlistCreator;
         this.wishlistFinder = wishlistFinder;
+        this.controllerAction = controllerAction;
         this.wishlistPageContentFactory = wishlistPageContentFactory;
     }
 
@@ -39,6 +41,16 @@ public class SunriseWishlistController extends SunriseContentController implemen
     public CompletionStage<Result> show(final String languageTag) {
         return wishlistInSession.findWishlistId()
                 .map(wishlistFinder::findById)
+                .orElseGet(() -> wishlistCreator.get())
+                .thenComposeAsync(this::showPage, HttpExecution.defaultContext());
+    }
+
+
+    @SunriseRoute(MyWishlistReverseRouter.CLEAR_WISHLIST_PROCESS)
+    public CompletionStage<Result> clear(final String languageTag) {
+        return wishlistInSession.findWishlistId()
+                .map(wishlistFinder::findById)
+                .map(shoppingListCompletionStage -> shoppingListCompletionStage.thenComposeAsync(controllerAction::apply))
                 .orElseGet(() -> wishlistCreator.get())
                 .thenComposeAsync(this::showPage, HttpExecution.defaultContext());
     }

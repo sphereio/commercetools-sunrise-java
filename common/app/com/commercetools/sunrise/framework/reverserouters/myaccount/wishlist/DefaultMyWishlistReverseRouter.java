@@ -10,18 +10,15 @@ public class DefaultMyWishlistReverseRouter extends AbstractReflectionReverseRou
 
     private final ReverseCaller addToWishlistCaller;
     private final ReverseCaller removeFromWishlistCaller;
+    private final ReverseCaller clearWishlistCaller;
     private final ReverseCaller wishlistPageCaller;
 
     @Inject
     public DefaultMyWishlistReverseRouter(final ParsedRoutes parsedRoutes) {
         addToWishlistCaller = getReverseCallerForSunriseRoute(ADD_TO_WISHLIST_PROCESS, parsedRoutes);
         removeFromWishlistCaller = getReverseCallerForSunriseRoute(REMOVE_FROM_WISHLIST_PROCESS, parsedRoutes);
+        clearWishlistCaller = getReverseCallerForSunriseRoute(CLEAR_WISHLIST_PROCESS, parsedRoutes);
         wishlistPageCaller = getReverseCallerForSunriseRoute(MY_WISHLIST_PAGE_CALL, parsedRoutes);
-    }
-
-    @Override
-    public Call myWishlistPageCall(final String languageTag) {
-        return wishlistPageCaller.call(languageTag);
     }
 
     @Override
@@ -32,5 +29,15 @@ public class DefaultMyWishlistReverseRouter extends AbstractReflectionReverseRou
     @Override
     public Call removeFromWishlistProcess(final String languageTag) {
         return removeFromWishlistCaller.call(languageTag);
+    }
+
+    @Override
+    public Call clearWishlistProcess(final String languageTag) {
+        return clearWishlistCaller.call(languageTag);
+    }
+
+    @Override
+    public Call myWishlistPageCall(final String languageTag) {
+        return wishlistPageCaller.call(languageTag);
     }
 }

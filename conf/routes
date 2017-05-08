@@ -118,8 +118,12 @@ POST        /:languageTag/user/addressbook/:addressIdentifier/remove            
 
 # Shows the wish list
 GET         /:languageTag/user/wishlist                                         @controllers.myaccount.MyWishListController.show(languageTag: String)
+# Adds a product variant to the wishlist
 POST        /:languageTag/user/wishlist/add                                     @controllers.myaccount.AddToWishlistController.process(languageTag: String)
+# Removes a line item from the wishlist
 POST        /:languageTag/user/wishlist/remove                                  @controllers.myaccount.RemoveFromWishlistController.process(languageTag: String)
+# Clears the wishlist
+POST        /:languageTag/user/wishlist/clear                                   @controllers.myaccount.MyWishListController.clear(languageTag: String)
 
 # Shows all orders from the customer
 GET         /:languageTag/user/orders                                           @controllers.myaccount.MyOrderListController.show(languageTag: String)

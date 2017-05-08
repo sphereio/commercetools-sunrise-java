@@ -1,0 +1,32 @@
+<!-- start myaccount/my-account-wishlist-pagination.hbs -->
+<div class="my-account-wishlist-pagination hidden-xs">
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="my-account-wishlist-clear">
+          <form id="form-clear-wishlist" name="clear-wishlist"
+                action="{{@root.meta._links.clearWishlist.href}}" method="post">
+              <input type="hidden" name="csrfToken"
+                     value="{{@root.meta.csrfToken}}"/>
+
+              <button type="submit">{{content.clearWishlistBtn}}</button>
+          </form>
+      </div>
+    </div>
+    <div class="col-sm-4 text-center custom-pagination">
+      <ul class="page-numbers">
+        {{> common/pagination pagination=content.pagination}}
+      </ul>
+    </div>
+    <div class="col-sm-4">
+      <div class="my-account-wishlist-per-page">
+        <span class="wishlist-display-selector-title hidden-sm">{{i18n "catalog:displaySelector.title"}}</span>
+        <select>
+          {{#each content.displaySelector.list}}
+            <option value="{{value}}" {{#if selected}}selected{{/if}}>{{label}}</option>
+          {{/each}}
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end myaccount/my-account-wishlist-pagination.hbs -->

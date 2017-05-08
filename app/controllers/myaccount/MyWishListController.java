@@ -5,6 +5,7 @@ import com.commercetools.sunrise.framework.components.controllers.RegisteredComp
 import com.commercetools.sunrise.framework.controllers.cache.NoCache;
 import com.commercetools.sunrise.framework.template.TemplateControllerComponentsSupplier;
 import com.commercetools.sunrise.framework.template.engine.ContentRenderer;
+import com.commercetools.sunrise.myaccount.wishlist.ClearWishlistControllerAction;
 import com.commercetools.sunrise.myaccount.wishlist.SunriseWishlistController;
 import com.commercetools.sunrise.myaccount.wishlist.WishlistCreator;
 import com.commercetools.sunrise.myaccount.wishlist.WishlistFinder;
@@ -23,7 +24,8 @@ public class MyWishListController extends SunriseWishlistController {
 
     @Inject
     public MyWishListController(final WishlistInSession wishlistInSession, final WishlistCreator wishlistCreator, final WishlistFinder wishlistFinder,
-                                final ContentRenderer contentRenderer, final WishlistPageContentFactory wishlistPageContentFactory) {
-        super(wishlistInSession, wishlistCreator, wishlistFinder, contentRenderer, wishlistPageContentFactory);
+                                final ClearWishlistControllerAction controllerAction, final ContentRenderer contentRenderer,
+                                final WishlistPageContentFactory wishlistPageContentFactory) {
+        super(wishlistInSession, wishlistCreator, wishlistFinder, controllerAction, contentRenderer, wishlistPageContentFactory);
     }
 }
