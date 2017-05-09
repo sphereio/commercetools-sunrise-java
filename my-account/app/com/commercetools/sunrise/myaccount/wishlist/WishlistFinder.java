@@ -1,23 +1,16 @@
 package com.commercetools.sunrise.myaccount.wishlist;
 
-import com.commercetools.sunrise.framework.controllers.AbstractSphereRequestExecutor;
-import com.commercetools.sunrise.framework.hooks.HookRunner;
-import com.google.inject.Inject;
-import io.sphere.sdk.client.SphereClient;
 import io.sphere.sdk.shoppinglists.ShoppingList;
-import io.sphere.sdk.shoppinglists.queries.ShoppingListByIdGet;
 
 import java.util.concurrent.CompletionStage;
 
-public class WishlistFinder extends AbstractSphereRequestExecutor {
-    @Inject
-    protected WishlistFinder(final SphereClient sphereClient, final HookRunner hookRunner) {
-        super(sphereClient, hookRunner);
-    }
+public interface WishlistFinder {
 
-    public CompletionStage<ShoppingList> findById(final String id) {
-        final ShoppingListByIdGet get = ShoppingListByIdGet.of(id)
-                .withExpansionPaths(m -> m.lineItems().variant());
-        return getSphereClient().execute(get);
-    }
+    /**
+     * If the current session contains a signed in customer or a previously created wishlist, this wishlist
+     * will be returned. Otherwise a new wishlist will be created and stored in the current session.
+     *
+     * @return the wishlist
+     */
+    CompletionStage<ShoppingList> getOrCreate();
 }

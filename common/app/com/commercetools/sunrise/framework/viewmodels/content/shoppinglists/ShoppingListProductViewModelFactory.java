@@ -2,8 +2,9 @@ package com.commercetools.sunrise.framework.viewmodels.content.shoppinglists;
 
 import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
 import com.commercetools.sunrise.framework.viewmodels.content.products.ProductVariantViewModel;
-import com.google.inject.Inject;
 import io.sphere.sdk.shoppinglists.LineItem;
+
+import javax.inject.Inject;
 
 /**
  * This factory class creates {@link ShoppingListProductViewModel}.

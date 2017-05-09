@@ -4,9 +4,10 @@ import com.commercetools.sunrise.framework.reverserouters.productcatalog.product
 import com.commercetools.sunrise.framework.viewmodels.content.products.AbstractProductVariantViewModelFactory;
 import com.commercetools.sunrise.framework.viewmodels.content.products.ProductVariantViewModel;
 import com.commercetools.sunrise.framework.viewmodels.formatters.PriceFormatter;
-import com.google.inject.Inject;
 import io.sphere.sdk.products.ProductVariant;
 import io.sphere.sdk.shoppinglists.LineItem;
+
+import javax.inject.Inject;
 
 /**
  * The factory class for creating {@link ProductVariantViewModel} used by shopping lists.

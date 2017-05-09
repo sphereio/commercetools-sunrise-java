@@ -5,9 +5,9 @@ import com.commercetools.sunrise.framework.viewmodels.PageTitleResolver;
 import com.commercetools.sunrise.framework.viewmodels.content.PageContentFactory;
 import com.commercetools.sunrise.framework.viewmodels.content.shoppinglists.ShoppingListThumbnailViewModel;
 import com.commercetools.sunrise.framework.viewmodels.content.shoppinglists.ShoppingListThumbnailViewModelFactory;
-import com.google.inject.Inject;
 import io.sphere.sdk.shoppinglists.ShoppingList;
 
+import javax.inject.Inject;
 import java.util.List;
 import java.util.stream.Collectors;
 

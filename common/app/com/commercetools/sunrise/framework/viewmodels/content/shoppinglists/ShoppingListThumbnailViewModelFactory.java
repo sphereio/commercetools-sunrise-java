@@ -1,8 +1,9 @@
 package com.commercetools.sunrise.framework.viewmodels.content.shoppinglists;
 
 import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
-import com.google.inject.Inject;
 import io.sphere.sdk.shoppinglists.LineItem;
+
+import javax.inject.Inject;
 
 public class ShoppingListThumbnailViewModelFactory extends SimpleViewModelFactory<ShoppingListThumbnailViewModel, LineItem> {
     private final ShoppingListProductViewModelFactory productViewModelFactory;

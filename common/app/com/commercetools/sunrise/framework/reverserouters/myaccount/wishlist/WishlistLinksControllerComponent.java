@@ -2,7 +2,8 @@ package com.commercetools.sunrise.framework.reverserouters.myaccount.wishlist;
 
 import com.commercetools.sunrise.framework.reverserouters.AbstractLinksControllerComponent;
 import com.commercetools.sunrise.framework.viewmodels.meta.PageMeta;
-import com.google.inject.Inject;
+
+import javax.inject.Inject;
 
 public class WishlistLinksControllerComponent  extends AbstractLinksControllerComponent<MyWishlistReverseRouter> {
 

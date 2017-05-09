@@ -8,30 +8,26 @@ import com.commercetools.sunrise.framework.template.engine.ContentRenderer;
 import com.commercetools.sunrise.framework.viewmodels.content.PageContent;
 import com.commercetools.sunrise.myaccount.MyAccountController;
 import com.commercetools.sunrise.myaccount.wishlist.viewmodels.WishlistPageContentFactory;
-import com.commercetools.sunrise.sessions.wishlist.WishlistInSession;
-import com.google.inject.Inject;
 import io.sphere.sdk.shoppinglists.ShoppingList;
-import io.sphere.sdk.utils.CompletableFutureUtils;
 import play.libs.concurrent.HttpExecution;
 import play.mvc.Result;
 
 import javax.annotation.Nullable;
+import javax.inject.Inject;
 import java.util.concurrent.CompletionStage;
 
+/**
+ * This controller is used to view the current wishlist.
+ */
 public class SunriseWishlistController extends SunriseContentController implements MyAccountController, WithQueryFlow<ShoppingList> {
-    private final WishlistInSession wishlistInSession;
-    private final WishlistCreator wishlistCreator;
-    private final WishlistFinder wishlistFinder;
+    private final WishlistFinderBySession wishlistFinder;
     private final ClearWishlistControllerAction controllerAction;
     private final WishlistPageContentFactory wishlistPageContentFactory;
 
     @Inject
-    protected SunriseWishlistController(final WishlistInSession wishlistInSession, final WishlistCreator wishlistCreator,
-                                        final WishlistFinder wishlistFinder, final ClearWishlistControllerAction controllerAction, final ContentRenderer contentRenderer,
-                                        final WishlistPageContentFactory wishlistPageContentFactory) {
+    protected SunriseWishlistController(final WishlistFinderBySession wishlistFinder, final ClearWishlistControllerAction controllerAction,
+                                        final ContentRenderer contentRenderer, final WishlistPageContentFactory wishlistPageContentFactory) {
         super(contentRenderer);
-        this.wishlistInSession = wishlistInSession;
-        this.wishlistCreator = wishlistCreator;
         this.wishlistFinder = wishlistFinder;
         this.controllerAction = controllerAction;
         this.wishlistPageContentFactory = wishlistPageContentFactory;
@@ -39,19 +35,15 @@ public class SunriseWishlistController extends SunriseContentController implemen
 
     @SunriseRoute(MyWishlistReverseRouter.MY_WISHLIST_PAGE_CALL)
     public CompletionStage<Result> show(final String languageTag) {
-        return wishlistInSession.findWishlistId()
-                .map(wishlistFinder::findById)
-                .orElseGet(() -> wishlistCreator.get())
+        return wishlistFinder.getOrCreate()
                 .thenComposeAsync(this::showPage, HttpExecution.defaultContext());
     }
 
 
     @SunriseRoute(MyWishlistReverseRouter.CLEAR_WISHLIST_PROCESS)
     public CompletionStage<Result> clear(final String languageTag) {
-        return wishlistInSession.findWishlistId()
-                .map(wishlistFinder::findById)
-                .map(shoppingListCompletionStage -> shoppingListCompletionStage.thenComposeAsync(controllerAction::apply))
-                .orElseGet(() -> wishlistCreator.get())
+        return wishlistFinder.getOrCreate()
+                .thenComposeAsync(controllerAction::apply)
                 .thenComposeAsync(this::showPage, HttpExecution.defaultContext());
     }
 

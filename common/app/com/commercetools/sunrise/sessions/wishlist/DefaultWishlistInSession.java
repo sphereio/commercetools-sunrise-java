@@ -1,6 +1,5 @@
 package com.commercetools.sunrise.sessions.wishlist;
 
-import com.commercetools.sunrise.framework.viewmodels.content.shoppinglists.ShoppingListViewModelFactory;
 import com.commercetools.sunrise.sessions.DataFromResourceStoringOperations;
 import com.commercetools.sunrise.sessions.ObjectStoringSessionStrategy;
 import io.sphere.sdk.shoppinglists.ShoppingList;
@@ -12,20 +11,20 @@ import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 import java.util.Optional;
 
+/**
+ * Default implementation of {@link WishlistInSession}.
+ */
 public class DefaultWishlistInSession extends DataFromResourceStoringOperations<ShoppingList> implements  WishlistInSession {
     private static final Logger LOGGER = LoggerFactory.getLogger(WishlistInSession.class);
     private static final String DEFAULT_WISHLIST_ID_SESSION_KEY = "sunrise-wishlist-id";
 
     private final String wishlistIdSessionKey;
     private final ObjectStoringSessionStrategy session;
-    private final ShoppingListViewModelFactory shoppingListViewModelFactory;
 
     @Inject
-    public DefaultWishlistInSession(final Configuration configuration, final ObjectStoringSessionStrategy session,
-                                    final ShoppingListViewModelFactory shoppingListViewModelFactory) {
+    public DefaultWishlistInSession(final Configuration configuration, final ObjectStoringSessionStrategy session) {
         this.wishlistIdSessionKey = configuration.getString("session.wishlist.wishlistId", DEFAULT_WISHLIST_ID_SESSION_KEY);
         this.session = session;
-        this.shoppingListViewModelFactory = shoppingListViewModelFactory;
     }
 
     @Override
@@ -45,6 +44,6 @@ public class DefaultWishlistInSession extends DataFromResourceStoringOperations<
 
     @Override
     protected void removeAssociatedData() {
-        session.removeObjectByKey(wishlistIdSessionKey);
+        session.removeValueByKey(wishlistIdSessionKey);
     }
 }

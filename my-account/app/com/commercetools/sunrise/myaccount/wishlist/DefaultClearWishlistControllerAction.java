@@ -2,13 +2,12 @@ package com.commercetools.sunrise.myaccount.wishlist;
 
 import com.commercetools.sunrise.framework.controllers.AbstractSphereRequestExecutor;
 import com.commercetools.sunrise.framework.hooks.HookRunner;
-import com.google.inject.Inject;
 import io.sphere.sdk.client.SphereClient;
 import io.sphere.sdk.shoppinglists.ShoppingList;
 import io.sphere.sdk.shoppinglists.commands.ShoppingListUpdateCommand;
-import io.sphere.sdk.shoppinglists.commands.updateactions.AddLineItem;
 import io.sphere.sdk.shoppinglists.commands.updateactions.RemoveLineItem;
 
+import javax.inject.Inject;
 import java.util.List;
 import java.util.concurrent.CompletionStage;
 import java.util.stream.Collectors;
