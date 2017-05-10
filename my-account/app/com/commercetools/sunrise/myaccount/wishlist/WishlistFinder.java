@@ -13,4 +13,6 @@ public interface WishlistFinder {
      * @return the wishlist
      */
     CompletionStage<ShoppingList> getOrCreate();
+
+    CompletionStage<Wishlist> getWishList(ShoppingList shoppingList);
 }

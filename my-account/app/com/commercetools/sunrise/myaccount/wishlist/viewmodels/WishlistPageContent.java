@@ -2,26 +2,23 @@ package com.commercetools.sunrise.myaccount.wishlist.viewmodels;
 
 import com.commercetools.sunrise.framework.viewmodels.GenericListViewModel;
 import com.commercetools.sunrise.framework.viewmodels.content.PageContent;
-import com.commercetools.sunrise.framework.viewmodels.content.shoppinglists.ShoppingListThumbnailViewModel;
+import com.commercetools.sunrise.productcatalog.productoverview.viewmodels.ProductThumbnailViewModel;
 
 /**
  * The page content for the wishlist.
  */
 public class WishlistPageContent extends PageContent {
-    private GenericListViewModel<ShoppingListThumbnailViewModel> products;
+    private GenericListViewModel<ProductThumbnailViewModel> products;
     private Integer itemsInTotal;
-    private Integer pagination;
 
     private String clearWishlistBtn = "Clear Wishlist";
 
-    public GenericListViewModel<ShoppingListThumbnailViewModel> getProducts() {
+    public GenericListViewModel<ProductThumbnailViewModel> getProducts() {
         return products;
     }
 
-    public void setProducts(final GenericListViewModel<ShoppingListThumbnailViewModel> products) {
+    public void setProducts(final GenericListViewModel<ProductThumbnailViewModel> products) {
         this.products = products;
-        this.itemsInTotal = products.getList().size();
-        this.pagination = 1;
     }
 
     public String getClearWishlistBtn() {
@@ -38,13 +35,5 @@ public class WishlistPageContent extends PageContent {
 
     public void setItemsInTotal(final Integer itemsInTotal) {
         this.itemsInTotal = itemsInTotal;
-    }
-
-    public Integer getPagination() {
-        return pagination;
-    }
-
-    public void setPagination(final Integer pagination) {
-        this.pagination = pagination;
     }
 }

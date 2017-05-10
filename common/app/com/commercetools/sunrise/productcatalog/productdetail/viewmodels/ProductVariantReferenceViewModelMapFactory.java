@@ -1,10 +1,10 @@
 package com.commercetools.sunrise.productcatalog.productdetail.viewmodels;
 
 import com.commercetools.sunrise.ctp.ProductAttributeSettings;
-import com.commercetools.sunrise.framework.viewmodels.content.products.AttributeWithProductType;
-import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
-import com.commercetools.sunrise.framework.viewmodels.formatters.AttributeFormatter;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
+import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.content.products.AttributeWithProductType;
+import com.commercetools.sunrise.framework.viewmodels.formatters.AttributeFormatter;
 import com.commercetools.sunrise.productcatalog.productdetail.ProductWithVariant;
 import io.sphere.sdk.models.Referenceable;
 import io.sphere.sdk.products.ProductProjection;

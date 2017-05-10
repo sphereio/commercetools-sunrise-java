@@ -8,7 +8,6 @@ import com.commercetools.sunrise.framework.template.engine.ContentRenderer;
 import com.commercetools.sunrise.framework.viewmodels.content.PageContent;
 import com.commercetools.sunrise.myaccount.MyAccountController;
 import com.commercetools.sunrise.myaccount.wishlist.viewmodels.WishlistPageContentFactory;
-import io.sphere.sdk.shoppinglists.ShoppingList;
 import play.libs.concurrent.HttpExecution;
 import play.mvc.Result;
 
@@ -19,7 +18,7 @@ import java.util.concurrent.CompletionStage;
 /**
  * This controller is used to view the current wishlist.
  */
-public class SunriseWishlistController extends SunriseContentController implements MyAccountController, WithQueryFlow<ShoppingList> {
+public class SunriseWishlistController extends SunriseContentController implements MyAccountController, WithQueryFlow<Wishlist> {
     private final WishlistFinderBySession wishlistFinder;
     private final ClearWishlistControllerAction controllerAction;
     private final WishlistPageContentFactory wishlistPageContentFactory;
@@ -36,14 +35,15 @@ public class SunriseWishlistController extends SunriseContentController implemen
     @SunriseRoute(MyWishlistReverseRouter.MY_WISHLIST_PAGE_CALL)
     public CompletionStage<Result> show(final String languageTag) {
         return wishlistFinder.getOrCreate()
+                .thenComposeAsync(wishlistFinder::getWishList)
                 .thenComposeAsync(this::showPage, HttpExecution.defaultContext());
     }
-
 
     @SunriseRoute(MyWishlistReverseRouter.CLEAR_WISHLIST_PROCESS)
     public CompletionStage<Result> clear(final String languageTag) {
         return wishlistFinder.getOrCreate()
                 .thenComposeAsync(controllerAction::apply)
+                .thenComposeAsync(wishlistFinder::getWishList)
                 .thenComposeAsync(this::showPage, HttpExecution.defaultContext());
     }
 
@@ -54,7 +54,7 @@ public class SunriseWishlistController extends SunriseContentController implemen
     }
 
     @Override
-    public PageContent createPageContent(final ShoppingList input) {
+    public PageContent createPageContent(final Wishlist input) {
         return wishlistPageContentFactory.create(input);
     }
 }

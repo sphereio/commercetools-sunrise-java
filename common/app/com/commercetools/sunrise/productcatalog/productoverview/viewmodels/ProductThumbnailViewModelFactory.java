@@ -3,13 +3,12 @@ package com.commercetools.sunrise.productcatalog.productoverview.viewmodels;
 import com.commercetools.sunrise.categorytree.NewCategoryTree;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
 import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
-import com.commercetools.sunrise.productcatalog.productdetail.viewmodels.ProductViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.content.products.ProductPriceUtils;
 import com.commercetools.sunrise.productcatalog.productdetail.ProductWithVariant;
+import com.commercetools.sunrise.productcatalog.productdetail.viewmodels.ProductViewModelFactory;
 import io.sphere.sdk.categories.CategoryTree;
 
 import javax.inject.Inject;
-
-import static com.commercetools.sunrise.framework.viewmodels.content.products.ProductPriceUtils.hasDiscount;
 
 @RequestScoped
 public class ProductThumbnailViewModelFactory extends SimpleViewModelFactory<ProductThumbnailViewModel, ProductWithVariant> {
@@ -42,7 +41,7 @@ public class ProductThumbnailViewModelFactory extends SimpleViewModelFactory<Pro
     }
 
     @Override
-    protected final void initialize(final ProductThumbnailViewModel viewModel, final ProductWithVariant productWithVariant) {
+    protected void initialize(final ProductThumbnailViewModel viewModel, final ProductWithVariant productWithVariant) {
         fillProduct(viewModel, productWithVariant);
         fillNew(viewModel, productWithVariant);
         fillSale(viewModel, productWithVariant);
@@ -58,6 +57,6 @@ public class ProductThumbnailViewModelFactory extends SimpleViewModelFactory<Pro
     }
 
     protected void fillSale(final ProductThumbnailViewModel viewModel, final ProductWithVariant productWithVariant) {
-        viewModel.setSale(hasDiscount(productWithVariant.getVariant()));
+        viewModel.setSale(ProductPriceUtils.hasDiscount(productWithVariant.getVariant()));
     }
 }

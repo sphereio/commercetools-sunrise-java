@@ -3,45 +3,59 @@ package com.commercetools.sunrise.myaccount.wishlist.viewmodels;
 import com.commercetools.sunrise.framework.viewmodels.GenericListViewModel;
 import com.commercetools.sunrise.framework.viewmodels.PageTitleResolver;
 import com.commercetools.sunrise.framework.viewmodels.content.PageContentFactory;
-import com.commercetools.sunrise.framework.viewmodels.content.shoppinglists.ShoppingListThumbnailViewModel;
-import com.commercetools.sunrise.framework.viewmodels.content.shoppinglists.ShoppingListThumbnailViewModelFactory;
-import io.sphere.sdk.shoppinglists.ShoppingList;
+import com.commercetools.sunrise.myaccount.wishlist.Wishlist;
+import com.commercetools.sunrise.productcatalog.productdetail.ProductWithVariant;
+import com.commercetools.sunrise.productcatalog.productoverview.viewmodels.ProductThumbnailViewModel;
+import com.commercetools.sunrise.productcatalog.productoverview.viewmodels.ProductThumbnailViewModelFactory;
+import io.sphere.sdk.products.ProductProjection;
+import io.sphere.sdk.queries.PagedQueryResult;
 
 import javax.inject.Inject;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
  * The factory class fore creating {@link WishlistPageContent}.
  */
-public class WishlistPageContentFactory extends PageContentFactory<WishlistPageContent, ShoppingList> {
+public class WishlistPageContentFactory extends PageContentFactory<WishlistPageContent, Wishlist> {
     private final PageTitleResolver pageTitleResolver;
-    private final ShoppingListThumbnailViewModelFactory thumbnailViewModelFactory;
+    private final ProductThumbnailViewModelFactory thumbnailViewModelFactory;
 
     @Inject
-    public WishlistPageContentFactory(final PageTitleResolver pageTitleResolver, final ShoppingListThumbnailViewModelFactory thumbnailViewModelFactory) {
+    public WishlistPageContentFactory(final PageTitleResolver pageTitleResolver, final ProductThumbnailViewModelFactory thumbnailViewModelFactory) {
         this.pageTitleResolver = pageTitleResolver;
         this.thumbnailViewModelFactory = thumbnailViewModelFactory;
     }
 
     @Override
-    protected WishlistPageContent newViewModelInstance(final ShoppingList input) {
+    protected WishlistPageContent newViewModelInstance(final Wishlist input) {
         return new WishlistPageContent();
     }
 
     @Override
-    protected void initialize(final WishlistPageContent viewModel, final ShoppingList input) {
+    protected void initialize(final WishlistPageContent viewModel, final Wishlist input) {
         super.initialize(viewModel, input);
-        final GenericListViewModel<ShoppingListThumbnailViewModel> products = new GenericListViewModel<>();
-        final List<ShoppingListThumbnailViewModel> list = input.getLineItems().stream()
-                .map(thumbnailViewModelFactory::create)
-                .collect(Collectors.toList());
-        products.setList(list);
-        viewModel.setProducts(products);
+
+        fillProducts(viewModel, input);
     }
 
+    private void fillProducts(final WishlistPageContent viewModel, final Wishlist input) {
+        final GenericListViewModel<ProductThumbnailViewModel> productList = new GenericListViewModel<>();
+        final PagedQueryResult<ProductProjection> queryResult = input.getProducts();
+        final List<ProductThumbnailViewModel> productThumbNails = queryResult == null ?
+                Collections.emptyList() :
+                queryResult.getResults().stream()
+                    .map(product -> ProductWithVariant.of(product, product.getMasterVariant()))
+                    .map(thumbnailViewModelFactory::create)
+                    .collect(Collectors.toList());
+        productList.setList(productThumbNails);
+        viewModel.setProducts(productList);
+    }
+
+
     @Override
-    protected void fillTitle(final WishlistPageContent viewModel, final ShoppingList input) {
+    protected void fillTitle(final WishlistPageContent viewModel, final Wishlist input) {
         viewModel.setTitle(pageTitleResolver.getOrEmpty("my-account:myAccount.title"));
     }
 }
