@@ -12,8 +12,8 @@ public final class Wishlist {
     private final ShoppingList shoppingList;
     private final PagedQueryResult<ProductProjection> products;
 
-    public Wishlist(final PagedQueryResult<ProductProjection> products) {
-        this.shoppingList = null;
+    public Wishlist(final ShoppingList shoppingList, final PagedQueryResult<ProductProjection> products) {
+        this.shoppingList = shoppingList;
         this.products = products;
     }
 

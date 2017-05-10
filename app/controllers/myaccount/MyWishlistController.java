@@ -8,6 +8,7 @@ import com.commercetools.sunrise.framework.template.engine.ContentRenderer;
 import com.commercetools.sunrise.myaccount.wishlist.ClearWishlistControllerAction;
 import com.commercetools.sunrise.myaccount.wishlist.SunriseWishlistController;
 import com.commercetools.sunrise.myaccount.wishlist.WishlistFinderBySession;
+import com.commercetools.sunrise.myaccount.wishlist.pagination.WishlistPaginationControllerComponent;
 import com.commercetools.sunrise.myaccount.wishlist.viewmodels.WishlistPageContentFactory;
 import com.commercetools.sunrise.sessions.customer.CustomerOperationsControllerComponentSupplier;
 
@@ -17,12 +18,13 @@ import javax.inject.Inject;
 @RegisteredComponents({
         TemplateControllerComponentsSupplier.class,
         PageHeaderControllerComponentSupplier.class,
-        CustomerOperationsControllerComponentSupplier.class
+        CustomerOperationsControllerComponentSupplier.class,
+        WishlistPaginationControllerComponent.class
 })
-public class MyWishListController extends SunriseWishlistController {
+public class MyWishlistController extends SunriseWishlistController {
 
     @Inject
-    public MyWishListController(final WishlistFinderBySession wishlistFinder, final ClearWishlistControllerAction controllerAction,
+    public MyWishlistController(final WishlistFinderBySession wishlistFinder, final ClearWishlistControllerAction controllerAction,
                                 final ContentRenderer contentRenderer, final WishlistPageContentFactory wishlistPageContentFactory) {
         super(wishlistFinder, controllerAction, contentRenderer, wishlistPageContentFactory);
     }

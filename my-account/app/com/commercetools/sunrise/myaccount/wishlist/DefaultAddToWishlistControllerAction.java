@@ -2,6 +2,7 @@ package com.commercetools.sunrise.myaccount.wishlist;
 
 import com.commercetools.sunrise.framework.controllers.AbstractSphereRequestExecutor;
 import com.commercetools.sunrise.framework.hooks.HookRunner;
+import com.commercetools.sunrise.myaccount.wishlist.viewmodels.WishlistLineItemFormData;
 import io.sphere.sdk.client.SphereClient;
 import io.sphere.sdk.shoppinglists.ShoppingList;
 import io.sphere.sdk.shoppinglists.commands.ShoppingListUpdateCommand;
@@ -19,11 +20,11 @@ public class DefaultAddToWishlistControllerAction extends AbstractSphereRequestE
     }
 
     @Override
-    public CompletionStage<ShoppingList> apply(final ShoppingList shoppingList, final AddToWishlistFormData addToWishlistFormData) {
+    public CompletionStage<ShoppingList> apply(final ShoppingList shoppingList, final WishlistLineItemFormData addToWishlistFormData) {
         return executeRequest(shoppingList, buildRequest(shoppingList, addToWishlistFormData));
     }
 
-    private ShoppingListUpdateCommand buildRequest(final ShoppingList shoppingList, final AddToWishlistFormData addToWishlistFormData) {
+    private ShoppingListUpdateCommand buildRequest(final ShoppingList shoppingList, final WishlistLineItemFormData addToWishlistFormData) {
         final AddLineItem addLineItem = AddLineItem.of(addToWishlistFormData.productId()).withVariantId(addToWishlistFormData.variantId());
         return ShoppingListUpdateCommand.of(shoppingList, addLineItem);
     }

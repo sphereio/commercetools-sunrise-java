@@ -2,6 +2,7 @@ package com.commercetools.sunrise.myaccount.wishlist;
 
 import com.commercetools.sunrise.framework.controllers.AbstractSphereRequestExecutor;
 import com.commercetools.sunrise.framework.hooks.HookRunner;
+import com.commercetools.sunrise.myaccount.wishlist.viewmodels.WishlistLineItemFormData;
 import io.sphere.sdk.client.SphereClient;
 import io.sphere.sdk.shoppinglists.LineItem;
 import io.sphere.sdk.shoppinglists.ShoppingList;
@@ -20,13 +21,16 @@ public class DefaultRemoveFromWishlistControllerAction  extends AbstractSphereRe
     }
 
     @Override
-    public CompletionStage<ShoppingList> apply(final ShoppingList shoppingList, final RemoveFromWishListFormData formData) {
+    public CompletionStage<ShoppingList> apply(final ShoppingList shoppingList, final WishlistLineItemFormData formData) {
         return executeRequest(shoppingList, buildRequest(shoppingList, formData));
     }
 
-    private ShoppingListUpdateCommand buildRequest(final ShoppingList shoppingList, final RemoveFromWishListFormData formData) {
+    private ShoppingListUpdateCommand buildRequest(final ShoppingList shoppingList, final WishlistLineItemFormData formData) {
         final LineItem lineItemToRemove = shoppingList.getLineItems().stream()
-                .filter(lineItem -> formData.equals(lineItem)).findFirst().get();
+                .filter(formData::equals)
+                .findFirst()
+                .get();
+
         final RemoveLineItem removeLineItem = RemoveLineItem.of(lineItemToRemove);
         return ShoppingListUpdateCommand.of(shoppingList, removeLineItem);
     }

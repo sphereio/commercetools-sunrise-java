@@ -2,6 +2,8 @@ package com.commercetools.sunrise.myaccount.wishlist;
 
 import com.commercetools.sunrise.framework.controllers.AbstractSphereRequestExecutor;
 import com.commercetools.sunrise.framework.hooks.HookRunner;
+import com.commercetools.sunrise.framework.hooks.ctpevents.ProductProjectionPagedResultLoadedHook;
+import com.commercetools.sunrise.framework.hooks.ctprequests.ProductProjectionQueryHook;
 import com.commercetools.sunrise.sessions.customer.CustomerInSession;
 import com.commercetools.sunrise.sessions.wishlist.WishlistInSession;
 import io.sphere.sdk.client.SphereClient;
@@ -47,21 +49,29 @@ public class WishlistFinderBySession extends AbstractSphereRequestExecutor imple
 
     @Override
     public CompletionStage<Wishlist> getWishList(final ShoppingList shoppingList) {
-            return queryForLineItemProducts(shoppingList);
-    }
-
-
-    private CompletionStage<Wishlist> queryForLineItemProducts(final ShoppingList shoppingList) {
         final List<String> productIds = shoppingList.getLineItems().stream()
                 .map(LineItem::getProductId)
                 .collect(Collectors.toList());
-        final CompletionStage<PagedQueryResult<ProductProjection>> execute = productIds.isEmpty() ?
-                CompletableFuture.completedFuture(null) : getSphereClient().execute(ProductProjectionQuery.ofCurrent().withPredicates(m -> m.id().isIn(productIds)));
-        return execute.thenComposeAsync(this::map, HttpExecution.defaultContext());
+
+        final ProductProjectionQuery initialProductProjectionQuery = ProductProjectionQuery
+                .ofCurrent()
+                .withPredicates(m -> m.id().isIn(productIds));
+
+        final ProductProjectionQuery productProjectionQuery = ProductProjectionQueryHook
+                .runHook(getHookRunner(), initialProductProjectionQuery);
+
+        final CompletionStage<PagedQueryResult<ProductProjection>> resultCompletionStage = productIds.isEmpty() ?
+                CompletableFuture.completedFuture(null) :
+                getSphereClient().execute(productProjectionQuery);
+
+        return resultCompletionStage
+                .thenApplyAsync(this::runProductProjectionPagedResultLoadedHook, HttpExecution.defaultContext())
+                .thenComposeAsync((input) -> CompletableFuture.completedFuture(new Wishlist(shoppingList, input)), HttpExecution.defaultContext());
     }
 
-    private CompletionStage<Wishlist> map(final PagedQueryResult<ProductProjection> input) {
-        return CompletableFuture.completedFuture(new Wishlist(input));
+    private PagedQueryResult<ProductProjection> runProductProjectionPagedResultLoadedHook(final PagedQueryResult<ProductProjection> result) {
+        ProductProjectionPagedResultLoadedHook.runHook(getHookRunner(), result);
+        return result;
     }
 
     private CompletionStage<ShoppingList> storeInSession(final ShoppingList input) {

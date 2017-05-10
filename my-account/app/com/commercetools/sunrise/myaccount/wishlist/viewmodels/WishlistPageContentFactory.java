@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * The factory class fore creating {@link WishlistPageContent}.
+ * The factory class for creating {@link WishlistPageContent}.
  */
 public class WishlistPageContentFactory extends PageContentFactory<WishlistPageContent, Wishlist> {
     private final PageTitleResolver pageTitleResolver;
