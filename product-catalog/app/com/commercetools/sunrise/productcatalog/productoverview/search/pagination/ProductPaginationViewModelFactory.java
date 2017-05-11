@@ -9,7 +9,8 @@ import javax.inject.Singleton;
 public final class ProductPaginationViewModelFactory extends AbstractPaginationViewModelFactory {
 
     @Inject
-    public ProductPaginationViewModelFactory(final ProductPaginationSettings productPaginationSettings) {
-        super(productPaginationSettings);
+    public ProductPaginationViewModelFactory(final ProductPaginationSettings paginationSettings,
+                                             final ProductsPerPageFormSettings entriesPerPageFormSettings) {
+        super(paginationSettings, entriesPerPageFormSettings);
     }
 }

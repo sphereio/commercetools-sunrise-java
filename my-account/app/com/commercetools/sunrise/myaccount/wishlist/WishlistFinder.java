@@ -14,5 +14,5 @@ public interface WishlistFinder {
      */
     CompletionStage<ShoppingList> getOrCreate();
 
-    CompletionStage<Wishlist> getWishList(ShoppingList shoppingList);
+    CompletionStage<Wishlist> getWishList(ShoppingList shoppingList, long limit, long offset);
 }

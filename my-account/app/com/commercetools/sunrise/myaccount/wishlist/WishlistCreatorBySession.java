@@ -26,11 +26,14 @@ public class WishlistCreatorBySession extends AbstractSphereRequestExecutor impl
 
     public CompletionStage<ShoppingList> get() {
         final Reference<Customer> customer = customerInSession.findCustomerId()
-                .map(Customer::referenceOfId).orElse(null);
+                .map(Customer::referenceOfId)
+                .orElse(null);
+
         final ShoppingListDraftDsl wishlist = ShoppingListDraftBuilder.of(LocalizedString.ofEnglish("Wishlist"))
                 .customer(customer)
                 .build();
-        final ShoppingListCreateCommand createCommand = ShoppingListCreateCommand.of(wishlist).withExpansionPaths(m -> m.lineItems().variant());
+
+        final ShoppingListCreateCommand createCommand = ShoppingListCreateCommand.of(wishlist);
 
         return getSphereClient().execute(createCommand);
     }

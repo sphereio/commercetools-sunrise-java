@@ -3,7 +3,6 @@ package com.commercetools.sunrise.myaccount.wishlist;
 import com.commercetools.sunrise.framework.controllers.AbstractSphereRequestExecutor;
 import com.commercetools.sunrise.framework.hooks.HookRunner;
 import com.commercetools.sunrise.framework.hooks.ctpevents.ProductProjectionPagedResultLoadedHook;
-import com.commercetools.sunrise.framework.hooks.ctprequests.ProductProjectionQueryHook;
 import com.commercetools.sunrise.sessions.customer.CustomerInSession;
 import com.commercetools.sunrise.sessions.wishlist.WishlistInSession;
 import io.sphere.sdk.client.SphereClient;
@@ -16,9 +15,7 @@ import io.sphere.sdk.shoppinglists.queries.ShoppingListQuery;
 import play.libs.concurrent.HttpExecution;
 
 import javax.inject.Inject;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.stream.Collectors;
@@ -48,25 +45,75 @@ public class WishlistFinderBySession extends AbstractSphereRequestExecutor imple
     }
 
     @Override
-    public CompletionStage<Wishlist> getWishList(final ShoppingList shoppingList) {
-        final List<String> productIds = shoppingList.getLineItems().stream()
+    public CompletionStage<Wishlist> getWishList(final ShoppingList shoppingList, final long limit, final long offset) {
+        final List<LineItem> lineItems = shoppingList.getLineItems() == null ?
+                Collections.emptyList() :
+                new ArrayList<>(shoppingList.getLineItems());
+        Collections.reverse(lineItems);
+
+        final long endIndex = offset + limit;
+        final List<LineItem> pagedLineItems = offset < lineItems.size() ?
+                lineItems.subList((int) offset, (int) Math.min(lineItems.size(), endIndex)) :
+                Collections.emptyList();
+
+        final List<String> productIds = pagedLineItems.stream()
                 .map(LineItem::getProductId)
                 .collect(Collectors.toList());
 
-        final ProductProjectionQuery initialProductProjectionQuery = ProductProjectionQuery
-                .ofCurrent()
-                .withPredicates(m -> m.id().isIn(productIds));
-
-        final ProductProjectionQuery productProjectionQuery = ProductProjectionQueryHook
-                .runHook(getHookRunner(), initialProductProjectionQuery);
-
         final CompletionStage<PagedQueryResult<ProductProjection>> resultCompletionStage = productIds.isEmpty() ?
                 CompletableFuture.completedFuture(null) :
-                getSphereClient().execute(productProjectionQuery);
+                getSphereClient().execute(ProductProjectionQuery.ofCurrent()
+                        .withPredicates(m -> m.id().isIn(productIds))
+                        .withLimit(limit));
+
+        final Map<String, Integer> productIdToLineItemIndex = pagedLineItems.stream()
+                .collect(Collectors.toMap(LineItem::getProductId, pagedLineItems::indexOf));
 
         return resultCompletionStage
+                .thenApply(pagedQueryResult ->  getOrderedBy(pagedQueryResult, productIdToLineItemIndex, offset, lineItems.size()))
                 .thenApplyAsync(this::runProductProjectionPagedResultLoadedHook, HttpExecution.defaultContext())
                 .thenComposeAsync((input) -> CompletableFuture.completedFuture(new Wishlist(shoppingList, input)), HttpExecution.defaultContext());
+    }
+
+    private PagedQueryResult<ProductProjection> getOrderedBy(final PagedQueryResult<ProductProjection> pagedQueryResult,
+                                                             final Map<String, Integer> productIdToLineItemIndex,
+                                                             final long offset,
+                                                             final int total) {
+        final List<ProductProjection> results = pagedQueryResult == null ?
+                Collections.emptyList() : pagedQueryResult.getResults();
+        final Long count = pagedQueryResult == null ? 0L : pagedQueryResult.getCount();
+        Collections.sort(results, orderBy(productIdToLineItemIndex));
+
+        return new PagedQueryResult<ProductProjection>() {
+            @Override
+            public Long getCount() {
+                return count;
+            }
+
+            @Override
+            public Long getOffset() {
+                return offset;
+            }
+
+            @Override
+            public List<ProductProjection> getResults() {
+                return results;
+            }
+
+            @Override
+            public Long getTotal() {
+                return (long) total;
+            }
+
+            @Override
+            public Long size() {
+                return (long) results.size();
+            }
+        };
+    }
+
+    private Comparator<ProductProjection> orderBy(final Map<String, Integer> productIdToLineItemIndex) {
+        return Comparator.comparing(productProjection -> productIdToLineItemIndex.get(productProjection.getId()));
     }
 
     private PagedQueryResult<ProductProjection> runProductProjectionPagedResultLoadedHook(final PagedQueryResult<ProductProjection> result) {
@@ -101,7 +148,7 @@ public class WishlistFinderBySession extends AbstractSphereRequestExecutor imple
     private Optional<ShoppingListQuery> buildQuery() {
         return tryBuildQueryByCustomerId()
                 .map(Optional::of)
-                .orElseGet(this::tryBuildQueryByCartId)
+                .orElseGet(this::tryBuildQueryByWishlistId)
                 .map(this::decorateQueryWithAdditionalInfo);
     }
 
@@ -110,15 +157,14 @@ public class WishlistFinderBySession extends AbstractSphereRequestExecutor imple
                 .map(customerId -> ShoppingListQuery.of().plusPredicates(m -> m.customer().isInIds(Collections.singletonList(customerId))));
     }
 
-    private Optional<ShoppingListQuery> tryBuildQueryByCartId() {
+    private Optional<ShoppingListQuery> tryBuildQueryByWishlistId() {
         return wishlistInSession.findWishlistId()
                 .map(shoppingListId -> ShoppingListQuery.of().plusPredicates(m -> m.id().is(shoppingListId)));
     }
 
     private ShoppingListQuery decorateQueryWithAdditionalInfo(final ShoppingListQuery query) {
         return query
-                .withExpansionPaths(m -> m.lineItems().variant())
-                .withSort(cart -> cart.lastModifiedAt().sort().desc())
+                .withSort(m -> m.createdAt().sort().desc())
                 .withLimit(1);
     }
 }

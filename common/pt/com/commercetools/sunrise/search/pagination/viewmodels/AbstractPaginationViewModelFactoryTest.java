@@ -195,7 +195,7 @@ public class AbstractPaginationViewModelFactoryTest extends WithApplication {
     private static class TestablePaginationViewModelFactory extends AbstractPaginationViewModelFactory {
 
         TestablePaginationViewModelFactory(final PaginationSettings settings) {
-            super(settings);
+            super(settings, null);
         }
     }
 }

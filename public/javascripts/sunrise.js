@@ -4,6 +4,10 @@ $("form#form-filter-products, form#form-filter-products-mobile").change(function
     this.submit();
 });
 
+$("form#form-filter-wishlist, form#form-filter-wishlist-mobile").change(function() {
+    this.submit();
+});
+
 // Submit language switcher on change
 $("form#form-select-language, form#form-select-language-mobile").change(function() {
     this.submit();

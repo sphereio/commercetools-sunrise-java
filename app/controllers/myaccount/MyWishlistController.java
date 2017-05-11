@@ -9,6 +9,8 @@ import com.commercetools.sunrise.myaccount.wishlist.ClearWishlistControllerActio
 import com.commercetools.sunrise.myaccount.wishlist.SunriseWishlistController;
 import com.commercetools.sunrise.myaccount.wishlist.WishlistFinderBySession;
 import com.commercetools.sunrise.myaccount.wishlist.pagination.WishlistPaginationControllerComponent;
+import com.commercetools.sunrise.myaccount.wishlist.pagination.WishlistPaginationSettings;
+import com.commercetools.sunrise.myaccount.wishlist.pagination.WishlistProductsPerPageFormSettings;
 import com.commercetools.sunrise.myaccount.wishlist.viewmodels.WishlistPageContentFactory;
 import com.commercetools.sunrise.sessions.customer.CustomerOperationsControllerComponentSupplier;
 
@@ -24,8 +26,13 @@ import javax.inject.Inject;
 public class MyWishlistController extends SunriseWishlistController {
 
     @Inject
-    public MyWishlistController(final WishlistFinderBySession wishlistFinder, final ClearWishlistControllerAction controllerAction,
-                                final ContentRenderer contentRenderer, final WishlistPageContentFactory wishlistPageContentFactory) {
-        super(wishlistFinder, controllerAction, contentRenderer, wishlistPageContentFactory);
+
+    public MyWishlistController(final WishlistFinderBySession wishlistFinder,
+                                final ClearWishlistControllerAction controllerAction,
+                                final ContentRenderer contentRenderer,
+                                final WishlistPageContentFactory wishlistPageContentFactory,
+                                final WishlistPaginationSettings paginationSettings,
+                                final WishlistProductsPerPageFormSettings entriesPerPageFormSettings) {
+        super(wishlistFinder, controllerAction, contentRenderer, wishlistPageContentFactory, paginationSettings, entriesPerPageFormSettings);
     }
 }
