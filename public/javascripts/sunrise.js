@@ -1,10 +1,12 @@
-
-// Submit faceted search on change
-$("form#form-filter-products, form#form-filter-products-mobile").change(function() {
+// TODO:
+// We should consider to mark all forms which should submit on change with a "data-submit-onchange" attribute.
+// Then we can rid of the special casses below
+$("form[data-submit-onchange]").change(function() {
     this.submit();
 });
 
-$("form#form-filter-wishlist, form#form-filter-wishlist-mobile").change(function() {
+// Submit faceted search on change
+$("form#form-filter-products, form#form-filter-products-mobile").change(function() {
     this.submit();
 });
 

@@ -1,26 +1,28 @@
 <div class="my-account-wishlist-pagination hidden-xs">
     <div class="row">
-        <div class="col-sm-4">
-            <div class="my-account-wishlist-clear">
-                <button>{{content.clearWishlistBtn}}</button>
+        <form id="form-filter-wishlist" name="filter-wishlist" data-submit-onchange
+              action="{{@root.meta._links.myWishlist.href}}">
+            <div class="col-sm-4">
+                <div class="my-account-wishlist-clear">
+                    <button>{{content.clearWishlistBtn}}</button>
+                </div>
             </div>
-        </div>
-        <div class="col-sm-4 text-center custom-pagination">
-            <ul class="page-numbers">
-                {{> common/pagination pagination=content.pagination}}
-            </ul>
-        </div>
-        <div class="col-sm-4">
-            <div class="my-account-wishlist-per-page">
-                <span class="wishlist-display-selector-title hidden-sm">{{i18n "catalog:displaySelector.title"}}</span>
-                <form id="form-filter-wishlist" name="filter-wishlist" action="{{@root.meta._links.myWishlist.href}}">
-                    <select  name="{{content.displaySelector.key}}" required>
+            <div class="col-sm-4 text-center custom-pagination">
+                <ul class="page-numbers">
+                    {{> common/pagination pagination=content.pagination}}
+                </ul>
+            </div>
+            <div class="col-sm-4">
+                <div class="my-account-wishlist-per-page">
+                    <span class="wishlist-display-selector-title hidden-sm">{{i18n
+                            "catalog:displaySelector.title"}}</span>
+                    <select name="{{content.displaySelector.key}}" required>
                         {{#each content.displaySelector.list}}
                             <option value="{{value}}" {{#if selected}}selected{{/if}}>{{label}}</option>
                         {{/each}}
                     </select>
-                </form>
+                </div>
             </div>
-        </div>
+        </form>
     </div>
 </div>
