@@ -3,10 +3,10 @@ package com.commercetools.sunrise.myaccount.wishlist.viewmodels;
 import com.commercetools.sunrise.framework.viewmodels.GenericListViewModel;
 import com.commercetools.sunrise.framework.viewmodels.PageTitleResolver;
 import com.commercetools.sunrise.framework.viewmodels.content.PageContentFactory;
+import com.commercetools.sunrise.framework.viewmodels.content.products.ProductThumbnailViewModel;
+import com.commercetools.sunrise.framework.viewmodels.content.products.ProductThumbnailViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.content.products.ProductWithVariant;
 import com.commercetools.sunrise.myaccount.wishlist.Wishlist;
-import com.commercetools.sunrise.productcatalog.productdetail.ProductWithVariant;
-import com.commercetools.sunrise.productcatalog.productoverview.viewmodels.ProductThumbnailViewModel;
-import com.commercetools.sunrise.productcatalog.productoverview.viewmodels.ProductThumbnailViewModelFactory;
 import io.sphere.sdk.products.ProductProjection;
 import io.sphere.sdk.queries.PagedQueryResult;
 

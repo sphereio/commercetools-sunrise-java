@@ -1,11 +1,8 @@
-package com.commercetools.sunrise.productcatalog.productoverview.viewmodels;
+package com.commercetools.sunrise.framework.viewmodels.content.products;
 
 import com.commercetools.sunrise.categorytree.NewCategoryTree;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
 import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
-import com.commercetools.sunrise.framework.viewmodels.content.products.ProductPriceUtils;
-import com.commercetools.sunrise.productcatalog.productdetail.ProductWithVariant;
-import com.commercetools.sunrise.productcatalog.productdetail.viewmodels.ProductViewModelFactory;
 import io.sphere.sdk.categories.CategoryTree;
 
 import javax.inject.Inject;

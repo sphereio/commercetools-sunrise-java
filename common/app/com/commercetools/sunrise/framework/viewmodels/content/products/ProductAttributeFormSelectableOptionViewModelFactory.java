@@ -1,7 +1,6 @@
-package com.commercetools.sunrise.productcatalog.productdetail.viewmodels;
+package com.commercetools.sunrise.framework.viewmodels.content.products;
 
 import com.commercetools.sunrise.framework.injection.RequestScoped;
-import com.commercetools.sunrise.framework.viewmodels.content.products.AttributeWithProductType;
 import com.commercetools.sunrise.framework.viewmodels.formatters.AttributeFormatter;
 import com.commercetools.sunrise.framework.viewmodels.forms.SelectableViewModelFactory;
 import io.sphere.sdk.products.attributes.Attribute;

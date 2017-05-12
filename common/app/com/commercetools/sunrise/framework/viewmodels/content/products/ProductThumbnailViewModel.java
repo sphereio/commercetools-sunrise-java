@@ -1,7 +1,6 @@
-package com.commercetools.sunrise.productcatalog.productoverview.viewmodels;
+package com.commercetools.sunrise.framework.viewmodels.content.products;
 
 import com.commercetools.sunrise.framework.viewmodels.ViewModel;
-import com.commercetools.sunrise.productcatalog.productdetail.viewmodels.ProductViewModel;
 
 public class ProductThumbnailViewModel extends ViewModel {
 

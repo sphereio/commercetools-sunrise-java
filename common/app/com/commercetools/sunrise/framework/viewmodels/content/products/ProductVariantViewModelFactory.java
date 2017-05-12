@@ -1,12 +1,8 @@
-package com.commercetools.sunrise.productcatalog.productdetail.viewmodels;
+package com.commercetools.sunrise.framework.viewmodels.content.products;
 
 import com.commercetools.sunrise.framework.injection.RequestScoped;
 import com.commercetools.sunrise.framework.reverserouters.productcatalog.product.ProductReverseRouter;
-import com.commercetools.sunrise.framework.viewmodels.content.products.AbstractProductVariantViewModelFactory;
-import com.commercetools.sunrise.framework.viewmodels.content.products.ProductPriceUtils;
-import com.commercetools.sunrise.framework.viewmodels.content.products.ProductVariantViewModel;
 import com.commercetools.sunrise.framework.viewmodels.formatters.PriceFormatter;
-import com.commercetools.sunrise.productcatalog.productdetail.ProductWithVariant;
 import play.mvc.Call;
 
 import javax.inject.Inject;

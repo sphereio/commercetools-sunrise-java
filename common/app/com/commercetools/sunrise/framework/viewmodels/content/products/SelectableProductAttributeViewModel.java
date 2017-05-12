@@ -1,6 +1,4 @@
-package com.commercetools.sunrise.productcatalog.productdetail.viewmodels;
-
-import com.commercetools.sunrise.framework.viewmodels.content.products.ProductAttributeViewModel;
+package com.commercetools.sunrise.framework.viewmodels.content.products;
 
 import java.util.ArrayList;
 import java.util.HashMap;

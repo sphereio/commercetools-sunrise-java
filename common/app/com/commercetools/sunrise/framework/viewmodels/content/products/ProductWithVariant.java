@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.productcatalog.productdetail;
+package com.commercetools.sunrise.framework.viewmodels.content.products;
 
 import io.sphere.sdk.models.Base;
 import io.sphere.sdk.products.ProductProjection;

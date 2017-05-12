@@ -2,7 +2,7 @@ package com.commercetools.sunrise.myaccount.wishlist.viewmodels;
 
 import com.commercetools.sunrise.framework.viewmodels.GenericListViewModel;
 import com.commercetools.sunrise.framework.viewmodels.content.PageContent;
-import com.commercetools.sunrise.productcatalog.productoverview.viewmodels.ProductThumbnailViewModel;
+import com.commercetools.sunrise.framework.viewmodels.content.products.ProductThumbnailViewModel;
 import com.commercetools.sunrise.search.pagination.viewmodels.EntriesPerPageSelectorViewModel;
 import com.commercetools.sunrise.search.pagination.viewmodels.PaginationViewModel;
 import com.commercetools.sunrise.search.pagination.viewmodels.WithPaginationViewModel;

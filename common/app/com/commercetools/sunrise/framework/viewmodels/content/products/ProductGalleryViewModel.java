@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.productcatalog.productdetail.viewmodels;
+package com.commercetools.sunrise.framework.viewmodels.content.products;
 
 import com.commercetools.sunrise.framework.viewmodels.ViewModel;
 
