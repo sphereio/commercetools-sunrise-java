@@ -9,6 +9,8 @@ import com.commercetools.sunrise.framework.viewmodels.content.products.ProductWi
 import com.commercetools.sunrise.myaccount.wishlist.Wishlist;
 import io.sphere.sdk.products.ProductProjection;
 import io.sphere.sdk.queries.PagedQueryResult;
+import io.sphere.sdk.shoppinglists.LineItem;
+import io.sphere.sdk.shoppinglists.ShoppingList;
 
 import javax.inject.Inject;
 import java.util.Collections;
@@ -38,6 +40,14 @@ public class WishlistPageContentFactory extends PageContentFactory<WishlistPageC
         super.initialize(viewModel, input);
 
         fillProducts(viewModel, input);
+        fillItemsInTotal(viewModel, input);
+    }
+
+    private void fillItemsInTotal(final WishlistPageContent viewModel, final Wishlist input) {
+        final ShoppingList wishlist = input.getShoppingList();
+        final List<LineItem> lineItems = wishlist.getLineItems();
+
+        viewModel.setItemsInTotal(lineItems == null ? 0 : lineItems.size());
     }
 
     private void fillProducts(final WishlistPageContent viewModel, final Wishlist input) {
@@ -56,6 +66,6 @@ public class WishlistPageContentFactory extends PageContentFactory<WishlistPageC
 
     @Override
     protected void fillTitle(final WishlistPageContent viewModel, final Wishlist input) {
-        viewModel.setTitle(pageTitleResolver.getOrEmpty("my-account:myAccount.title"));
+        viewModel.setTitle(pageTitleResolver.getOrEmpty("my-account:myWishlist.title"));
     }
 }

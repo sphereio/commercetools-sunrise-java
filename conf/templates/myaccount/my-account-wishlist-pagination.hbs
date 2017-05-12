@@ -1,10 +1,8 @@
 <div class="my-account-wishlist-pagination hidden-xs">
     <div class="row">
-        <form id="form-filter-wishlist" name="filter-wishlist" data-submit-onchange
-              action="{{@root.meta._links.myWishlist.href}}">
             <div class="col-sm-4">
                 <div class="my-account-wishlist-clear">
-                    <button>{{content.clearWishlistBtn}}</button>
+                    <button>{{i18n "my-account:myWishlist.clear"}}</button>
                 </div>
             </div>
             <div class="col-sm-4 text-center custom-pagination">
@@ -13,16 +11,18 @@
                 </ul>
             </div>
             <div class="col-sm-4">
-                <div class="my-account-wishlist-per-page">
+                <form id="form-filter-wishlist" name="filter-wishlist" data-submit-onchange
+                      action="{{@root.meta._links.self.href}}">
+                    <div class="my-account-wishlist-per-page">
                     <span class="wishlist-display-selector-title hidden-sm">{{i18n
                             "catalog:displaySelector.title"}}</span>
-                    <select name="{{content.displaySelector.key}}" required>
-                        {{#each content.displaySelector.list}}
-                            <option value="{{value}}" {{#if selected}}selected{{/if}}>{{label}}</option>
-                        {{/each}}
-                    </select>
-                </div>
+                        <select name="{{content.displaySelector.key}}" required>
+                            {{#each content.displaySelector.list}}
+                                <option value="{{value}}" {{#if selected}}selected{{/if}}>{{label}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                </form>
             </div>
-        </form>
     </div>
 </div>
