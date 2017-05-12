@@ -5,25 +5,25 @@ import com.commercetools.sunrise.framework.viewmodels.meta.PageMeta;
 
 import javax.inject.Inject;
 
-public class WishlistLinksControllerComponent  extends AbstractLinksControllerComponent<MyWishlistReverseRouter> {
+public class WishlistLinksControllerComponent  extends AbstractLinksControllerComponent<WishlistReverseRouter> {
 
-    private final MyWishlistReverseRouter myWishlistReverseRouter;
+    private final WishlistReverseRouter wishlistReverseRouter;
 
     @Inject
-    public WishlistLinksControllerComponent(final MyWishlistReverseRouter myWishlistReverseRouter) {
-        this.myWishlistReverseRouter = myWishlistReverseRouter;
+    public WishlistLinksControllerComponent(final WishlistReverseRouter wishlistReverseRouter) {
+        this.wishlistReverseRouter = wishlistReverseRouter;
     }
 
     @Override
-    public MyWishlistReverseRouter getReverseRouter() {
-        return myWishlistReverseRouter;
+    public WishlistReverseRouter getReverseRouter() {
+        return wishlistReverseRouter;
     }
 
     @Override
-    protected void addLinksToPage(final PageMeta meta, final MyWishlistReverseRouter reverseRouter) {
-        meta.addHalLink(reverseRouter.addToWishlistProcess("en"), "addToWishlist");
-        meta.addHalLink(reverseRouter.removeFromWishlistProcess("en"), "removeFromWishlist");
-        meta.addHalLink(reverseRouter.clearWishlistProcess("en"), "clearWishlist");
-        meta.addHalLink(reverseRouter.myWishlistPageCall("en"), "myWishlist");
+    protected void addLinksToPage(final PageMeta meta, final WishlistReverseRouter reverseRouter) {
+        meta.addHalLink(reverseRouter.addToWishlistProcess(), "addToWishlist");
+        meta.addHalLink(reverseRouter.removeFromWishlistProcess(), "removeFromWishlist");
+        meta.addHalLink(reverseRouter.clearWishlistProcess(), "clearWishlist");
+        meta.addHalLink(reverseRouter.wishlistPageCall(), "myWishlist");
     }
 }

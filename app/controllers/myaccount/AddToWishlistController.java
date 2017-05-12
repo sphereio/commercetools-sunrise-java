@@ -1,6 +1,6 @@
 package controllers.myaccount;
 
-import com.commercetools.sunrise.framework.reverserouters.myaccount.wishlist.MyWishlistReverseRouter;
+import com.commercetools.sunrise.framework.reverserouters.myaccount.wishlist.WishlistReverseRouter;
 import com.commercetools.sunrise.framework.template.engine.ContentRenderer;
 import com.commercetools.sunrise.myaccount.wishlist.AddToWishlistControllerAction;
 import com.commercetools.sunrise.myaccount.wishlist.SunriseAddToWishlistController;
@@ -16,7 +16,7 @@ public class AddToWishlistController extends SunriseAddToWishlistController {
 
     public AddToWishlistController(final ContentRenderer contentRenderer, final FormFactory formFactory, final WishlistLineItemFormData formData,
                                    final WishlistFinderBySession wishlistFinder, final AddToWishlistControllerAction controllerAction,
-                                   final MyWishlistReverseRouter reverseRouter) {
+                                   final WishlistReverseRouter reverseRouter) {
         super(contentRenderer, formFactory, formData, wishlistFinder, controllerAction, reverseRouter);
     }
 }

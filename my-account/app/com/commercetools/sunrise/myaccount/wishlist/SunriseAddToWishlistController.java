@@ -4,7 +4,7 @@ import com.commercetools.sunrise.framework.controllers.SunriseContentFormControl
 import com.commercetools.sunrise.framework.controllers.WithContentFormFlow;
 import com.commercetools.sunrise.framework.hooks.EnableHooks;
 import com.commercetools.sunrise.framework.reverserouters.SunriseRoute;
-import com.commercetools.sunrise.framework.reverserouters.myaccount.wishlist.MyWishlistReverseRouter;
+import com.commercetools.sunrise.framework.reverserouters.myaccount.wishlist.WishlistReverseRouter;
 import com.commercetools.sunrise.framework.template.engine.ContentRenderer;
 import com.commercetools.sunrise.framework.viewmodels.content.PageContent;
 import com.commercetools.sunrise.myaccount.wishlist.viewmodels.WishlistLineItemFormData;
@@ -22,13 +22,13 @@ public class SunriseAddToWishlistController extends SunriseContentFormController
     private final WishlistLineItemFormData formData;
     private final WishlistFinderBySession wishlistFinder;
     private final AddToWishlistControllerAction controllerAction;
-    private final MyWishlistReverseRouter reverseRouter;
+    private final WishlistReverseRouter reverseRouter;
 
     @Inject
     protected SunriseAddToWishlistController(final ContentRenderer contentRenderer, final FormFactory formFactory,
                                              final WishlistLineItemFormData formData,
                                              final WishlistFinderBySession wishlistFinder,
-                                             final AddToWishlistControllerAction controllerAction, final MyWishlistReverseRouter reverseRouter) {
+                                             final AddToWishlistControllerAction controllerAction, final WishlistReverseRouter reverseRouter) {
         super(contentRenderer, formFactory);
         this.formData = formData;
         this.wishlistFinder = wishlistFinder;
@@ -42,7 +42,7 @@ public class SunriseAddToWishlistController extends SunriseContentFormController
     }
 
     @EnableHooks
-    @SunriseRoute(MyWishlistReverseRouter.ADD_TO_WISHLIST_PROCESS)
+    @SunriseRoute(WishlistReverseRouter.ADD_TO_WISHLIST_PROCESS)
     public CompletionStage<Result> process(final String languageTag) {
         return wishlistFinder.getOrCreate()
                 .thenComposeAsync(this::processForm, HttpExecution.defaultContext());
@@ -66,6 +66,6 @@ public class SunriseAddToWishlistController extends SunriseContentFormController
 
     @Override
     public CompletionStage<Result> handleSuccessfulAction(final ShoppingList output, final WishlistLineItemFormData formData) {
-        return redirectToCall(reverseRouter.myWishlistPageCall("en"));
+        return redirectToCall(reverseRouter.wishlistPageCall());
     }
 }

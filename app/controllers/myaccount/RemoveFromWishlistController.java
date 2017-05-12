@@ -1,6 +1,6 @@
 package controllers.myaccount;
 
-import com.commercetools.sunrise.framework.reverserouters.myaccount.wishlist.MyWishlistReverseRouter;
+import com.commercetools.sunrise.framework.reverserouters.myaccount.wishlist.WishlistReverseRouter;
 import com.commercetools.sunrise.framework.template.engine.ContentRenderer;
 import com.commercetools.sunrise.myaccount.wishlist.RemoveFromWishlistControllerAction;
 import com.commercetools.sunrise.myaccount.wishlist.SunriseRemoveFromWishlistController;
@@ -15,7 +15,7 @@ public class RemoveFromWishlistController extends SunriseRemoveFromWishlistContr
 
     public RemoveFromWishlistController(final ContentRenderer contentRenderer, final FormFactory formFactory, final WishlistLineItemFormData formData,
                                         final WishlistFinderBySession wishlistFinder, final RemoveFromWishlistControllerAction controllerAction,
-                                        final MyWishlistReverseRouter reverseRouter) {
+                                        final WishlistReverseRouter reverseRouter) {
         super(contentRenderer, formFactory, formData, wishlistFinder, controllerAction, reverseRouter);
     }
 }

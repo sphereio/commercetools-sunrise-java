@@ -7,18 +7,18 @@ import play.mvc.Call;
 
 import javax.inject.Inject;
 
-public class DefaultMyWishlistReverseRouter extends AbstractReflectionReverseRouter implements MyWishlistReverseRouter {
+public class SimpleWishlistReverseRouterByReflection extends AbstractReflectionReverseRouter implements SimpleWishlistReverseRouter {
     private final ReverseCaller addToWishlistCaller;
     private final ReverseCaller removeFromWishlistCaller;
     private final ReverseCaller clearWishlistCaller;
     private final ReverseCaller wishlistPageCaller;
 
     @Inject
-    public DefaultMyWishlistReverseRouter(final ParsedRoutes parsedRoutes) {
+    public SimpleWishlistReverseRouterByReflection(final ParsedRoutes parsedRoutes) {
         addToWishlistCaller = getReverseCallerForSunriseRoute(ADD_TO_WISHLIST_PROCESS, parsedRoutes);
         removeFromWishlistCaller = getReverseCallerForSunriseRoute(REMOVE_FROM_WISHLIST_PROCESS, parsedRoutes);
         clearWishlistCaller = getReverseCallerForSunriseRoute(CLEAR_WISHLIST_PROCESS, parsedRoutes);
-        wishlistPageCaller = getReverseCallerForSunriseRoute(MY_WISHLIST_PAGE_CALL, parsedRoutes);
+        wishlistPageCaller = getReverseCallerForSunriseRoute(WISHLIST_PAGE_CALL, parsedRoutes);
     }
 
     @Override
@@ -37,7 +37,7 @@ public class DefaultMyWishlistReverseRouter extends AbstractReflectionReverseRou
     }
 
     @Override
-    public Call myWishlistPageCall(final String languageTag) {
+    public Call wishlistPageCall(final String languageTag) {
         return wishlistPageCaller.call(languageTag);
     }
 }

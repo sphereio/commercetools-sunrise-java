@@ -4,7 +4,7 @@ import com.commercetools.sunrise.framework.controllers.SunriseContentController;
 import com.commercetools.sunrise.framework.controllers.WithQueryFlow;
 import com.commercetools.sunrise.framework.hooks.EnableHooks;
 import com.commercetools.sunrise.framework.reverserouters.SunriseRoute;
-import com.commercetools.sunrise.framework.reverserouters.myaccount.wishlist.MyWishlistReverseRouter;
+import com.commercetools.sunrise.framework.reverserouters.myaccount.wishlist.WishlistReverseRouter;
 import com.commercetools.sunrise.framework.template.engine.ContentRenderer;
 import com.commercetools.sunrise.framework.viewmodels.content.PageContent;
 import com.commercetools.sunrise.myaccount.MyAccountController;
@@ -49,7 +49,7 @@ public class SunriseWishlistController extends SunriseContentController implemen
     }
 
     @EnableHooks
-    @SunriseRoute(MyWishlistReverseRouter.MY_WISHLIST_PAGE_CALL)
+    @SunriseRoute(WishlistReverseRouter.WISHLIST_PAGE_CALL)
     public CompletionStage<Result> show(final String languageTag) {
         return wishlistFinder.getOrCreate()
                 .thenComposeAsync(this::getWishlist, HttpExecution.defaultContext())
@@ -57,7 +57,7 @@ public class SunriseWishlistController extends SunriseContentController implemen
     }
 
     @EnableHooks
-    @SunriseRoute(MyWishlistReverseRouter.CLEAR_WISHLIST_PROCESS)
+    @SunriseRoute(WishlistReverseRouter.CLEAR_WISHLIST_PROCESS)
     public CompletionStage<Result> clear(final String languageTag) {
         return wishlistFinder.getOrCreate()
                 .thenComposeAsync(controllerAction::apply, HttpExecution.defaultContext())
