@@ -22,4 +22,12 @@ public interface AuthenticationReverseRouter extends SimpleAuthenticationReverse
     default Call logOutProcessCall() {
         return logOutProcessCall(locale().toLanguageTag());
     }
+
+    default Call changePasswordPageCall() {
+        return changePasswordPageCall(locale().toLanguageTag());
+    }
+
+    default Call changePasswordProcessCall() {
+        return changePasswordProcessCall(locale().toLanguageTag());
+    }
 }
