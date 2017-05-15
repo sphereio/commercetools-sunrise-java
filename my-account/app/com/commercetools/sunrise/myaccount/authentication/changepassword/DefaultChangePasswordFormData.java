@@ -22,13 +22,8 @@ public class DefaultChangePasswordFormData extends Base implements ChangePasswor
         return newPassword;
     }
 
-    @Override
-    public String repeatPassword() {
-        return repeatPassword;
-    }
-
     public String validate() {
-        if (newPassword == null || oldPassword == null || !oldPassword.equals(newPassword)) {
+        if (newPassword == null || repeatPassword == null || !newPassword.equals(repeatPassword)) {
             return "New password does not match confirmed one"; // TODO use i18n version
         }
         return null;

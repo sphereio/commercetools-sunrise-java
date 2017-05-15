@@ -40,16 +40,6 @@ public abstract class SunriseChangePasswordController extends SunriseContentForm
         this.pageContentFactory = pageContentFactory;
     }
 
-    @Override
-    public final CustomerFinder getCustomerFinder() {
-        return customerFinder;
-    }
-
-    @Override
-    public final Class<? extends ChangePasswordFormData> getFormDataClass() {
-        return formData.getClass();
-    }
-
     @EnableHooks
     @SunriseRoute(AuthenticationReverseRouter.CHANGE_PASSWORD_PAGE)
     public CompletionStage<Result> show(final String languageTag) {
@@ -63,9 +53,22 @@ public abstract class SunriseChangePasswordController extends SunriseContentForm
     }
 
     @Override
+    public final CustomerFinder getCustomerFinder() {
+        return customerFinder;
+    }
+
+    @Override
+    public final Class<? extends ChangePasswordFormData> getFormDataClass() {
+        return formData.getClass();
+    }
+
+    @Override
     public CompletionStage<Customer> executeAction(final Customer input, final ChangePasswordFormData formData) {
         return controllerAction.apply(input, formData);
     }
+
+    @Override
+    public abstract CompletionStage<Result> handleSuccessfulAction(final Customer result, final ChangePasswordFormData formData);
 
     @Override
     public CompletionStage<Result> handleClientErrorFailedAction(final Customer input, final Form<? extends ChangePasswordFormData> form, final ClientErrorException clientErrorException) {
@@ -76,9 +79,6 @@ public abstract class SunriseChangePasswordController extends SunriseContentForm
             return WithContentFormFlow.super.handleClientErrorFailedAction(input, form, clientErrorException);
         }
     }
-
-    @Override
-    public abstract CompletionStage<Result> handleSuccessfulAction(final Customer result, final ChangePasswordFormData formData);
 
     @Override
     public PageContent createPageContent(final Customer input, final Form<? extends ChangePasswordFormData> form) {

@@ -1,9 +1,9 @@
 package com.commercetools.sunrise.myaccount.authentication.changepassword.viemodels;
 
-import com.commercetools.sunrise.myaccount.authentication.AuthenticationPageContent;
+import com.commercetools.sunrise.framework.viewmodels.content.PageContent;
 import play.data.Form;
 
-public class ChangePasswordPageContent extends AuthenticationPageContent {
+public class ChangePasswordPageContent extends PageContent {
 
     private Form<?> changePasswordForm;
 

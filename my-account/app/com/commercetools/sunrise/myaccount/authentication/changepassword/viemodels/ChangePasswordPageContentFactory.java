@@ -2,29 +2,12 @@ package com.commercetools.sunrise.myaccount.authentication.changepassword.viemod
 
 import com.commercetools.sunrise.framework.viewmodels.PageTitleResolver;
 import com.commercetools.sunrise.framework.viewmodels.content.FormPageContentFactory;
-import com.commercetools.sunrise.myaccount.authentication.AbstractAuthenticationPageContentFactory;
-import com.commercetools.sunrise.myaccount.authentication.AuthenticationPageContent;
 import com.commercetools.sunrise.myaccount.authentication.changepassword.ChangePasswordFormData;
-import com.commercetools.sunrise.myaccount.authentication.signup.viewmodels.SignUpFormSettingsViewModelFactory;
 import play.data.Form;
 
 import javax.inject.Inject;
 
 public class ChangePasswordPageContentFactory extends FormPageContentFactory<ChangePasswordPageContent, Void, ChangePasswordFormData> {
-
-    /*private final SignUpFormSettingsViewModelFactory signUpFormSettingsViewModelFactory;
-
-    @Inject
-    public ChangePasswordPageContentFactory(final PageTitleResolver pageTitleResolver,
-                                            final SignUpFormSettingsViewModelFactory signUpFormSettingsViewModelFactory) {
-        super(pageTitleResolver);
-        this.signUpFormSettingsViewModelFactory = signUpFormSettingsViewModelFactory;
-    }*/
-
-//    protected final SignUpFormSettingsViewModelFactory getSignUpFormSettingsViewModelFactory() {
-//        return signUpFormSettingsViewModelFactory;
-//    }
-
 
     private final PageTitleResolver pageTitleResolver;
 
@@ -50,7 +33,6 @@ public class ChangePasswordPageContentFactory extends FormPageContentFactory<Cha
 
     @Override
     protected void fillTitle(final ChangePasswordPageContent viewModel, final Void input, final Form<? extends ChangePasswordFormData> form) {
-
         pageTitleResolver.getOrEmpty("myAccount:changePassword.title");
     }
 

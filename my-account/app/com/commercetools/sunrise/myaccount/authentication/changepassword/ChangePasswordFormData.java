@@ -8,6 +8,4 @@ public interface ChangePasswordFormData {
     String oldPassword();
 
     String newPassword();
-
-    String repeatPassword();
 }
