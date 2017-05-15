@@ -34,7 +34,7 @@ public class WishlistPaginationControllerComponent extends AbstractPaginationCon
 
     @Override
     public CompletionStage<?> onProductProjectionPagedResultLoaded(final PagedResult<ProductProjection> productProjectionPagedResult) {
-        this.pagedResult = productProjectionPagedResult; // TODO move code from WishlistFinderBySession here
+        this.pagedResult = productProjectionPagedResult;
         return completedFuture(null);
     }
 }

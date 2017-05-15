@@ -6,11 +6,17 @@ import com.commercetools.sunrise.framework.hooks.ctpevents.ProductProjectionPage
 import com.commercetools.sunrise.sessions.customer.CustomerInSession;
 import com.commercetools.sunrise.sessions.wishlist.WishlistInSession;
 import io.sphere.sdk.client.SphereClient;
+import io.sphere.sdk.customers.Customer;
+import io.sphere.sdk.models.LocalizedString;
+import io.sphere.sdk.models.Reference;
 import io.sphere.sdk.products.ProductProjection;
 import io.sphere.sdk.products.queries.ProductProjectionQuery;
 import io.sphere.sdk.queries.PagedQueryResult;
 import io.sphere.sdk.shoppinglists.LineItem;
 import io.sphere.sdk.shoppinglists.ShoppingList;
+import io.sphere.sdk.shoppinglists.ShoppingListDraftBuilder;
+import io.sphere.sdk.shoppinglists.ShoppingListDraftDsl;
+import io.sphere.sdk.shoppinglists.commands.ShoppingListCreateCommand;
 import io.sphere.sdk.shoppinglists.queries.ShoppingListQuery;
 import play.libs.concurrent.HttpExecution;
 
@@ -25,16 +31,13 @@ import static java.util.concurrent.CompletableFuture.completedFuture;
 public class WishlistFinderBySession extends AbstractSphereRequestExecutor implements WishlistFinder {
     private final WishlistInSession wishlistInSession;
     private final CustomerInSession customerInSession;
-    private final WishlistCreator wishlistCreator;
 
     @Inject
     protected WishlistFinderBySession(final SphereClient sphereClient, final HookRunner hookRunner,
-                                      final WishlistInSession wishlistInSession, final CustomerInSession customerInSession,
-                                      final WishlistCreator wishlistCreator) {
+                                      final WishlistInSession wishlistInSession, final CustomerInSession customerInSession) {
         super(sphereClient, hookRunner);
         this.wishlistInSession = wishlistInSession;
         this.customerInSession = customerInSession;
-        this.wishlistCreator = wishlistCreator;
     }
 
     @Override
@@ -66,19 +69,28 @@ public class WishlistFinderBySession extends AbstractSphereRequestExecutor imple
                         .withPredicates(m -> m.id().isIn(productIds))
                         .withLimit(limit));
 
-        final Map<String, Integer> productIdToLineItemIndex = pagedLineItems.stream()
-                .collect(Collectors.toMap(LineItem::getProductId, pagedLineItems::indexOf));
 
         return resultCompletionStage
-                .thenApply(pagedQueryResult ->  getOrderedBy(pagedQueryResult, productIdToLineItemIndex, offset, lineItems.size()))
+                .thenApply(pagedQueryResult ->  getOrderedBy(pagedQueryResult, pagedLineItems, offset, lineItems.size()))
                 .thenApplyAsync(this::runProductProjectionPagedResultLoadedHook, HttpExecution.defaultContext())
                 .thenComposeAsync((input) -> CompletableFuture.completedFuture(new Wishlist(shoppingList, input)), HttpExecution.defaultContext());
     }
 
+    /**
+     * This method creates a new {@link PagedQueryResult} object from the given one and orders the {@link PagedQueryResult#getResults()}
+     * according to given paged line items.
+     *
+     * Additionally the given offset and count are used in the returnd object.
+     *
+     * This allows us to view the product projections in the same order as the line items of the wishlist.
+     */
     private PagedQueryResult<ProductProjection> getOrderedBy(final PagedQueryResult<ProductProjection> pagedQueryResult,
-                                                             final Map<String, Integer> productIdToLineItemIndex,
+                                                             final List<LineItem> pagedLineItems,
                                                              final long offset,
                                                              final int total) {
+        final Map<String, Integer> productIdToLineItemIndex = pagedLineItems.stream()
+                .collect(Collectors.toMap(LineItem::getProductId, pagedLineItems::indexOf));
+
         final List<ProductProjection> results = pagedQueryResult == null ?
                 Collections.emptyList() : pagedQueryResult.getResults();
         final Long count = pagedQueryResult == null ? 0L : pagedQueryResult.getCount();
@@ -130,8 +142,22 @@ public class WishlistFinderBySession extends AbstractSphereRequestExecutor imple
         if (shoppingListOptional.isPresent()) {
             return CompletableFuture.completedFuture(shoppingListOptional.get());
         } else {
-            return wishlistCreator.get();
+            return get();
         }
+    }
+
+    private CompletionStage<ShoppingList> get() {
+        final Reference<Customer> customer = customerInSession.findCustomerId()
+                .map(Customer::referenceOfId)
+                .orElse(null);
+
+        final ShoppingListDraftDsl wishlist = ShoppingListDraftBuilder.of(LocalizedString.ofEnglish("Wishlist"))
+                .customer(customer)
+                .build();
+
+        final ShoppingListCreateCommand createCommand = ShoppingListCreateCommand.of(wishlist);
+
+        return getSphereClient().execute(createCommand);
     }
 
     private CompletionStage<Optional<ShoppingList>> getShoppingList() {

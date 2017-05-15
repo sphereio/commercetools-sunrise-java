@@ -5,8 +5,8 @@ import io.sphere.sdk.queries.PagedQueryResult;
 import io.sphere.sdk.shoppinglists.ShoppingList;
 
 /**
- * A wishlist is combination of a {@link ShoppingList} and
- * the resolved {@link ProductProjection}s of its {@link ShoppingList#getLineItems()}.
+ * A wishlist is combination of a {@link ShoppingList} and the currently viewed {@link #getProducts()}
+ * of its {@link ShoppingList#getLineItems()}.
  */
 public final class Wishlist {
     private final ShoppingList shoppingList;
