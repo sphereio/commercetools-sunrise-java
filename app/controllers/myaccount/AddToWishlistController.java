@@ -13,9 +13,11 @@ import javax.inject.Inject;
 public class AddToWishlistController extends SunriseAddToWishlistController {
 
     @Inject
-
-    public AddToWishlistController(final ContentRenderer contentRenderer, final FormFactory formFactory, final WishlistLineItemFormData formData,
-                                   final WishlistFinderBySession wishlistFinder, final AddToWishlistControllerAction controllerAction,
+    public AddToWishlistController(final ContentRenderer contentRenderer,
+                                   final FormFactory formFactory,
+                                   final WishlistLineItemFormData formData,
+                                   final WishlistFinderBySession wishlistFinder,
+                                   final AddToWishlistControllerAction controllerAction,
                                    final WishlistReverseRouter reverseRouter) {
         super(contentRenderer, formFactory, formData, wishlistFinder, controllerAction, reverseRouter);
     }

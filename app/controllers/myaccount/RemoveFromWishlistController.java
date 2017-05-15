@@ -11,10 +11,13 @@ import play.data.FormFactory;
 import javax.inject.Inject;
 
 public class RemoveFromWishlistController extends SunriseRemoveFromWishlistController {
-    @Inject
 
-    public RemoveFromWishlistController(final ContentRenderer contentRenderer, final FormFactory formFactory, final WishlistLineItemFormData formData,
-                                        final WishlistFinderBySession wishlistFinder, final RemoveFromWishlistControllerAction controllerAction,
+    @Inject
+    public RemoveFromWishlistController(final ContentRenderer contentRenderer,
+                                        final FormFactory formFactory,
+                                        final WishlistLineItemFormData formData,
+                                        final WishlistFinderBySession wishlistFinder,
+                                        final RemoveFromWishlistControllerAction controllerAction,
                                         final WishlistReverseRouter reverseRouter) {
         super(contentRenderer, formFactory, formData, wishlistFinder, controllerAction, reverseRouter);
     }

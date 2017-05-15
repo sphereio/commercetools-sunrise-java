@@ -1,13 +1,13 @@
 package com.commercetools.sunrise.myaccount.wishlist;
 
 import com.commercetools.sunrise.framework.controllers.SunriseContentFormController;
-import com.commercetools.sunrise.framework.controllers.WithContentFormFlow;
+import com.commercetools.sunrise.framework.controllers.WithFormFlow;
 import com.commercetools.sunrise.framework.hooks.EnableHooks;
 import com.commercetools.sunrise.framework.reverserouters.SunriseRoute;
 import com.commercetools.sunrise.framework.reverserouters.myaccount.wishlist.WishlistReverseRouter;
 import com.commercetools.sunrise.framework.template.engine.ContentRenderer;
-import com.commercetools.sunrise.framework.viewmodels.content.PageContent;
 import com.commercetools.sunrise.myaccount.wishlist.viewmodels.WishlistLineItemFormData;
+import io.sphere.sdk.client.ClientErrorException;
 import io.sphere.sdk.shoppinglists.ShoppingList;
 import play.data.Form;
 import play.data.FormFactory;
@@ -18,7 +18,7 @@ import javax.inject.Inject;
 import java.util.concurrent.CompletionStage;
 
 public class SunriseRemoveFromWishlistController extends SunriseContentFormController
-        implements WithContentFormFlow<ShoppingList, ShoppingList, WishlistLineItemFormData> {
+        implements WithFormFlow<ShoppingList, ShoppingList, WishlistLineItemFormData> {
     private final WishlistLineItemFormData formData;
     private final WishlistFinderBySession wishlistFinder;
     private final RemoveFromWishlistControllerAction controllerAction;
@@ -48,22 +48,22 @@ public class SunriseRemoveFromWishlistController extends SunriseContentFormContr
     }
 
     @Override
-    public PageContent createPageContent(final ShoppingList input, final Form<? extends WishlistLineItemFormData> form) {
-        return null;
-    }
-
-    @Override
-    public void preFillFormData(final ShoppingList input, final WishlistLineItemFormData formData) {
-        // not applicable here
-    }
-
-    @Override
     public CompletionStage<ShoppingList> executeAction(final ShoppingList input, final WishlistLineItemFormData formData) {
         return controllerAction.apply(input, formData);
     }
 
     @Override
     public CompletionStage<Result> handleSuccessfulAction(final ShoppingList output, final WishlistLineItemFormData formData) {
+        return redirectToCall(reverseRouter.wishlistPageCall());
+    }
+
+    @Override
+    public CompletionStage<Result> handleInvalidForm(final ShoppingList input, final Form<? extends WishlistLineItemFormData> form) {
+        return redirectToCall(reverseRouter.wishlistPageCall());
+    }
+
+    @Override
+    public CompletionStage<Result> handleClientErrorFailedAction(final ShoppingList input, final Form<? extends WishlistLineItemFormData> form, final ClientErrorException clientErrorException) {
         return redirectToCall(reverseRouter.wishlistPageCall());
     }
 }

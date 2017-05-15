@@ -26,10 +26,9 @@ import javax.inject.Inject;
 public class MyWishlistController extends SunriseWishlistController {
 
     @Inject
-
-    public MyWishlistController(final WishlistFinderBySession wishlistFinder,
+    public MyWishlistController(final ContentRenderer contentRenderer,
+                                final WishlistFinderBySession wishlistFinder,
                                 final ClearWishlistControllerAction controllerAction,
-                                final ContentRenderer contentRenderer,
                                 final WishlistPageContentFactory wishlistPageContentFactory,
                                 final WishlistPaginationSettings paginationSettings,
                                 final WishlistProductsPerPageFormSettings entriesPerPageFormSettings) {
