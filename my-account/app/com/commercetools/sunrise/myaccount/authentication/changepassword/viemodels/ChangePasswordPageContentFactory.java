@@ -36,7 +36,7 @@ public class ChangePasswordPageContentFactory extends FormPageContentFactory<Cha
         return super.create(null, form);
     }
 
-    protected void fillChangePasswordForm(final ChangePasswordPageContent viewModel, final Form<? extends ChangePasswordFormData> form) {
+    private void fillChangePasswordForm(final ChangePasswordPageContent viewModel, final Form<? extends ChangePasswordFormData> form) {
         viewModel.setChangePasswordForm(form);
     }
 }

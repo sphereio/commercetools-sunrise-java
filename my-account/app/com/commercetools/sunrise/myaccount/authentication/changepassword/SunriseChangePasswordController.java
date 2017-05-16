@@ -68,9 +68,6 @@ public abstract class SunriseChangePasswordController extends SunriseContentForm
     }
 
     @Override
-    public abstract CompletionStage<Result> handleSuccessfulAction(final Customer result, final ChangePasswordFormData formData);
-
-    @Override
     public CompletionStage<Result> handleClientErrorFailedAction(final Customer input, final Form<? extends ChangePasswordFormData> form, final ClientErrorException clientErrorException) {
         if (isCustomerInvalidCurrentPasswordError(clientErrorException)) {
             saveFormError(form, "Invalid current password"); // TODO i18n

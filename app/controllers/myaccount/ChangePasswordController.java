@@ -12,7 +12,6 @@ import com.commercetools.sunrise.myaccount.authentication.changepassword.ChangeP
 import com.commercetools.sunrise.myaccount.authentication.changepassword.ChangePasswordFormData;
 import com.commercetools.sunrise.myaccount.authentication.changepassword.SunriseChangePasswordController;
 import com.commercetools.sunrise.myaccount.authentication.changepassword.viemodels.ChangePasswordPageContentFactory;
-import com.commercetools.sunrise.sessions.customer.CustomerOperationsControllerComponentSupplier;
 import io.sphere.sdk.customers.Customer;
 import play.data.FormFactory;
 import play.mvc.Result;
@@ -23,8 +22,7 @@ import java.util.concurrent.CompletionStage;
 @NoCache
 @RegisteredComponents({
         TemplateControllerComponentsSupplier.class,
-        PageHeaderControllerComponentSupplier.class,
-        CustomerOperationsControllerComponentSupplier.class
+        PageHeaderControllerComponentSupplier.class
 })
 public final class ChangePasswordController extends SunriseChangePasswordController {
 

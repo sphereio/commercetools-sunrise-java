@@ -21,14 +21,11 @@ public class DefaultChangePasswordControllerAction extends AbstractSphereRequest
 
     @Override
     public CompletionStage<Customer> apply(final Customer customer, final ChangePasswordFormData formData) {
-        return executeRequest(buildRequest(customer, formData));
+        return executeRequest(
+                CustomerChangePasswordCommand.of(customer, formData.oldPassword(), formData.newPassword()));
     }
 
-    protected CustomerChangePasswordCommand buildRequest(final Customer customer, final ChangePasswordFormData formData) {
-        return CustomerChangePasswordCommand.of(customer, formData.oldPassword(), formData.newPassword());
-    }
-
-    protected final CompletionStage<Customer> executeRequest(final CustomerChangePasswordCommand baseCommand) {
+    private CompletionStage<Customer> executeRequest(final CustomerChangePasswordCommand baseCommand) {
         final CustomerChangePasswordCommand command = CustomerChangePasswordCommandHook.runHook(getHookRunner(), baseCommand);
         return getSphereClient().execute(command)
                 .thenApplyAsync(updatedCustomer -> {
@@ -36,5 +33,4 @@ public class DefaultChangePasswordControllerAction extends AbstractSphereRequest
                     return updatedCustomer;
                 }, HttpExecution.defaultContext());
     }
-
 }
