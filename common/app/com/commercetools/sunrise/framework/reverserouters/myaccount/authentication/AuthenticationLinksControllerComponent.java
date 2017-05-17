@@ -26,7 +26,6 @@ public class AuthenticationLinksControllerComponent extends AbstractLinksControl
         meta.addHalLink(reverseRouter.logOutProcessCall(), "logOut");
         meta.addHalLink(reverseRouter.logInPageCall(), "signUp");
         meta.addHalLink(reverseRouter.signUpProcessCall(), "signUpSubmit");
-        meta.addHalLink(reverseRouter.changePasswordPageCall(), "changePassword");
         meta.addHalLink(reverseRouter.changePasswordProcessCall(), "changePassword");
     }
 }

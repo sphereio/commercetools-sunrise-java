@@ -7,11 +7,11 @@ public final class CustomerInvalidCurrentPassword extends SphereError {
     public static final String CODE = "InvalidCurrentPassword";
 
     @JsonCreator
-    private CustomerInvalidCurrentPassword(String message) {
+    private CustomerInvalidCurrentPassword(final String message) {
         super(CODE, message);
     }
 
-    public static CustomerInvalidCurrentPassword of(String message) {
+    public static CustomerInvalidCurrentPassword of(final String message) {
         return new CustomerInvalidCurrentPassword(message);
     }
 }

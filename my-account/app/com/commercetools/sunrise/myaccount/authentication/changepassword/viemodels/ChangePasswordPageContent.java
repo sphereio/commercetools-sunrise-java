@@ -11,7 +11,7 @@ public class ChangePasswordPageContent extends PageContent {
         return changePasswordForm;
     }
 
-    void setChangePasswordForm(Form<?> changePasswordForm) {
+    void setChangePasswordForm(final Form<?> changePasswordForm) {
         this.changePasswordForm = changePasswordForm;
     }
 }
