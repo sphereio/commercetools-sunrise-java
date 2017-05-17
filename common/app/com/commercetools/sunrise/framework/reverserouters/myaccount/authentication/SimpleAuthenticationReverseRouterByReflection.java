@@ -15,8 +15,6 @@ final class SimpleAuthenticationReverseRouterByReflection extends AbstractReflec
     private final ReverseCaller logInProcessCaller;
     private final ReverseCaller signUpProcessCaller;
     private final ReverseCaller logOutProcessCaller;
-    private final ReverseCaller changePasswordPageCaller;
-    private final ReverseCaller changePasswordProcessCaller;
 
     @Inject
     private SimpleAuthenticationReverseRouterByReflection(final ParsedRoutes parsedRoutes) {
@@ -24,8 +22,6 @@ final class SimpleAuthenticationReverseRouterByReflection extends AbstractReflec
         logInProcessCaller = getReverseCallerForSunriseRoute(LOG_IN_PROCESS, parsedRoutes);
         signUpProcessCaller = getReverseCallerForSunriseRoute(SIGN_UP_PROCESS, parsedRoutes);
         logOutProcessCaller = getReverseCallerForSunriseRoute(LOG_OUT_PROCESS, parsedRoutes);
-        changePasswordPageCaller = getReverseCallerForSunriseRoute(CHANGE_PASSWORD_PAGE, parsedRoutes);
-        changePasswordProcessCaller = getReverseCallerForSunriseRoute(CHANGE_PASSWORD_PROCESS, parsedRoutes);
     }
 
     @Override
@@ -46,15 +42,5 @@ final class SimpleAuthenticationReverseRouterByReflection extends AbstractReflec
     @Override
     public Call logOutProcessCall(final String languageTag) {
         return logOutProcessCaller.call(languageTag);
-    }
-
-    @Override
-    public Call changePasswordPageCall(final String languageTag) {
-        return changePasswordPageCaller.call(languageTag);
-    }
-
-    @Override
-    public Call changePasswordProcessCall(final String languageTag) {
-        return changePasswordProcessCaller.call(languageTag);
     }
 }

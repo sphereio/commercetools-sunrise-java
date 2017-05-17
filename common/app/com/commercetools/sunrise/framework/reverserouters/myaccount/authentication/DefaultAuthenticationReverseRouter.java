@@ -37,14 +37,4 @@ public class DefaultAuthenticationReverseRouter extends AbstractLocalizedReverse
     public Call logOutProcessCall(final String languageTag) {
         return delegate.logOutProcessCall(languageTag);
     }
-
-    @Override
-    public Call changePasswordPageCall(final String languageTag) {
-        return delegate.changePasswordPageCall(languageTag);
-    }
-
-    @Override
-    public Call changePasswordProcessCall(final String languageTag) {
-        return delegate.changePasswordProcessCall(languageTag);
-    }
 }

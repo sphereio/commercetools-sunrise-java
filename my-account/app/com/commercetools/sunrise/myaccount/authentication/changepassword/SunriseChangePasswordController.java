@@ -4,7 +4,7 @@ import com.commercetools.sunrise.framework.controllers.SunriseContentFormControl
 import com.commercetools.sunrise.framework.controllers.WithContentFormFlow;
 import com.commercetools.sunrise.framework.hooks.EnableHooks;
 import com.commercetools.sunrise.framework.reverserouters.SunriseRoute;
-import com.commercetools.sunrise.framework.reverserouters.myaccount.authentication.AuthenticationReverseRouter;
+import com.commercetools.sunrise.framework.reverserouters.myaccount.changepassword.ChangePasswordReverseRouter;
 import com.commercetools.sunrise.framework.template.engine.ContentRenderer;
 import com.commercetools.sunrise.framework.viewmodels.content.PageContent;
 import com.commercetools.sunrise.myaccount.CustomerFinder;
@@ -41,13 +41,13 @@ public abstract class SunriseChangePasswordController extends SunriseContentForm
     }
 
     @EnableHooks
-    @SunriseRoute(AuthenticationReverseRouter.CHANGE_PASSWORD_PAGE)
+    @SunriseRoute(ChangePasswordReverseRouter.CHANGE_PASSWORD_PAGE)
     public CompletionStage<Result> show(final String languageTag) {
         return showFormPage(null, formData);
     }
 
     @EnableHooks
-    @SunriseRoute(AuthenticationReverseRouter.CHANGE_PASSWORD_PROCESS)
+    @SunriseRoute(ChangePasswordReverseRouter.CHANGE_PASSWORD_PROCESS)
     public CompletionStage<Result> process(final String languageTag) {
         return requireCustomer(this::processForm);
     }

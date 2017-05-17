@@ -21,12 +21,4 @@ public interface SimpleAuthenticationReverseRouter {
     String LOG_OUT_PROCESS = "logOutProcessCall";
 
     Call logOutProcessCall(final String languageTag);
-
-    String CHANGE_PASSWORD_PAGE = "changePasswordPageCall";
-
-    Call changePasswordPageCall(final String languageTag);
-
-    String CHANGE_PASSWORD_PROCESS = "changePasswordProcessCall";
-
-    Call changePasswordProcessCall(final String languageTag);
 }
