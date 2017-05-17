@@ -29,7 +29,7 @@ public class ChangePasswordPageContentFactory extends FormPageContentFactory<Cha
 
     @Override
     protected void fillTitle(final ChangePasswordPageContent viewModel, final Void input, final Form<? extends ChangePasswordFormData> form) {
-        viewModel.setTitle(pageTitleResolver.getOrEmpty("my-account:changePassword.title")); // TODO messages missing in FE templates
+        viewModel.setTitle(pageTitleResolver.getOrEmpty("my-account:changePassword.changePasswordTitle")); // TODO messages missing in FE templates
     }
 
     public final ChangePasswordPageContent create(final Form<? extends ChangePasswordFormData> form) {
