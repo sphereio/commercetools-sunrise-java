@@ -1,5 +1,6 @@
 package com.commercetools.sunrise.sessions.wishlist;
 
+import com.commercetools.sunrise.framework.viewmodels.content.wishlist.WishlistViewModel;
 import com.commercetools.sunrise.sessions.ResourceStoringOperations;
 import com.google.inject.ImplementedBy;
 import io.sphere.sdk.shoppinglists.ShoppingList;
@@ -21,6 +22,8 @@ public interface WishlistInSession extends ResourceStoringOperations<ShoppingLis
      * @return the optional wishlist id
      */
     Optional<String> findWishlistId();
+
+    Optional<WishlistViewModel> findWishlist();
 
     /**
      * Stores the given wishlist in the current session.

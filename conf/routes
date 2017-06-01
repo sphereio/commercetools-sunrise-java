@@ -117,13 +117,13 @@ POST        /:languageTag/user/addressbook/:addressIdentifier/edit              
 POST        /:languageTag/user/addressbook/:addressIdentifier/remove            @controllers.myaccount.RemoveAddressController.process(languageTag: String, addressIdentifier: String)
 
 # Shows the wish list
-GET         /:languageTag/user/wishlist                                         @controllers.myaccount.MyWishlistController.show(languageTag: String)
+GET         /:languageTag/wishlist                                         @controllers.wishlist.WishlistController.show(languageTag: String)
 # Adds a product variant to the wishlist
-POST        /:languageTag/user/wishlist/add                                     @controllers.myaccount.AddToWishlistController.process(languageTag: String)
+POST        /:languageTag/wishlist/add                                     @controllers.wishlist.AddToWishlistController.process(languageTag: String)
 # Removes a line item from the wishlist
-POST        /:languageTag/user/wishlist/remove                                  @controllers.myaccount.RemoveFromWishlistController.process(languageTag: String)
+POST        /:languageTag/wishlist/remove                                  @controllers.wishlist.RemoveFromWishlistController.process(languageTag: String)
 # Clears the wishlist
-POST        /:languageTag/user/wishlist/clear                                   @controllers.myaccount.MyWishlistController.clear(languageTag: String)
+POST        /:languageTag/wishlist/clear                                   @controllers.wishlist.ClearWishlistController.process(languageTag: String)
 
 # Shows all orders from the customer
 GET         /:languageTag/user/orders                                           @controllers.myaccount.MyOrderListController.show(languageTag: String)

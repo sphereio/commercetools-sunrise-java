@@ -5,19 +5,19 @@ import play.mvc.Call;
 
 @ImplementedBy(SimpleWishlistReverseRouterByReflection.class)
 public interface SimpleWishlistReverseRouter {
-    String ADD_TO_WISHLIST_PROCESS = "addToWishlistProcess";
+    String ADD_TO_WISHLIST_PROCESS = "addToWishlistProcessCall";
 
-    String REMOVE_FROM_WISHLIST_PROCESS = "removeFromWishlistProcess";
+    String REMOVE_FROM_WISHLIST_PROCESS = "removeFromWishlistProcessCall";
 
-    String CLEAR_WISHLIST_PROCESS = "clearWishlistProcess";
+    String CLEAR_WISHLIST_PROCESS = "clearWishlistProcessCall";
 
-    String WISHLIST_PAGE_CALL = "wishlistPageCall";
+    String WISHLIST_PAGE = "wishlistPageCall";
 
-    Call addToWishlistProcess(String languageTag);
+    Call addToWishlistProcessCall(String languageTag);
 
-    Call removeFromWishlistProcess(String languageTag);
+    Call removeFromWishlistProcessCall(String languageTag);
 
-    Call clearWishlistProcess(String languageTag);
+    Call clearWishlistProcessCall(String languageTag);
 
     Call wishlistPageCall(String languageTag);
 }

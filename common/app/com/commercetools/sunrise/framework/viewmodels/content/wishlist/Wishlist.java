@@ -1,8 +1,9 @@
-package com.commercetools.sunrise.myaccount.wishlist;
+package com.commercetools.sunrise.framework.viewmodels.content.wishlist;
 
 import io.sphere.sdk.products.ProductProjection;
-import io.sphere.sdk.queries.PagedQueryResult;
 import io.sphere.sdk.shoppinglists.ShoppingList;
+
+import java.util.List;
 
 /**
  * A wishlist is combination of a {@link ShoppingList} and the currently viewed {@link #getProducts()}
@@ -10,9 +11,9 @@ import io.sphere.sdk.shoppinglists.ShoppingList;
  */
 public final class Wishlist {
     private final ShoppingList shoppingList;
-    private final PagedQueryResult<ProductProjection> products;
+    private final List<ProductProjection> products;
 
-    public Wishlist(final ShoppingList shoppingList, final PagedQueryResult<ProductProjection> products) {
+    public Wishlist(final ShoppingList shoppingList, final List<ProductProjection> products) {
         this.shoppingList = shoppingList;
         this.products = products;
     }
@@ -21,7 +22,7 @@ public final class Wishlist {
         return shoppingList;
     }
 
-    public PagedQueryResult<ProductProjection> getProducts() {
+    public List<ProductProjection> getProducts() {
         return products;
     }
 }

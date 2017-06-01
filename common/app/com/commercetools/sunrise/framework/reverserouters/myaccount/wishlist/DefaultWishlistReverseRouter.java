@@ -10,24 +10,24 @@ public class DefaultWishlistReverseRouter extends AbstractLocalizedReverseRouter
     private final SimpleWishlistReverseRouter delegate;
 
     @Inject
-    public DefaultWishlistReverseRouter(final Locale locale, final SimpleWishlistReverseRouter delegate) {
+    protected DefaultWishlistReverseRouter(final Locale locale, final SimpleWishlistReverseRouter delegate) {
         super(locale);
         this.delegate = delegate;
     }
 
     @Override
-    public Call addToWishlistProcess(final String languageTag) {
-        return delegate.addToWishlistProcess(languageTag);
+    public Call addToWishlistProcessCall(final String languageTag) {
+        return delegate.addToWishlistProcessCall(languageTag);
     }
 
     @Override
-    public Call removeFromWishlistProcess(final String languageTag) {
-        return delegate.removeFromWishlistProcess(languageTag);
+    public Call removeFromWishlistProcessCall(final String languageTag) {
+        return delegate.removeFromWishlistProcessCall(languageTag);
     }
 
     @Override
-    public Call clearWishlistProcess(final String languageTag) {
-        return delegate.clearWishlistProcess(languageTag);
+    public Call clearWishlistProcessCall(final String languageTag) {
+        return delegate.clearWishlistProcessCall(languageTag);
     }
 
     @Override

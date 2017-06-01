@@ -2,6 +2,7 @@ package controllers.productcatalog;
 
 import com.commercetools.sunrise.framework.components.controllers.PageHeaderControllerComponentSupplier;
 import com.commercetools.sunrise.framework.components.controllers.RegisteredComponents;
+import com.commercetools.sunrise.framework.components.controllers.WishlistControllerComponent;
 import com.commercetools.sunrise.framework.controllers.cache.NoCache;
 import com.commercetools.sunrise.framework.reverserouters.productcatalog.product.ProductReverseRouter;
 import com.commercetools.sunrise.framework.template.TemplateControllerComponentsSupplier;
@@ -24,7 +25,8 @@ import static java.util.concurrent.CompletableFuture.completedFuture;
 @RegisteredComponents({
         TemplateControllerComponentsSupplier.class,
         PageHeaderControllerComponentSupplier.class,
-        ProductRecommendationsControllerComponent.class
+        ProductRecommendationsControllerComponent.class,
+        WishlistControllerComponent.class
 })
 public final class ProductDetailController extends SunriseProductDetailController {
 

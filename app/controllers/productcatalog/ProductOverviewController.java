@@ -2,6 +2,7 @@ package controllers.productcatalog;
 
 import com.commercetools.sunrise.framework.components.controllers.PageHeaderControllerComponentSupplier;
 import com.commercetools.sunrise.framework.components.controllers.RegisteredComponents;
+import com.commercetools.sunrise.framework.components.controllers.WishlistControllerComponent;
 import com.commercetools.sunrise.framework.controllers.cache.NoCache;
 import com.commercetools.sunrise.framework.controllers.metrics.LogMetrics;
 import com.commercetools.sunrise.framework.template.TemplateControllerComponentsSupplier;
@@ -24,7 +25,8 @@ import static java.util.concurrent.CompletableFuture.completedFuture;
 @RegisteredComponents({
         TemplateControllerComponentsSupplier.class,
         PageHeaderControllerComponentSupplier.class,
-        ProductOverviewSearchControllerComponentsSupplier.class
+        ProductOverviewSearchControllerComponentsSupplier.class,
+        WishlistControllerComponent.class
 })
 public final class ProductOverviewController extends SunriseProductOverviewController {
 

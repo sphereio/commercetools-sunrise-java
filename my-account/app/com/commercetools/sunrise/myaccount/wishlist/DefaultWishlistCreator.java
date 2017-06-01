@@ -1,6 +1,5 @@
 package com.commercetools.sunrise.myaccount.wishlist;
 
-import com.commercetools.sunrise.framework.controllers.AbstractSphereRequestExecutor;
 import com.commercetools.sunrise.framework.hooks.HookRunner;
 import com.commercetools.sunrise.sessions.customer.CustomerInSession;
 import io.sphere.sdk.client.SphereClient;
@@ -15,16 +14,20 @@ import io.sphere.sdk.shoppinglists.commands.ShoppingListCreateCommand;
 import javax.inject.Inject;
 import java.util.concurrent.CompletionStage;
 
-public class WishlistCreatorBySession extends AbstractSphereRequestExecutor implements WishlistCreator {
+public class DefaultWishlistCreator extends AbstractShoppingListCreateExecutor implements WishlistCreator {
     private final CustomerInSession customerInSession;
 
     @Inject
-    protected WishlistCreatorBySession(final SphereClient sphereClient, final HookRunner hookRunner, final CustomerInSession customerInSession) {
+    protected DefaultWishlistCreator(final SphereClient sphereClient, final HookRunner hookRunner, final CustomerInSession customerInSession) {
         super(sphereClient, hookRunner);
         this.customerInSession = customerInSession;
     }
 
     public CompletionStage<ShoppingList> get() {
+        return executeRequest(buildRequest());
+    }
+
+    protected ShoppingListCreateCommand buildRequest() {
         final Reference<Customer> customer = customerInSession.findCustomerId()
                 .map(Customer::referenceOfId)
                 .orElse(null);
@@ -33,8 +36,6 @@ public class WishlistCreatorBySession extends AbstractSphereRequestExecutor impl
                 .customer(customer)
                 .build();
 
-        final ShoppingListCreateCommand createCommand = ShoppingListCreateCommand.of(wishlist);
-
-        return getSphereClient().execute(createCommand);
+        return ShoppingListCreateCommand.of(wishlist);
     }
 }

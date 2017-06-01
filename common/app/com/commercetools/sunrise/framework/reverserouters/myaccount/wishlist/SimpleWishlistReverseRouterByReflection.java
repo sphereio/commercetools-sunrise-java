@@ -6,8 +6,10 @@ import com.commercetools.sunrise.framework.reverserouters.ReverseCaller;
 import play.mvc.Call;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
-public class SimpleWishlistReverseRouterByReflection extends AbstractReflectionReverseRouter implements SimpleWishlistReverseRouter {
+@Singleton
+class SimpleWishlistReverseRouterByReflection extends AbstractReflectionReverseRouter implements SimpleWishlistReverseRouter {
     private final ReverseCaller addToWishlistCaller;
     private final ReverseCaller removeFromWishlistCaller;
     private final ReverseCaller clearWishlistCaller;
@@ -18,21 +20,21 @@ public class SimpleWishlistReverseRouterByReflection extends AbstractReflectionR
         addToWishlistCaller = getReverseCallerForSunriseRoute(ADD_TO_WISHLIST_PROCESS, parsedRoutes);
         removeFromWishlistCaller = getReverseCallerForSunriseRoute(REMOVE_FROM_WISHLIST_PROCESS, parsedRoutes);
         clearWishlistCaller = getReverseCallerForSunriseRoute(CLEAR_WISHLIST_PROCESS, parsedRoutes);
-        wishlistPageCaller = getReverseCallerForSunriseRoute(WISHLIST_PAGE_CALL, parsedRoutes);
+        wishlistPageCaller = getReverseCallerForSunriseRoute(WISHLIST_PAGE, parsedRoutes);
     }
 
     @Override
-    public Call addToWishlistProcess(final String languageTag) {
+    public Call addToWishlistProcessCall(final String languageTag) {
         return addToWishlistCaller.call(languageTag);
     }
 
     @Override
-    public Call removeFromWishlistProcess(final String languageTag) {
+    public Call removeFromWishlistProcessCall(final String languageTag) {
         return removeFromWishlistCaller.call(languageTag);
     }
 
     @Override
-    public Call clearWishlistProcess(final String languageTag) {
+    public Call clearWishlistProcessCall(final String languageTag) {
         return clearWishlistCaller.call(languageTag);
     }
 

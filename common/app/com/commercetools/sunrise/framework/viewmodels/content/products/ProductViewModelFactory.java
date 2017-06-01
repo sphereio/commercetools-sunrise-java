@@ -91,7 +91,7 @@ public class ProductViewModelFactory extends SimpleViewModelFactory<ProductViewM
     }
 
     protected void fillGallery(final ProductViewModel viewModel, final ProductWithVariant productWithVariant) {
-        viewModel.setGallery(productGalleryViewModelFactory.create(productWithVariant));
+        viewModel.setGallery(productGalleryViewModelFactory.create(productWithVariant.getVariant()));
     }
 
     protected void fillDetails(final ProductViewModel viewModel, final ProductWithVariant productWithVariant) {

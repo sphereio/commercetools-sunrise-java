@@ -8,15 +8,15 @@ import play.mvc.Call;
 public interface WishlistReverseRouter extends SimpleWishlistReverseRouter, LocalizedReverseRouter {
 
     default Call addToWishlistProcess() {
-        return addToWishlistProcess(locale().toLanguageTag());
+        return addToWishlistProcessCall(locale().toLanguageTag());
     }
 
     default Call removeFromWishlistProcess() {
-        return removeFromWishlistProcess(locale().toLanguageTag());
+        return removeFromWishlistProcessCall(locale().toLanguageTag());
     }
 
     default Call clearWishlistProcess() {
-        return clearWishlistProcess(locale().toLanguageTag());
+        return clearWishlistProcessCall(locale().toLanguageTag());
     }
 
     default Call wishlistPageCall() {

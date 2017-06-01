@@ -4,11 +4,6 @@ import com.commercetools.sunrise.framework.viewmodels.GenericListViewModel;
 import com.commercetools.sunrise.framework.viewmodels.PageTitleResolver;
 import com.commercetools.sunrise.framework.viewmodels.content.PageContentFactory;
 import com.commercetools.sunrise.framework.viewmodels.content.products.ProductThumbnailViewModel;
-import com.commercetools.sunrise.framework.viewmodels.content.products.ProductThumbnailViewModelFactory;
-import com.commercetools.sunrise.framework.viewmodels.content.products.ProductWithVariant;
-import com.commercetools.sunrise.myaccount.wishlist.Wishlist;
-import io.sphere.sdk.products.ProductProjection;
-import io.sphere.sdk.queries.PagedQueryResult;
 import io.sphere.sdk.shoppinglists.LineItem;
 import io.sphere.sdk.shoppinglists.ShoppingList;
 
@@ -20,43 +15,47 @@ import java.util.stream.Collectors;
 /**
  * The factory class for creating {@link WishlistPageContent}.
  */
-public class WishlistPageContentFactory extends PageContentFactory<WishlistPageContent, Wishlist> {
+public class WishlistPageContentFactory extends PageContentFactory<WishlistPageContent, ShoppingList> {
     private final PageTitleResolver pageTitleResolver;
-    private final ProductThumbnailViewModelFactory thumbnailViewModelFactory;
+    private final LineItemThumbnailViewModelFactory thumbnailViewModelFactory;
 
     @Inject
-    public WishlistPageContentFactory(final PageTitleResolver pageTitleResolver, final ProductThumbnailViewModelFactory thumbnailViewModelFactory) {
+    public WishlistPageContentFactory(final PageTitleResolver pageTitleResolver, final LineItemThumbnailViewModelFactory thumbnailViewModelFactory) {
         this.pageTitleResolver = pageTitleResolver;
         this.thumbnailViewModelFactory = thumbnailViewModelFactory;
     }
 
     @Override
-    protected WishlistPageContent newViewModelInstance(final Wishlist input) {
+    protected WishlistPageContent newViewModelInstance(final ShoppingList input) {
         return new WishlistPageContent();
     }
 
     @Override
-    protected void initialize(final WishlistPageContent viewModel, final Wishlist input) {
-        super.initialize(viewModel, input);
-
-        fillProducts(viewModel, input);
-        fillItemsInTotal(viewModel, input);
+    public final WishlistPageContent create(final ShoppingList wishlist) {
+        return super.create(wishlist);
     }
 
-    private void fillItemsInTotal(final WishlistPageContent viewModel, final Wishlist input) {
-        final ShoppingList wishlist = input.getShoppingList();
+    @Override
+    protected void initialize(final WishlistPageContent viewModel, final ShoppingList input) {
+        super.initialize(viewModel, input);
+        if (input != null) {
+            fillProducts(viewModel, input);
+            fillItemsInTotal(viewModel, input);
+        }
+    }
+
+    private void fillItemsInTotal(final WishlistPageContent viewModel, final ShoppingList wishlist) {
         final List<LineItem> lineItems = wishlist.getLineItems();
 
         viewModel.setItemsInTotal(lineItems == null ? 0 : lineItems.size());
     }
 
-    private void fillProducts(final WishlistPageContent viewModel, final Wishlist input) {
+    private void fillProducts(final WishlistPageContent viewModel, final ShoppingList wishlist) {
         final GenericListViewModel<ProductThumbnailViewModel> productList = new GenericListViewModel<>();
-        final PagedQueryResult<ProductProjection> queryResult = input.getProducts();
-        final List<ProductThumbnailViewModel> productThumbNails = queryResult == null ?
+        final List<LineItem> lineItems = wishlist.getLineItems();
+        final List<ProductThumbnailViewModel> productThumbNails = lineItems == null ?
                 Collections.emptyList() :
-                queryResult.getResults().stream()
-                    .map(product -> ProductWithVariant.of(product, product.getMasterVariant()))
+                lineItems.stream()
                     .map(thumbnailViewModelFactory::create)
                     .collect(Collectors.toList());
         productList.setList(productThumbNails);
@@ -65,7 +64,7 @@ public class WishlistPageContentFactory extends PageContentFactory<WishlistPageC
 
 
     @Override
-    protected void fillTitle(final WishlistPageContent viewModel, final Wishlist input) {
+    protected void fillTitle(final WishlistPageContent viewModel, final ShoppingList input) {
         viewModel.setTitle(pageTitleResolver.getOrEmpty("my-account:myWishlist.title"));
     }
 }

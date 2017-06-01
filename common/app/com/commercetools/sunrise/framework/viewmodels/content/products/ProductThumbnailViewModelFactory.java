@@ -38,7 +38,7 @@ public class ProductThumbnailViewModelFactory extends SimpleViewModelFactory<Pro
     }
 
     @Override
-    protected void initialize(final ProductThumbnailViewModel viewModel, final ProductWithVariant productWithVariant) {
+    protected final void initialize(final ProductThumbnailViewModel viewModel, final ProductWithVariant productWithVariant) {
         fillProduct(viewModel, productWithVariant);
         fillNew(viewModel, productWithVariant);
         fillSale(viewModel, productWithVariant);

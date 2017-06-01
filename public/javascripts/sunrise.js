@@ -1,6 +1,6 @@
 // TODO:
 // We should consider to mark all forms which should submit on change with a "data-submit-onchange" attribute.
-// Then we can rid of the special casses below
+// Then we can rid of the special cases below
 $("form[data-submit-onchange]").change(function() {
     this.submit();
 });

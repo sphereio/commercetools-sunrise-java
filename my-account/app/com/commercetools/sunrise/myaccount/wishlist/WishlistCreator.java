@@ -5,7 +5,7 @@ import io.sphere.sdk.shoppinglists.ShoppingList;
 
 import java.util.concurrent.CompletionStage;
 
-@ImplementedBy(WishlistCreatorBySession.class)
+@ImplementedBy(DefaultWishlistCreator.class)
 public interface WishlistCreator {
     /**
      * Creates a wishlist.

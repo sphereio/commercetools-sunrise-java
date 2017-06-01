@@ -11,19 +11,10 @@ import io.sphere.sdk.shoppinglists.ShoppingList;
  * @see LineItem#getProductId()
  * @see LineItem#getVariantId()
  */
-@ImplementedBy(DefaultWishlistLineItemFormData.class)
-public interface WishlistLineItemFormData {
+@ImplementedBy(DefaultAddWishlistLineItemFormData.class)
+public interface AddWishlistLineItemFormData {
 
     String productId();
 
     Integer variantId();
-
-    /**
-     * This method allows to compare this object with the given line item.
-     *
-     * @param lineItem the line item to compare
-     *
-     * @return true iff. the line item refers to the same product variant
-     */
-    boolean equals(LineItem lineItem);
 }
