@@ -4,6 +4,11 @@ import com.google.inject.AbstractModule;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 import io.sphere.sdk.client.*;
+import io.sphere.sdk.http.AsyncHttpClientAdapter;
+import io.sphere.sdk.http.HttpClient;
+import org.asynchttpclient.AsyncHttpClient;
+import org.asynchttpclient.DefaultAsyncHttpClient;
+import org.asynchttpclient.DefaultAsyncHttpClientConfig;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import play.Application;
@@ -54,4 +59,10 @@ public abstract class WithSphereClient extends WithApplication {
         final String clientSecret = configuration.getString("ctp.it.clientSecret");
         return SphereClientConfig.of(projectKey, clientId, clientSecret);
     }
+
+    protected static HttpClient newHttpClient() {
+        final AsyncHttpClient asyncHttpClient = new DefaultAsyncHttpClient(new DefaultAsyncHttpClientConfig.Builder().setAcceptAnyCertificate(true).build());
+        return AsyncHttpClientAdapter.of(asyncHttpClient);
+    }
+
 }
