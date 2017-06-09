@@ -30,4 +30,26 @@ object Version {
       Seq(file)
     }.taskValue
   )
+
+  lazy val generateVersionClass = Seq(
+    sourceGenerators in Compile += Def.task {
+      val file = (sourceManaged in Compile).value / "com" / "commercetools" / "sunrise" / "common" / "version" / "SunriseSolutionInfo.java"
+      IO.write(file,
+        s"""package com.commercetools.sunrise.common.version;
+          |
+          |import io.sphere.sdk.client.SolutionInfo;
+          |
+          |public class SunriseSolutionInfo extends SolutionInfo {
+          |
+          |
+          |    public SunriseSolutionInfo() {
+          |        setName("sunrise-java-shop-framework");
+          |        setVersion("${version.value}");
+          |    }
+          |
+          |}
+          |""".stripMargin)
+      Seq(file)
+    }.taskValue)
+
 }

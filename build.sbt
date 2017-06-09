@@ -40,6 +40,7 @@ lazy val common = project
   .configs(IntegrationTest, TestCommon.PlayTest)
   .settings(Release.enableSignedRelease ++ TestCommon.defaultSettings: _*)
   .settings(Dependencies.jvmSdk ++ Dependencies.sunriseTheme ++ Dependencies.sunriseModules ++ Dependencies.commonLib: _*)
+    .settings(Version.generateVersionClass)
   .dependsOn(`test-lib` % TestCommon.allTestScopes)
 
 lazy val `product-catalog` = project
@@ -66,3 +67,4 @@ lazy val `test-lib` = project
   .settings(Dependencies.jvmSdk ++ Dependencies.commonLib: _*)
 
 lazy val commonWithTests: Seq[ClasspathDep[ProjectReference]] = Seq(common, `test-lib` % TestCommon.allTestScopes)
+
