@@ -10,7 +10,7 @@ public class WishlistLinksControllerComponent  extends AbstractLinksControllerCo
     private final WishlistReverseRouter wishlistReverseRouter;
 
     @Inject
-    public WishlistLinksControllerComponent(final WishlistReverseRouter wishlistReverseRouter) {
+    protected WishlistLinksControllerComponent(final WishlistReverseRouter wishlistReverseRouter) {
         this.wishlistReverseRouter = wishlistReverseRouter;
     }
 

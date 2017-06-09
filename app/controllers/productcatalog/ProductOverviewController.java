@@ -2,7 +2,6 @@ package controllers.productcatalog;
 
 import com.commercetools.sunrise.framework.components.controllers.PageHeaderControllerComponentSupplier;
 import com.commercetools.sunrise.framework.components.controllers.RegisteredComponents;
-import com.commercetools.sunrise.framework.components.controllers.WishlistControllerComponent;
 import com.commercetools.sunrise.framework.controllers.cache.NoCache;
 import com.commercetools.sunrise.framework.controllers.metrics.LogMetrics;
 import com.commercetools.sunrise.framework.template.TemplateControllerComponentsSupplier;
@@ -12,6 +11,7 @@ import com.commercetools.sunrise.productcatalog.productoverview.ProductListFinde
 import com.commercetools.sunrise.productcatalog.productoverview.SunriseProductOverviewController;
 import com.commercetools.sunrise.productcatalog.productoverview.search.ProductOverviewSearchControllerComponentsSupplier;
 import com.commercetools.sunrise.productcatalog.productoverview.viewmodels.ProductOverviewPageContentFactory;
+import com.commercetools.sunrise.wishlist.controllers.WishlistControllerComponent;
 import play.mvc.Result;
 
 import javax.annotation.Nullable;

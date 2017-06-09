@@ -15,11 +15,11 @@ import java.util.Optional;
 public interface WishlistInSession extends ResourceStoringOperations<ShoppingList> {
 
     /**
-     * Returns the wishlist id stored in the current session.
+     * Returns the wishlist ID stored in the current session.
      *
      * @see ShoppingList#getId()
      *
-     * @return the optional wishlist id
+     * @return the optional wishlist ID
      */
     Optional<String> findWishlistId();
 

@@ -1,12 +1,12 @@
 package controllers.wishlist;
 
 import com.commercetools.sunrise.framework.components.controllers.RegisteredComponents;
-import com.commercetools.sunrise.framework.components.controllers.WishlistInSessionControllerComponent;
 import com.commercetools.sunrise.framework.reverserouters.myaccount.wishlist.WishlistReverseRouter;
 import com.commercetools.sunrise.framework.template.engine.ContentRenderer;
-import com.commercetools.sunrise.myaccount.wishlist.ClearWishlistControllerAction;
-import com.commercetools.sunrise.myaccount.wishlist.SunriseClearWishlistController;
-import com.commercetools.sunrise.myaccount.wishlist.WishlistFinderBySession;
+import com.commercetools.sunrise.wishlist.WishlistFinder;
+import com.commercetools.sunrise.wishlist.controllers.ClearWishlistControllerAction;
+import com.commercetools.sunrise.wishlist.controllers.SunriseClearWishlistController;
+import com.commercetools.sunrise.wishlist.controllers.WishlistInSessionControllerComponent;
 import com.google.inject.Inject;
 import io.sphere.sdk.shoppinglists.ShoppingList;
 import play.data.FormFactory;
@@ -22,7 +22,7 @@ public class ClearWishlistController extends SunriseClearWishlistController {
     @Inject
     public ClearWishlistController(final ContentRenderer contentRenderer,
                                    final FormFactory formFactory,
-                                   final WishlistFinderBySession wishlistFinder,
+                                   final WishlistFinder wishlistFinder,
                                    final ClearWishlistControllerAction controllerAction,
                                    final WishlistReverseRouter reverseRouter) {
         super(contentRenderer, formFactory, wishlistFinder, controllerAction);
