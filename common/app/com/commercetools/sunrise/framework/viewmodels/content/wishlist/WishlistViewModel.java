@@ -2,6 +2,9 @@ package com.commercetools.sunrise.framework.viewmodels.content.wishlist;
 
 import com.commercetools.sunrise.framework.viewmodels.GenericListViewModel;
 
+/**
+ * This view model is used to render the mini wishlist view.
+ */
 public class WishlistViewModel extends GenericListViewModel<WishlistItemViewModel> {
     private String title;
 

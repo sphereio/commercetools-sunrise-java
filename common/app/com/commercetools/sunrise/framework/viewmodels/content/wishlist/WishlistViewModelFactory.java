@@ -3,6 +3,7 @@ package com.commercetools.sunrise.framework.viewmodels.content.wishlist;
 import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
 import io.sphere.sdk.shoppinglists.LineItem;
 import io.sphere.sdk.shoppinglists.ShoppingList;
+import play.Configuration;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -11,24 +12,31 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
+/**
+ * This view model factory creates {@link WishlistViewModel} instances for wishlists {@link ShoppingList}.
+ */
 public class WishlistViewModelFactory extends SimpleViewModelFactory<WishlistViewModel, ShoppingList> {
     private WishlistItemViewModelFactory wishlistItemViewModelFactory;
 
+    private final int recentlyAddedItems;
     private final Locale locale;
 
     @Inject
-    protected WishlistViewModelFactory(final WishlistItemViewModelFactory wishlistItemViewModelFactory, final Locale locale) {
+    protected WishlistViewModelFactory(final WishlistItemViewModelFactory wishlistItemViewModelFactory,
+                                       final Configuration configuration,
+                                       final Locale locale) {
         this.wishlistItemViewModelFactory = wishlistItemViewModelFactory;
+        this.recentlyAddedItems = configuration.getInt("wishlist.recentlyAddedItems");
         this.locale = locale;
     }
 
     @Override
-    public final WishlistViewModel create(final ShoppingList input) {
-        return super.create(input);
+    public final WishlistViewModel create(final ShoppingList wishlist) {
+        return super.create(wishlist);
     }
 
     @Override
-    protected WishlistViewModel newViewModelInstance(final ShoppingList input) {
+    protected WishlistViewModel newViewModelInstance(final ShoppingList wishlist) {
         return new WishlistViewModel();
     }
 
@@ -42,7 +50,7 @@ public class WishlistViewModelFactory extends SimpleViewModelFactory<WishlistVie
             Collections.reverse(lineItems);
             viewModel.setQuantity(lineItems.size());
 
-            final int lastIndex = lineItems.size() > 3 ? 3 : lineItems.size();
+            final int lastIndex = lineItems.size() > recentlyAddedItems ? recentlyAddedItems : lineItems.size();
 
             final List<LineItem> recentlyAdded = lineItems.subList(0, lastIndex);
             final List<WishlistItemViewModel> wishlistItemViewModels = recentlyAdded.stream()

@@ -2,25 +2,21 @@ package com.commercetools.sunrise.framework.viewmodels.content.wishlist;
 
 import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
 import io.sphere.sdk.products.ProductVariant;
+import io.sphere.sdk.shoppinglists.LineItem;
 
-import javax.inject.Inject;
-import java.util.Locale;
-
+/**
+ * This view model factory creates {@link WishlistItemViewModel} instances for the product variants of
+ * the wishlists line items {@link LineItem#getVariant()}.
+ */
 public class WishlistItemViewModelFactory extends SimpleViewModelFactory<WishlistItemViewModel, ProductVariant> {
-    private final Locale locale;
 
-    @Inject
-    protected WishlistItemViewModelFactory(final Locale locale) {
-        this.locale = locale;
+    @Override
+    public final WishlistItemViewModel create(final ProductVariant productVariant) {
+        return super.create(productVariant);
     }
 
     @Override
-    public final WishlistItemViewModel create(final ProductVariant input) {
-        return super.create(input);
-    }
-
-    @Override
-    protected WishlistItemViewModel newViewModelInstance(final ProductVariant input) {
+    protected WishlistItemViewModel newViewModelInstance(final ProductVariant productVariant) {
         return new WishlistItemViewModel();
     }
 
@@ -32,9 +28,6 @@ public class WishlistItemViewModelFactory extends SimpleViewModelFactory<Wishlis
                     .map(image -> image.getUrl()).orElse(null);
 
             viewModel.setImageUrl(imageUrl);
-
-            final String name = "";
-            viewModel.setName(name);
         }
     }
 }
