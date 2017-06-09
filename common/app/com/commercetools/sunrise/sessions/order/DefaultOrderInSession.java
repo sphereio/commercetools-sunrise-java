@@ -16,7 +16,7 @@ import java.util.Optional;
  * Keeps the order ID in session.
  */
 @Singleton
-public class  DefaultOrderInSession extends DataFromResourceStoringOperations<Order> implements OrderInSession {
+public class DefaultOrderInSession extends DataFromResourceStoringOperations<Order> implements OrderInSession {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderInSession.class);
     private static final String DEFAULT_LAST_ORDER_ID_SESSION_KEY = "sunrise-last-order-id";
