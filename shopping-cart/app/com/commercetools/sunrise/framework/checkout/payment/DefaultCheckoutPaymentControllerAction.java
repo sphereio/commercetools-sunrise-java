@@ -3,6 +3,7 @@ package com.commercetools.sunrise.framework.checkout.payment;
 import com.commercetools.sunrise.framework.AbstractCartUpdateExecutor;
 import com.commercetools.sunrise.framework.hooks.HookRunner;
 import io.sphere.sdk.carts.Cart;
+import io.sphere.sdk.carts.PaymentInfo;
 import io.sphere.sdk.carts.commands.CartUpdateCommand;
 import io.sphere.sdk.carts.commands.updateactions.AddPayment;
 import io.sphere.sdk.carts.commands.updateactions.RemovePayment;
@@ -67,10 +68,8 @@ public class DefaultCheckoutPaymentControllerAction extends AbstractCartUpdateEx
     private List<Payment> findPaymentsToRemove(final Cart cart, final Payment payment) {
         return Optional.ofNullable(cart.getPaymentInfo())
                 .map(paymentInfo -> {
-                    final boolean referenceAreExpanded = paymentInfo.getPayments().stream()
-                            .allMatch(reference -> reference.getObj() != null);
-                    if (!referenceAreExpanded) {
-                        LOGGER.warn("Payment info is not expanded in cart: the new payment information can be saved but the previous payments will not be removed.");
+                    if (!hasReferencesExpanded(paymentInfo)) {
+                        LOGGER.warn("Payments are not expanded in cart: the new payment information can be saved but the previous payments will not be removed.");
                     }
                     return paymentInfo.getPayments().stream()
                             .filter(paymentRef -> !paymentRef.referencesSameResource(payment))
@@ -103,5 +102,10 @@ public class DefaultCheckoutPaymentControllerAction extends AbstractCartUpdateEx
                 .filter(paymentMethod -> Objects.equals(paymentMethod.getMethod(), formData.paymentMethod()))
                 .findAny()
                 .orElseThrow(() -> new RuntimeException("No valid payment method found")); // Should not happen after validation
+    }
+
+    private boolean hasReferencesExpanded(final PaymentInfo paymentInfo) {
+        return paymentInfo.getPayments().stream()
+                .allMatch(reference -> reference.getObj() != null);
     }
 }
