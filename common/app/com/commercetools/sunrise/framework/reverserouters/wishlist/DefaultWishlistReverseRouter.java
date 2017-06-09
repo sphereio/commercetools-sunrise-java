@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.framework.reverserouters.myaccount.wishlist;
+package com.commercetools.sunrise.framework.reverserouters.wishlist;
 
 import com.commercetools.sunrise.framework.reverserouters.AbstractLocalizedReverseRouter;
 import play.mvc.Call;

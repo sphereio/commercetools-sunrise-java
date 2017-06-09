@@ -8,11 +8,11 @@ import com.commercetools.sunrise.framework.reverserouters.myaccount.addressbook.
 import com.commercetools.sunrise.framework.reverserouters.myaccount.authentication.AuthenticationLinksControllerComponent;
 import com.commercetools.sunrise.framework.reverserouters.myaccount.mydetails.MyPersonalDetailsLinksControllerComponent;
 import com.commercetools.sunrise.framework.reverserouters.myaccount.myorders.MyOrdersLinksControllerComponent;
-import com.commercetools.sunrise.framework.reverserouters.myaccount.wishlist.WishlistLinksControllerComponent;
 import com.commercetools.sunrise.framework.reverserouters.productcatalog.home.HomeLinksControllerComponent;
 import com.commercetools.sunrise.framework.reverserouters.productcatalog.product.ProductLinksControllerComponent;
 import com.commercetools.sunrise.framework.reverserouters.shoppingcart.cart.CartLinksControllerComponent;
 import com.commercetools.sunrise.framework.reverserouters.shoppingcart.checkout.CheckoutLinksControllerComponent;
+import com.commercetools.sunrise.framework.reverserouters.wishlist.WishlistLinksControllerComponent;
 
 import javax.inject.Inject;
 import java.util.ArrayList;

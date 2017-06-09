@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.framework.reverserouters.myaccount.wishlist;
+package com.commercetools.sunrise.framework.reverserouters.wishlist;
 
 import com.commercetools.sunrise.framework.reverserouters.AbstractReflectionReverseRouter;
 import com.commercetools.sunrise.framework.reverserouters.ParsedRoutes;

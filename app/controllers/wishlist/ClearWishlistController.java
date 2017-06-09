@@ -1,7 +1,7 @@
 package controllers.wishlist;
 
 import com.commercetools.sunrise.framework.components.controllers.RegisteredComponents;
-import com.commercetools.sunrise.framework.reverserouters.myaccount.wishlist.WishlistReverseRouter;
+import com.commercetools.sunrise.framework.reverserouters.wishlist.WishlistReverseRouter;
 import com.commercetools.sunrise.framework.template.engine.ContentRenderer;
 import com.commercetools.sunrise.wishlist.WishlistFinder;
 import com.commercetools.sunrise.wishlist.controllers.ClearWishlistControllerAction;

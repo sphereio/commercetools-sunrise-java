@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.framework.reverserouters.myaccount.wishlist;
+package com.commercetools.sunrise.framework.reverserouters.wishlist;
 
 import com.google.inject.ImplementedBy;
 import play.mvc.Call;
