@@ -23,11 +23,15 @@ public class WishlistItemViewModelFactory extends SimpleViewModelFactory<Wishlis
     @Override
     protected final void initialize(final WishlistItemViewModel viewModel, final ProductVariant productVariant) {
         if (productVariant != null) {
-            final String imageUrl = productVariant.getImages().stream()
-                    .findFirst()
-                    .map(image -> image.getUrl()).orElse(null);
-
-            viewModel.setImageUrl(imageUrl);
+            fillImageUrl(viewModel, productVariant);
         }
+    }
+
+    protected void fillImageUrl(final WishlistItemViewModel viewModel, final ProductVariant productVariant) {
+        final String imageUrl = productVariant.getImages().stream()
+                .findFirst()
+                .map(image -> image.getUrl()).orElse(null);
+
+        viewModel.setImageUrl(imageUrl);
     }
 }

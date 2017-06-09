@@ -43,22 +43,36 @@ public class WishlistViewModelFactory extends SimpleViewModelFactory<WishlistVie
     @Override
     protected final void initialize(final WishlistViewModel viewModel, final ShoppingList wishlist) {
         if (wishlist != null) {
-            final String title = wishlist.getName().get(locale);
-            viewModel.setTitle(title);
+            fillTitle(viewModel, wishlist);
 
-            final List<LineItem> lineItems = new ArrayList<>(wishlist.getLineItems());
-            Collections.reverse(lineItems);
-            viewModel.setQuantity(lineItems.size());
+            final List<LineItem> lineItems = wishlist.getLineItems();
 
-            final int lastIndex = lineItems.size() > recentlyAddedItems ? recentlyAddedItems : lineItems.size();
-
-            final List<LineItem> recentlyAdded = lineItems.subList(0, lastIndex);
-            final List<WishlistItemViewModel> wishlistItemViewModels = recentlyAdded.stream()
-                    .map(LineItem::getVariant)
-                    .map(wishlistItemViewModelFactory::create)
-                    .collect(Collectors.toList());
-
-            viewModel.setList(wishlistItemViewModels);
+            fillQuantity(viewModel, lineItems);
+            fillLineItems(viewModel, lineItems);
         }
+    }
+
+    protected void fillLineItems(final WishlistViewModel viewModel, final List<LineItem> lineItems1) {
+        final List<LineItem> lineItems = new ArrayList<>(lineItems1);
+        Collections.reverse(lineItems);
+
+        final int lastIndex = lineItems.size() > recentlyAddedItems ? recentlyAddedItems : lineItems.size();
+
+        final List<LineItem> recentlyAdded = lineItems.subList(0, lastIndex);
+        final List<WishlistItemViewModel> wishlistItemViewModels = recentlyAdded.stream()
+                .map(LineItem::getVariant)
+                .map(wishlistItemViewModelFactory::create)
+                .collect(Collectors.toList());
+
+        viewModel.setList(wishlistItemViewModels);
+    }
+
+    protected void fillQuantity(final WishlistViewModel viewModel, final List<LineItem> lineItems) {
+        viewModel.setQuantity(lineItems.size());
+    }
+
+    protected void fillTitle(final WishlistViewModel viewModel, final ShoppingList wishlist) {
+        final String title = wishlist.getName().get(locale);
+        viewModel.setTitle(title);
     }
 }

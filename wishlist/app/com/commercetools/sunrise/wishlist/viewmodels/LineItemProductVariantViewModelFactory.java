@@ -16,8 +16,8 @@ public class LineItemProductVariantViewModelFactory extends AbstractProductVaria
     private final ProductReverseRouter productReverseRouter;
 
     @Inject
-    public LineItemProductVariantViewModelFactory(final PriceFormatter priceFormatter,
-                                                  final ProductReverseRouter productReverseRouter) {
+    protected LineItemProductVariantViewModelFactory(final PriceFormatter priceFormatter,
+                                                     final ProductReverseRouter productReverseRouter) {
         super();
         this.priceFormatter = priceFormatter;
         this.productReverseRouter = productReverseRouter;
@@ -53,10 +53,7 @@ public class LineItemProductVariantViewModelFactory extends AbstractProductVaria
 
     @Override
     protected void fillUrl(final ProductVariantViewModel viewModel, final LineItem lineItem) {
-//        viewModel.setUrl(productReverseRouter
-//                .productDetailPageCall(lineItem)
-//                .map(Call::url)
-//                .orElse(""));
+        // not applicable
     }
 
     @Override
@@ -65,12 +62,12 @@ public class LineItemProductVariantViewModelFactory extends AbstractProductVaria
     }
 
     @Override
-    protected void fillPrice(final ProductVariantViewModel viewModel, final LineItem input) {
+    protected void fillPrice(final ProductVariantViewModel viewModel, final LineItem lineItem) {
         // not applicable
     }
 
     @Override
-    protected void fillPriceOld(final ProductVariantViewModel viewModel, final LineItem input) {
+    protected void fillPriceOld(final ProductVariantViewModel viewModel, final LineItem lineItem) {
         // not applicable
     }
 }

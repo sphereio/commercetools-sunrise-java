@@ -19,18 +19,43 @@ public class LineItemProductViewModelFactory extends SimpleViewModelFactory<Prod
     }
 
     @Override
-    protected ProductViewModel newViewModelInstance(final LineItem input) {
+    protected ProductViewModel newViewModelInstance(final LineItem lineItem) {
         return new ProductViewModel();
     }
 
     @Override
-    protected void initialize(final ProductViewModel viewModel, final LineItem input) {
-        viewModel.setProductId(input.getProductId());
-        viewModel.setVariantId(input.getVariantId());
+    public final ProductViewModel create(final LineItem lineItem) {
+        return super.create(lineItem);
+    }
 
-        viewModel.setVariant(productVariantViewModelFactory.create(input));
-        viewModel.setGallery(productGalleryViewModelFactory.create(input.getVariant()));
+    @Override
+    protected final void initialize(final ProductViewModel viewModel, final LineItem lineItem) {
+        fillProductId(viewModel, lineItem);
+        fillVariantId(viewModel, lineItem);
+        fillVariant(viewModel, lineItem);
 
-        viewModel.put("lineItemId", input.getId());
+        fillGallery(viewModel, lineItem);
+
+        fillLineItem(viewModel, lineItem);
+    }
+
+    protected void fillLineItem(final ProductViewModel viewModel, final LineItem lineItem) {
+        viewModel.put("lineItemId", lineItem.getId());
+    }
+
+    protected void fillGallery(final ProductViewModel viewModel, final LineItem lineItem) {
+        viewModel.setGallery(productGalleryViewModelFactory.create(lineItem.getVariant()));
+    }
+
+    protected void fillVariant(final ProductViewModel viewModel, final LineItem lineItem) {
+        viewModel.setVariant(productVariantViewModelFactory.create(lineItem));
+    }
+
+    protected void fillVariantId(final ProductViewModel viewModel, final LineItem lineItem) {
+        viewModel.setVariantId(lineItem.getVariantId());
+    }
+
+    protected void fillProductId(final ProductViewModel viewModel, final LineItem lineItem) {
+        viewModel.setProductId(lineItem.getProductId());
     }
 }

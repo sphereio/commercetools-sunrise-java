@@ -15,12 +15,21 @@ public class LineItemThumbnailViewModelFactory extends SimpleViewModelFactory<Pr
     }
 
     @Override
-    protected ProductThumbnailViewModel newViewModelInstance(final LineItem input) {
+    public final ProductThumbnailViewModel create(final LineItem lineItem) {
+        return super.create(lineItem);
+    }
+
+    @Override
+    protected ProductThumbnailViewModel newViewModelInstance(final LineItem lineItem) {
         return new ProductThumbnailViewModel();
     }
 
     @Override
-    protected void initialize(final ProductThumbnailViewModel viewModel, final LineItem input) {
-        viewModel.setProduct(lineItemProductViewModelFactory.create(input));
+    protected final void initialize(final ProductThumbnailViewModel viewModel, final LineItem lineItem) {
+        fillProduct(viewModel, lineItem);
+    }
+
+    protected void fillProduct(final ProductThumbnailViewModel viewModel, final LineItem lineItem) {
+        viewModel.setProduct(lineItemProductViewModelFactory.create(lineItem));
     }
 }

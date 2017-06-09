@@ -20,7 +20,7 @@ public class WishlistPageContentFactory extends PageContentFactory<WishlistPageC
     private final LineItemThumbnailViewModelFactory thumbnailViewModelFactory;
 
     @Inject
-    public WishlistPageContentFactory(final PageTitleResolver pageTitleResolver, final LineItemThumbnailViewModelFactory thumbnailViewModelFactory) {
+    protected WishlistPageContentFactory(final PageTitleResolver pageTitleResolver, final LineItemThumbnailViewModelFactory thumbnailViewModelFactory) {
         this.pageTitleResolver = pageTitleResolver;
         this.thumbnailViewModelFactory = thumbnailViewModelFactory;
     }
@@ -36,21 +36,27 @@ public class WishlistPageContentFactory extends PageContentFactory<WishlistPageC
     }
 
     @Override
-    protected void initialize(final WishlistPageContent viewModel, final ShoppingList input) {
+    protected final void initialize(final WishlistPageContent viewModel, final ShoppingList input) {
         super.initialize(viewModel, input);
+
         if (input != null) {
             fillProducts(viewModel, input);
             fillItemsInTotal(viewModel, input);
         }
     }
 
-    private void fillItemsInTotal(final WishlistPageContent viewModel, final ShoppingList wishlist) {
+    @Override
+    protected void fillTitle(final WishlistPageContent viewModel, final ShoppingList input) {
+        viewModel.setTitle(pageTitleResolver.getOrEmpty("my-account:myWishlist.title"));
+    }
+
+    protected void fillItemsInTotal(final WishlistPageContent viewModel, final ShoppingList wishlist) {
         final List<LineItem> lineItems = wishlist.getLineItems();
 
         viewModel.setItemsInTotal(lineItems == null ? 0 : lineItems.size());
     }
 
-    private void fillProducts(final WishlistPageContent viewModel, final ShoppingList wishlist) {
+    protected void fillProducts(final WishlistPageContent viewModel, final ShoppingList wishlist) {
         final GenericListViewModel<ProductThumbnailViewModel> productList = new GenericListViewModel<>();
         final List<LineItem> lineItems = wishlist.getLineItems();
         final List<ProductThumbnailViewModel> productThumbNails = lineItems == null ?
@@ -60,11 +66,5 @@ public class WishlistPageContentFactory extends PageContentFactory<WishlistPageC
                     .collect(Collectors.toList());
         productList.setList(productThumbNails);
         viewModel.setProducts(productList);
-    }
-
-
-    @Override
-    protected void fillTitle(final WishlistPageContent viewModel, final ShoppingList input) {
-        viewModel.setTitle(pageTitleResolver.getOrEmpty("my-account:myWishlist.title"));
     }
 }
