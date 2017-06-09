@@ -14,9 +14,7 @@ public class SunriseSolutionInfo extends SolutionInfo {
 
 
     public SunriseSolutionInfo() {
-
         setName("sunrise-java-shop-framework");
-        
     }
 
     @Override
@@ -29,7 +27,6 @@ public class SunriseSolutionInfo extends SolutionInfo {
         String version;
         try {
             final InputStream versionAsStream = Play.current().resourceAsStream("internal/version.json").get();
-            ApplicationLoader.class.getResourceAsStream("internal/version.json");
             final String versionAsString = IOUtils.toString(versionAsStream, StandardCharsets.UTF_8);
             version = SphereJsonUtils.parse(versionAsString).get("version").asText();
         } catch (IOException e) {
