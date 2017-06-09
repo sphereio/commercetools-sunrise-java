@@ -16,10 +16,7 @@ public class SunriseSolutionInfo extends SolutionInfo {
     public SunriseSolutionInfo() {
 
         setName("sunrise-java-shop-framework");
-        setEmergencyContact("");
-        setWebsite("");
-
-
+        
     }
 
     @Override
