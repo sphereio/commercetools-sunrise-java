@@ -32,7 +32,7 @@ import static java.util.stream.Collectors.toList;
 
 /**
  * Deletes previous payments associated with the cart and adds the new one.
- * {@code paymentInfo.payments} must be expanded in order to properly work, otherwise previous payments will not be removed.
+ * The {@link PaymentInfo#getPayments()} references should be expanded using the expansion path {@code paymentInfo.payments} to properly work, otherwise previous payments will not be removed.
  */
 public class DefaultCheckoutPaymentControllerAction extends AbstractCartUpdateExecutor implements CheckoutPaymentControllerAction {
 
