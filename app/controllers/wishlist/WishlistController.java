@@ -10,6 +10,7 @@ import com.commercetools.sunrise.wishlist.controllers.SunriseWishlistController;
 import com.commercetools.sunrise.wishlist.controllers.WishlistInSessionControllerComponent;
 import com.commercetools.sunrise.wishlist.viewmodels.WishlistPageContentFactory;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 
 @NoCache
@@ -18,12 +19,18 @@ import javax.inject.Inject;
         PageHeaderControllerComponentSupplier.class,
         WishlistInSessionControllerComponent.class
 })
-public class WishlistController extends SunriseWishlistController {
+public final class WishlistController extends SunriseWishlistController {
 
     @Inject
     public WishlistController(final ContentRenderer contentRenderer,
                               final WishlistPageContentFactory wishlistPageContentFactory,
                               final WishlistFinder wishlistFinder) {
         super(contentRenderer, wishlistPageContentFactory, wishlistFinder);
+    }
+
+    @Nullable
+    @Override
+    public String getTemplateName() {
+        return "my-account-wishlist";
     }
 }

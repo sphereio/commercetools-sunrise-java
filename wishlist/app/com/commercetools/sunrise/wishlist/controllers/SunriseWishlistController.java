@@ -13,7 +13,6 @@ import com.commercetools.sunrise.wishlist.viewmodels.WishlistPageContentFactory;
 import io.sphere.sdk.shoppinglists.ShoppingList;
 import play.mvc.Result;
 
-import javax.annotation.Nullable;
 import javax.inject.Inject;
 import java.util.concurrent.CompletionStage;
 
@@ -39,15 +38,9 @@ public class SunriseWishlistController extends SunriseContentController implemen
         return requireWishlist(this::showPage);
     }
 
-    @Nullable
     @Override
-    public String getTemplateName() {
-        return "my-account-wishlist";
-    }
-
-    @Override
-    public PageContent createPageContent(final ShoppingList input) {
-        return wishlistPageContentFactory.create(input);
+    public PageContent createPageContent(final ShoppingList wishlist) {
+        return wishlistPageContentFactory.create(wishlist);
     }
 
     @Override

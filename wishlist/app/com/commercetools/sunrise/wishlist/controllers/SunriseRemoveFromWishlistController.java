@@ -51,19 +51,20 @@ public abstract class SunriseRemoveFromWishlistController extends SunriseContent
     }
 
     @Override
-    public CompletionStage<ShoppingList> executeAction(final ShoppingList input, final RemoveWishlistLineItemFormData formData) {
-        return controllerAction.apply(input, formData);
-    }
-
-    public abstract CompletionStage<Result> handleSuccessfulAction(final ShoppingList output, final RemoveWishlistLineItemFormData formData);
-
-    @Override
-    public PageContent createPageContent(final ShoppingList input, final Form<? extends RemoveWishlistLineItemFormData> form) {
-        return wishlistPageContentFactory.create(input);
+    public CompletionStage<ShoppingList> executeAction(final ShoppingList wishlist, final RemoveWishlistLineItemFormData removeWishlistLineItemFormData) {
+        return controllerAction.apply(wishlist, removeWishlistLineItemFormData);
     }
 
     @Override
-    public void preFillFormData(final ShoppingList input, final RemoveWishlistLineItemFormData formData) {
+    public abstract CompletionStage<Result> handleSuccessfulAction(final ShoppingList wishlist, final RemoveWishlistLineItemFormData removeWishlistLineItemFormData);
+
+    @Override
+    public PageContent createPageContent(final ShoppingList wishlist, final Form<? extends RemoveWishlistLineItemFormData> removeWishlistLineItemFormData) {
+        return wishlistPageContentFactory.create(wishlist);
+    }
+
+    @Override
+    public void preFillFormData(final ShoppingList wishlist, final RemoveWishlistLineItemFormData removeWishlistLineItemFormData) {
 
     }
 

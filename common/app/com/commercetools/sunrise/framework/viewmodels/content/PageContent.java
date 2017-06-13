@@ -38,13 +38,4 @@ public abstract class PageContent extends ViewModel {
         }
         this.components.add(component);
     }
-
-    public WishlistViewModel getWishlist() {
-        return wishlist;
-    }
-
-    public void setWishlist(final WishlistViewModel wishlist) {
-        this.wishlist = wishlist;
-    }
-
 }

@@ -8,8 +8,7 @@ import io.sphere.sdk.shoppinglists.ShoppingList;
  * The form data used to add and remove line items from the wishlist.
  *
  * @see ShoppingList#getLineItems()
- * @see LineItem#getProductId()
- * @see LineItem#getVariantId()
+ * @see LineItem#getId()
  */
 @ImplementedBy(DefaultRemoveWishlistLineItemFormData.class)
 public interface RemoveWishlistLineItemFormData {

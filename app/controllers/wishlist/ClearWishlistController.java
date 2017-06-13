@@ -15,7 +15,7 @@ import play.mvc.Result;
 import java.util.concurrent.CompletionStage;
 
 @RegisteredComponents(WishlistInSessionControllerComponent.class)
-public class ClearWishlistController extends SunriseClearWishlistController {
+public final class ClearWishlistController extends SunriseClearWishlistController {
 
     private final WishlistReverseRouter reverseRouter;
 
@@ -30,7 +30,7 @@ public class ClearWishlistController extends SunriseClearWishlistController {
     }
 
     @Override
-    public CompletionStage<Result> handleSuccessfulAction(final ShoppingList output) {
+    public CompletionStage<Result> handleSuccessfulAction(final ShoppingList wishlist) {
         return redirectToCall(reverseRouter.wishlistPageCall());
     }
 

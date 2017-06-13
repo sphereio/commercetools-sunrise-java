@@ -4,7 +4,6 @@ import com.commercetools.sunrise.framework.components.controllers.ControllerComp
 import com.commercetools.sunrise.framework.hooks.ctpevents.ShoppingListCreatedHook;
 import com.commercetools.sunrise.framework.hooks.ctpevents.ShoppingListLoadedHook;
 import com.commercetools.sunrise.framework.hooks.ctpevents.ShoppingListUpdatedHook;
-import com.commercetools.sunrise.framework.injection.RequestScoped;
 import com.commercetools.sunrise.sessions.wishlist.WishlistInSession;
 import com.google.inject.Inject;
 import io.sphere.sdk.shoppinglists.ShoppingList;
@@ -14,8 +13,7 @@ import java.util.concurrent.CompletionStage;
 
 import static java.util.concurrent.CompletableFuture.completedFuture;
 
-@RequestScoped
-public class WishlistInSessionControllerComponent implements ControllerComponent,
+public final class WishlistInSessionControllerComponent implements ControllerComponent,
         ShoppingListCreatedHook, ShoppingListUpdatedHook, ShoppingListLoadedHook {
     private final WishlistInSession wishlistInSession;
 

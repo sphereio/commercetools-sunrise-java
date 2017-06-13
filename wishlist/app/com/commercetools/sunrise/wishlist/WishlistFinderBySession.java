@@ -14,7 +14,7 @@ import java.util.concurrent.CompletionStage;
 
 import static java.util.concurrent.CompletableFuture.completedFuture;
 
-public class WishlistFinderBySession extends AbstractSingleShoppingListQueryExecutor implements WishlistFinder {
+class WishlistFinderBySession extends AbstractSingleShoppingListQueryExecutor implements WishlistFinder {
     private final WishlistInSession wishlistInSession;
     private final CustomerInSession customerInSession;
 

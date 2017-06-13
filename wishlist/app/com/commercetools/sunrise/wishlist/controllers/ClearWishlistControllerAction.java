@@ -12,9 +12,9 @@ public interface ClearWishlistControllerAction extends ControllerAction, Functio
     /**
      * Removes all line items from the given wishlist.
      *
-     * @param wishlist the wishlist
+     * @param wishlist the {@link ShoppingList} from which to remove all line items
      *
-     * @return the completion stage for this action
+     * @return the completion stage for the updated wishlist with no line items
      */
     @Override
     CompletionStage<ShoppingList> apply(ShoppingList wishlist);

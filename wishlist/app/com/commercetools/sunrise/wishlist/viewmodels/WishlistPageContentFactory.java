@@ -39,10 +39,8 @@ public class WishlistPageContentFactory extends PageContentFactory<WishlistPageC
     protected final void initialize(final WishlistPageContent viewModel, final ShoppingList input) {
         super.initialize(viewModel, input);
 
-        if (input != null) {
-            fillProducts(viewModel, input);
-            fillItemsInTotal(viewModel, input);
-        }
+        fillProducts(viewModel, input);
+        fillItemsInTotal(viewModel, input);
     }
 
     @Override
@@ -51,20 +49,24 @@ public class WishlistPageContentFactory extends PageContentFactory<WishlistPageC
     }
 
     protected void fillItemsInTotal(final WishlistPageContent viewModel, final ShoppingList wishlist) {
-        final List<LineItem> lineItems = wishlist.getLineItems();
+        if (wishlist != null) {
+            final List<LineItem> lineItems = wishlist.getLineItems();
 
-        viewModel.setItemsInTotal(lineItems == null ? 0 : lineItems.size());
+            viewModel.setItemsInTotal(lineItems == null ? 0 : lineItems.size());
+        }
     }
 
     protected void fillProducts(final WishlistPageContent viewModel, final ShoppingList wishlist) {
-        final GenericListViewModel<ProductThumbnailViewModel> productList = new GenericListViewModel<>();
-        final List<LineItem> lineItems = wishlist.getLineItems();
-        final List<ProductThumbnailViewModel> productThumbNails = lineItems == null ?
-                Collections.emptyList() :
-                lineItems.stream()
-                    .map(thumbnailViewModelFactory::create)
-                    .collect(Collectors.toList());
-        productList.setList(productThumbNails);
-        viewModel.setProducts(productList);
+        if (wishlist != null) {
+            final GenericListViewModel<ProductThumbnailViewModel> productList = new GenericListViewModel<>();
+            final List<LineItem> lineItems = wishlist.getLineItems();
+            final List<ProductThumbnailViewModel> productThumbNails = lineItems == null ?
+                    Collections.emptyList() :
+                    lineItems.stream()
+                            .map(thumbnailViewModelFactory::create)
+                            .collect(Collectors.toList());
+            productList.setList(productThumbNails);
+            viewModel.setProducts(productList);
+        }
     }
 }

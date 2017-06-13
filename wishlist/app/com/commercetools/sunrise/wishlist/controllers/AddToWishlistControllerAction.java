@@ -13,10 +13,10 @@ public interface AddToWishlistControllerAction extends ControllerAction, BiFunct
     /**
      * Adds a line item to the given wishlist.
      *
-     * @param wishlist              the wishlist
-     * @param addWishlistLineItemFormData specifies the line item data
+     * @param wishlist                    the {@link ShoppingList} to add the line item to
+     * @param addWishlistLineItemFormData specifies the line item to add
      *
-     * @return the completion stage for this action
+     * @return the completion stage for the updated wishlist with the added line item
      */
     @Override
     CompletionStage<ShoppingList> apply(ShoppingList wishlist, AddWishlistLineItemFormData addWishlistLineItemFormData);

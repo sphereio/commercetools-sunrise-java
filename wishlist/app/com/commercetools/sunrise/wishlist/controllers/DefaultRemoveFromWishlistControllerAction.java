@@ -3,7 +3,6 @@ package com.commercetools.sunrise.wishlist.controllers;
 import com.commercetools.sunrise.framework.hooks.HookRunner;
 import com.commercetools.sunrise.wishlist.viewmodels.RemoveWishlistLineItemFormData;
 import io.sphere.sdk.client.SphereClient;
-import io.sphere.sdk.shoppinglists.LineItem;
 import io.sphere.sdk.shoppinglists.ShoppingList;
 import io.sphere.sdk.shoppinglists.commands.ShoppingListUpdateCommand;
 import io.sphere.sdk.shoppinglists.commands.updateactions.RemoveLineItem;
@@ -23,12 +22,7 @@ public class DefaultRemoveFromWishlistControllerAction extends AbstractShoppingL
     }
 
     protected ShoppingListUpdateCommand buildRequest(final ShoppingList wishlist, final RemoveWishlistLineItemFormData removeWishlistFormData) {
-        final LineItem lineItemToRemove = wishlist.getLineItems().stream()
-                .filter(lineItem -> removeWishlistFormData.lineItemId().equals(lineItem.getId()))
-                .findFirst()
-                .get();
-
-        final RemoveLineItem removeLineItem = RemoveLineItem.of(lineItemToRemove);
+        final RemoveLineItem removeLineItem = RemoveLineItem.of(removeWishlistFormData.lineItemId());
         return ShoppingListUpdateCommand.of(wishlist, removeLineItem);
     }
 }

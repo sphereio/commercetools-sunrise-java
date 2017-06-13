@@ -44,7 +44,8 @@ public abstract class SunriseClearWishlistController extends SunriseContentFormC
         return controllerAction.apply(wishlist);
     }
 
-    public abstract CompletionStage<Result> handleSuccessfulAction(final ShoppingList output);
+    @Override
+    public abstract CompletionStage<Result> handleSuccessfulAction(final ShoppingList wishlist);
 
     @Override
     public WishlistFinder getWishlistFinder() {
@@ -52,8 +53,7 @@ public abstract class SunriseClearWishlistController extends SunriseContentFormC
     }
 
     @Override
-    public CompletionStage<Result> handleClientErrorFailedAction(final ShoppingList input, final ClientErrorException clientErrorException) {
-        // No CTP call involved, this should never be called
+    public CompletionStage<Result> handleClientErrorFailedAction(final ShoppingList wishlist, final ClientErrorException clientErrorException) {
         return handleGeneralFailedAction(clientErrorException);
     }
 }

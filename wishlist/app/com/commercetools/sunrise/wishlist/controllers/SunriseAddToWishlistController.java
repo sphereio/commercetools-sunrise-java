@@ -56,11 +56,12 @@ public abstract class SunriseAddToWishlistController extends SunriseContentFormC
     }
 
     @Override
-    public CompletionStage<ShoppingList> executeAction(final ShoppingList input, final AddWishlistLineItemFormData formData) {
-        return controllerAction.apply(input, formData);
+    public CompletionStage<ShoppingList> executeAction(final ShoppingList wishlist, final AddWishlistLineItemFormData addWishlistLineItemFormData) {
+        return controllerAction.apply(wishlist, addWishlistLineItemFormData);
     }
 
-    public abstract CompletionStage<Result> handleSuccessfulAction(final ShoppingList output, final AddWishlistLineItemFormData formData);
+    @Override
+    public abstract CompletionStage<Result> handleSuccessfulAction(final ShoppingList wishlist, final AddWishlistLineItemFormData addWishlistLineItemFormData);
 
     @Override
     public WishlistFinder getWishlistFinder() {
@@ -68,8 +69,8 @@ public abstract class SunriseAddToWishlistController extends SunriseContentFormC
     }
 
     @Override
-    public PageContent createPageContent(final ShoppingList input, final Form<? extends AddWishlistLineItemFormData> form) {
-        return wishlistPageContentFactory.create(input);
+    public PageContent createPageContent(final ShoppingList wishlist, final Form<? extends AddWishlistLineItemFormData> addWishlistLineItemFormData) {
+        return wishlistPageContentFactory.create(wishlist);
     }
 
     @Override
@@ -79,7 +80,7 @@ public abstract class SunriseAddToWishlistController extends SunriseContentFormC
     }
 
     @Override
-    public void preFillFormData(final ShoppingList input, final AddWishlistLineItemFormData formData) {
+    public void preFillFormData(final ShoppingList wishlist, final AddWishlistLineItemFormData addWishlistLineItemFormData) {
 
     }
 }

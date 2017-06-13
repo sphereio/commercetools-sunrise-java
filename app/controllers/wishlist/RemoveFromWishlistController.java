@@ -17,7 +17,7 @@ import javax.inject.Inject;
 import java.util.concurrent.CompletionStage;
 
 @RegisteredComponents(WishlistInSessionControllerComponent.class)
-public class RemoveFromWishlistController extends SunriseRemoveFromWishlistController {
+public final class RemoveFromWishlistController extends SunriseRemoveFromWishlistController {
     private final WishlistReverseRouter reverseRouter;
 
     @Inject
@@ -33,7 +33,7 @@ public class RemoveFromWishlistController extends SunriseRemoveFromWishlistContr
     }
 
     @Override
-    public CompletionStage<Result> handleSuccessfulAction(final ShoppingList output, final RemoveWishlistLineItemFormData formData) {
+    public CompletionStage<Result> handleSuccessfulAction(final ShoppingList wishlist, final RemoveWishlistLineItemFormData removeWishlistLineItemFormData) {
         return redirectToCall(reverseRouter.wishlistPageCall());
     }
 
