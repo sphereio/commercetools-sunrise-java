@@ -36,15 +36,15 @@ public class WishlistPageContentFactory extends PageContentFactory<WishlistPageC
     }
 
     @Override
-    protected final void initialize(final WishlistPageContent viewModel, final ShoppingList input) {
-        super.initialize(viewModel, input);
+    protected final void initialize(final WishlistPageContent viewModel, final ShoppingList wishlist) {
+        super.initialize(viewModel, wishlist);
 
-        fillProducts(viewModel, input);
-        fillItemsInTotal(viewModel, input);
+        fillProducts(viewModel, wishlist);
+        fillItemsInTotal(viewModel, wishlist);
     }
 
     @Override
-    protected void fillTitle(final WishlistPageContent viewModel, final ShoppingList input) {
+    protected void fillTitle(final WishlistPageContent viewModel, final ShoppingList wishlist) {
         viewModel.setTitle(pageTitleResolver.getOrEmpty("my-account:myWishlist.title"));
     }
 
