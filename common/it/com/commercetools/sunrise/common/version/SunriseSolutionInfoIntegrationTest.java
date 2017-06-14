@@ -15,7 +15,7 @@ import static com.commercetools.sunrise.it.SphereClientFixtures.provideHttpClien
 import static com.commercetools.sunrise.it.SphereClientFixtures.provideSphereClient;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class UserAgentIntegrationTest {
+public class SunriseSolutionInfoIntegrationTest {
 
     @Test
     public void userAgent() throws Exception {
