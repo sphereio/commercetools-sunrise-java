@@ -25,13 +25,16 @@ public final class SphereClientFixtures {
     }
 
     public static BlockingSphereClient provideSphereClient() {
-        return provideSphereClient(provideHttpClient());
+        return provideSphereClient(provideHttpClient(), provideSphereClientConfig());
     }
 
     public static BlockingSphereClient provideSphereClient(final HttpClient httpClient) {
-        final SphereClientConfig config = provideSphereClientConfig();
-        final SphereAccessTokenSupplier tokenSupplier = SphereAccessTokenSupplier.ofAutoRefresh(config, httpClient, false);
-        final SphereClient underlying = SphereClient.of(config, httpClient, tokenSupplier);
+        return provideSphereClient(httpClient, provideSphereClientConfig());
+    }
+
+    public static BlockingSphereClient provideSphereClient(final HttpClient httpClient, final SphereClientConfig sphereClientConfig) {
+        final SphereAccessTokenSupplier tokenSupplier = SphereAccessTokenSupplier.ofAutoRefresh(sphereClientConfig, httpClient, false);
+        final SphereClient underlying = SphereClient.of(sphereClientConfig, httpClient, tokenSupplier);
         return BlockingSphereClient.of(underlying, Duration.ofSeconds(30));
     }
 
