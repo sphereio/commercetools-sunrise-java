@@ -16,7 +16,7 @@ import static com.commercetools.sunrise.it.CategoryTestFixtures.withCategory;
 import static com.commercetools.sunrise.it.ProductTestFixtures.*;
 import static com.commercetools.sunrise.it.ProductTypeTestFixtures.productTypeDraft;
 import static com.commercetools.sunrise.it.ProductTypeTestFixtures.withProductType;
-import static com.commercetools.sunrise.it.WithSphereClient.provideSphereClient;
+import static com.commercetools.sunrise.it.SphereClientFixtures.provideSphereClient;
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 

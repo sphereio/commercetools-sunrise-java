@@ -11,8 +11,8 @@ import org.junit.Test;
 import javax.annotation.Nullable;
 import java.util.concurrent.CompletionStage;
 
-import static com.commercetools.sunrise.it.WithSphereClient.provideHttpClient;
-import static com.commercetools.sunrise.it.WithSphereClient.provideSphereClient;
+import static com.commercetools.sunrise.it.SphereClientFixtures.provideHttpClient;
+import static com.commercetools.sunrise.it.SphereClientFixtures.provideSphereClient;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class UserAgentIntegrationTest {
