@@ -8,6 +8,7 @@ import io.sphere.sdk.shoppinglists.ShoppingList;
 import java.util.concurrent.CompletionStage;
 import java.util.function.BiFunction;
 
+@FunctionalInterface
 @ImplementedBy(DefaultAddToWishlistControllerAction.class)
 public interface AddToWishlistControllerAction extends ControllerAction, BiFunction<ShoppingList, AddWishlistLineItemFormData, CompletionStage<ShoppingList>> {
     /**

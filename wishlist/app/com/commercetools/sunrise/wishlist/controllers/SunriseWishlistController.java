@@ -19,7 +19,7 @@ import java.util.concurrent.CompletionStage;
 /**
  * This controller is used to view the current wishlist.
  */
-public class SunriseWishlistController extends SunriseContentController implements WithQueryFlow<ShoppingList>, WithRequiredWishlist {
+public abstract class SunriseWishlistController extends SunriseContentController implements WithQueryFlow<ShoppingList>, WithRequiredWishlist {
     private final WishlistFinder wishlistFinder;
     private final WishlistPageContentFactory wishlistPageContentFactory;
 

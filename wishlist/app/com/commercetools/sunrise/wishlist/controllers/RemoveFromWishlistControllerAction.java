@@ -8,6 +8,7 @@ import io.sphere.sdk.shoppinglists.ShoppingList;
 import java.util.concurrent.CompletionStage;
 import java.util.function.BiFunction;
 
+@FunctionalInterface
 @ImplementedBy(DefaultRemoveFromWishlistControllerAction.class)
 public interface RemoveFromWishlistControllerAction extends ControllerAction, BiFunction<ShoppingList, RemoveWishlistLineItemFormData, CompletionStage<ShoppingList>> {
     /**

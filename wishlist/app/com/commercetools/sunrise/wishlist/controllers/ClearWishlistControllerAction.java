@@ -7,6 +7,7 @@ import io.sphere.sdk.shoppinglists.ShoppingList;
 import java.util.concurrent.CompletionStage;
 import java.util.function.Function;
 
+@FunctionalInterface
 @ImplementedBy(DefaultClearWishlistControllerAction.class)
 public interface ClearWishlistControllerAction extends ControllerAction, Function<ShoppingList, CompletionStage<ShoppingList>> {
     /**
