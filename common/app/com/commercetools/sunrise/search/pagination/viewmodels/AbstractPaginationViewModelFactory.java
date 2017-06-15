@@ -1,7 +1,6 @@
 package com.commercetools.sunrise.search.pagination.viewmodels;
 
 import com.commercetools.sunrise.framework.viewmodels.ViewModelFactory;
-import com.commercetools.sunrise.search.pagination.EntriesPerPageFormSettings;
 import com.commercetools.sunrise.search.pagination.PaginationSettings;
 import io.sphere.sdk.queries.PagedResult;
 import play.mvc.Http;
@@ -18,12 +17,9 @@ import static java.util.stream.Collectors.toList;
 public abstract class AbstractPaginationViewModelFactory extends ViewModelFactory {
 
     private final PaginationSettings paginationSettings;
-    private final EntriesPerPageFormSettings entriesPerPageFormSettings;
 
-    protected AbstractPaginationViewModelFactory(final PaginationSettings paginationSettings,
-                                                 final EntriesPerPageFormSettings entriesPerPageFormSettings) {
+    protected AbstractPaginationViewModelFactory(final PaginationSettings paginationSettings) {
         this.paginationSettings = paginationSettings;
-        this.entriesPerPageFormSettings = entriesPerPageFormSettings;
     }
 
     protected final PaginationSettings getPaginationSettings() {
@@ -67,14 +63,14 @@ public abstract class AbstractPaginationViewModelFactory extends ViewModelFactor
     }
 
     protected void fillLastPage(final PaginationViewModel viewModel, final PagedResult<?> pagedResult, final long currentPage) {
-        final long totalPages = calculateTotalPages(pagedResult);
+        final long totalPages = calculateTotalPages(pagedResult, currentPage);
         if (lastPageIsDisplayed(currentPage, totalPages)) {
             viewModel.setLastPage(createLinkData(totalPages, currentPage));
         }
     }
 
     protected void fillPages(final PaginationViewModel viewModel, final PagedResult<?> pagedResult, final long currentPage) {
-        final long totalPages = calculateTotalPages(pagedResult);
+        final long totalPages = calculateTotalPages(pagedResult, currentPage);
         long startPage = 1;
         long endPage = totalPages;
         if (firstPageIsDisplayed(currentPage)) {
@@ -125,12 +121,11 @@ public abstract class AbstractPaginationViewModelFactory extends ViewModelFactor
         return Math.min(currentPage + paginationSettings.getDisplayedPages(), totalPages);
     }
 
-    private long calculateTotalPages(final PagedResult<?> pagedResult) {
-        final Long count = pagedResult.getCount();
-        if (count > 0) {
-            final Long total = pagedResult.getTotal();
-            final Http.Context context = Http.Context.current();
-            final Double totalPages = Math.ceil(((double) total) / entriesPerPageFormSettings.getLimit(context));
+    private long calculateTotalPages(final PagedResult<?> pagedResult, final long currentPage) {
+        if (pagedResult.isLast()) {
+            return currentPage;
+        } else if (pagedResult.getCount() > 0) {
+            final Double totalPages = Math.ceil(pagedResult.getTotal() / pagedResult.getCount());
             return totalPages.longValue();
         } else {
             return 0;

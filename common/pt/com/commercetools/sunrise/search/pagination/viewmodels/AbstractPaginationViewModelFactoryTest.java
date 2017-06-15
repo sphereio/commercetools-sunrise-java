@@ -1,8 +1,6 @@
 package com.commercetools.sunrise.search.pagination.viewmodels;
 
 import com.commercetools.sunrise.framework.viewmodels.forms.QueryStringUtils;
-import com.commercetools.sunrise.search.pagination.EntriesPerPageFormOption;
-import com.commercetools.sunrise.search.pagination.EntriesPerPageFormSettings;
 import com.commercetools.sunrise.search.pagination.PaginationSettings;
 import io.sphere.sdk.products.ProductProjection;
 import io.sphere.sdk.queries.PagedResult;
@@ -10,7 +8,10 @@ import org.junit.Test;
 import play.mvc.Http;
 import play.test.WithApplication;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -148,14 +149,7 @@ public class AbstractPaginationViewModelFactoryTest extends WithApplication {
                 .build());
         Http.Context.current.set(context);
         final PaginationSettings settings = PaginationSettings.of("page", displayedPages);
-
-        final List<EntriesPerPageFormOption> entriesPerPageOptions =
-                Arrays.asList(EntriesPerPageFormOption.of("ppp", PAGE_SIZE.toString(), PAGE_SIZE.intValue(), true));
-        final EntriesPerPageFormSettings entriesPerPageFormSettings = EntriesPerPageFormSettings.of("ppp", entriesPerPageOptions);
-
-        final TestablePaginationViewModelFactory paginationViewModelFactory =
-                new TestablePaginationViewModelFactory(settings, entriesPerPageFormSettings);
-        return paginationViewModelFactory.create(searchResult, currentPage);
+        return new TestablePaginationViewModelFactory(settings).create(searchResult, currentPage);
     }
 
     private PagedResult<ProductProjection> pagedResult(final int page, final int totalPages) {
@@ -200,9 +194,8 @@ public class AbstractPaginationViewModelFactoryTest extends WithApplication {
 
     private static class TestablePaginationViewModelFactory extends AbstractPaginationViewModelFactory {
 
-        public TestablePaginationViewModelFactory(final PaginationSettings paginationSettings,
-                                                  final EntriesPerPageFormSettings entriesPerPageFormSettings) {
-            super(paginationSettings, entriesPerPageFormSettings);
+        TestablePaginationViewModelFactory(final PaginationSettings settings) {
+            super(settings);
         }
     }
 }
