@@ -7,6 +7,8 @@ import io.sphere.sdk.categories.CategoryTree;
 
 import javax.inject.Inject;
 
+import static com.commercetools.sunrise.framework.viewmodels.content.products.ProductPriceUtils.hasDiscount;
+
 @RequestScoped
 public class ProductThumbnailViewModelFactory extends SimpleViewModelFactory<ProductThumbnailViewModel, ProductWithVariant> {
 
@@ -54,6 +56,6 @@ public class ProductThumbnailViewModelFactory extends SimpleViewModelFactory<Pro
     }
 
     protected void fillSale(final ProductThumbnailViewModel viewModel, final ProductWithVariant productWithVariant) {
-        viewModel.setSale(ProductPriceUtils.hasDiscount(productWithVariant.getVariant()));
+        viewModel.setSale(hasDiscount(productWithVariant.getVariant()));
     }
 }
