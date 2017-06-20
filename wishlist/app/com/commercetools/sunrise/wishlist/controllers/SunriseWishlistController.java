@@ -20,6 +20,7 @@ import java.util.concurrent.CompletionStage;
  * This controller is used to view the current wishlist.
  */
 public abstract class SunriseWishlistController extends SunriseContentController implements WithQueryFlow<ShoppingList>, WithRequiredWishlist {
+
     private final WishlistFinder wishlistFinder;
     private final WishlistPageContentFactory wishlistPageContentFactory;
 
@@ -32,6 +33,11 @@ public abstract class SunriseWishlistController extends SunriseContentController
         this.wishlistFinder = wishlistFinder;
     }
 
+    @Override
+    public final WishlistFinder getWishlistFinder() {
+        return wishlistFinder;
+    }
+
     @EnableHooks
     @SunriseRoute(WishlistReverseRouter.WISHLIST_PAGE)
     public CompletionStage<Result> show(final String languageTag) {
@@ -41,11 +47,6 @@ public abstract class SunriseWishlistController extends SunriseContentController
     @Override
     public PageContent createPageContent(final ShoppingList wishlist) {
         return wishlistPageContentFactory.create(wishlist);
-    }
-
-    @Override
-    public WishlistFinder getWishlistFinder() {
-        return wishlistFinder;
     }
 
     @Override

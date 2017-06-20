@@ -21,6 +21,7 @@ import java.util.concurrent.CompletionStage;
  */
 public abstract class SunriseClearWishlistController extends SunriseContentFormController
         implements WithExecutionFlow<ShoppingList, ShoppingList>, WithRequiredWishlist {
+
     private final WishlistFinder wishlistFinder;
     private final ClearWishlistControllerAction controllerAction;
 
@@ -31,6 +32,11 @@ public abstract class SunriseClearWishlistController extends SunriseContentFormC
         super(contentRenderer, formFactory);
         this.wishlistFinder = wishlistFinder;
         this.controllerAction = controllerAction;
+    }
+
+    @Override
+    public final WishlistFinder getWishlistFinder() {
+        return wishlistFinder;
     }
 
     @EnableHooks
@@ -46,11 +52,6 @@ public abstract class SunriseClearWishlistController extends SunriseContentFormC
 
     @Override
     public abstract CompletionStage<Result> handleSuccessfulAction(final ShoppingList wishlist);
-
-    @Override
-    public WishlistFinder getWishlistFinder() {
-        return wishlistFinder;
-    }
 
     @Override
     public CompletionStage<Result> handleClientErrorFailedAction(final ShoppingList wishlist, final ClientErrorException clientErrorException) {
