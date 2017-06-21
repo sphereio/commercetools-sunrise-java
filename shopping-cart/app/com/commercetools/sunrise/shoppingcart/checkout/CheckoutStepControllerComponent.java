@@ -1,8 +1,8 @@
 package com.commercetools.sunrise.shoppingcart.checkout;
 
-import com.commercetools.sunrise.framework.viewmodels.PageData;
 import com.commercetools.sunrise.framework.components.controllers.ControllerComponent;
 import com.commercetools.sunrise.framework.hooks.application.PageDataReadyHook;
+import com.commercetools.sunrise.framework.viewmodels.PageData;
 import com.commercetools.sunrise.shoppingcart.checkout.address.viewmodels.CheckoutAddressPageContent;
 import com.commercetools.sunrise.shoppingcart.checkout.confirmation.viewmodels.CheckoutConfirmationPageContent;
 import com.commercetools.sunrise.shoppingcart.checkout.payment.viewmodels.CheckoutPaymentPageContent;
@@ -11,6 +11,8 @@ import com.commercetools.sunrise.shoppingcart.checkout.shipping.viewmodels.Check
 import javax.inject.Singleton;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.commercetools.sunrise.shoppingcart.checkout.CheckoutStep.*;
 
 @Singleton
 public class CheckoutStepControllerComponent implements ControllerComponent, PageDataReadyHook {
