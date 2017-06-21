@@ -19,8 +19,8 @@ import javax.inject.Inject;
 import java.util.concurrent.CompletionStage;
 
 public abstract class SunriseRemoveFromWishlistController extends SunriseContentFormController
-        implements WithContentFormFlow<ShoppingList, ShoppingList, RemoveWishlistLineItemFormData>, WithRequiredWishlist {
-    private final RemoveWishlistLineItemFormData formData;
+        implements WithContentFormFlow<ShoppingList, ShoppingList, RemoveFromWishlistFormData>, WithRequiredWishlist {
+    private final RemoveFromWishlistFormData formData;
     private final WishlistPageContentFactory wishlistPageContentFactory;
     private final WishlistFinder wishlistFinder;
     private final RemoveFromWishlistControllerAction controllerAction;
@@ -28,7 +28,7 @@ public abstract class SunriseRemoveFromWishlistController extends SunriseContent
     @Inject
     protected SunriseRemoveFromWishlistController(final ContentRenderer contentRenderer, final FormFactory formFactory,
                                                   final WishlistPageContentFactory wishlistPageContentFactory,
-                                                  final RemoveWishlistLineItemFormData formData,
+                                                  final RemoveFromWishlistFormData formData,
                                                   final WishlistFinder wishlistFinder,
                                                   final RemoveFromWishlistControllerAction controllerAction) {
         super(contentRenderer, formFactory);
@@ -45,25 +45,25 @@ public abstract class SunriseRemoveFromWishlistController extends SunriseContent
     }
 
     @Override
-    public Class<? extends RemoveWishlistLineItemFormData> getFormDataClass() {
+    public Class<? extends RemoveFromWishlistFormData> getFormDataClass() {
         return formData.getClass();
     }
 
     @Override
-    public CompletionStage<ShoppingList> executeAction(final ShoppingList wishlist, final RemoveWishlistLineItemFormData removeWishlistLineItemFormData) {
-        return controllerAction.apply(wishlist, removeWishlistLineItemFormData);
+    public CompletionStage<ShoppingList> executeAction(final ShoppingList wishlist, final RemoveFromWishlistFormData removeFromWishlistFormData) {
+        return controllerAction.apply(wishlist, removeFromWishlistFormData);
     }
 
     @Override
-    public abstract CompletionStage<Result> handleSuccessfulAction(final ShoppingList wishlist, final RemoveWishlistLineItemFormData removeWishlistLineItemFormData);
+    public abstract CompletionStage<Result> handleSuccessfulAction(final ShoppingList wishlist, final RemoveFromWishlistFormData removeFromWishlistFormData);
 
     @Override
-    public PageContent createPageContent(final ShoppingList wishlist, final Form<? extends RemoveWishlistLineItemFormData> removeWishlistLineItemFormData) {
+    public PageContent createPageContent(final ShoppingList wishlist, final Form<? extends RemoveFromWishlistFormData> removeWishlistLineItemFormData) {
         return wishlistPageContentFactory.create(wishlist);
     }
 
     @Override
-    public void preFillFormData(final ShoppingList wishlist, final RemoveWishlistLineItemFormData removeWishlistLineItemFormData) {
+    public void preFillFormData(final ShoppingList wishlist, final RemoveFromWishlistFormData removeFromWishlistFormData) {
 
     }
 
