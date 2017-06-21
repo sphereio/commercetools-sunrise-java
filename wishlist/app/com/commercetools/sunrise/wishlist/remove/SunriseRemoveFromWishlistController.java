@@ -38,6 +38,16 @@ public abstract class SunriseRemoveFromWishlistController extends SunriseContent
         this.controllerAction = controllerAction;
     }
 
+    @Override
+    public final Class<? extends RemoveFromWishlistFormData> getFormDataClass() {
+        return formData.getClass();
+    }
+
+    @Override
+    public final WishlistFinder getWishlistFinder() {
+        return wishlistFinder;
+    }
+
     @EnableHooks
     @SunriseRoute(WishlistReverseRouter.REMOVE_FROM_WISHLIST_PROCESS)
     public CompletionStage<Result> process(final String languageTag) {
@@ -45,30 +55,20 @@ public abstract class SunriseRemoveFromWishlistController extends SunriseContent
     }
 
     @Override
-    public Class<? extends RemoveFromWishlistFormData> getFormDataClass() {
-        return formData.getClass();
+    public CompletionStage<ShoppingList> executeAction(final ShoppingList wishlist, final RemoveFromWishlistFormData formData) {
+        return controllerAction.apply(wishlist, formData);
     }
 
     @Override
-    public CompletionStage<ShoppingList> executeAction(final ShoppingList wishlist, final RemoveFromWishlistFormData removeFromWishlistFormData) {
-        return controllerAction.apply(wishlist, removeFromWishlistFormData);
-    }
+    public abstract CompletionStage<Result> handleSuccessfulAction(final ShoppingList wishlist, final RemoveFromWishlistFormData formData);
 
     @Override
-    public abstract CompletionStage<Result> handleSuccessfulAction(final ShoppingList wishlist, final RemoveFromWishlistFormData removeFromWishlistFormData);
-
-    @Override
-    public PageContent createPageContent(final ShoppingList wishlist, final Form<? extends RemoveFromWishlistFormData> removeWishlistLineItemFormData) {
+    public PageContent createPageContent(final ShoppingList wishlist, final Form<? extends RemoveFromWishlistFormData> formData) {
         return wishlistPageContentFactory.create(wishlist);
     }
 
     @Override
-    public void preFillFormData(final ShoppingList wishlist, final RemoveFromWishlistFormData removeFromWishlistFormData) {
-
-    }
-
-    @Override
-    public WishlistFinder getWishlistFinder() {
-        return wishlistFinder;
+    public void preFillFormData(final ShoppingList wishlist, final RemoveFromWishlistFormData formData) {
+        // Do not pre-fill anything
     }
 }

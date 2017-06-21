@@ -44,8 +44,13 @@ public abstract class SunriseAddToWishlistController extends SunriseContentFormC
     }
 
     @Override
-    public Class<? extends AddToWishlistFormData> getFormDataClass() {
+    public final Class<? extends AddToWishlistFormData> getFormDataClass() {
         return formData.getClass();
+    }
+
+    @Override
+    public final WishlistFinder getWishlistFinder() {
+        return wishlistFinder;
     }
 
     @EnableHooks
@@ -55,12 +60,12 @@ public abstract class SunriseAddToWishlistController extends SunriseContentFormC
     }
 
     @Override
-    public CompletionStage<ShoppingList> executeAction(final ShoppingList wishlist, final AddToWishlistFormData addToWishlistFormData) {
-        return controllerAction.apply(wishlist, addToWishlistFormData);
+    public CompletionStage<ShoppingList> executeAction(final ShoppingList wishlist, final AddToWishlistFormData formData) {
+        return controllerAction.apply(wishlist, formData);
     }
 
     @Override
-    public abstract CompletionStage<Result> handleSuccessfulAction(final ShoppingList wishlist, final AddToWishlistFormData addToWishlistFormData);
+    public abstract CompletionStage<Result> handleSuccessfulAction(final ShoppingList wishlist, final AddToWishlistFormData formData);
 
     @Override
     public WishlistFinder getWishlistFinder() {
@@ -68,7 +73,7 @@ public abstract class SunriseAddToWishlistController extends SunriseContentFormC
     }
 
     @Override
-    public PageContent createPageContent(final ShoppingList wishlist, final Form<? extends AddToWishlistFormData> addWishlistLineItemFormData) {
+    public PageContent createPageContent(final ShoppingList wishlist, final Form<? extends AddToWishlistFormData> formData) {
         return wishlistPageContentFactory.create(wishlist);
     }
 
@@ -79,7 +84,7 @@ public abstract class SunriseAddToWishlistController extends SunriseContentFormC
     }
 
     @Override
-    public void preFillFormData(final ShoppingList wishlist, final AddToWishlistFormData addToWishlistFormData) {
-
+    public void preFillFormData(final ShoppingList wishlist, final AddToWishlistFormData formData) {
+      // Do not pre-fill anything
     }
 }
