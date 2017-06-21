@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.common.version;
 
-import io.sphere.sdk.client.SphereClient;
+import io.sphere.sdk.client.BlockingSphereClient;
 import io.sphere.sdk.http.HttpClient;
 import io.sphere.sdk.http.HttpHeaders;
 import io.sphere.sdk.http.HttpRequest;
@@ -20,8 +20,8 @@ public class SunriseSolutionInfoIntegrationTest {
     @Test
     public void userAgent() throws Exception {
         try (final FakeHttpClient httpClient = new FakeHttpClient()) {
-            try (final SphereClient client = provideSphereClient(httpClient)) {
-                client.execute(ProjectGet.of()).toCompletableFuture().join();
+            try (final BlockingSphereClient client = provideSphereClient(httpClient)) {
+                client.executeBlocking(ProjectGet.of());
                 assertThat(httpClient.getLastUserAgent())
                         .contains("sunrise-java-shop-framework");
             }
