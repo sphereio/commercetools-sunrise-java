@@ -84,14 +84,14 @@ GET         /:languageTag/checkout/thankyou                                     
 # SIGN UP/IN/OUT
 # ~~~~~
 
-# Shows log in form
+# Shows login and signup form
 GET         /:languageTag/user/login                                            @controllers.myaccount.LogInController.show(languageTag: String)
 # Logs in the user
 POST        /:languageTag/user/login                                            @controllers.myaccount.LogInController.process(languageTag: String)
-# Logs out the user
-GET         /:languageTag/user/logout                                           @controllers.myaccount.LogOutController.process(languageTag: String)
 # Registers the user
 POST        /:languageTag/user/signup                                           @controllers.myaccount.SignUpController.process(languageTag: String)
+# Logs out the user
+GET         /:languageTag/user/logout                                           @controllers.myaccount.LogOutController.process(languageTag: String)
 
 
 # MY ACCOUNT
@@ -102,8 +102,9 @@ GET         /:languageTag/user                                                  
 # Processes the form for updating the customer's details
 POST        /:languageTag/user                                                  @controllers.myaccount.MyPersonalDetailsController.process(languageTag: String)
 
-# Shows a form for changing password
+# Shows the form for changing password
 GET         /:languageTag/user/password                                         @controllers.myaccount.ChangePasswordController.show(languageTag: String)
+# Processes the form for changing password
 POST        /:languageTag/user/password                                         @controllers.myaccount.ChangePasswordController.process(languageTag: String)
 
 # Shows the address book
@@ -112,18 +113,29 @@ GET         /:languageTag/user/addressbook                                      
 GET         /:languageTag/user/addressbook/add                                  @controllers.myaccount.AddAddressController.show(languageTag: String)
 # Adds an address to the customer's address book
 POST        /:languageTag/user/addressbook/add                                  @controllers.myaccount.AddAddressController.process(languageTag: String)
-# Shows the form to edit an address from the customer's address book
-GET         /:languageTag/user/addressbook/:addressIdentifier/edit              @controllers.myaccount.ChangeAddressController.show(languageTag: String, addressIdentifier: String)
 # Updates an address from the customer's address book
 POST        /:languageTag/user/addressbook/:addressIdentifier/edit              @controllers.myaccount.ChangeAddressController.process(languageTag: String, addressIdentifier: String)
 # Removes an address from the customer's address book
 POST        /:languageTag/user/addressbook/:addressIdentifier/remove            @controllers.myaccount.RemoveAddressController.process(languageTag: String, addressIdentifier: String)
 
-
 # Shows all orders from the customer
 GET         /:languageTag/user/orders                                           @controllers.myaccount.MyOrderListController.show(languageTag: String)
 # Show an order from the customer
 GET         /:languageTag/user/orders/:orderIdentifier                          @controllers.myaccount.MyOrderDetailController.show(languageTag: String, orderIdentifier: String)
+
+
+# WISHLIST
+# ~~~~~
+
+# Shows the wishlist
+GET         /:languageTag/wishlist                                              @controllers.wishlist.WishlistContentController.show(languageTag: String)
+# Adds a product variant to the wishlist
+POST        /:languageTag/wishlist/add                                          @controllers.wishlist.AddToWishlistController.process(languageTag: String)
+# Removes a line item from the wishlist
+POST        /:languageTag/wishlist/remove                                       @controllers.wishlist.RemoveFromWishlistController.process(languageTag: String)
+# Clears the wishlist
+POST        /:languageTag/wishlist/clear                                        @controllers.wishlist.ClearWishlistController.process(languageTag: String)
+
 
 # SEARCH
 # ~~~~~
