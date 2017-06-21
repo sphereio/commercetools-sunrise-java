@@ -128,7 +128,7 @@ GET         /:languageTag/user/orders/:orderIdentifier                          
 # ~~~~~
 
 # Shows the wishlist
-GET         /:languageTag/wishlist                                              @controllers.wishlist.WishlistController.show(languageTag: String)
+GET         /:languageTag/wishlist                                              @controllers.wishlist.WishlistContentController.show(languageTag: String)
 # Adds a product variant to the wishlist
 POST        /:languageTag/wishlist/add                                          @controllers.wishlist.AddToWishlistController.process(languageTag: String)
 # Removes a line item from the wishlist
