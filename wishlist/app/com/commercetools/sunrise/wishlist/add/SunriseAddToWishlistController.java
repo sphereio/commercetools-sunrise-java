@@ -68,11 +68,6 @@ public abstract class SunriseAddToWishlistController extends SunriseContentFormC
     public abstract CompletionStage<Result> handleSuccessfulAction(final ShoppingList wishlist, final AddToWishlistFormData formData);
 
     @Override
-    public WishlistFinder getWishlistFinder() {
-        return wishlistFinder;
-    }
-
-    @Override
     public PageContent createPageContent(final ShoppingList wishlist, final Form<? extends AddToWishlistFormData> formData) {
         return wishlistPageContentFactory.create(wishlist);
     }
