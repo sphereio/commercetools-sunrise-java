@@ -93,6 +93,8 @@ POST        /:languageTag/user/signup                                           
 # Logs out the user
 GET         /:languageTag/user/logout                                           @controllers.myaccount.LogOutController.process(languageTag: String)
 
+# Send reset password email
+POST         /:languageTag/password/reset                                       @controllers.myaccount.SendResetPasswordEmailController.process(languageTag: String)
 
 # MY ACCOUNT
 # ~~~~~

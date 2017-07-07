@@ -1,3 +1,8 @@
+// Focus email field in reset change password modal
+$("#forgot-password-modal").on('shown.bs.modal', function(){
+    $(this).find('#reset-email-input').focus();
+});
+
 // Submit faceted search on change
 $("form#form-filter-products, form#form-filter-products-mobile").change(function() {
     this.submit();

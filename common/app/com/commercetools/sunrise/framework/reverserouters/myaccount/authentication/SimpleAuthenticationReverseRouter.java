@@ -21,4 +21,8 @@ public interface SimpleAuthenticationReverseRouter {
     String LOG_OUT_PROCESS = "logOutProcessCall";
 
     Call logOutProcessCall(final String languageTag);
+
+    String RESET_PASSWORD_PROCESS = "resetPasswordProcessCall";
+
+    Call resetPasswordProcessCall(final String languageTag);
 }
