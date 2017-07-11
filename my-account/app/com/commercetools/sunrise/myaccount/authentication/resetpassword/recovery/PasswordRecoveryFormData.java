@@ -1,12 +1,12 @@
-package com.commercetools.sunrise.myaccount.authentication.resetpassword.sendemail;
+package com.commercetools.sunrise.myaccount.authentication.resetpassword.recovery;
 
 import com.google.inject.ImplementedBy;
 
 /**
  * The data required to send a reset password email to a customer.
  */
-@ImplementedBy(DefaultSendResetPasswordEmailFormData.class)
-public interface SendResetPasswordEmailFormData {
+@ImplementedBy(DefaultPasswordRecoveryFormData.class)
+public interface PasswordRecoveryFormData {
 
     /**
      * The customer email address for which a password reset email should be send.

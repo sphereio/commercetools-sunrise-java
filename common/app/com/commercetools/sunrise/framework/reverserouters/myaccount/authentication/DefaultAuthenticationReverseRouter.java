@@ -7,7 +7,6 @@ import javax.inject.Inject;
 import java.util.Locale;
 
 public class DefaultAuthenticationReverseRouter extends AbstractLocalizedReverseRouter implements AuthenticationReverseRouter {
-
     private final SimpleAuthenticationReverseRouter delegate;
 
     @Inject
@@ -34,10 +33,5 @@ public class DefaultAuthenticationReverseRouter extends AbstractLocalizedReverse
     @Override
     public Call logOutProcessCall(final String languageTag) {
         return delegate.logOutProcessCall(languageTag);
-    }
-
-    @Override
-    public Call resetPasswordProcessCall(final String languageTag) {
-        return delegate.resetPasswordProcessCall(languageTag);
     }
 }

@@ -1,11 +1,11 @@
-package com.commercetools.sunrise.myaccount.authentication.resetpassword.sendemail;
+package com.commercetools.sunrise.myaccount.authentication.resetpassword.recovery;
 
 import play.data.validation.Constraints.Email;
 
 /**
- * Default implementation of {@link SendResetPasswordEmailFormData}
+ * Default implementation of {@link PasswordRecoveryFormData}
  */
-public class DefaultSendResetPasswordEmailFormData implements SendResetPasswordEmailFormData {
+public class DefaultPasswordRecoveryFormData implements PasswordRecoveryFormData {
     @Email
     private String email;
 

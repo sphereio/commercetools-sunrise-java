@@ -92,3 +92,9 @@ changePassword:
   changeBtn: Change password
   backBtn: Back
   feedbackMessage: Password changed successfully.
+resetPassword:
+  title: Reset Password
+  newPasswordLabelTxt: New password
+  confirmPasswordLabelTxt: Confirm new password
+  resetBtn: Reset password
+  feedbackMessage: Password reset successfully.

@@ -91,3 +91,9 @@ changePassword:
   changeBtn: Passwort ändern
   backBtn: Zurück
   feedbackMessage: Kennwort erfolgreich geändert.
+resetPassword:
+  title: Passwort zurücksetzen
+  newPasswordLabelTxt: Neues Passwort
+  confirmPasswordLabelTxt: Neues Passwort bestätigen
+  resetBtn: Passwort zurücksetzen
+  feedbackMessage: Kennwort erfolgreich geändert.

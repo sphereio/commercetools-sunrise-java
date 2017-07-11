@@ -10,12 +10,10 @@ import javax.inject.Singleton;
 
 @Singleton
 final class SimpleAuthenticationReverseRouterByReflection extends AbstractReflectionReverseRouter implements SimpleAuthenticationReverseRouter {
-
     private final ReverseCaller logInPageCaller;
     private final ReverseCaller logInProcessCaller;
     private final ReverseCaller signUpProcessCaller;
     private final ReverseCaller logOutProcessCaller;
-    private final ReverseCaller resetPasswordProcessCaller;
 
     @Inject
     private SimpleAuthenticationReverseRouterByReflection(final ParsedRoutes parsedRoutes) {
@@ -23,7 +21,6 @@ final class SimpleAuthenticationReverseRouterByReflection extends AbstractReflec
         logInProcessCaller = getReverseCallerForSunriseRoute(LOG_IN_PROCESS, parsedRoutes);
         signUpProcessCaller = getReverseCallerForSunriseRoute(SIGN_UP_PROCESS, parsedRoutes);
         logOutProcessCaller = getReverseCallerForSunriseRoute(LOG_OUT_PROCESS, parsedRoutes);
-        resetPasswordProcessCaller = getReverseCallerForSunriseRoute(RESET_PASSWORD_PROCESS, parsedRoutes);
     }
 
     @Override
@@ -44,10 +41,5 @@ final class SimpleAuthenticationReverseRouterByReflection extends AbstractReflec
     @Override
     public Call logOutProcessCall(final String languageTag) {
         return logOutProcessCaller.call(languageTag);
-    }
-
-    @Override
-    public Call resetPasswordProcessCall(final String languageTag) {
-        return resetPasswordProcessCaller.call(languageTag);
     }
 }

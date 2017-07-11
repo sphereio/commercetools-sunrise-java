@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.myaccount.authentication.resetpassword.sendemail;
+package com.commercetools.sunrise.myaccount.authentication.resetpassword.recovery;
 
 import com.commercetools.sunrise.framework.controllers.AbstractSphereRequestExecutor;
 import com.commercetools.sunrise.framework.hooks.HookRunner;
