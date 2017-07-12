@@ -8,7 +8,6 @@ import com.commercetools.sunrise.framework.reverserouters.myaccount.resetpasswor
 import com.commercetools.sunrise.myaccount.MyAccountController;
 import io.sphere.sdk.customers.CustomerToken;
 import play.data.FormFactory;
-import play.libs.concurrent.HttpExecution;
 import play.mvc.Result;
 
 import java.util.concurrent.CompletionStage;
@@ -43,9 +42,6 @@ public abstract class SunrisePasswordRecoveryController extends SunriseFormContr
 
     @Override
     public CompletionStage<CustomerToken> executeAction(final Void input, final PasswordRecoveryFormData formData) {
-        return controllerAction.apply(formData)
-                .thenComposeAsync(customerToken -> sendEmail(customerToken), HttpExecution.defaultContext());
+        return controllerAction.apply(formData);
     }
-
-    protected abstract CompletionStage<CustomerToken> sendEmail(final CustomerToken resetPasswordToken);
 }
