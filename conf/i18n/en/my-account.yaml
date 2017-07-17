@@ -98,3 +98,6 @@ resetPassword:
   confirmPasswordLabelTxt: Confirm new password
   resetBtn: Reset password
   feedbackMessage: Password reset successfully.
+forgotPassword:
+  title: Forgot Password
+  description: Please submit your email address to receive a password reset link.

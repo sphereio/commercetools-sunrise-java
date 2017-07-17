@@ -15,6 +15,9 @@ public interface ResetPasswordReverseRouter extends SimpleResetPasswordReverseRo
         return resetPasswordPageCall(locale().toLanguageTag(), resetToken);
     }
 
+    default Call requestRecoveryEmailPageCall() {
+        return requestRecoveryEmailPageCall(locale().toLanguageTag());
+    }
 
     default Call requestRecoveryEmailProcessCall() {
         return requestRecoveryEmailProcessCall(locale().toLanguageTag());

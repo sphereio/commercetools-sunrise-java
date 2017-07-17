@@ -97,3 +97,6 @@ resetPassword:
   confirmPasswordLabelTxt: Neues Passwort bestätigen
   resetBtn: Passwort zurücksetzen
   feedbackMessage: Kennwort erfolgreich geändert.
+forgotPassword:
+  title: Passwort vergessen
+  description: Geben Sie Ihre Emailadresse ein und klicken Sie auf "Passwort zurücksetzen" und wir senden Ihnen einen Link, um ein neues Passwort zu setzen.

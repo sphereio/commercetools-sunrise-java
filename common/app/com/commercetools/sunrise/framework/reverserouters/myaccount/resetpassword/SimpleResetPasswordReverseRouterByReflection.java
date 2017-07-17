@@ -11,12 +11,15 @@ import javax.inject.Inject;
 final class SimpleResetPasswordReverseRouterByReflection extends AbstractReflectionReverseRouter implements SimpleResetPasswordReverseRouter {
     private final ReverseCaller resetPasswordPageCaller;
     private final ReverseCaller resetPasswordProcessCaller;
+    private final ReverseCaller requestRecoveryEmailPageCaller;
     private final ReverseCaller requestRecoveryEmailProcessCaller;
 
     @Inject
     public SimpleResetPasswordReverseRouterByReflection(final ParsedRoutes parsedRoutes) {
         resetPasswordPageCaller = getReverseCallerForSunriseRoute(RESET_PASSWORD_PAGE, parsedRoutes);
         resetPasswordProcessCaller = getReverseCallerForSunriseRoute(RESET_PASSWORD_PROCESS, parsedRoutes);
+        requestRecoveryEmailPageCaller = getReverseCallerForSunriseRoute(REQUEST_RECOVERY_EMAIL_PAGE,
+                parsedRoutes);
         requestRecoveryEmailProcessCaller = getReverseCallerForSunriseRoute(REQUEST_RECOVERY_EMAIL_PROCESS,
                 parsedRoutes);
     }
@@ -29,6 +32,11 @@ final class SimpleResetPasswordReverseRouterByReflection extends AbstractReflect
     @Override
     public Call resetPasswordProcessCall(final String languageTag, final String resetToken) {
         return resetPasswordProcessCaller.call(languageTag, resetToken);
+    }
+
+    @Override
+    public Call requestRecoveryEmailPageCall(final String languageTag) {
+        return requestRecoveryEmailPageCaller.call(languageTag);
     }
 
     @Override

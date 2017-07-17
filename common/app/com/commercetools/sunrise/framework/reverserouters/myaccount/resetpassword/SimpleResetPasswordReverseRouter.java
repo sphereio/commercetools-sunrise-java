@@ -8,6 +8,9 @@ import play.mvc.Call;
  */
 @ImplementedBy(SimpleResetPasswordReverseRouterByReflection.class)
 public interface SimpleResetPasswordReverseRouter {
+    String REQUEST_RECOVERY_EMAIL_PAGE = "requestRecoveryEmailPageCall";
+
+    Call requestRecoveryEmailPageCall(final String languageTag);
 
     String REQUEST_RECOVERY_EMAIL_PROCESS = "requestRecoveryEmailProcessCall";
 

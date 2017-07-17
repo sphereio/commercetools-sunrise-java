@@ -96,6 +96,8 @@ GET         /:languageTag/user/logout                                           
 # PASSWORD RECOVERY
 # ~~~~~
 
+# Show form to enter password recover email
+GET         /:languageTag/password/recovery                                     @controllers.myaccount.PasswordRecoveryController.show(languageTag: String)
 # Send recovery password email
 POST         /:languageTag/password/recovery                                    @controllers.myaccount.PasswordRecoveryController.process(languageTag: String)
 

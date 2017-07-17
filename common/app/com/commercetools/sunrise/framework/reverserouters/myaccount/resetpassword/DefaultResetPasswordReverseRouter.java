@@ -26,6 +26,11 @@ public class DefaultResetPasswordReverseRouter extends AbstractLocalizedReverseR
     }
 
     @Override
+    public Call requestRecoveryEmailPageCall(final String languageTag) {
+        return delegate.requestRecoveryEmailPageCall(languageTag);
+    }
+
+    @Override
     public Call requestRecoveryEmailProcessCall(final String languageTag) {
         return delegate.requestRecoveryEmailProcessCall(languageTag);
     }
