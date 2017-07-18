@@ -33,10 +33,15 @@ object Dependencies {
   lazy val sunriseModules = Seq (
     libraryDependencies ++= Seq (
       "com.commercetools.sunrise.cms" % "cms-api" % "0.1.0",
-      "com.commercetools.sunrise.email" % "email-api" % sunriseEmailVersion,
-      "com.commercetools.sunrise.email" % "email-smtp" % sunriseEmailVersion
+      "com.commercetools.sunrise.email" % "email-api" % sunriseEmailVersion
     )
   )
+
+  lazy val sunriseEmailSmtp = Seq {
+    libraryDependencies ++= Seq (
+      "com.commercetools.sunrise.email" % "email-smtp" % sunriseEmailVersion
+    )
+  }
 
   lazy val commonLib = Seq (
     libraryDependencies ++= Seq (

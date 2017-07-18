@@ -31,7 +31,7 @@ lazy val `commercetools-sunrise` = (project in file("."))
   .enablePlugins(PlayJava, JavaUnidocPlugin, SunriseThemeImporterPlugin)
   .settings(unidocProjectFilter in (JavaUnidoc, unidoc) := inProjects(childProjects: _*))
   .settings(Release.disablePublish: _*)
-  .settings(Dependencies.sunriseDefaultTheme)
+  .settings(Dependencies.sunriseDefaultTheme ++ Dependencies.sunriseEmailSmtp)
   .aggregate(childProjects: _*)
   .dependsOn(`product-catalog`, `shopping-cart`, `my-account`, wishlist)
 

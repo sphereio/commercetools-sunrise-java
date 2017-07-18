@@ -1,5 +1,3 @@
-package com.commercetools.sunrise.framework.email;
-
 import com.google.inject.Provider;
 import io.commercetools.sunrise.email.EmailSender;
 import io.commercetools.sunrise.email.smtp.SmtpAuthEmailSender;
