@@ -21,9 +21,10 @@ public class EmailSenderProvider implements Provider<EmailSender> {
         final int port = configuration.getInt("application.smtp.port", 25);
         final String username = configuration.getString("application.smtp.username");
         final String password = configuration.getString("application.smtp.password");
+        final String security = configuration.getString("application.smtp.security");
         timeoutMs = configuration.getInt("application.smtp.timeoutMs", 10 * 1000);
         smtpConfiguration =
-                new SmtpConfiguration(host, port, SmtpConfiguration.TransportSecurity.None, username, password);
+                new SmtpConfiguration(host, port, SmtpConfiguration.TransportSecurity.valueOf(security), username, password);
         executor = new ForkJoinPool(5);
     }
 

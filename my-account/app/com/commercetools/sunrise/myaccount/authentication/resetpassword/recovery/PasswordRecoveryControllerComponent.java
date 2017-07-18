@@ -12,7 +12,6 @@ import com.commercetools.sunrise.myaccount.authentication.resetpassword.recovery
 import io.commercetools.sunrise.email.EmailSender;
 import io.sphere.sdk.customers.CustomerToken;
 import io.sphere.sdk.customers.commands.CustomerCreatePasswordTokenCommand;
-import play.Logger;
 import play.mvc.Http;
 
 import javax.annotation.Nullable;
@@ -78,12 +77,10 @@ public class PasswordRecoveryControllerComponent implements ControllerComponent,
         final TemplateContext templateContext = new TemplateContext(pageData, Collections.singletonList(locale), null);
         final String emailText = templateEngine.render("password-reset-email", templateContext);
 
-        Logger.debug("Password reset link {}", passwordResetLink);
         return emailSender.send(msg -> {
-            msg.setFrom("test@example.com");
             msg.setRecipients(Message.RecipientType.TO, getCustomerEmail());
             msg.setSubject(passwordResetEmailPageContent.getSubject(), "UTF-8");
-            msg.setText(emailText);
+            msg.setContent(emailText, "text/html");
         });
     }
 
