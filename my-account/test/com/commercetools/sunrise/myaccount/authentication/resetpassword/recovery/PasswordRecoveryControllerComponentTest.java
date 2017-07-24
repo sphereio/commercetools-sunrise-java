@@ -9,13 +9,11 @@ import io.sphere.sdk.customers.CustomerToken;
 import io.sphere.sdk.customers.commands.CustomerCreatePasswordTokenCommand;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.MockitoAnnotations;
 import play.mvc.Call;
 import play.mvc.Http;
-
-import java.util.Locale;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
@@ -23,7 +21,6 @@ import static org.mockito.Mockito.*;
 /**
  * Unit test for {@link PasswordRecoveryControllerComponent}.
  */
-@RunWith(MockitoJUnitRunner.class)
 public class PasswordRecoveryControllerComponentTest {
     @Mock
     private ResetPasswordReverseRouter resetPasswordReverseRouter;
@@ -42,16 +39,12 @@ public class PasswordRecoveryControllerComponentTest {
     @Mock
     private Call call;
 
+    @InjectMocks
     private PasswordRecoveryControllerComponent passwordRecoveryControllerComponent;
 
     @Before
     public void setup() {
-        passwordRecoveryControllerComponent = new PasswordRecoveryControllerComponent(resetPasswordReverseRouter,
-                passwordResetEmailPageContentFactory,
-                templateEngine,
-                emailSender,
-                Locale.ENGLISH);
-
+        MockitoAnnotations.initMocks(this);
         Http.Context.current.set(context);
     }
 
