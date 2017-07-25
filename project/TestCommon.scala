@@ -7,6 +7,8 @@ object TestCommon {
 
   val allTestScopes = "test,it,pt"
 
+  private val sunriseEmailVersion = "0.1.2"
+
   lazy val PlayTest: sbt.Configuration = config("pt") extend Test
 
   lazy val defaultSettings: Def.SettingsDefinition = itBaseTestSettings ++ ptBaseTestSettings ++ configCommonTestSettings(allTestScopes) ++ configPlayDependencies("it,pt")
@@ -34,7 +36,8 @@ object TestCommon {
     ),
     libraryDependencies ++= Seq (
       "org.assertj" % "assertj-core" % "3.6.2" % scopes,
-      "org.mockito" % "mockito-core" % "2.7.9" % scopes
+      "org.mockito" % "mockito-core" % "2.7.9" % scopes,
+      "com.commercetools.sunrise.email" % "email-smtp" % sunriseEmailVersion  % scopes
     ),
     dependencyOverrides ++= Set (
       "junit" % "junit" % "4.12" % scopes

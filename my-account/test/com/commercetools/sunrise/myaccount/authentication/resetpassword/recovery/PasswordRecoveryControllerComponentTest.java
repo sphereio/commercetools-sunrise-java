@@ -5,15 +5,17 @@ import com.commercetools.sunrise.framework.template.engine.TemplateEngine;
 import com.commercetools.sunrise.myaccount.authentication.resetpassword.recovery.viewmodels.PasswordResetEmailPageContent;
 import com.commercetools.sunrise.myaccount.authentication.resetpassword.recovery.viewmodels.PasswordResetEmailPageContentFactory;
 import io.commercetools.sunrise.email.EmailSender;
+import io.commercetools.sunrise.email.MessageEditor;
 import io.sphere.sdk.customers.CustomerToken;
 import io.sphere.sdk.customers.commands.CustomerCreatePasswordTokenCommand;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.*;
 import play.mvc.Call;
 import play.mvc.Http;
+
+import javax.mail.Message;
+import javax.mail.internet.MimeMessage;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
@@ -39,6 +41,9 @@ public class PasswordRecoveryControllerComponentTest {
     @Mock
     private Call call;
 
+    @Captor
+    private ArgumentCaptor<MessageEditor> messageEditorCaptor;
+
     @InjectMocks
     private PasswordRecoveryControllerComponent passwordRecoveryControllerComponent;
 
@@ -49,7 +54,7 @@ public class PasswordRecoveryControllerComponentTest {
     }
 
     @Test
-    public void onCustomerCreatePasswordTokenCommand() {
+    public void sendRecoveryEmail() throws Exception {
         final String customerEmail = "test@example.com";
         final CustomerCreatePasswordTokenCommand customerCreatePasswordTokenCommand =
                 CustomerCreatePasswordTokenCommand.of(customerEmail);
@@ -57,10 +62,7 @@ public class PasswordRecoveryControllerComponentTest {
         assertThat(passwordRecoveryControllerComponent.getCustomerEmail()).isNull();
         passwordRecoveryControllerComponent.onCustomerCreatePasswordTokenCommand(customerCreatePasswordTokenCommand);
         assertThat(passwordRecoveryControllerComponent.getCustomerEmail()).isEqualTo(customerEmail);
-    }
 
-    @Test
-    public void onCustomerTokenCreated() {
         final String tokenValue = "test-token";
 
         when(customerToken.getValue()).thenReturn(tokenValue);
@@ -77,6 +79,12 @@ public class PasswordRecoveryControllerComponentTest {
 
         passwordRecoveryControllerComponent.onCustomerTokenCreated(customerToken);
 
-        verify(emailSender).send(notNull());
+        verify(emailSender).send(messageEditorCaptor.capture());
+        final MessageEditor messageEditor = messageEditorCaptor.getValue();
+
+        final MimeMessage mimeMessage = mock(MimeMessage.class);
+        messageEditor.edit(mimeMessage);
+
+        verify(mimeMessage).setRecipients(Message.RecipientType.TO, customerEmail);
     }
 }
