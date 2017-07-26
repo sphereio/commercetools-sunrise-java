@@ -16,8 +16,8 @@ import play.mvc.Http;
 
 import javax.mail.Message;
 import javax.mail.internet.MimeMessage;
+import java.util.concurrent.CompletableFuture;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 /**
@@ -59,32 +59,41 @@ public class PasswordRecoveryControllerComponentTest {
         final CustomerCreatePasswordTokenCommand customerCreatePasswordTokenCommand =
                 CustomerCreatePasswordTokenCommand.of(customerEmail);
 
-        assertThat(passwordRecoveryControllerComponent.getCustomerEmail()).isNull();
-        passwordRecoveryControllerComponent.onCustomerCreatePasswordTokenCommand(customerCreatePasswordTokenCommand);
-        assertThat(passwordRecoveryControllerComponent.getCustomerEmail()).isEqualTo(customerEmail);
-
-        final String tokenValue = "test-token";
-
-        when(customerToken.getValue()).thenReturn(tokenValue);
-        when(context.request()).thenReturn(request);
-        final String passwordResetLink = "http://my.password";
-        when(call.absoluteURL(request)).thenReturn(passwordResetLink);
-        when(resetPasswordReverseRouter.resetPasswordPageCall(tokenValue)).thenReturn(call);
-
         final PasswordResetEmailPageContent passwordResetEmailPageContent = new PasswordResetEmailPageContent();
-        passwordResetEmailPageContent.setPasswordResetUrl(passwordResetLink);
+        final String emailContent = "email-content";
 
-        when(passwordResetEmailPageContentFactory.create(passwordResetLink)).thenReturn(passwordResetEmailPageContent);
-        when(templateEngine.render(eq("password-reset-email"), notNull())).thenReturn("email-content");
+        WHEN:
+        {
+            final String tokenValue = "test-token";
 
+            when(customerToken.getValue()).thenReturn(tokenValue);
+            when(context.request()).thenReturn(request);
+            final String passwordResetLink = "http://my.password";
+            when(call.absoluteURL(request)).thenReturn(passwordResetLink);
+            when(resetPasswordReverseRouter.resetPasswordPageCall(tokenValue)).thenReturn(call);
+
+            passwordResetEmailPageContent.setPasswordResetUrl(passwordResetLink);
+            final String emailSubject = "email-subject";
+            passwordResetEmailPageContent.setSubject(emailSubject);
+
+            when(passwordResetEmailPageContentFactory.create(passwordResetLink)).thenReturn(passwordResetEmailPageContent);
+            when(templateEngine.render(eq("password-reset-email"), notNull())).thenReturn(emailContent);
+            when(emailSender.send(messageEditorCaptor.capture())).thenReturn(CompletableFuture.completedFuture(null));
+        }
+
+        passwordRecoveryControllerComponent.onCustomerCreatePasswordTokenCommand(customerCreatePasswordTokenCommand);
         passwordRecoveryControllerComponent.onCustomerTokenCreated(customerToken);
 
-        verify(emailSender).send(messageEditorCaptor.capture());
-        final MessageEditor messageEditor = messageEditorCaptor.getValue();
+        THEN:
+        {
+            final MessageEditor messageEditor = messageEditorCaptor.getValue();
 
-        final MimeMessage mimeMessage = mock(MimeMessage.class);
-        messageEditor.edit(mimeMessage);
+            final MimeMessage mimeMessage = mock(MimeMessage.class);
+            messageEditor.edit(mimeMessage);
 
-        verify(mimeMessage).setRecipients(Message.RecipientType.TO, customerEmail);
+            verify(mimeMessage).setRecipients(Message.RecipientType.TO, customerEmail);
+            verify(mimeMessage).setSubject(passwordResetEmailPageContent.getSubject(), "UTF-8");
+            verify(mimeMessage).setContent(emailContent, "text/html");
+        }
     }
 }
