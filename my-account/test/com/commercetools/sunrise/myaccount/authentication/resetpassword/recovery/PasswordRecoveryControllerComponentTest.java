@@ -62,7 +62,7 @@ public class PasswordRecoveryControllerComponentTest {
         final PasswordResetEmailPageContent passwordResetEmailPageContent = new PasswordResetEmailPageContent();
         final String emailContent = "email-content";
 
-        WHEN:
+        when:
         {
             final String tokenValue = "test-token";
 
@@ -84,7 +84,7 @@ public class PasswordRecoveryControllerComponentTest {
         passwordRecoveryControllerComponent.onCustomerCreatePasswordTokenCommand(customerCreatePasswordTokenCommand);
         passwordRecoveryControllerComponent.onCustomerTokenCreated(customerToken);
 
-        THEN:
+        then:
         {
             final MessageEditor messageEditor = messageEditorCaptor.getValue();
 

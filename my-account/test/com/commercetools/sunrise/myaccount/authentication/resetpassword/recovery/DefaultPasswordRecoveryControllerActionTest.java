@@ -56,6 +56,7 @@ public class DefaultPasswordRecoveryControllerActionTest {
             when(hookRunner.runEventHook(eq(CustomerTokenCreatedHook.class), any()))
                     .thenReturn(CompletableFuture.completedFuture(null));
         }
+
         final CompletableFuture<CustomerToken> customerTokenCompletionStage =
                 (CompletableFuture<CustomerToken>) defaultPasswordRecoveryControllerAction.apply(recoveryEmailFormData);
 
