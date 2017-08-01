@@ -7,11 +7,11 @@ import com.commercetools.sunrise.framework.controllers.metrics.LogMetrics;
 import com.commercetools.sunrise.framework.reverserouters.myaccount.authentication.AuthenticationReverseRouter;
 import com.commercetools.sunrise.framework.template.TemplateControllerComponentsSupplier;
 import com.commercetools.sunrise.framework.template.engine.ContentRenderer;
-import com.commercetools.sunrise.myaccount.authentication.resetpassword.reset.ResetPasswordControllerAction;
-import com.commercetools.sunrise.myaccount.authentication.resetpassword.reset.ResetPasswordFormData;
-import com.commercetools.sunrise.myaccount.authentication.resetpassword.reset.ResetPasswordLinksControllerComponent;
-import com.commercetools.sunrise.myaccount.authentication.resetpassword.reset.SunriseResetPasswordController;
-import com.commercetools.sunrise.myaccount.authentication.resetpassword.reset.viewmodels.ResetPasswordPageContentFactory;
+import com.commercetools.sunrise.myaccount.authentication.recoverpassword.reset.ResetPasswordControllerAction;
+import com.commercetools.sunrise.myaccount.authentication.recoverpassword.reset.ResetPasswordFormData;
+import com.commercetools.sunrise.myaccount.authentication.recoverpassword.reset.ResetPasswordLinksControllerComponent;
+import com.commercetools.sunrise.myaccount.authentication.recoverpassword.reset.SunriseResetPasswordController;
+import com.commercetools.sunrise.myaccount.authentication.recoverpassword.reset.viewmodels.ResetPasswordPageContentFactory;
 import play.data.FormFactory;
 import play.mvc.Result;
 
