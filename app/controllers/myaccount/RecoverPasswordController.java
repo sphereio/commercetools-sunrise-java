@@ -11,7 +11,9 @@ import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recove
 import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover.RecoverPasswordFormData;
 import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover.SunriseRecoverPasswordController;
 import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover.viewmodels.RecoverPasswordPageContentFactory;
+import io.commercetools.sunrise.email.EmailDeliveryException;
 import io.sphere.sdk.customers.CustomerToken;
+import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Result;
 
@@ -47,5 +49,11 @@ public final class RecoverPasswordController extends SunriseRecoverPasswordContr
     @Override
     public CompletionStage<Result> handleSuccessfulAction(final CustomerToken output, final RecoverPasswordFormData formData) {
         return redirectToCall(authenticationReverseRouter.logInProcessCall());
+    }
+
+    @Override
+    protected CompletionStage<Result> handleEmailDeliveryException(final Form<? extends RecoverPasswordFormData> form, final EmailDeliveryException emailDeliveryException) {
+        saveFormError(form, "Email delivery error");
+        return showFormPageWithErrors(null, form);
     }
 }

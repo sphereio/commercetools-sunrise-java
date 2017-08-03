@@ -8,13 +8,17 @@ import com.commercetools.sunrise.framework.reverserouters.myaccount.resetpasswor
 import com.commercetools.sunrise.framework.template.engine.ContentRenderer;
 import com.commercetools.sunrise.framework.viewmodels.content.PageContent;
 import com.commercetools.sunrise.myaccount.MyAccountController;
+import com.commercetools.sunrise.myaccount.authentication.changepassword.ChangePasswordFormData;
 import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover.viewmodels.RecoverPasswordPageContentFactory;
+import io.commercetools.sunrise.email.EmailDeliveryException;
 import io.sphere.sdk.customers.CustomerToken;
 import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Result;
 
 import java.util.concurrent.CompletionStage;
+
+import static io.sphere.sdk.utils.CompletableFutureUtils.exceptionallyCompletedFuture;
 
 /**
  * This abstract controller gets an customer email as input, request a customer reset password token for the
@@ -57,6 +61,18 @@ public abstract class SunriseRecoverPasswordController extends SunriseContentFor
     public CompletionStage<CustomerToken> executeAction(final Void input, final RecoverPasswordFormData formData) {
         return controllerAction.apply(formData);
     }
+
+    @Override
+    public CompletionStage<Result> handleFailedAction(final Void input, final Form<? extends RecoverPasswordFormData> form, final Throwable throwable) {
+        final Throwable cause = throwable.getCause();
+        if (cause instanceof EmailDeliveryException) {
+            final EmailDeliveryException emailDeliveryException = (EmailDeliveryException) cause;
+            return handleEmailDeliveryException(form, emailDeliveryException);
+        }
+        return WithContentFormFlow.super.handleFailedAction(input, form, throwable);
+    }
+
+    protected abstract CompletionStage<Result> handleEmailDeliveryException(final Form<? extends RecoverPasswordFormData> form, final EmailDeliveryException emailDeliveryException);
 
     @Override
     public PageContent createPageContent(final Void input, final Form<? extends RecoverPasswordFormData> form) {
