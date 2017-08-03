@@ -8,7 +8,6 @@ import com.commercetools.sunrise.framework.reverserouters.myaccount.authenticati
 import com.commercetools.sunrise.framework.template.TemplateControllerComponentsSupplier;
 import com.commercetools.sunrise.framework.template.engine.ContentRenderer;
 import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover.RecoverPasswordControllerAction;
-import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover.RecoverPasswordControllerComponent;
 import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover.RecoverPasswordFormData;
 import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover.SunriseRecoverPasswordController;
 import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover.viewmodels.RecoverPasswordPageContentFactory;
@@ -24,8 +23,7 @@ import java.util.concurrent.CompletionStage;
 @NoCache
 @RegisteredComponents({
         TemplateControllerComponentsSupplier.class,
-        PageHeaderControllerComponentSupplier.class,
-        RecoverPasswordControllerComponent.class
+        PageHeaderControllerComponentSupplier.class
 })
 public final class RecoverPasswordController extends SunriseRecoverPasswordController {
     private final AuthenticationReverseRouter authenticationReverseRouter;
