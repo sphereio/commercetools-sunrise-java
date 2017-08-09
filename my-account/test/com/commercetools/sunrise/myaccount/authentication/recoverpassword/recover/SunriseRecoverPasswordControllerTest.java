@@ -1,18 +1,23 @@
 package com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover;
 
 import com.commercetools.sunrise.framework.template.engine.ContentRenderer;
+import com.commercetools.sunrise.framework.viewmodels.PageTitleResolver;
+import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover.viewmodels.RecoverPasswordPageContent;
 import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover.viewmodels.RecoverPasswordPageContentFactory;
 import com.google.common.collect.ImmutableMap;
 import io.commercetools.sunrise.email.EmailDeliveryException;
+import io.sphere.sdk.client.NotFoundException;
 import io.sphere.sdk.customers.CustomerToken;
 import io.sphere.sdk.utils.CompletableFutureUtils;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import play.data.FormFactory;
 import play.data.format.Formatters;
+import play.i18n.Lang;
 import play.i18n.MessagesApi;
 import play.mvc.Http;
 import play.mvc.Result;
@@ -46,6 +51,8 @@ public class SunriseRecoverPasswordControllerTest {
 
     private FormFactory formFactory;
     @Mock
+    private PageTitleResolver pageTitleResolver;
+    @InjectMocks
     private  RecoverPasswordPageContentFactory pageContentFactory;
 
     @Mock
@@ -57,6 +64,8 @@ public class SunriseRecoverPasswordControllerTest {
 
     @Mock
     private Http.Context context;
+    @Mock
+    private CustomerToken customerToken;
 
     private Http.Request request;
 
@@ -69,15 +78,10 @@ public class SunriseRecoverPasswordControllerTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final Map<String, String> email = ImmutableMap.of("email", "test@example.com");
-        request = new Http.RequestBuilder().bodyForm(email).build();
-        Http.Context.current.set(context);
-        when(context.request()).thenReturn(request);
 
         formFactory = new FormFactory(messagesApi,formatters, validator);
         formData = new DefaultRecoverPasswordFormData();
         formData.setEmail("test@example.com");
-
         recoverPasswordController =
                 Mockito.mock(SunriseRecoverPasswordController.class,
                         withSettings().useConstructor(contentRenderer, formFactory, pageContentFactory, formData, controllerAction)
@@ -86,10 +90,16 @@ public class SunriseRecoverPasswordControllerTest {
 
     @Test
     public void handleEmailDeliveryException() throws Exception {
+        final Map<String, String> email = ImmutableMap.of("email", "test@example.com");
+        request = new Http.RequestBuilder().bodyForm(email).build();
+        Http.Context.current.set(context);
         final EmailDeliveryException emailDeliveryException = new EmailDeliveryException("Email delivery error");
         final StatusHeader badRequest = Results.badRequest();
+        new RecoverPasswordPageContent();
+
         when:
         {
+            when(context.request()).thenReturn(request);
             final CompletableFuture<CustomerToken> exceptionallyCompletedFuture =
                     CompletableFutureUtils.exceptionallyCompletedFuture(emailDeliveryException);
             when(controllerAction.apply(any()))
