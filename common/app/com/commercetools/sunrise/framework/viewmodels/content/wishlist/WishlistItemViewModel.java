@@ -10,6 +10,8 @@ public class WishlistItemViewModel extends ViewModel {
 
     private String name;
 
+    private String productSlug;
+
     public String getImageUrl() {
         return imageUrl;
     }
@@ -24,5 +26,13 @@ public class WishlistItemViewModel extends ViewModel {
 
     public void setName(final String name) {
         this.name = name;
+    }
+
+    public String getProductSlug() {
+        return productSlug;
+    }
+
+    public void setProductSlug(String productSlug) {
+        this.productSlug = productSlug;
     }
 }
