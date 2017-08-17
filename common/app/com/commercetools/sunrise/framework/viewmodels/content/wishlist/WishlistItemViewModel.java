@@ -10,7 +10,7 @@ public class WishlistItemViewModel extends ViewModel {
 
     private String name;
 
-    private String productSlug;
+    private String url;
 
     public String getImageUrl() {
         return imageUrl;
@@ -28,11 +28,11 @@ public class WishlistItemViewModel extends ViewModel {
         this.name = name;
     }
 
-    public String getProductSlug() {
-        return productSlug;
+    public String getUrl() {
+        return url;
     }
 
-    public void setProductSlug(String productSlug) {
-        this.productSlug = productSlug;
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

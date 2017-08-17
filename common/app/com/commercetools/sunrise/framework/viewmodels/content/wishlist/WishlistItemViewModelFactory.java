@@ -50,7 +50,7 @@ public class WishlistItemViewModelFactory extends SimpleViewModelFactory<Wishlis
                     .productDetailPageCall(lineItem)
                     .map(Call::url)
                     .orElse("");
-            viewModel.setProductSlug(productSlug);
+            viewModel.setUrl(productSlug);
         }
     }
 
