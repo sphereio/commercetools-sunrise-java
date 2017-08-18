@@ -25,6 +25,7 @@ public class CategoryTreeFacetOptionViewModelFactory extends AbstractFacetOption
     private final List<Locale> locales;
     private final CategoryTree categoryTree;
     private final ProductReverseRouter productReverseRouter;
+    private final Set<String> ignoredParams;
 
     @Inject
     public CategoryTreeFacetOptionViewModelFactory(final UserLanguage userLanguage, @NavigationCategoryTree final CategoryTree categoryTree,
@@ -32,8 +33,16 @@ public class CategoryTreeFacetOptionViewModelFactory extends AbstractFacetOption
         this.locales = userLanguage.locales();
         this.categoryTree = categoryTree;
         this.productReverseRouter = productReverseRouter;
+        this.ignoredParams = getIgnoredParamsSet();
     }
 
+
+    private static final Set<String> getIgnoredParamsSet(){
+        Set<String> ignoredParamsSet = new HashSet<>();
+        ignoredParamsSet.add("page");
+        return Collections.unmodifiableSet(ignoredParamsSet);
+
+    }
     protected final List<Locale> getLocales() {
         return locales;
     }
@@ -65,7 +74,7 @@ public class CategoryTreeFacetOptionViewModelFactory extends AbstractFacetOption
     @Override
     protected void fillValue(final FacetOptionViewModel viewModel, final TermFacetResult stats, final Category category, @Nullable final Category selectedValue) {
         productReverseRouter.productOverviewPageCall(category).ifPresent(call -> {
-            viewModel.setValue(buildUri(call.url(), extractQueryString(Http.Context.current().request())));
+            viewModel.setValue(buildUri(call.url(), extractQueryString(Http.Context.current().request(), ignoredParams)));
         });
     }
 
