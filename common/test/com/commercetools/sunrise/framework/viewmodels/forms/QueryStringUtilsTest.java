@@ -3,6 +3,7 @@ package com.commercetools.sunrise.framework.viewmodels.forms;
 import org.junit.Test;
 
 import java.net.URLDecoder;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -100,5 +101,18 @@ public class QueryStringUtilsTest {
         testWithHttpContext(queryString, httpContext ->
                 assertThat(extractQueryString(httpContext.request()))
                         .isEqualTo(queryString));
+    }
+
+    @Test
+    public void extractsQueryStringIgnoringAParameter() throws Exception {
+
+        final String IGNORED_PARAM = "foo";
+        final Map<String, List<String>> queryString = someQueryString();
+
+        queryString.remove(IGNORED_PARAM);
+        testWithHttpContext(queryString, httpContext ->
+                assertThat(extractQueryString(httpContext.request(), Collections.singleton( IGNORED_PARAM )))
+                        .isEqualTo( queryString ));
+
     }
 }

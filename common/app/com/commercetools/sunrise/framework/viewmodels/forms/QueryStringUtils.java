@@ -43,8 +43,7 @@ public final class QueryStringUtils {
      * @return query string from the request
      */
     public static Map<String, List<String>> extractQueryString(final Http.Request httpRequest) {
-        return httpRequest.queryString().entrySet().stream()
-                .collect(toMap(Map.Entry::getKey, entry -> asList(entry.getValue())));
+        return extractQueryString(httpRequest, Collections.emptySet());
     }
 
     /**
@@ -55,9 +54,8 @@ public final class QueryStringUtils {
      */
     public static Map<String, List<String>> extractQueryString(final Http.Request httpRequest,final Set<String> ignoredParams) {
 
-        Set<String> ignored = Optional.ofNullable(ignoredParams).orElseGet(HashSet::new);
         return httpRequest.queryString().entrySet().stream()
-                .filter(stringEntry -> !ignored.contains(stringEntry.getKey()))
+                .filter(stringEntry -> !ignoredParams.contains(stringEntry.getKey()))
                 .collect(toMap(Map.Entry::getKey, entry -> asList(entry.getValue())));
     }
 
