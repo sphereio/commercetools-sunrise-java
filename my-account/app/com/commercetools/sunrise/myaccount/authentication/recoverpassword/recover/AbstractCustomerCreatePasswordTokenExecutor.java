@@ -15,7 +15,7 @@ import java.util.concurrent.CompletionStage;
  * An abstract executor to create a customer password reset token {@link CustomerCreatePasswordTokenCommand}
  * and executes the registered hooks {@link CustomerCreatePasswordTokenCommandHook} and {@link CustomerTokenCreatedHook}.
  */
-public class AbstractCustomerCreatePasswordTokenExecutor extends AbstractSphereRequestExecutor {
+public abstract class AbstractCustomerCreatePasswordTokenExecutor extends AbstractSphereRequestExecutor {
 
     protected AbstractCustomerCreatePasswordTokenExecutor(final SphereClient sphereClient, final HookRunner hookRunner) {
         super(sphereClient, hookRunner);

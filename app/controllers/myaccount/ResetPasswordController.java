@@ -12,6 +12,7 @@ import com.commercetools.sunrise.myaccount.authentication.recoverpassword.reset.
 import com.commercetools.sunrise.myaccount.authentication.recoverpassword.reset.ResetPasswordLinksControllerComponent;
 import com.commercetools.sunrise.myaccount.authentication.recoverpassword.reset.SunriseResetPasswordController;
 import com.commercetools.sunrise.myaccount.authentication.recoverpassword.reset.viewmodels.ResetPasswordPageContentFactory;
+import io.sphere.sdk.customers.Customer;
 import play.data.FormFactory;
 import play.mvc.Result;
 
@@ -30,7 +31,7 @@ public final class ResetPasswordController extends SunriseResetPasswordControlle
     private final AuthenticationReverseRouter authenticationReverseRouter;
 
     @Inject
-    public ResetPasswordController(final ContentRenderer contentRenderer, final FormFactory formFactory,
+    ResetPasswordController(final ContentRenderer contentRenderer, final FormFactory formFactory,
                                    final ResetPasswordFormData formData,
                                    final ResetPasswordControllerAction controllerAction,
                                    final ResetPasswordPageContentFactory pageContentFactory,
@@ -46,7 +47,7 @@ public final class ResetPasswordController extends SunriseResetPasswordControlle
     }
 
     @Override
-    public CompletionStage<Result> handleSuccessfulAction(final ResetPasswordFormData output, final ResetPasswordFormData formData) {
+    public CompletionStage<Result> handleSuccessfulAction(final Customer customer, final ResetPasswordFormData formData) {
         return redirectToCall(authenticationReverseRouter.logInPageCall());
     }
 }

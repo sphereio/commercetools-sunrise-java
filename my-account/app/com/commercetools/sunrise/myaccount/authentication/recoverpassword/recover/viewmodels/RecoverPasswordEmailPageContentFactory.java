@@ -24,10 +24,10 @@ public class RecoverPasswordEmailPageContentFactory extends SimpleViewModelFacto
     @Override
     protected final void initialize(final RecoverPasswordEmailPageContent viewModel, final String passwordResetUrl) {
         fillPasswordResetUrl(viewModel, passwordResetUrl);
-        fillSubject(viewModel);
+        fillSubject(viewModel, passwordResetUrl);
     }
 
-    protected void fillSubject(final RecoverPasswordEmailPageContent viewModel) {
+    protected void fillSubject(final RecoverPasswordEmailPageContent viewModel, final String passwordResetUrl) {
         viewModel.setSubject(i18nIdentifierResolver.resolveOrEmpty("my-account:forgotPassword.email.subject"));
     }
 

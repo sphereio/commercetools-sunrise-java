@@ -8,7 +8,6 @@ import com.commercetools.sunrise.framework.reverserouters.myaccount.resetpasswor
 import com.commercetools.sunrise.framework.template.engine.ContentRenderer;
 import com.commercetools.sunrise.framework.viewmodels.content.PageContent;
 import com.commercetools.sunrise.myaccount.MyAccountController;
-import com.commercetools.sunrise.myaccount.authentication.changepassword.ChangePasswordFormData;
 import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover.viewmodels.RecoverPasswordPageContentFactory;
 import io.commercetools.sunrise.email.EmailDeliveryException;
 import io.sphere.sdk.customers.CustomerToken;
@@ -17,8 +16,6 @@ import play.data.FormFactory;
 import play.mvc.Result;
 
 import java.util.concurrent.CompletionStage;
-
-import static io.sphere.sdk.utils.CompletableFutureUtils.exceptionallyCompletedFuture;
 
 /**
  * This abstract controller gets an customer email as input, request a customer reset password token for the
@@ -81,6 +78,6 @@ public abstract class SunriseRecoverPasswordController extends SunriseContentFor
 
     @Override
     public void preFillFormData(final Void input, final RecoverPasswordFormData formData) {
-
+        // Do nothing
     }
 }

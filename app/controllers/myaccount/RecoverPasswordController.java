@@ -17,7 +17,6 @@ import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Result;
 
-import javax.annotation.Nullable;
 import javax.inject.Inject;
 import java.util.concurrent.CompletionStage;
 
@@ -31,7 +30,7 @@ public final class RecoverPasswordController extends SunriseRecoverPasswordContr
     private final AuthenticationReverseRouter authenticationReverseRouter;
 
     @Inject
-    public RecoverPasswordController(final ContentRenderer contentRenderer, final FormFactory formFactory,
+    RecoverPasswordController(final ContentRenderer contentRenderer, final FormFactory formFactory,
                                      final RecoverPasswordPageContentFactory pageContentFactory,
                                      final RecoverPasswordFormData formData,
                                      final RecoverPasswordControllerAction controllerAction,
@@ -40,14 +39,13 @@ public final class RecoverPasswordController extends SunriseRecoverPasswordContr
         this.authenticationReverseRouter = authenticationReverseRouter;
     }
 
-    @Nullable
     @Override
     public String getTemplateName() {
         return "my-account-forgot-password";
     }
 
     @Override
-    public CompletionStage<Result> handleSuccessfulAction(final CustomerToken output, final RecoverPasswordFormData formData) {
+    public CompletionStage<Result> handleSuccessfulAction(final CustomerToken customerToken, final RecoverPasswordFormData formData) {
         return redirectToCall(authenticationReverseRouter.logInProcessCall());
     }
 

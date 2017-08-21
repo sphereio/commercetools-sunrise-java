@@ -3,10 +3,10 @@ package com.commercetools.sunrise.myaccount.authentication.recoverpassword.reset
 import play.data.validation.Constraints;
 
 public class DefaultResetPasswordFormData implements ResetPasswordFormData {
-    @Constraints.MinLength(1)
+    @Constraints.Required
     private String newPassword;
 
-    @Constraints.MinLength(1)
+    @Constraints.Required
     private String confirmPassword;
 
     @Override
@@ -33,5 +33,13 @@ public class DefaultResetPasswordFormData implements ResetPasswordFormData {
 
     public void setConfirmPassword(final String confirmPassword) {
         this.confirmPassword = confirmPassword;
+    }
+
+
+    public String validate() {
+        final boolean isValid = newPassword.equals(confirmPassword) &&
+                !newPassword.isEmpty();
+
+        return isValid ? null : "Confirm password invalid";
     }
 }

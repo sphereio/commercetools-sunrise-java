@@ -56,12 +56,11 @@ public class DefaultResetPasswordControllerActionTest {
                     .thenReturn(CompletableFuture.completedFuture(customer));
         }
 
-        final CompletableFuture<Customer> customerCompletableFuture =
-                (CompletableFuture<Customer>) defaultResetPasswordControllerAction.apply(resetTokenValue, resetPasswordFormData);
-        final Customer customer = customerCompletableFuture.get();
+        final Customer updatedCustomer = defaultResetPasswordControllerAction.apply(resetTokenValue, resetPasswordFormData)
+                .toCompletableFuture().get();
 
         then: {
-            assertThat(customer).isNotNull();
+            assertThat(updatedCustomer).isNotNull();
 
             final CustomerPasswordResetCommand customerPasswordResetCommand = customerPasswordResetCommandCaptor.getValue();
             assertThat(customerPasswordResetCommand.getTokenValue()).isEqualTo(resetTokenValue);

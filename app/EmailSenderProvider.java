@@ -8,7 +8,7 @@ import javax.inject.Inject;
 import java.util.concurrent.ForkJoinPool;
 
 
-public class EmailSenderProvider implements Provider<EmailSender> {
+public final class EmailSenderProvider implements Provider<EmailSender> {
     private final SmtpConfiguration smtpConfiguration;
     private final ForkJoinPool executor;
     private final int timeoutMs;

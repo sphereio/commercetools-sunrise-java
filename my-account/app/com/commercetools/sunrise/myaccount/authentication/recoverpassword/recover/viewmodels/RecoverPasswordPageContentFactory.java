@@ -28,6 +28,11 @@ public class RecoverPasswordPageContentFactory extends FormPageContentFactory<Re
     }
 
     @Override
+    public final RecoverPasswordPageContent create(final Void input, final Form<? extends RecoverPasswordFormData> form) {
+        return super.create(input, form);
+    }
+
+    @Override
     protected RecoverPasswordPageContent newViewModelInstance(final Void input, final Form<? extends RecoverPasswordFormData> form) {
         return new RecoverPasswordPageContent();
     }
@@ -47,7 +52,7 @@ public class RecoverPasswordPageContentFactory extends FormPageContentFactory<Re
         fillResetPasswordForm(viewModel, input, form);
     }
 
-    private void fillResetPasswordForm(final RecoverPasswordPageContent viewModel, final Void input, final Form<? extends RecoverPasswordFormData> form) {
+    protected void fillResetPasswordForm(final RecoverPasswordPageContent viewModel, final Void input, final Form<? extends RecoverPasswordFormData> form) {
         viewModel.setPasswordRecoveryForm(form);
     }
 }

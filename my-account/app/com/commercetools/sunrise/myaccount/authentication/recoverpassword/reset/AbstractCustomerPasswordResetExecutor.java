@@ -14,7 +14,7 @@ import java.util.concurrent.CompletionStage;
  *
  * @see CustomerPasswordResetCommand
  */
-public class AbstractCustomerPasswordResetExecutor extends AbstractSphereRequestExecutor {
+public abstract class AbstractCustomerPasswordResetExecutor extends AbstractSphereRequestExecutor {
 
     protected AbstractCustomerPasswordResetExecutor(final SphereClient sphereClient, final HookRunner hookRunner) {
         super(sphereClient, hookRunner);

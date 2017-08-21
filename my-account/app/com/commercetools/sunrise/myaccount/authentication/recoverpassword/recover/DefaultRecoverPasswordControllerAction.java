@@ -14,7 +14,6 @@ import io.sphere.sdk.customers.commands.CustomerCreatePasswordTokenCommand;
 import play.libs.concurrent.HttpExecution;
 import play.mvc.Http;
 
-import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.mail.Message;
 import java.util.Collections;
@@ -46,14 +45,14 @@ public class DefaultRecoverPasswordControllerAction extends AbstractCustomerCrea
     @Override
     public CompletionStage<CustomerToken> apply(final RecoverPasswordFormData recoveryEmailFormData) {
         return executeRequest(buildRequest(recoveryEmailFormData))
-                .thenComposeAsync(customerToken -> onResetPasswordTokenCreated(customerToken, recoveryEmailFormData.email()), HttpExecution.defaultContext());
+                .thenComposeAsync(customerToken -> onResetPasswordTokenCreated(customerToken, recoveryEmailFormData), HttpExecution.defaultContext());
     }
 
     protected CustomerCreatePasswordTokenCommand buildRequest(final RecoverPasswordFormData formData) {
         return CustomerCreatePasswordTokenCommand.of(formData.email());
     }
 
-    protected CompletionStage<CustomerToken> onResetPasswordTokenCreated(final CustomerToken resetPasswordToken, final String customerEmail) {
+    protected CompletionStage<CustomerToken> onResetPasswordTokenCreated(final CustomerToken resetPasswordToken, final RecoverPasswordFormData recoveryEmailFormData) {
         final String passwordResetLink = createPasswordResetLink(resetPasswordToken);
         final RecoverPasswordEmailPageContent recoverPasswordEmailPageContent =
                 recoverPasswordEmailPageContentFactory.create(passwordResetLink);
@@ -64,7 +63,7 @@ public class DefaultRecoverPasswordControllerAction extends AbstractCustomerCrea
         final String emailText = templateEngine.render("password-reset-email", templateContext);
 
         return emailSender.send(msg -> {
-            msg.setRecipients(Message.RecipientType.TO, customerEmail);
+            msg.setRecipients(Message.RecipientType.TO, recoveryEmailFormData.email());
             msg.setSubject(recoverPasswordEmailPageContent.getSubject(), "UTF-8");
             msg.setContent(emailText, "text/html");
         }).thenApply(s -> resetPasswordToken);

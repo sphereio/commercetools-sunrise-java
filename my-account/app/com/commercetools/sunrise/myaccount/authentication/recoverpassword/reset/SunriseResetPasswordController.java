@@ -9,13 +9,12 @@ import com.commercetools.sunrise.framework.template.engine.ContentRenderer;
 import com.commercetools.sunrise.framework.viewmodels.content.PageContent;
 import com.commercetools.sunrise.myaccount.MyAccountController;
 import com.commercetools.sunrise.myaccount.authentication.recoverpassword.reset.viewmodels.ResetPasswordPageContentFactory;
+import io.sphere.sdk.customers.Customer;
 import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Result;
 
 import java.util.concurrent.CompletionStage;
-
-import static java.util.concurrent.CompletableFuture.completedFuture;
 
 /**
  * This controller performs the reset of a customer's password.
@@ -26,7 +25,7 @@ import static java.util.concurrent.CompletableFuture.completedFuture;
  * {@link #process(String, String)}.
  */
 public abstract class SunriseResetPasswordController extends SunriseContentFormController
-        implements MyAccountController, WithContentFormFlow<String, ResetPasswordFormData, ResetPasswordFormData> {
+        implements MyAccountController, WithContentFormFlow<String, Customer, ResetPasswordFormData> {
     private final ResetPasswordFormData formData;
     private final ResetPasswordControllerAction controllerAction;
     private final ResetPasswordPageContentFactory pageContentFactory;
@@ -54,24 +53,6 @@ public abstract class SunriseResetPasswordController extends SunriseContentFormC
     }
 
     @Override
-    public CompletionStage<Form<? extends ResetPasswordFormData>> validateForm(final String resetToken, final Form<? extends ResetPasswordFormData> form) {
-        final ResetPasswordFormData resetPasswordFormData = form.get();
-        final String newPassword = resetPasswordFormData.newPassword();
-        if (newPassword == null) {
-            saveFormError(form, "New password is required");
-
-        } else {
-            final boolean isValid = newPassword.equals(resetPasswordFormData.confirmPassword()) &&
-                    !newPassword.isEmpty();
-
-            if (!isValid) {
-                saveFormError(form, "Confirm password invalid");
-            }
-        }
-        return completedFuture(form);
-    }
-
-    @Override
     public Class<? extends ResetPasswordFormData> getFormDataClass() {
         return formData.getClass();
     }
@@ -87,11 +68,12 @@ public abstract class SunriseResetPasswordController extends SunriseContentFormC
     }
 
     @Override
-    public CompletionStage<ResetPasswordFormData> executeAction(final String resetToken, final ResetPasswordFormData formData) {
-        return controllerAction.apply(resetToken, formData).thenApplyAsync(customer -> formData);
+    public CompletionStage<Customer> executeAction(final String resetToken, final ResetPasswordFormData formData) {
+        return controllerAction.apply(resetToken, formData);
     }
 
     @Override
     public void preFillFormData(final String resetToken, final ResetPasswordFormData formData) {
+        // Do nothing
     }
 }

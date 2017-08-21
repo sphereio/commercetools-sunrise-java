@@ -27,12 +27,12 @@ public class ResetPasswordPageContentFactory extends FormPageContentFactory<Rese
     }
 
     @Override
-    protected ResetPasswordPageContent newViewModelInstance(final String input, final Form<? extends ResetPasswordFormData> form) {
+    protected ResetPasswordPageContent newViewModelInstance(final String resetToken, final Form<? extends ResetPasswordFormData> form) {
         return new ResetPasswordPageContent();
     }
 
     @Override
-    protected void fillTitle(final ResetPasswordPageContent viewModel, final String input, final Form<? extends ResetPasswordFormData> form) {
+    protected void fillTitle(final ResetPasswordPageContent viewModel, final String resetToken, final Form<? extends ResetPasswordFormData> form) {
         viewModel.setTitle(pageTitleResolver.getOrEmpty("my-account:resetPassword.title"));
     }
 
@@ -41,12 +41,12 @@ public class ResetPasswordPageContentFactory extends FormPageContentFactory<Rese
     }
 
     @Override
-    protected final void initialize(final ResetPasswordPageContent viewModel, final String input, final Form<? extends ResetPasswordFormData> form) {
-        super.initialize(viewModel, input, form);
-        fillResetPasswordForm(viewModel, input, form);
+    protected final void initialize(final ResetPasswordPageContent viewModel, final String resetToken, final Form<? extends ResetPasswordFormData> form) {
+        super.initialize(viewModel, resetToken, form);
+        fillResetPasswordForm(viewModel, resetToken, form);
     }
 
-    private void fillResetPasswordForm(final ResetPasswordPageContent viewModel, final String input, final Form<? extends ResetPasswordFormData> form) {
+    private void fillResetPasswordForm(final ResetPasswordPageContent viewModel, final String resetToken, final Form<? extends ResetPasswordFormData> form) {
         viewModel.setResetPasswordForm(form);
     }
 }

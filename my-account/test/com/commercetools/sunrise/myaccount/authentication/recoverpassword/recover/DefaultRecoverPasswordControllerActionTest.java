@@ -11,7 +11,6 @@ import io.commercetools.sunrise.email.EmailSender;
 import io.commercetools.sunrise.email.MessageEditor;
 import io.sphere.sdk.client.SphereClient;
 import io.sphere.sdk.customers.CustomerToken;
-import io.sphere.sdk.customers.commands.CustomerCreatePasswordTokenCommand;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.*;
@@ -22,9 +21,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.ArgumentMatchers.notNull;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
 /**
@@ -68,8 +65,6 @@ public class DefaultRecoverPasswordControllerActionTest {
     public void execute() throws ExecutionException, InterruptedException {
         final RecoverPasswordEmailPageContent recoverPasswordEmailPageContent = new RecoverPasswordEmailPageContent();
         final String emailContent = "email-content";
-        final DefaultRecoverPasswordFormData recoveryEmailFormData = new DefaultRecoverPasswordFormData();
-        recoveryEmailFormData.setEmail("test@example.com");
         final String tokenValue = "token-value";
 
         when:
@@ -99,12 +94,19 @@ public class DefaultRecoverPasswordControllerActionTest {
         }
 
         final CompletableFuture<CustomerToken> customerTokenCompletionStage =
-                (CompletableFuture<CustomerToken>) defaultPasswordRecoveryControllerAction.apply(recoveryEmailFormData);
+                defaultPasswordRecoveryControllerAction.apply(formDataWithValidEmailOfExistingCustomer()).toCompletableFuture();
 
         then:
         {
             final CustomerToken customerToken = customerTokenCompletionStage.get();
+            assertThat(customerTokenCompletionStage).isCompletedWithValueMatching(customerToken1 -> customerToken1.getValue().equals(tokenValue));
             assertThat(customerToken.getValue()).isEqualTo(tokenValue);
         }
+    }
+
+    private DefaultRecoverPasswordFormData formDataWithValidEmailOfExistingCustomer() {
+        final DefaultRecoverPasswordFormData recoveryEmailFormData = new DefaultRecoverPasswordFormData();
+        recoveryEmailFormData.setEmail("test@example.com");
+        return recoveryEmailFormData;
     }
 }
