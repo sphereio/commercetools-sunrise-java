@@ -49,13 +49,13 @@ POST        /:languageTag/changeCountry                                         
 # ~~~~~
 
 # Shows the details of the cart belonging to the current session
-GET         /:languageTag/cart                                                  @controllers.shoppingcart.CartDetailController.show(languageTag: String)
+GET         /:languageTag/cart                                                  @controllers.shoppingcart.CartContentController.show(languageTag: String)
 # Adds the selected product to the cart
-POST        /:languageTag/cart/add                                              @controllers.shoppingcart.AddLineItemController.process(languageTag: String)
+POST        /:languageTag/cart/add                                              @controllers.shoppingcart.AddToCartController.process(languageTag: String)
 # Changes the quantity of a selected line item from the cart of the current session
-POST        /:languageTag/cart/quantity                                         @controllers.shoppingcart.ChangeLineItemQuantityController.process(languageTag: String)
+POST        /:languageTag/cart/quantity                                         @controllers.shoppingcart.ChangeQuantityInCartController.process(languageTag: String)
 # Removes a selected line item from the cart of the current session
-POST        /:languageTag/cart/remove                                           @controllers.shoppingcart.RemoveLineItemController.process(languageTag: String)
+POST        /:languageTag/cart/remove                                           @controllers.shoppingcart.RemoveFromCartController.process(languageTag: String)
 
 
 # CHECKOUT
@@ -113,6 +113,8 @@ GET         /:languageTag/user/addressbook                                      
 GET         /:languageTag/user/addressbook/add                                  @controllers.myaccount.AddAddressController.show(languageTag: String)
 # Adds an address to the customer's address book
 POST        /:languageTag/user/addressbook/add                                  @controllers.myaccount.AddAddressController.process(languageTag: String)
+# Shows the form to edit an address from the customer's address book
+GET         /:languageTag/user/addressbook/:addressIdentifier/edit              @controllers.myaccount.ChangeAddressController.show(languageTag: String, addressIdentifier: String)
 # Updates an address from the customer's address book
 POST        /:languageTag/user/addressbook/:addressIdentifier/edit              @controllers.myaccount.ChangeAddressController.process(languageTag: String, addressIdentifier: String)
 # Removes an address from the customer's address book
