@@ -1,7 +1,6 @@
 package com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover;
 
 import com.commercetools.sunrise.framework.hooks.HookRunner;
-import com.commercetools.sunrise.framework.reverserouters.myaccount.resetpassword.ResetPasswordReverseRouter;
 import com.commercetools.sunrise.framework.template.engine.TemplateContext;
 import com.commercetools.sunrise.framework.template.engine.TemplateEngine;
 import com.commercetools.sunrise.framework.viewmodels.PageData;
@@ -12,7 +11,6 @@ import io.sphere.sdk.client.SphereClient;
 import io.sphere.sdk.customers.CustomerToken;
 import io.sphere.sdk.customers.commands.CustomerCreatePasswordTokenCommand;
 import play.libs.concurrent.HttpExecution;
-import play.mvc.Http;
 
 import javax.inject.Inject;
 import javax.mail.Message;
@@ -22,7 +20,6 @@ import java.util.concurrent.CompletionStage;
 
 public class DefaultRecoverPasswordControllerAction extends AbstractCustomerCreatePasswordTokenExecutor implements RecoverPasswordControllerAction {
     private RecoverPasswordEmailPageContentFactory recoverPasswordEmailPageContentFactory;
-    private final ResetPasswordReverseRouter resetPasswordReverseRouter;
     private final TemplateEngine templateEngine;
     private final EmailSender emailSender;
     private final Locale locale;
@@ -30,13 +27,11 @@ public class DefaultRecoverPasswordControllerAction extends AbstractCustomerCrea
     @Inject
     protected DefaultRecoverPasswordControllerAction(final SphereClient sphereClient, final HookRunner hookRunner,
                                                      final RecoverPasswordEmailPageContentFactory recoverPasswordEmailPageContentFactory,
-                                                     final ResetPasswordReverseRouter resetPasswordReverseRouter,
                                                      final TemplateEngine templateEngine,
                                                      final EmailSender emailSender,
                                                      final Locale locale) {
         super(sphereClient, hookRunner);
         this.recoverPasswordEmailPageContentFactory = recoverPasswordEmailPageContentFactory;
-        this.resetPasswordReverseRouter = resetPasswordReverseRouter;
         this.templateEngine = templateEngine;
         this.emailSender = emailSender;
         this.locale = locale;
@@ -53,9 +48,8 @@ public class DefaultRecoverPasswordControllerAction extends AbstractCustomerCrea
     }
 
     protected CompletionStage<CustomerToken> onResetPasswordTokenCreated(final CustomerToken resetPasswordToken, final RecoverPasswordFormData recoveryEmailFormData) {
-        final String passwordResetLink = createPasswordResetLink(resetPasswordToken);
         final RecoverPasswordEmailPageContent recoverPasswordEmailPageContent =
-                recoverPasswordEmailPageContentFactory.create(passwordResetLink);
+                recoverPasswordEmailPageContentFactory.create(resetPasswordToken);
         final PageData pageData = new PageData();
         pageData.setContent(recoverPasswordEmailPageContent);
 
@@ -67,13 +61,5 @@ public class DefaultRecoverPasswordControllerAction extends AbstractCustomerCrea
             msg.setSubject(recoverPasswordEmailPageContent.getSubject(), "UTF-8");
             msg.setContent(emailText, "text/html");
         }).thenApply(s -> resetPasswordToken);
-    }
-
-    protected String createPasswordResetLink(final CustomerToken resetPasswordToken) {
-        final Http.Request request = Http.Context.current().request();
-        final String absoluteURL = resetPasswordReverseRouter.resetPasswordPageCall(resetPasswordToken.getValue())
-                .absoluteURL(request);
-
-        return absoluteURL;
     }
 }
