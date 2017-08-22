@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.commercetools.sunrise.framework.viewmodels.forms.FormTestUtils.quxQueryString;
 import static com.commercetools.sunrise.framework.viewmodels.forms.FormTestUtils.someQueryString;
 import static com.commercetools.sunrise.framework.viewmodels.forms.FormTestUtils.testWithHttpContext;
 import static com.commercetools.sunrise.framework.viewmodels.forms.QueryStringUtils.*;
@@ -109,10 +110,9 @@ public class QueryStringUtilsTest {
         final String IGNORED_PARAM = "foo";
         final Map<String, List<String>> queryString = someQueryString();
 
-        queryString.remove(IGNORED_PARAM);
         testWithHttpContext(queryString, httpContext ->
                 assertThat(extractQueryString(httpContext.request(), Collections.singleton( IGNORED_PARAM )))
-                        .isEqualTo( queryString ));
+                        .isEqualTo( quxQueryString() ));
 
     }
 }
