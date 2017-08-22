@@ -9,7 +9,6 @@ import com.commercetools.sunrise.framework.template.TemplateControllerComponents
 import com.commercetools.sunrise.framework.template.engine.ContentRenderer;
 import com.commercetools.sunrise.myaccount.authentication.recoverpassword.reset.ResetPasswordControllerAction;
 import com.commercetools.sunrise.myaccount.authentication.recoverpassword.reset.ResetPasswordFormData;
-import com.commercetools.sunrise.myaccount.authentication.recoverpassword.reset.ResetPasswordLinksControllerComponent;
 import com.commercetools.sunrise.myaccount.authentication.recoverpassword.reset.SunriseResetPasswordController;
 import com.commercetools.sunrise.myaccount.authentication.recoverpassword.reset.viewmodels.ResetPasswordPageContentFactory;
 import io.sphere.sdk.customers.Customer;
@@ -24,8 +23,7 @@ import java.util.concurrent.CompletionStage;
 @NoCache
 @RegisteredComponents({
         TemplateControllerComponentsSupplier.class,
-        PageHeaderControllerComponentSupplier.class,
-        ResetPasswordLinksControllerComponent.class
+        PageHeaderControllerComponentSupplier.class
 })
 public final class ResetPasswordController extends SunriseResetPasswordController {
     private final AuthenticationReverseRouter authenticationReverseRouter;

@@ -1,5 +1,6 @@
 package com.commercetools.sunrise.myaccount.authentication.recoverpassword.reset.viewmodels;
 
+import com.commercetools.sunrise.framework.reverserouters.myaccount.resetpassword.ResetPasswordReverseRouter;
 import com.commercetools.sunrise.framework.viewmodels.PageTitleResolver;
 import com.commercetools.sunrise.framework.viewmodels.content.FormPageContentFactory;
 import com.commercetools.sunrise.myaccount.authentication.recoverpassword.reset.ResetPasswordFormData;
@@ -14,12 +15,13 @@ import javax.inject.Inject;
  * @see ResetPasswordFormData
  */
 public class ResetPasswordPageContentFactory extends FormPageContentFactory<ResetPasswordPageContent, String, ResetPasswordFormData> {
-
     private final PageTitleResolver pageTitleResolver;
+    private final ResetPasswordReverseRouter resetPasswordReverseRouter;
 
     @Inject
-    protected ResetPasswordPageContentFactory(final PageTitleResolver pageTitleResolver) {
+    protected ResetPasswordPageContentFactory(final PageTitleResolver pageTitleResolver, final ResetPasswordReverseRouter resetPasswordReverseRouter) {
         this.pageTitleResolver = pageTitleResolver;
+        this.resetPasswordReverseRouter = resetPasswordReverseRouter;
     }
 
     protected final PageTitleResolver getPageTitleResolver() {
@@ -36,17 +38,23 @@ public class ResetPasswordPageContentFactory extends FormPageContentFactory<Rese
         viewModel.setTitle(pageTitleResolver.getOrEmpty("my-account:resetPassword.title"));
     }
 
-    public final ResetPasswordPageContent create(final Form<? extends ResetPasswordFormData> form) {
-        return super.create(null, form);
+    public final ResetPasswordPageContent create( final String resetToken, final Form<? extends ResetPasswordFormData> form) {
+        return super.create(resetToken, form);
     }
 
     @Override
     protected final void initialize(final ResetPasswordPageContent viewModel, final String resetToken, final Form<? extends ResetPasswordFormData> form) {
         super.initialize(viewModel, resetToken, form);
         fillResetPasswordForm(viewModel, resetToken, form);
+        fillResetPasswordUrl(viewModel, resetToken, form);
     }
 
-    private void fillResetPasswordForm(final ResetPasswordPageContent viewModel, final String resetToken, final Form<? extends ResetPasswordFormData> form) {
+    protected void fillResetPasswordUrl(final ResetPasswordPageContent viewModel, final String resetToken, final Form<? extends ResetPasswordFormData> form) {
+        final String resetPasswordUrl = resetPasswordReverseRouter.resetPasswordProcessCall(resetToken).url();
+        viewModel.setResetPasswordUrl(resetPasswordUrl);
+    }
+
+    protected void fillResetPasswordForm(final ResetPasswordPageContent viewModel, final String resetToken, final Form<? extends ResetPasswordFormData> form) {
         viewModel.setResetPasswordForm(form);
     }
 }

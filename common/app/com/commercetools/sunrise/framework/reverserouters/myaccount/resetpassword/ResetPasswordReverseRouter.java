@@ -7,7 +7,7 @@ import play.mvc.Call;
 @ImplementedBy(DefaultResetPasswordReverseRouter.class)
 public interface ResetPasswordReverseRouter extends SimpleResetPasswordReverseRouter, LocalizedReverseRouter {
 
-    default Call resetPasswordCall(final String resetToken) {
+    default Call resetPasswordProcessCall(final String resetToken) {
         return resetPasswordProcessCall(locale().toLanguageTag(), resetToken);
     }
 

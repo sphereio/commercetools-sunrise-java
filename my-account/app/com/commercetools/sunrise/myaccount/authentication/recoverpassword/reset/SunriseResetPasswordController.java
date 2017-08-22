@@ -64,7 +64,7 @@ public abstract class SunriseResetPasswordController extends SunriseContentFormC
 
     @Override
     public PageContent createPageContent(final String resetToken, final Form<? extends ResetPasswordFormData> form) {
-        return pageContentFactory.create(form);
+        return pageContentFactory.create(resetToken, form);
     }
 
     @Override

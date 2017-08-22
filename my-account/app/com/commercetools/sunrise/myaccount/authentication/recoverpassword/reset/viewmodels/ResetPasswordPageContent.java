@@ -10,11 +10,21 @@ import play.data.Form;
 public class ResetPasswordPageContent extends PageContent {
     private Form<?> resetPasswordForm;
 
+    private String resetPasswordUrl;
+
     public Form<?> getResetPasswordForm() {
         return resetPasswordForm;
     }
 
     public void setResetPasswordForm(final Form<?> resetPasswordForm) {
         this.resetPasswordForm = resetPasswordForm;
+    }
+
+    public String getResetPasswordUrl() {
+        return resetPasswordUrl;
+    }
+
+    public void setResetPasswordUrl(final String resetPasswordUrl) {
+        this.resetPasswordUrl = resetPasswordUrl;
     }
 }
