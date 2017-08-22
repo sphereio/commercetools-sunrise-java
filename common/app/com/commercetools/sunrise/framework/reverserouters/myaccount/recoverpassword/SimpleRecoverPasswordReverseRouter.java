@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.framework.reverserouters.myaccount.resetpassword;
+package com.commercetools.sunrise.framework.reverserouters.myaccount.recoverpassword;
 
 import com.google.inject.ImplementedBy;
 import play.mvc.Call;
@@ -6,8 +6,8 @@ import play.mvc.Call;
 /**
  * The reverse router for the reset password controller.
  */
-@ImplementedBy(SimpleResetPasswordReverseRouterByReflection.class)
-public interface SimpleResetPasswordReverseRouter {
+@ImplementedBy(SimpleRecoverPasswordReverseRouterByReflection.class)
+public interface SimpleRecoverPasswordReverseRouter {
     String REQUEST_RECOVERY_EMAIL_PAGE = "requestRecoveryEmailPageCall";
 
     Call requestRecoveryEmailPageCall(final String languageTag);

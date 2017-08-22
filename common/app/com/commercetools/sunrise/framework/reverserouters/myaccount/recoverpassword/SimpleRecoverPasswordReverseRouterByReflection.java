@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.framework.reverserouters.myaccount.resetpassword;
+package com.commercetools.sunrise.framework.reverserouters.myaccount.recoverpassword;
 
 import com.commercetools.sunrise.framework.reverserouters.AbstractReflectionReverseRouter;
 import com.commercetools.sunrise.framework.reverserouters.ParsedRoutes;
@@ -8,14 +8,14 @@ import play.mvc.Call;
 import javax.inject.Inject;
 
 
-final class SimpleResetPasswordReverseRouterByReflection extends AbstractReflectionReverseRouter implements SimpleResetPasswordReverseRouter {
+final class SimpleRecoverPasswordReverseRouterByReflection extends AbstractReflectionReverseRouter implements SimpleRecoverPasswordReverseRouter {
     private final ReverseCaller resetPasswordPageCaller;
     private final ReverseCaller resetPasswordProcessCaller;
     private final ReverseCaller requestRecoveryEmailPageCaller;
     private final ReverseCaller requestRecoveryEmailProcessCaller;
 
     @Inject
-    public SimpleResetPasswordReverseRouterByReflection(final ParsedRoutes parsedRoutes) {
+    public SimpleRecoverPasswordReverseRouterByReflection(final ParsedRoutes parsedRoutes) {
         resetPasswordPageCaller = getReverseCallerForSunriseRoute(RESET_PASSWORD_PAGE, parsedRoutes);
         resetPasswordProcessCaller = getReverseCallerForSunriseRoute(RESET_PASSWORD_PROCESS, parsedRoutes);
         requestRecoveryEmailPageCaller = getReverseCallerForSunriseRoute(REQUEST_RECOVERY_EMAIL_PAGE,

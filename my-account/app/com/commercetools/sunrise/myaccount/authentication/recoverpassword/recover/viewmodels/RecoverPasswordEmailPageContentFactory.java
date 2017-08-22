@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover.viewmodels;
 
-import com.commercetools.sunrise.framework.reverserouters.myaccount.resetpassword.ResetPasswordReverseRouter;
+import com.commercetools.sunrise.framework.reverserouters.myaccount.recoverpassword.RecoverPasswordReverseRouter;
 import com.commercetools.sunrise.framework.template.i18n.I18nIdentifierResolver;
 import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
 import io.sphere.sdk.customers.CustomerToken;
@@ -13,12 +13,12 @@ import javax.inject.Inject;
  */
 public class RecoverPasswordEmailPageContentFactory extends SimpleViewModelFactory<RecoverPasswordEmailPageContent, CustomerToken> {
     private final I18nIdentifierResolver i18nIdentifierResolver;
-    private final ResetPasswordReverseRouter resetPasswordReverseRouter;
+    private final RecoverPasswordReverseRouter recoverPasswordReverseRouter;
 
     @Inject
-    protected RecoverPasswordEmailPageContentFactory(final I18nIdentifierResolver i18nIdentifierResolver, final ResetPasswordReverseRouter resetPasswordReverseRouter) {
+    protected RecoverPasswordEmailPageContentFactory(final I18nIdentifierResolver i18nIdentifierResolver, final RecoverPasswordReverseRouter recoverPasswordReverseRouter) {
         this.i18nIdentifierResolver = i18nIdentifierResolver;
-        this.resetPasswordReverseRouter = resetPasswordReverseRouter;
+        this.recoverPasswordReverseRouter = recoverPasswordReverseRouter;
     }
 
     @Override
@@ -43,7 +43,7 @@ public class RecoverPasswordEmailPageContentFactory extends SimpleViewModelFacto
 
     protected String createPasswordResetUrl(final CustomerToken resetPasswordToken) {
         final Http.Request request = Http.Context.current().request();
-        final String absoluteURL = resetPasswordReverseRouter.resetPasswordPageCall(resetPasswordToken.getValue())
+        final String absoluteURL = recoverPasswordReverseRouter.resetPasswordPageCall(resetPasswordToken.getValue())
                 .absoluteURL(request);
 
         return absoluteURL;

@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.framework.reverserouters.myaccount.resetpassword;
+package com.commercetools.sunrise.framework.reverserouters.myaccount.recoverpassword;
 
 import com.commercetools.sunrise.framework.reverserouters.AbstractLocalizedReverseRouter;
 import play.mvc.Call;
@@ -6,11 +6,11 @@ import play.mvc.Call;
 import javax.inject.Inject;
 import java.util.Locale;
 
-public class DefaultResetPasswordReverseRouter extends AbstractLocalizedReverseRouter implements ResetPasswordReverseRouter {
-    private final SimpleResetPasswordReverseRouter delegate;
+public class DefaultRecoverPasswordReverseRouter extends AbstractLocalizedReverseRouter implements RecoverPasswordReverseRouter {
+    private final SimpleRecoverPasswordReverseRouter delegate;
 
     @Inject
-    protected DefaultResetPasswordReverseRouter(final Locale locale, final SimpleResetPasswordReverseRouter delegate) {
+    protected DefaultRecoverPasswordReverseRouter(final Locale locale, final SimpleRecoverPasswordReverseRouter delegate) {
         super(locale);
         this.delegate = delegate;
     }

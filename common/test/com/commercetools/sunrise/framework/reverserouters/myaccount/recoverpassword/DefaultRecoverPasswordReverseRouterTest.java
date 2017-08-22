@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.framework.reverserouters.myaccount.resetpassword;
+package com.commercetools.sunrise.framework.reverserouters.myaccount.recoverpassword;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -11,26 +11,26 @@ import java.util.Locale;
 import static org.mockito.Mockito.verify;
 
 /**
- * Unit tests for {@link DefaultResetPasswordReverseRouter}.
+ * Unit tests for {@link DefaultRecoverPasswordReverseRouter}.
  */
 @RunWith(MockitoJUnitRunner.class)
-public class DefaultResetPasswordReverseRouterTest {
+public class DefaultRecoverPasswordReverseRouterTest {
     @Mock
-    private SimpleResetPasswordReverseRouter simpleResetPasswordReverseRouter;
+    private SimpleRecoverPasswordReverseRouter simpleRecoverPasswordReverseRouter;
 
     private Locale locale = Locale.ENGLISH;
-    private DefaultResetPasswordReverseRouter defaultResetPasswordReverseRouter;
+    private DefaultRecoverPasswordReverseRouter defaultResetPasswordReverseRouter;
 
     @Before
     public void setup() {
-        defaultResetPasswordReverseRouter = new DefaultResetPasswordReverseRouter(locale, simpleResetPasswordReverseRouter);
+        defaultResetPasswordReverseRouter = new DefaultRecoverPasswordReverseRouter(locale, simpleRecoverPasswordReverseRouter);
     }
 
     @Test
     public void requestRecoveryEmailPageCall() {
         defaultResetPasswordReverseRouter.requestRecoveryEmailPageCall(locale.toLanguageTag());
 
-        verify(simpleResetPasswordReverseRouter)
+        verify(simpleRecoverPasswordReverseRouter)
                 .requestRecoveryEmailPageCall(locale.toLanguageTag());
     }
 
@@ -38,7 +38,7 @@ public class DefaultResetPasswordReverseRouterTest {
     public void requestRecoveryEmailProcessCall() {
         defaultResetPasswordReverseRouter.requestRecoveryEmailProcessCall(locale.toLanguageTag());
 
-        verify(simpleResetPasswordReverseRouter)
+        verify(simpleRecoverPasswordReverseRouter)
                 .requestRecoveryEmailProcessCall(locale.toLanguageTag());
     }
 
@@ -47,7 +47,7 @@ public class DefaultResetPasswordReverseRouterTest {
         final String tokenValue = "taken-value";
         defaultResetPasswordReverseRouter.resetPasswordPageCall(locale.toLanguageTag(), tokenValue);
 
-        verify(simpleResetPasswordReverseRouter)
+        verify(simpleRecoverPasswordReverseRouter)
                 .resetPasswordPageCall(locale.toLanguageTag(), tokenValue);
     }
 
@@ -56,7 +56,7 @@ public class DefaultResetPasswordReverseRouterTest {
         final String tokenValue = "taken-value";
         defaultResetPasswordReverseRouter.resetPasswordProcessCall(locale.toLanguageTag(), tokenValue);
 
-        verify(simpleResetPasswordReverseRouter)
+        verify(simpleRecoverPasswordReverseRouter)
                 .resetPasswordProcessCall(locale.toLanguageTag(), tokenValue);
     }
 }

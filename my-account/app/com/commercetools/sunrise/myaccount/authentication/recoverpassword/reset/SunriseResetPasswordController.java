@@ -4,7 +4,7 @@ import com.commercetools.sunrise.framework.controllers.SunriseContentFormControl
 import com.commercetools.sunrise.framework.controllers.WithContentFormFlow;
 import com.commercetools.sunrise.framework.hooks.EnableHooks;
 import com.commercetools.sunrise.framework.reverserouters.SunriseRoute;
-import com.commercetools.sunrise.framework.reverserouters.myaccount.resetpassword.SimpleResetPasswordReverseRouter;
+import com.commercetools.sunrise.framework.reverserouters.myaccount.recoverpassword.SimpleRecoverPasswordReverseRouter;
 import com.commercetools.sunrise.framework.template.engine.ContentRenderer;
 import com.commercetools.sunrise.framework.viewmodels.content.PageContent;
 import com.commercetools.sunrise.myaccount.MyAccountController;
@@ -41,13 +41,13 @@ public abstract class SunriseResetPasswordController extends SunriseContentFormC
     }
 
     @EnableHooks
-    @SunriseRoute(SimpleResetPasswordReverseRouter.RESET_PASSWORD_PAGE)
+    @SunriseRoute(SimpleRecoverPasswordReverseRouter.RESET_PASSWORD_PAGE)
     public CompletionStage<Result> show(final String languageTag, final String resetToken) {
         return showFormPage(resetToken, formData);
     }
 
     @EnableHooks
-    @SunriseRoute(SimpleResetPasswordReverseRouter.RESET_PASSWORD_PROCESS)
+    @SunriseRoute(SimpleRecoverPasswordReverseRouter.RESET_PASSWORD_PROCESS)
     public CompletionStage<Result> process(final String languageTag, final String resetToken) {
         return processForm(resetToken);
     }
