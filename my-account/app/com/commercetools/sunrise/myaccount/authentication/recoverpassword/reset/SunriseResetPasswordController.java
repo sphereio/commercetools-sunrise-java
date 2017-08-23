@@ -58,11 +58,6 @@ public abstract class SunriseResetPasswordController extends SunriseContentFormC
     }
 
     @Override
-    public CompletionStage<Result> handleInvalidForm(final String resetToken, final Form<? extends ResetPasswordFormData> form) {
-        return showFormPageWithErrors(resetToken, form);
-    }
-
-    @Override
     public PageContent createPageContent(final String resetToken, final Form<? extends ResetPasswordFormData> form) {
         return pageContentFactory.create(resetToken, form);
     }

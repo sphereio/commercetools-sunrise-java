@@ -13,11 +13,4 @@ public interface ResetPasswordFormData {
      * @return the new password
      */
     String newPassword();
-
-    /**
-     * The confirm password.
-     *
-     * @return the repeated new password
-     */
-    String confirmPassword();
 }

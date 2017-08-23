@@ -14,11 +14,6 @@ public class DefaultResetPasswordFormData implements ResetPasswordFormData {
         return newPassword;
     }
 
-    @Override
-    public String confirmPassword() {
-        return confirmPassword;
-    }
-
     public String getNewPassword() {
         return newPassword;
     }
@@ -34,7 +29,6 @@ public class DefaultResetPasswordFormData implements ResetPasswordFormData {
     public void setConfirmPassword(final String confirmPassword) {
         this.confirmPassword = confirmPassword;
     }
-
 
     public String validate() {
         final boolean isValid = newPassword.equals(confirmPassword) &&
