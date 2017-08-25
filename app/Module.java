@@ -3,6 +3,7 @@ import com.commercetools.sunrise.categorytree.CategoryTreeConfiguration;
 import com.commercetools.sunrise.categorytree.NavigationCategoryTree;
 import com.commercetools.sunrise.categorytree.NewCategoryTree;
 import com.commercetools.sunrise.cms.CmsService;
+import com.commercetools.sunrise.email.fake.FakeEmailSender;
 import com.commercetools.sunrise.framework.controllers.metrics.SimpleMetricsSphereClientProvider;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
 import com.commercetools.sunrise.framework.localization.CountryFromSessionProvider;
@@ -86,7 +87,7 @@ public class Module extends AbstractModule {
 
         // Bindings fo email sender
         bind(EmailSender.class)
-                .toProvider(EmailSenderProvider.class)
+                .to(FakeEmailSender.class)
                 .in(Singleton.class);
 
         // Bindings for all user context related
