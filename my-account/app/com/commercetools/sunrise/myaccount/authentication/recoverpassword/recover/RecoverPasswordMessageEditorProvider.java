@@ -6,7 +6,7 @@ import io.sphere.sdk.customers.CustomerToken;
 
 import java.util.concurrent.CompletionStage;
 
-@ImplementedBy(RecoverPasswordMessageEditorProviderImpl.class)
+@ImplementedBy(DefaultRecoverPasswordMessageEditorProvider.class)
 @FunctionalInterface
 public interface RecoverPasswordMessageEditorProvider {
 

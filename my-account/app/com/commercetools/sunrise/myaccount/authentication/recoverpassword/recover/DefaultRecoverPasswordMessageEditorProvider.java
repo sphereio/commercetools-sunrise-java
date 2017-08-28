@@ -11,13 +11,23 @@ import play.mvc.Http;
 
 import javax.inject.Inject;
 import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import java.util.Collections;
 import java.util.Locale;
 import java.util.concurrent.CompletionStage;
 
 import static java.util.concurrent.CompletableFuture.completedFuture;
 
-final class RecoverPasswordMessageEditorProviderImpl implements RecoverPasswordMessageEditorProvider {
+/**
+ * Default provider which obtains the email contents from the template {@code password-reset-email}.
+ * Subject and recipients are populated too.
+ *
+ * If your email requires any additional data (e.g. {@code from} field) you can extend this class, override the method
+ * {@link #editMessage(MimeMessage, CustomerToken, RecoverPasswordFormData)} and add the necessary
+ * lines of code. Alternatively you can create your own implementation of {@link RecoverPasswordMessageEditorProvider}.
+ */
+public class DefaultRecoverPasswordMessageEditorProvider implements RecoverPasswordMessageEditorProvider {
 
     private final Locale locale;
     private final TemplateEngine templateEngine;
@@ -25,9 +35,9 @@ final class RecoverPasswordMessageEditorProviderImpl implements RecoverPasswordM
     private final RecoverPasswordReverseRouter recoverPasswordReverseRouter;
 
     @Inject
-    RecoverPasswordMessageEditorProviderImpl(final Locale locale, final TemplateEngine templateEngine,
-                                             final I18nIdentifierResolver i18nIdentifierResolver,
-                                             final RecoverPasswordReverseRouter recoverPasswordReverseRouter) {
+    protected DefaultRecoverPasswordMessageEditorProvider(final Locale locale, final TemplateEngine templateEngine,
+                                                          final I18nIdentifierResolver i18nIdentifierResolver,
+                                                          final RecoverPasswordReverseRouter recoverPasswordReverseRouter) {
         this.locale = locale;
         this.templateEngine = templateEngine;
         this.i18nIdentifierResolver = i18nIdentifierResolver;
@@ -36,11 +46,13 @@ final class RecoverPasswordMessageEditorProviderImpl implements RecoverPasswordM
 
     @Override
     public CompletionStage<MessageEditor> get(final CustomerToken resetPasswordToken, final RecoverPasswordFormData formData) {
-        return completedFuture(msg -> {
-            msg.setRecipients(Message.RecipientType.TO, formData.email());
-            msg.setSubject(createSubject(), "UTF-8");
-            msg.setContent(createEmailContent(resetPasswordToken), "text/html");
-        });
+        return completedFuture(msg -> editMessage(msg, resetPasswordToken, formData));
+    }
+
+    protected void editMessage(final MimeMessage msg, final CustomerToken resetPasswordToken, final RecoverPasswordFormData formData) throws MessagingException {
+        msg.setRecipients(Message.RecipientType.TO, formData.email());
+        msg.setSubject(createSubject(), "UTF-8");
+        msg.setContent(createEmailContent(resetPasswordToken), "text/html");
     }
 
     private String createSubject() {
