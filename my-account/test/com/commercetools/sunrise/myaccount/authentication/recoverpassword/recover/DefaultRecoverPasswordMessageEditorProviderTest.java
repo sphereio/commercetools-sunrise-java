@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover;
 
-import com.commercetools.sunrise.framework.template.engine.ContentRenderer;
+import com.commercetools.sunrise.framework.template.engine.EmailContentRenderer;
 import com.commercetools.sunrise.framework.template.i18n.I18nIdentifierResolver;
 import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover.viewmodels.RecoverPasswordEmailContent;
 import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover.viewmodels.RecoverPasswordEmailContentFactory;
@@ -41,7 +41,7 @@ public class DefaultRecoverPasswordMessageEditorProviderTest {
     @Mock
     private I18nIdentifierResolver i18nIdentifierResolver;
     @Mock
-    private ContentRenderer contentRendererWithSomeContent;
+    private EmailContentRenderer emailContentRendererWithSomeContent;
     @Mock
     private RecoverPasswordEmailContentFactory dummyEmailContentFactory;
 
@@ -59,7 +59,7 @@ public class DefaultRecoverPasswordMessageEditorProviderTest {
     public void setUp() throws Exception {
         when(dummyEmailContentFactory.create(notNull())).thenReturn(new RecoverPasswordEmailContent());
         when(formDataWithValidEmail.email()).thenReturn(RECIPIENT_FIELD);
-        when(contentRendererWithSomeContent.render(notNull(), notNull())).thenReturn(completedFuture(new Html(CONTENT_FIELD)));
+        when(emailContentRendererWithSomeContent.render(notNull(), notNull())).thenReturn(completedFuture(new Html(CONTENT_FIELD)));
     }
 
     @Test
@@ -135,7 +135,7 @@ public class DefaultRecoverPasswordMessageEditorProviderTest {
 
         @Inject
         public CustomRecoverPasswordMessageEditorProvider(final I18nIdentifierResolver i18nIdentifierResolver,
-                                                          final ContentRenderer emailContentRenderer,
+                                                          final EmailContentRenderer emailContentRenderer,
                                                           final RecoverPasswordEmailContentFactory recoverPasswordEmailContentFactory) {
             super(i18nIdentifierResolver, emailContentRenderer, recoverPasswordEmailContentFactory);
         }
