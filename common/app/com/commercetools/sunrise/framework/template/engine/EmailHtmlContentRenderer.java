@@ -10,7 +10,7 @@ import javax.annotation.Nullable;
 import javax.inject.Inject;
 import java.util.concurrent.CompletionStage;
 
-public final class EmailHtmlContentRenderer extends AbstractHtmlContentRenderer implements ContentRenderer {
+final class EmailHtmlContentRenderer extends AbstractHtmlContentRenderer implements EmailContentRenderer {
 
     @Inject
     EmailHtmlContentRenderer(final UserLanguage userLanguage, final TemplateEngine templateEngine, final CmsService cmsService) {

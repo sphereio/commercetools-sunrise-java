@@ -1,18 +1,15 @@
 package com.commercetools.sunrise.framework.template.engine;
 
-import javax.inject.Named;
-import javax.inject.Qualifier;
-import java.lang.annotation.Documented;
-import java.lang.annotation.Retention;
+import com.commercetools.sunrise.framework.viewmodels.content.PageContent;
+import com.google.inject.ImplementedBy;
+import play.twirl.api.Content;
 
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import javax.annotation.Nullable;
+import java.util.concurrent.CompletionStage;
 
-/**
- * {@linkplain Qualifier Qualifier} for the content renderer used for emails.
- */
-@Named("emailContentRenderer")
-@Qualifier
-@Documented
-@Retention(RUNTIME)
-public @interface EmailContentRenderer {
+@ImplementedBy(EmailHtmlContentRenderer.class)
+public interface EmailContentRenderer extends ContentRenderer {
+
+    @Override
+    CompletionStage<Content> render(final PageContent pageContent, @Nullable final String templateName, @Nullable final String cmsKey);
 }

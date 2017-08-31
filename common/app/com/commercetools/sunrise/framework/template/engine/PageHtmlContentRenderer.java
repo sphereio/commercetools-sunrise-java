@@ -25,7 +25,7 @@ import javax.inject.Inject;
 import java.io.IOException;
 import java.util.concurrent.CompletionStage;
 
-public final class PageHtmlContentRenderer extends AbstractHtmlContentRenderer implements ContentRenderer {
+final class PageHtmlContentRenderer extends AbstractHtmlContentRenderer implements ContentRenderer {
 
     private static final Logger PAGE_DATA_LOGGER_AS_JSON = LoggerFactory.getLogger(PageData.class.getName() + "Json");
     private static final ObjectMapper objectMapper = createObjectMapper();

@@ -41,12 +41,12 @@ import java.util.concurrent.CompletionStage;
 public class DefaultRecoverPasswordMessageEditorProvider implements RecoverPasswordMessageEditorProvider {
 
     private final I18nIdentifierResolver i18nIdentifierResolver;
-    private final ContentRenderer emailContentRenderer;
+    private final EmailContentRenderer emailContentRenderer;
     private final RecoverPasswordEmailContentFactory recoverPasswordEmailContentFactory;
 
     @Inject
     protected DefaultRecoverPasswordMessageEditorProvider(final I18nIdentifierResolver i18nIdentifierResolver,
-                                                          @EmailContentRenderer final ContentRenderer emailContentRenderer,
+                                                          final EmailContentRenderer emailContentRenderer,
                                                           final RecoverPasswordEmailContentFactory recoverPasswordEmailContentFactory) {
         this.i18nIdentifierResolver = i18nIdentifierResolver;
         this.emailContentRenderer = emailContentRenderer;
@@ -57,7 +57,7 @@ public class DefaultRecoverPasswordMessageEditorProvider implements RecoverPassw
         return i18nIdentifierResolver;
     }
 
-    protected final ContentRenderer getEmailContentRenderer() {
+    protected final EmailContentRenderer getEmailContentRenderer() {
         return emailContentRenderer;
     }
 
