@@ -7,7 +7,7 @@ import play.twirl.api.Content;
 import javax.annotation.Nullable;
 import java.util.concurrent.CompletionStage;
 
-@ImplementedBy(HtmlContentRenderer.class)
+@ImplementedBy(PageHtmlContentRenderer.class)
 public interface ContentRenderer {
 
     CompletionStage<Content> render(final PageContent pageContent, @Nullable final String templateName, @Nullable final String cmsKey);

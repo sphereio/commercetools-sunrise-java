@@ -102,6 +102,7 @@ forgotPassword:
   title: Forgot Password
   description: Please submit your email address to receive a password reset link.
   email:
+    from: Sunrise Team <sunrise-noreply@commercetools.com>
     subject: Your Password Reset Request
     passwordResetTitle: Password Reset
     dearUser: Dear

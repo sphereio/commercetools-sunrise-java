@@ -1,20 +1,19 @@
 package com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover;
 
 import com.commercetools.sunrise.framework.hooks.HookRunner;
-import com.commercetools.sunrise.framework.template.engine.TemplateEngine;
-import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover.viewmodels.RecoverPasswordEmailPageContent;
-import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover.viewmodels.RecoverPasswordEmailPageContentFactory;
 import io.commercetools.sunrise.email.EmailSender;
+import io.commercetools.sunrise.email.MessageEditor;
 import io.sphere.sdk.client.SphereClient;
 import io.sphere.sdk.customers.CustomerToken;
+import io.sphere.sdk.customers.commands.CustomerCreatePasswordTokenCommand;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 
-import java.util.concurrent.CompletableFuture;
-
+import static java.util.concurrent.CompletableFuture.completedFuture;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.verify;
@@ -23,67 +22,59 @@ import static org.mockito.Mockito.when;
 /**
  * Unit tests for {@link DefaultRecoverPasswordControllerAction}.
  */
+@RunWith(MockitoJUnitRunner.class)
 public class DefaultRecoverPasswordControllerActionTest {
+
+    private static final String CUSTOMER_EMAIL = "someone@mail.com";
+
     @Mock
     private SphereClient sphereClient;
     @Mock
-    private HookRunner hookRunner;
-    @Mock
-    private RecoverPasswordEmailPageContentFactory recoverPasswordEmailPageContentFactory;
-    @Mock
-    private TemplateEngine templateEngine;
+    private HookRunner dummyHookRunner;
     @Mock
     private EmailSender emailSender;
     @Mock
-    private CustomerToken customerToken;
+    private RecoverPasswordMessageEditorProvider dummyMessageEditorProvider;
 
     @InjectMocks
     private DefaultRecoverPasswordControllerAction defaultPasswordRecoveryControllerAction;
 
+    @Mock
+    private RecoverPasswordFormData formDataWithValidEmail;
+    @Mock
+    private CustomerToken dummyForgetPasswordToken;
+    private MessageEditor fakeMessageEditor = msg -> {};
+
     @Before
     public void setup() {
-        MockitoAnnotations.initMocks(this);
+        when(formDataWithValidEmail.email()).thenReturn(CUSTOMER_EMAIL);
+        when(dummyMessageEditorProvider.get(notNull(), notNull())).thenReturn(completedFuture(fakeMessageEditor));
     }
 
     @Test
-    public void execute() throws Exception {
-        mockCustomerCreatePasswordTokenCommandRequest();
-        mockRecoverPasswordEmailPageCreation();
-        mockRenderEmailTemplate();
-        mockSendEmail();
+    public void sendsEmailOnValidCustomerToken() throws Exception {
+        mockSphereClientThatReturnsCustomerToken();
+        mockEmailSenderWithSuccessfulOutcome();
 
-        final CompletableFuture<CustomerToken> passwordRecoveryActionResult =
-                defaultPasswordRecoveryControllerAction.apply(formDataWithValidEmailOfExistingCustomer()).toCompletableFuture();
+        final CustomerToken resetPasswordToken = executeDefaultControllerAction();
 
-        assertThat(passwordRecoveryActionResult.get()).isEqualTo(customerToken);
+        verify(sphereClient).execute(CustomerCreatePasswordTokenCommand.of(CUSTOMER_EMAIL));
+        verify(emailSender).send(fakeMessageEditor);
+        verify(dummyMessageEditorProvider).get(dummyForgetPasswordToken, formDataWithValidEmail);
 
-        verify(recoverPasswordEmailPageContentFactory).create(eq(customerToken));
-        verify(templateEngine).render(notNull(), notNull());
-        verify(emailSender).send(notNull());
+        assertThat(resetPasswordToken).isEqualTo(dummyForgetPasswordToken);
     }
 
-    private void mockSendEmail() {
-        when(emailSender.send(notNull())).thenReturn(CompletableFuture.completedFuture(null));
+    private CustomerToken executeDefaultControllerAction() throws Exception {
+        return defaultPasswordRecoveryControllerAction.apply(formDataWithValidEmail).toCompletableFuture().get();
     }
 
-    private void mockRenderEmailTemplate() {
-        final String emailContent = "email-content";
-        when(templateEngine.render(notNull(), notNull())).thenReturn(emailContent);
+    private void mockEmailSenderWithSuccessfulOutcome() {
+        when(emailSender.send(notNull())).thenReturn(completedFuture("email-id"));
     }
 
-    private void mockRecoverPasswordEmailPageCreation() {
-        final RecoverPasswordEmailPageContent recoverPasswordEmailPageContent = new RecoverPasswordEmailPageContent();
-        when(recoverPasswordEmailPageContentFactory.create(customerToken)).thenReturn(recoverPasswordEmailPageContent);
-    }
-
-    private void mockCustomerCreatePasswordTokenCommandRequest() {
-        when(sphereClient.execute(any()))
-                .thenReturn(CompletableFuture.completedFuture(customerToken));
-    }
-
-    private DefaultRecoverPasswordFormData formDataWithValidEmailOfExistingCustomer() {
-        final DefaultRecoverPasswordFormData recoveryEmailFormData = new DefaultRecoverPasswordFormData();
-        recoveryEmailFormData.setEmail("test@example.com");
-        return recoveryEmailFormData;
+    private void mockSphereClientThatReturnsCustomerToken() {
+        when(sphereClient.execute(notNull()))
+                .thenReturn(completedFuture(dummyForgetPasswordToken));
     }
 }

@@ -101,6 +101,7 @@ forgotPassword:
   title: Passwort vergessen
   description: Geben Sie Ihre Emailadresse ein und klicken Sie auf "Passwort zurücksetzen" und wir senden Ihnen einen Link, um ein neues Passwort zu setzen.
   email:
+    from: Sunrise Team <sunrise-noreply@commercetools.com>
     subject: Passwort zurücksetzen
     passwordResetTitle: Passwort zrücksetzen
     dearUser: Sehr geehrter

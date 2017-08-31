@@ -3,7 +3,6 @@ import com.commercetools.sunrise.categorytree.CategoryTreeConfiguration;
 import com.commercetools.sunrise.categorytree.NavigationCategoryTree;
 import com.commercetools.sunrise.categorytree.NewCategoryTree;
 import com.commercetools.sunrise.cms.CmsService;
-import com.commercetools.sunrise.email.fake.FakeEmailSender;
 import com.commercetools.sunrise.framework.controllers.metrics.SimpleMetricsSphereClientProvider;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
 import com.commercetools.sunrise.framework.localization.CountryFromSessionProvider;
@@ -28,6 +27,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.name.Names;
 import com.neovisionaries.i18n.CountryCode;
+import email.smtp.EmailSenderProvider;
 import io.commercetools.sunrise.email.EmailSender;
 import io.sphere.sdk.categories.CategoryTree;
 import io.sphere.sdk.client.SphereClient;
@@ -87,7 +87,7 @@ public class Module extends AbstractModule {
 
         // Bindings fo email sender
         bind(EmailSender.class)
-                .to(FakeEmailSender.class)
+                .toProvider(EmailSenderProvider.class)
                 .in(Singleton.class);
 
         // Bindings for all user context related
