@@ -1,5 +1,7 @@
 package com.commercetools.sunrise.email.fake;
 
+import io.commercetools.sunrise.email.EmailCreationException;
+import io.commercetools.sunrise.email.EmailDeliveryException;
 import io.commercetools.sunrise.email.EmailSender;
 import io.commercetools.sunrise.email.MessageEditor;
 import org.slf4j.Logger;
@@ -9,13 +11,11 @@ import javax.annotation.Nonnull;
 import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.Properties;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
-
-import static java.util.concurrent.CompletableFuture.completedFuture;
 
 public final class FakeEmailSender implements EmailSender {
 
@@ -24,21 +24,31 @@ public final class FakeEmailSender implements EmailSender {
     @Nonnull
     @Override
     public CompletionStage<String> send(@Nonnull final MessageEditor messageEditor) {
+        final String emailId = UUID.randomUUID().toString();
+        final MimeMessage message = createMessage(messageEditor, emailId);
+        final CompletableFuture<String> result = new CompletableFuture<>();
+        try {
+            final File emailFile = createEmailFile(emailId);
+            message.writeTo(new FileOutputStream(emailFile));
+            LOGGER.debug("Message written in file: " + emailFile.getAbsolutePath());
+            result.complete(emailId);
+        } catch (Throwable t) {
+            result.completeExceptionally(new EmailDeliveryException("Could not write email file", t));
+        }
+        return result;
+    }
+
+    private MimeMessage createMessage(final @Nonnull MessageEditor messageEditor, final String emailId) {
         final Session session = Session.getInstance(new Properties());
         final MimeMessage message = new MimeMessage(session);
-        final String emailId = UUID.randomUUID().toString();
         try {
             messageEditor.edit(message);
-            LOGGER.debug("Writing email " + emailId);
-            try {
-                message.writeTo(new FileOutputStream(createEmailFile(emailId)));
-            } catch (FileNotFoundException e) {
-                LOGGER.error("Could not write email file", e);
-            }
+            LOGGER.debug("Message edited: " + emailId);
         } catch (Exception e) {
             LOGGER.error("Could not send fake email", e);
+            throw new EmailCreationException("Could not create fake email", e);
         }
-        return completedFuture(emailId);
+        return message;
     }
 
     private File createEmailFile(final String emailId) {

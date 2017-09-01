@@ -1,8 +1,11 @@
 package com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover;
 
 import com.commercetools.sunrise.framework.hooks.HookRunner;
+import com.commercetools.sunrise.framework.hooks.ctprequests.CustomerCreatePasswordTokenCommandHook;
+import io.commercetools.sunrise.email.EmailDeliveryException;
 import io.commercetools.sunrise.email.EmailSender;
 import io.commercetools.sunrise.email.MessageEditor;
+import io.sphere.sdk.client.NotFoundException;
 import io.sphere.sdk.client.SphereClient;
 import io.sphere.sdk.customers.CustomerToken;
 import io.sphere.sdk.customers.commands.CustomerCreatePasswordTokenCommand;
@@ -13,11 +16,18 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import javax.inject.Inject;
+
+import java.util.concurrent.CompletionStage;
+
+import static io.sphere.sdk.utils.CompletableFutureUtils.exceptionallyCompletedFuture;
 import static java.util.concurrent.CompletableFuture.completedFuture;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.notNull;
+import static org.mockito.Mockito.*;
 
 /**
  * Unit tests for {@link DefaultRecoverPasswordControllerAction}.
@@ -38,17 +48,20 @@ public class DefaultRecoverPasswordControllerActionTest {
 
     @InjectMocks
     private DefaultRecoverPasswordControllerAction defaultPasswordRecoveryControllerAction;
+    @InjectMocks
+    private CustomRecoverPasswordControllerAction customPasswordRecoveryControllerAction;
 
     @Mock
     private RecoverPasswordFormData formDataWithValidEmail;
     @Mock
     private CustomerToken dummyForgetPasswordToken;
-    private MessageEditor fakeMessageEditor = msg -> {};
+    private MessageEditor dummyMessageEditor = msg -> {};
 
     @Before
     public void setup() {
         when(formDataWithValidEmail.email()).thenReturn(CUSTOMER_EMAIL);
-        when(dummyMessageEditorProvider.get(notNull(), notNull())).thenReturn(completedFuture(fakeMessageEditor));
+        when(dummyMessageEditorProvider.get(any(), any())).thenReturn(completedFuture(dummyMessageEditor));
+        when(dummyHookRunner.runUnaryOperatorHook(any(), any(), any())).thenAnswer(invocation -> invocation.getArgument(2));
     }
 
     @Test
@@ -58,23 +71,92 @@ public class DefaultRecoverPasswordControllerActionTest {
 
         final CustomerToken resetPasswordToken = executeDefaultControllerAction();
 
+        assertThat(resetPasswordToken).isEqualTo(dummyForgetPasswordToken);
+
+        verify(dummyHookRunner).runUnaryOperatorHook(eq(CustomerCreatePasswordTokenCommandHook.class), any(), any());
         verify(sphereClient).execute(CustomerCreatePasswordTokenCommand.of(CUSTOMER_EMAIL));
-        verify(emailSender).send(fakeMessageEditor);
-        verify(dummyMessageEditorProvider).get(dummyForgetPasswordToken, formDataWithValidEmail);
+        verify(emailSender).send(dummyMessageEditor);
+    }
+
+    @Test
+    public void returnsBadRequestOnInvalidEmail() throws Exception {
+        mockSphereClientThatCannotFindEmailToRecover();
+
+        assertThatThrownBy(this::executeDefaultControllerAction).hasCauseInstanceOf(NotFoundException.class);
+
+        verify(dummyHookRunner).runUnaryOperatorHook(eq(CustomerCreatePasswordTokenCommandHook.class), any(), any());
+        verify(sphereClient).execute(CustomerCreatePasswordTokenCommand.of(CUSTOMER_EMAIL));
+        verify(emailSender, never()).send(dummyMessageEditor);
+    }
+
+    @Test
+    public void returnsEmailDeliveryExceptionOnSendFailure() throws Exception {
+        mockSphereClientThatReturnsCustomerToken();
+        mockEmailSenderThatFailsToSend();
+
+        assertThatThrownBy(this::executeDefaultControllerAction).hasCauseInstanceOf(EmailDeliveryException.class);
+
+        verify(dummyHookRunner).runUnaryOperatorHook(eq(CustomerCreatePasswordTokenCommandHook.class), any(), any());
+        verify(sphereClient).execute(CustomerCreatePasswordTokenCommand.of(CUSTOMER_EMAIL));
+        verify(emailSender).send(dummyMessageEditor);
+    }
+
+    @Test
+    public void allowsToAlterRequestAndBehaviour() throws Exception {
+        mockSphereClientThatReturnsCustomerToken();
+        mockEmailSenderWithSuccessfulOutcome();
+
+        final CustomerToken resetPasswordToken = executeCustomControllerAction();
 
         assertThat(resetPasswordToken).isEqualTo(dummyForgetPasswordToken);
+
+        verify(dummyHookRunner).runUnaryOperatorHook(eq(CustomerCreatePasswordTokenCommandHook.class), any(), any());
+        verify(sphereClient).execute(CustomerCreatePasswordTokenCommand.of("another@email.com"));
+        verify(emailSender, never()).send(dummyMessageEditor);
     }
 
     private CustomerToken executeDefaultControllerAction() throws Exception {
         return defaultPasswordRecoveryControllerAction.apply(formDataWithValidEmail).toCompletableFuture().get();
     }
 
+    private CustomerToken executeCustomControllerAction() throws Exception {
+        return customPasswordRecoveryControllerAction.apply(formDataWithValidEmail).toCompletableFuture().get();
+    }
+
     private void mockEmailSenderWithSuccessfulOutcome() {
         when(emailSender.send(notNull())).thenReturn(completedFuture("email-id"));
     }
 
+    private void mockEmailSenderThatFailsToSend() {
+        when(emailSender.send(notNull())).thenReturn(exceptionallyCompletedFuture(new EmailDeliveryException("Failed to send")));
+    }
+
     private void mockSphereClientThatReturnsCustomerToken() {
-        when(sphereClient.execute(notNull()))
-                .thenReturn(completedFuture(dummyForgetPasswordToken));
+        when(sphereClient.execute(notNull())).thenReturn(completedFuture(dummyForgetPasswordToken));
+    }
+
+    private void mockSphereClientThatCannotFindEmailToRecover() {
+        when(sphereClient.execute(notNull())).thenReturn(exceptionallyCompletedFuture(new NotFoundException()));
+    }
+
+    private static class CustomRecoverPasswordControllerAction extends DefaultRecoverPasswordControllerAction {
+
+        @Inject
+        public CustomRecoverPasswordControllerAction(final SphereClient sphereClient, final HookRunner hookRunner,
+                                                     final EmailSender emailSender, final RecoverPasswordMessageEditorProvider recoverPasswordMessageEditorProvider) {
+            super(sphereClient, hookRunner, emailSender, recoverPasswordMessageEditorProvider);
+        }
+
+        @Override
+        protected CustomerCreatePasswordTokenCommand buildRequest(final RecoverPasswordFormData formData) {
+            // Replaces request for another email
+            return CustomerCreatePasswordTokenCommand.of("another@email.com");
+        }
+
+        @Override
+        protected CompletionStage<CustomerToken> onResetPasswordTokenCreated(final CustomerToken resetPasswordToken, final RecoverPasswordFormData recoveryEmailFormData) {
+            // Does not send email
+            return completedFuture(resetPasswordToken);
+        }
     }
 }

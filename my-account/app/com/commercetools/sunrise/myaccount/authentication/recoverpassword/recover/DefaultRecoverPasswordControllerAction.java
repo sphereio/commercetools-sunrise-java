@@ -43,7 +43,7 @@ public class DefaultRecoverPasswordControllerAction extends AbstractCustomerCrea
 
     protected CompletionStage<CustomerToken> onResetPasswordTokenCreated(final CustomerToken resetPasswordToken, final RecoverPasswordFormData recoveryEmailFormData) {
         return recoverPasswordMessageEditorProvider.get(resetPasswordToken, recoveryEmailFormData)
-                .thenApply(emailSender::send)
+                .thenCompose(emailSender::send)
                 .thenApply(messageId -> resetPasswordToken);
     }
 }

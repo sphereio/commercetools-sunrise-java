@@ -69,12 +69,12 @@ public class DefaultRecoverPasswordMessageEditorProviderTest {
         final MimeMessage message = blankMimeMessage();
         defaultMessageEditor().edit(message);
 
-        verify(dummyEmailContentFactory).create(dummyResetPasswordToken);
-
         assertThat(message.getSubject()).isEqualTo(SUBJECT_FIELD);
         assertThat(message.getFrom()).contains(addressOf(FROM_FIELD));
         assertThat(message.getContent()).isEqualTo(CONTENT_FIELD);
         assertThat(message.getAllRecipients()).contains(addressOf(RECIPIENT_FIELD));
+
+        verify(dummyEmailContentFactory).create(dummyResetPasswordToken);
     }
 
     @Test
@@ -82,12 +82,12 @@ public class DefaultRecoverPasswordMessageEditorProviderTest {
         final MimeMessage message = blankMimeMessage();
         defaultMessageEditor().edit(message);
 
-        verify(dummyEmailContentFactory).create(dummyResetPasswordToken);
-
         assertThat(message.getSubject()).isNull();
         assertThat(message.getFrom()).isNull();
         assertThat(message.getContent()).isEqualTo(CONTENT_FIELD);
         assertThat(message.getAllRecipients()).contains(addressOf(RECIPIENT_FIELD));
+
+        verify(dummyEmailContentFactory).create(dummyResetPasswordToken);
     }
 
     @Test
@@ -97,8 +97,6 @@ public class DefaultRecoverPasswordMessageEditorProviderTest {
         final MimeMessage message = blankMimeMessage();
         customMessageEditor().edit(message);
 
-        verify(dummyEmailContentFactory).create(dummyResetPasswordToken);
-
         assertThat(message.getSubject())
                 .isNotEqualTo(SUBJECT_FIELD)
                 .isEqualTo("Another subject");
@@ -106,6 +104,8 @@ public class DefaultRecoverPasswordMessageEditorProviderTest {
         assertThat(message.getContent()).isEqualTo(CONTENT_FIELD);
         assertThat(message.getAllRecipients()).contains(addressOf(RECIPIENT_FIELD));
         assertThat(message.getDescription()).isEqualTo("Some description");
+
+        verify(dummyEmailContentFactory).create(dummyResetPasswordToken);
     }
 
     private MessageEditor defaultMessageEditor() throws Exception {
