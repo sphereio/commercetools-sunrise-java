@@ -31,10 +31,10 @@ public final class RecoverPasswordController extends SunriseRecoverPasswordContr
 
     @Inject
     RecoverPasswordController(final ContentRenderer contentRenderer, final FormFactory formFactory,
-                                     final RecoverPasswordPageContentFactory pageContentFactory,
-                                     final RecoverPasswordFormData formData,
-                                     final RecoverPasswordControllerAction controllerAction,
-                                     final AuthenticationReverseRouter authenticationReverseRouter) {
+                              final RecoverPasswordPageContentFactory pageContentFactory,
+                              final RecoverPasswordFormData formData,
+                              final RecoverPasswordControllerAction controllerAction,
+                              final AuthenticationReverseRouter authenticationReverseRouter) {
         super(contentRenderer, formFactory, pageContentFactory, formData, controllerAction);
         this.authenticationReverseRouter = authenticationReverseRouter;
     }
@@ -50,8 +50,14 @@ public final class RecoverPasswordController extends SunriseRecoverPasswordContr
     }
 
     @Override
+    protected CompletionStage<Result> handleNotFoundEmail(final Form<? extends RecoverPasswordFormData> form) {
+        saveFormError(form, "Email not found");
+        return showFormPageWithErrors(null, form);
+    }
+
+    @Override
     protected CompletionStage<Result> handleEmailDeliveryException(final Form<? extends RecoverPasswordFormData> form, final EmailDeliveryException emailDeliveryException) {
         saveFormError(form, "Email delivery error");
-        return showFormPageWithErrors(null, form);
+        return internalServerErrorResultWithPageContent(createPageContent(null, form));
     }
 }

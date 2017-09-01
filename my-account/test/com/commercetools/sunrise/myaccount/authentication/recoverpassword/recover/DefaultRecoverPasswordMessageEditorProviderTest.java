@@ -15,14 +15,12 @@ import org.mockito.junit.MockitoJUnitRunner;
 import play.twirl.api.Html;
 
 import javax.inject.Inject;
-import javax.mail.Address;
-import javax.mail.Session;
-import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Optional;
-import java.util.Properties;
 import java.util.concurrent.CompletionStage;
 
+import static com.commercetools.sunrise.it.EmailTestFixtures.addressOf;
+import static com.commercetools.sunrise.it.EmailTestFixtures.blankMimeMessage;
 import static java.util.concurrent.CompletableFuture.completedFuture;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.eq;
@@ -121,14 +119,6 @@ public class DefaultRecoverPasswordMessageEditorProviderTest {
                 .thenReturn(Optional.of(FROM_FIELD));
         when(i18nIdentifierResolver.resolve(eq("my-account:forgotPassword.email.subject")))
                 .thenReturn(Optional.of(SUBJECT_FIELD));
-    }
-
-    private MimeMessage blankMimeMessage() {
-        return new MimeMessage(Session.getInstance(new Properties()));
-    }
-
-    private Address addressOf(final String address) throws Exception {
-        return new InternetAddress(address);
     }
 
     private static class CustomRecoverPasswordMessageEditorProvider extends DefaultRecoverPasswordMessageEditorProvider {

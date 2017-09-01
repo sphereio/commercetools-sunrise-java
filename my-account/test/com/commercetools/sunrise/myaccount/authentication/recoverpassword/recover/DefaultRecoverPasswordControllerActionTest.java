@@ -92,7 +92,7 @@ public class DefaultRecoverPasswordControllerActionTest {
     @Test
     public void returnsEmailDeliveryExceptionOnSendFailure() throws Exception {
         mockSphereClientThatReturnsCustomerToken();
-        mockEmailSenderThatFailsToSend();
+        mockEmailSenderWithFailedDelivery();
 
         assertThatThrownBy(this::executeDefaultControllerAction).hasCauseInstanceOf(EmailDeliveryException.class);
 
@@ -127,7 +127,7 @@ public class DefaultRecoverPasswordControllerActionTest {
         when(emailSender.send(notNull())).thenReturn(completedFuture("email-id"));
     }
 
-    private void mockEmailSenderThatFailsToSend() {
+    private void mockEmailSenderWithFailedDelivery() {
         when(emailSender.send(notNull())).thenReturn(exceptionallyCompletedFuture(new EmailDeliveryException("Failed to send")));
     }
 

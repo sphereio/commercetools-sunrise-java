@@ -15,6 +15,7 @@ dist
 /RUNNING_PID
 /.settings
 dev.conf
+it.conf
 *.log
 /common/graphql.config.json
 *.eml

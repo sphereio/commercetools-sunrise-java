@@ -6,7 +6,6 @@ import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recove
 import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover.viewmodels.RecoverPasswordPageContentFactory;
 import com.google.common.collect.ImmutableMap;
 import io.commercetools.sunrise.email.EmailDeliveryException;
-import io.sphere.sdk.client.NotFoundException;
 import io.sphere.sdk.customers.CustomerToken;
 import io.sphere.sdk.utils.CompletableFutureUtils;
 import org.junit.Before;
@@ -17,7 +16,6 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import play.data.FormFactory;
 import play.data.format.Formatters;
-import play.i18n.Lang;
 import play.i18n.MessagesApi;
 import play.mvc.Http;
 import play.mvc.Result;
@@ -45,7 +43,7 @@ import static org.mockito.Mockito.*;
  * - May be we should try to reduce the number of used mocks?
  * - I'm not sure if this test makes sense, so let's talk about it ;-)
  */
-public class SunriseRecoverPasswordControllerTest {
+public class SunriseRecoverPasswordControllerTest2 {
     @Mock
     private ContentRenderer contentRenderer;
 
