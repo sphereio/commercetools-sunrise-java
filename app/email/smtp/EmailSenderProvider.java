@@ -4,6 +4,7 @@ import com.commercetools.sunrise.email.fake.FakeEmailSender;
 import com.google.inject.Provider;
 import io.commercetools.sunrise.email.EmailSender;
 import io.commercetools.sunrise.email.smtp.SmtpAuthEmailSender;
+import play.Application;
 
 import javax.inject.Inject;
 import java.util.concurrent.Executor;
@@ -15,10 +16,12 @@ import java.util.concurrent.ForkJoinPool;
  */
 public final class EmailSenderProvider implements Provider<EmailSender> {
     private final SmtpEmailSenderSettings smtpEmailSenderSettings;
+    private final Application application;
 
     @Inject
-    EmailSenderProvider(final SmtpEmailSenderSettings smtpEmailSenderSettings) {
+    EmailSenderProvider(final SmtpEmailSenderSettings smtpEmailSenderSettings, final Application application) {
         this.smtpEmailSenderSettings = smtpEmailSenderSettings;
+        this.application = application;
     }
 
     @Override
@@ -27,7 +30,7 @@ public final class EmailSenderProvider implements Provider<EmailSender> {
             final Executor executor = ForkJoinPool.commonPool();
             return new SmtpAuthEmailSender(smtpEmailSenderSettings.smtpConfiguration(), executor, smtpEmailSenderSettings.timeoutMs());
         } else {
-            return new FakeEmailSender();
+            return new FakeEmailSender(application);
         }
     }
 

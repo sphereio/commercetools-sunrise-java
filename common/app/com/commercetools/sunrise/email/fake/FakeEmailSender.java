@@ -6,6 +6,7 @@ import io.commercetools.sunrise.email.EmailSender;
 import io.commercetools.sunrise.email.MessageEditor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import play.Application;
 
 import javax.annotation.Nonnull;
 import javax.mail.Session;
@@ -20,6 +21,12 @@ import java.util.concurrent.CompletionStage;
 public final class FakeEmailSender implements EmailSender {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EmailSender.class);
+
+    private final File path;
+
+    public FakeEmailSender(final Application application) {
+        path = application.path();
+    }
 
     @Nonnull
     @Override
@@ -52,6 +59,6 @@ public final class FakeEmailSender implements EmailSender {
     }
 
     private File createEmailFile(final String emailId) {
-        return new File("email-" + emailId + ".eml");
+        return new File(path, "email-" + emailId + ".eml");
     }
 }
