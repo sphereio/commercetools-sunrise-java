@@ -77,7 +77,7 @@ public class RecoverPasswordControllerIntegrationTest extends WithSphereClient {
                     .bodyForm(singletonMap("email", email)));
 
             assertThat(result.status()).isEqualTo(SEE_OTHER);
-            assertThat(result.header(LOCATION)).contains("/en/user/login");
+            assertThat(result.header(LOCATION)).contains("/en/password/recovery");
 
             try {
                 final MimeMessage message = blankMimeMessage();
