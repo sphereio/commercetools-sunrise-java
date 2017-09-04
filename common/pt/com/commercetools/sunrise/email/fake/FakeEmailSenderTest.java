@@ -16,7 +16,7 @@ public class FakeEmailSenderTest extends WithApplication {
 
     private static final String EMAIL_CONTENT = "Some content";
 
-    private MessageEditor dummyMessageEditor = msg -> msg.setContent(EMAIL_CONTENT, "text/html");
+    private MessageEditor fakeMessageEditor = msg -> msg.setContent(EMAIL_CONTENT, "text/html");
 
     private File email;
 
@@ -30,12 +30,12 @@ public class FakeEmailSenderTest extends WithApplication {
 
     @Test
     public void writesEmail() throws Exception {
-        sendEmail(dummyMessageEditor);
+        sendFakeEmail(fakeMessageEditor);
         assertThat(email).exists();
         assertThat(Files.toString(email, Charsets.UTF_8)).contains(EMAIL_CONTENT);
     }
 
-    private void sendEmail(final MessageEditor messageEditor) throws InterruptedException, java.util.concurrent.ExecutionException {
+    private void sendFakeEmail(final MessageEditor messageEditor) throws InterruptedException, java.util.concurrent.ExecutionException {
         final EmailSender emailSender = new FakeEmailSender(app);
         final String emailId = emailSender.send(messageEditor).toCompletableFuture().get();
         email = app.getFile("email-" + emailId + ".eml");

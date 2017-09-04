@@ -23,9 +23,10 @@ public class RecoverPasswordEmailContentFactoryTest {
 
     private static final String TOKEN_VALUE = "some-token-value";
     private static final String RESET_PASSWORD_URL = "https://some-url/recover";
+    private static final String OTHER_RESET_PASSWORD_URL = "some-other-url";
 
     @Mock
-    private RecoverPasswordReverseRouter dummyRecoverPasswordReverseRouter;
+    private RecoverPasswordReverseRouter fakeRecoverPasswordReverseRouter;
 
     @InjectMocks
     private RecoverPasswordEmailContentFactory defaultEmailContentFactory;
@@ -39,9 +40,9 @@ public class RecoverPasswordEmailContentFactoryTest {
     public void setUp() throws Exception {
         final Call callToResetPasswordUrl = mock(Call.class);
         when(callToResetPasswordUrl.absoluteURL(any())).thenReturn(RESET_PASSWORD_URL);
-        when(dummyRecoverPasswordReverseRouter.resetPasswordPageCall(TOKEN_VALUE)).thenReturn(callToResetPasswordUrl);
+        when(fakeRecoverPasswordReverseRouter.resetPasswordPageCall(TOKEN_VALUE)).thenReturn(callToResetPasswordUrl);
         when(fakeResetPasswordToken.getValue()).thenReturn(TOKEN_VALUE);
-        Http.Context.current.set(new Http.Context(new Http.RequestBuilder().build()));
+        Http.Context.current.set(mock(Http.Context.class));
     }
 
     @Test
@@ -56,7 +57,7 @@ public class RecoverPasswordEmailContentFactoryTest {
         final RecoverPasswordEmailContent emailContent = customEmailContentFactory.create(fakeResetPasswordToken);
         assertThat(emailContent.getPasswordResetUrl())
                 .isNotEqualTo(RESET_PASSWORD_URL)
-                .isEqualTo("some-other-url");
+                .isEqualTo(OTHER_RESET_PASSWORD_URL);
         assertThat(emailContent.getTitle()).isNull();
         assertThat(emailContent.get("some-other-field")).isEqualTo("some-value");
     }
@@ -70,7 +71,8 @@ public class RecoverPasswordEmailContentFactoryTest {
 
         @Override
         protected void fillPasswordResetUrl(final RecoverPasswordEmailContent viewModel, final CustomerToken resetPasswordToken) {
-            viewModel.setPasswordResetUrl("some-other-url");
+            // Sets another password URL
+            viewModel.setPasswordResetUrl(OTHER_RESET_PASSWORD_URL);
         }
 
         @Override
@@ -81,6 +83,7 @@ public class RecoverPasswordEmailContentFactoryTest {
         }
 
         private void fillAnotherField(final RecoverPasswordEmailContent viewModel, final CustomerToken resetPasswordToken) {
+            // Sets a new field
             viewModel.put("some-other-field", "some-value");
         }
     }

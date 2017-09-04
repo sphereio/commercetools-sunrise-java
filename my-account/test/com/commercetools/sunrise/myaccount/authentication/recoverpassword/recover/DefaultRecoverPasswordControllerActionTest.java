@@ -36,6 +36,7 @@ import static org.mockito.Mockito.*;
 public class DefaultRecoverPasswordControllerActionTest {
 
     private static final String CUSTOMER_EMAIL = "someone@mail.com";
+    private static final String ANOTHER_CUSTOMER_EMAIL = "another@email.com";
 
     @Mock
     private SphereClient sphereClient;
@@ -111,7 +112,7 @@ public class DefaultRecoverPasswordControllerActionTest {
         assertThat(resetPasswordToken).isEqualTo(dummyForgetPasswordToken);
 
         verify(dummyHookRunner).runUnaryOperatorHook(eq(CustomerCreatePasswordTokenCommandHook.class), any(), any());
-        verify(sphereClient).execute(CustomerCreatePasswordTokenCommand.of("another@email.com"));
+        verify(sphereClient).execute(CustomerCreatePasswordTokenCommand.of(ANOTHER_CUSTOMER_EMAIL));
         verify(emailSender, never()).send(dummyMessageEditor);
     }
 
@@ -150,7 +151,7 @@ public class DefaultRecoverPasswordControllerActionTest {
         @Override
         protected CustomerCreatePasswordTokenCommand buildRequest(final RecoverPasswordFormData formData) {
             // Replaces request for another email
-            return CustomerCreatePasswordTokenCommand.of("another@email.com");
+            return CustomerCreatePasswordTokenCommand.of(ANOTHER_CUSTOMER_EMAIL);
         }
 
         @Override

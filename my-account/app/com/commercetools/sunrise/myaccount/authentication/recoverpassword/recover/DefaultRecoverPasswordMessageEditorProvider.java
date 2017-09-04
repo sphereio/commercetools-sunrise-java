@@ -70,7 +70,7 @@ public class DefaultRecoverPasswordMessageEditorProvider implements RecoverPassw
                 .thenApplyAsync(emailContent -> msg -> {
                     msg.setContent(emailContent, "text/html");
                     msg.setRecipients(Message.RecipientType.TO, formData.email());
-                    msg.setFrom(createFormField());
+                    msg.setFrom(createFromField());
                     msg.setSubject(createSubjectField(), "UTF-8");
                 }, HttpExecution.defaultContext());
     }
@@ -82,7 +82,7 @@ public class DefaultRecoverPasswordMessageEditorProvider implements RecoverPassw
     }
 
     @Nullable
-    private String createFormField() {
+    private String createFromField() {
         return i18nIdentifierResolver.resolve("my-account:forgotPassword.email.from").orElse(null);
     }
 
