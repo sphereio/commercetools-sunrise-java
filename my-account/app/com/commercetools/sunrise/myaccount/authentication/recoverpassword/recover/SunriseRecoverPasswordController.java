@@ -9,7 +9,7 @@ import com.commercetools.sunrise.framework.template.engine.ContentRenderer;
 import com.commercetools.sunrise.framework.viewmodels.content.PageContent;
 import com.commercetools.sunrise.myaccount.MyAccountController;
 import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover.viewmodels.RecoverPasswordPageContentFactory;
-import io.commercetools.sunrise.email.EmailDeliveryException;
+import com.commercetools.sunrise.email.EmailDeliveryException;
 import io.sphere.sdk.client.NotFoundException;
 import io.sphere.sdk.customers.CustomerToken;
 import play.data.Form;

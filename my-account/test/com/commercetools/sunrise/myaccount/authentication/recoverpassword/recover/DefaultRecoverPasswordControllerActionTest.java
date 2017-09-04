@@ -2,9 +2,9 @@ package com.commercetools.sunrise.myaccount.authentication.recoverpassword.recov
 
 import com.commercetools.sunrise.framework.hooks.HookRunner;
 import com.commercetools.sunrise.framework.hooks.ctprequests.CustomerCreatePasswordTokenCommandHook;
-import io.commercetools.sunrise.email.EmailDeliveryException;
-import io.commercetools.sunrise.email.EmailSender;
-import io.commercetools.sunrise.email.MessageEditor;
+import com.commercetools.sunrise.email.EmailDeliveryException;
+import com.commercetools.sunrise.email.EmailSender;
+import com.commercetools.sunrise.email.MessageEditor;
 import io.sphere.sdk.client.NotFoundException;
 import io.sphere.sdk.client.SphereClient;
 import io.sphere.sdk.customers.CustomerToken;

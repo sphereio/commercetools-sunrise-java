@@ -1,9 +1,9 @@
 package com.commercetools.sunrise.email.fake;
 
+import com.commercetools.sunrise.email.EmailSender;
+import com.commercetools.sunrise.email.MessageEditor;
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
-import io.commercetools.sunrise.email.EmailSender;
-import io.commercetools.sunrise.email.MessageEditor;
 import org.junit.After;
 import org.junit.Test;
 import play.test.WithApplication;

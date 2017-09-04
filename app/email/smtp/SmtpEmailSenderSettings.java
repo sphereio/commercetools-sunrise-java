@@ -1,11 +1,11 @@
 package email.smtp;
 
 import com.google.inject.ImplementedBy;
-import io.commercetools.sunrise.email.smtp.SmtpConfiguration;
+import com.commercetools.sunrise.email.smtp.SmtpConfiguration;
 import play.Configuration;
 
 /**
- * Configuration for {@link io.commercetools.sunrise.email.EmailSender}.
+ * Configuration for {@link com.commercetools.sunrise.email.EmailSender}.
  */
 @ImplementedBy(SmtpEmailSenderSettingsImpl.class)
 public interface SmtpEmailSenderSettings {

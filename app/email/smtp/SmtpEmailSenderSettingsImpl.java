@@ -1,7 +1,7 @@
 package email.smtp;
 
+import com.commercetools.sunrise.email.smtp.SmtpConfiguration;
 import com.google.inject.Inject;
-import io.commercetools.sunrise.email.smtp.SmtpConfiguration;
 import io.sphere.sdk.models.Base;
 import play.Configuration;
 

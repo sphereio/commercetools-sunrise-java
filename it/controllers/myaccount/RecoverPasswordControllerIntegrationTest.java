@@ -2,9 +2,9 @@ package controllers.myaccount;
 
 import com.commercetools.sunrise.it.WithSphereClient;
 import com.google.inject.AbstractModule;
-import io.commercetools.sunrise.email.EmailDeliveryException;
-import io.commercetools.sunrise.email.EmailSender;
-import io.commercetools.sunrise.email.MessageEditor;
+import com.commercetools.sunrise.email.EmailDeliveryException;
+import com.commercetools.sunrise.email.EmailSender;
+import com.commercetools.sunrise.email.MessageEditor;
 import io.sphere.sdk.client.SphereClient;
 import org.junit.Test;
 import org.junit.runner.RunWith;

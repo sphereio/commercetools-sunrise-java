@@ -4,7 +4,7 @@ import com.commercetools.sunrise.framework.template.engine.EmailContentRenderer;
 import com.commercetools.sunrise.framework.template.i18n.I18nIdentifierResolver;
 import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover.viewmodels.RecoverPasswordEmailContent;
 import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover.viewmodels.RecoverPasswordEmailContentFactory;
-import io.commercetools.sunrise.email.MessageEditor;
+import com.commercetools.sunrise.email.MessageEditor;
 import io.sphere.sdk.customers.CustomerToken;
 import org.junit.Before;
 import org.junit.Test;

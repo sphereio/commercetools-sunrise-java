@@ -1,9 +1,9 @@
 package com.commercetools.sunrise.email.fake;
 
-import io.commercetools.sunrise.email.EmailCreationException;
-import io.commercetools.sunrise.email.EmailDeliveryException;
-import io.commercetools.sunrise.email.EmailSender;
-import io.commercetools.sunrise.email.MessageEditor;
+import com.commercetools.sunrise.email.EmailCreationException;
+import com.commercetools.sunrise.email.EmailDeliveryException;
+import com.commercetools.sunrise.email.EmailSender;
+import com.commercetools.sunrise.email.MessageEditor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import play.Application;

@@ -11,7 +11,7 @@ import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recove
 import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover.RecoverPasswordFormData;
 import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover.SunriseRecoverPasswordController;
 import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover.viewmodels.RecoverPasswordPageContentFactory;
-import io.commercetools.sunrise.email.EmailDeliveryException;
+import com.commercetools.sunrise.email.EmailDeliveryException;
 import io.sphere.sdk.customers.CustomerToken;
 import play.data.Form;
 import play.data.FormFactory;

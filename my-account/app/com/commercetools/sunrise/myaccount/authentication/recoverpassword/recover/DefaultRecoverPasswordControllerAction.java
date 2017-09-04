@@ -1,7 +1,7 @@
 package com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover;
 
 import com.commercetools.sunrise.framework.hooks.HookRunner;
-import io.commercetools.sunrise.email.EmailSender;
+import com.commercetools.sunrise.email.EmailSender;
 import io.sphere.sdk.client.SphereClient;
 import io.sphere.sdk.customers.CustomerToken;
 import io.sphere.sdk.customers.commands.CustomerCreatePasswordTokenCommand;

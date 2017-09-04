@@ -2,8 +2,8 @@ package email.smtp;
 
 import com.commercetools.sunrise.email.fake.FakeEmailSender;
 import com.google.inject.Provider;
-import io.commercetools.sunrise.email.EmailSender;
-import io.commercetools.sunrise.email.smtp.SmtpAuthEmailSender;
+import com.commercetools.sunrise.email.EmailSender;
+import com.commercetools.sunrise.email.smtp.SmtpAuthEmailSender;
 import play.Application;
 
 import javax.inject.Inject;

@@ -1,7 +1,7 @@
 package com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover;
 
 import com.google.inject.ImplementedBy;
-import io.commercetools.sunrise.email.MessageEditor;
+import com.commercetools.sunrise.email.MessageEditor;
 import io.sphere.sdk.customers.CustomerToken;
 
 import java.util.concurrent.CompletionStage;

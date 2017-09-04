@@ -28,7 +28,7 @@ import com.google.inject.Provides;
 import com.google.inject.name.Names;
 import com.neovisionaries.i18n.CountryCode;
 import email.smtp.EmailSenderProvider;
-import io.commercetools.sunrise.email.EmailSender;
+import com.commercetools.sunrise.email.EmailSender;
 import io.sphere.sdk.categories.CategoryTree;
 import io.sphere.sdk.client.SphereClient;
 import io.sphere.sdk.products.search.PriceSelection;
