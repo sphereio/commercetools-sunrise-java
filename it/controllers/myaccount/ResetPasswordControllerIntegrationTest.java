@@ -4,8 +4,6 @@ import com.commercetools.sunrise.it.WithSphereClient;
 import io.sphere.sdk.customers.CustomerToken;
 import io.sphere.sdk.customers.commands.CustomerCreatePasswordTokenCommand;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnitRunner;
 import play.mvc.Http;
 import play.mvc.Result;
 
@@ -18,7 +16,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static play.mvc.Http.Status.OK;
 import static play.test.Helpers.*;
 
-@RunWith(MockitoJUnitRunner.class)
 public class ResetPasswordControllerIntegrationTest extends WithSphereClient {
 
     @Test
