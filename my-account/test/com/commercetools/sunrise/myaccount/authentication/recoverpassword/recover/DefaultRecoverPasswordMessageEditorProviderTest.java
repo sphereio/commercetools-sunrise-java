@@ -132,6 +132,7 @@ public class DefaultRecoverPasswordMessageEditorProviderTest {
 
         @Override
         public CompletionStage<MessageEditor> get(final CustomerToken resetPasswordToken, final RecoverPasswordFormData formData) {
+            // Replaces subject and sets description
             return super.get(resetPasswordToken, formData)
                     .thenApply(msgEditor -> msg -> {
                         msgEditor.edit(msg);
