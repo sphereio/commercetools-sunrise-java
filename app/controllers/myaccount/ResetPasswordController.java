@@ -12,10 +12,10 @@ import com.commercetools.sunrise.myaccount.authentication.recoverpassword.reset.
 import com.commercetools.sunrise.myaccount.authentication.recoverpassword.reset.SunriseResetPasswordController;
 import com.commercetools.sunrise.myaccount.authentication.recoverpassword.reset.viewmodels.ResetPasswordPageContentFactory;
 import io.sphere.sdk.customers.Customer;
+import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Result;
 
-import javax.annotation.Nullable;
 import javax.inject.Inject;
 import java.util.concurrent.CompletionStage;
 
@@ -38,14 +38,24 @@ public final class ResetPasswordController extends SunriseResetPasswordControlle
         this.authenticationReverseRouter = authenticationReverseRouter;
     }
 
-    @Nullable
     @Override
     public String getTemplateName() {
         return "my-account-reset-password";
     }
 
     @Override
+    public String getCmsPageKey() {
+        return "default";
+    }
+
+    @Override
     public CompletionStage<Result> handleSuccessfulAction(final Customer customer, final ResetPasswordFormData formData) {
         return redirectToCall(authenticationReverseRouter.logInPageCall());
+    }
+
+    @Override
+    protected CompletionStage<Result> handleNotFoundToken(final String resetToken, final Form<? extends ResetPasswordFormData> form) {
+        saveFormError(form, "Reset token is not valid");
+        return showFormPageWithErrors(resetToken, form);
     }
 }

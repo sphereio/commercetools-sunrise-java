@@ -1,5 +1,6 @@
 package com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover;
 
+import com.commercetools.sunrise.email.EmailDeliveryException;
 import com.commercetools.sunrise.framework.controllers.SunriseContentFormController;
 import com.commercetools.sunrise.framework.controllers.WithContentFormFlow;
 import com.commercetools.sunrise.framework.hooks.EnableHooks;
@@ -9,7 +10,8 @@ import com.commercetools.sunrise.framework.template.engine.ContentRenderer;
 import com.commercetools.sunrise.framework.viewmodels.content.PageContent;
 import com.commercetools.sunrise.myaccount.MyAccountController;
 import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover.viewmodels.RecoverPasswordPageContentFactory;
-import io.commercetools.sunrise.email.EmailDeliveryException;
+import io.sphere.sdk.client.ClientErrorException;
+import io.sphere.sdk.client.NotFoundException;
 import io.sphere.sdk.customers.CustomerToken;
 import play.data.Form;
 import play.data.FormFactory;
@@ -68,6 +70,16 @@ public abstract class SunriseRecoverPasswordController extends SunriseContentFor
         }
         return WithContentFormFlow.super.handleFailedAction(input, form, throwable);
     }
+
+    @Override
+    public CompletionStage<Result> handleClientErrorFailedAction(final Void input, final Form<? extends RecoverPasswordFormData> form, final ClientErrorException clientErrorException) {
+        if (clientErrorException instanceof NotFoundException) {
+            return handleNotFoundEmail(form);
+        }
+        return WithContentFormFlow.super.handleClientErrorFailedAction(input, form, clientErrorException);
+    }
+
+    protected abstract CompletionStage<Result> handleNotFoundEmail(final Form<? extends RecoverPasswordFormData> form);
 
     protected abstract CompletionStage<Result> handleEmailDeliveryException(final Form<? extends RecoverPasswordFormData> form, final EmailDeliveryException emailDeliveryException);
 
