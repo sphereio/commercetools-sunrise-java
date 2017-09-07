@@ -31,7 +31,8 @@ object Dependencies {
 
   lazy val sunriseModules = Seq (
     libraryDependencies ++= Seq (
-      "com.commercetools.sunrise.cms" % "cms-api" % "0.1.0"
+      "com.commercetools.sunrise.cms" % "cms-api" % "0.1.0",
+      "com.commercetools.sunrise.email" % "email-api" % "0.3.0"
     )
   )
 

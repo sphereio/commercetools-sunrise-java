@@ -3,50 +3,41 @@ package com.commercetools.sunrise.myaccount.authentication.recoverpassword.recov
 import com.commercetools.sunrise.common.controllers.SunriseFrameworkController;
 import com.commercetools.sunrise.common.controllers.WithFormFlow;
 import com.commercetools.sunrise.common.controllers.WithTemplateName;
+import com.commercetools.sunrise.common.reverserouter.RecoverPasswordReverseRouter;
+import com.commercetools.sunrise.email.EmailDeliveryException;
+import com.commercetools.sunrise.email.EmailSender;
+import com.commercetools.sunrise.framework.annotations.IntroducingMultiControllerComponents;
 import com.commercetools.sunrise.framework.annotations.SunriseRoute;
+import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover.viewmodels.RecoverPasswordPageContent;
 import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover.viewmodels.RecoverPasswordPageContentFactory;
-import com.commercetools.sunrise.myaccount.authentication.signup.SignUpFormData;
-import com.commercetools.sunrise.shoppingcart.CartInSession;
 import io.sphere.sdk.client.ClientErrorException;
 import io.sphere.sdk.client.NotFoundException;
-import io.sphere.sdk.customers.CustomerDraft;
-import io.sphere.sdk.customers.CustomerSignInResult;
 import io.sphere.sdk.customers.CustomerToken;
-import io.sphere.sdk.customers.commands.CustomerCreateCommand;
+import io.sphere.sdk.customers.commands.CustomerCreatePasswordTokenCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import play.data.Form;
-import play.data.FormFactory;
+import play.libs.concurrent.HttpExecution;
+import play.mvc.Call;
 import play.mvc.Result;
+import play.twirl.api.Html;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.CompletionStage;
 
 import static java.util.Arrays.asList;
+import static java.util.concurrent.CompletableFuture.completedFuture;
 
 /**
  * This abstract controller gets an customer email as input, request a customer reset password token for the
  * customer and then sends an email with a link to the reset password page.
  */
+@IntroducingMultiControllerComponents(SunriseRecoverPasswordHeroldComponent.class)
 public abstract class SunriseRecoverPasswordController extends SunriseFrameworkController
         implements WithTemplateName, WithFormFlow<RecoverPasswordFormData, Void, CustomerToken> {
 
     private static final Logger logger = LoggerFactory.getLogger(SunriseRecoverPasswordController.class);
-
-    private final RecoverPasswordPageContentFactory pageContentFactory;
-    private final RecoverPasswordControllerAction controllerAction;
-    private final RecoverPasswordFormData formData;
-
-    protected SunriseRecoverPasswordController(final ContentRenderer contentRenderer, final FormFactory formFactory,
-                                               final RecoverPasswordPageContentFactory pageContentFactory,
-                                               final RecoverPasswordFormData formData,
-                                               final RecoverPasswordControllerAction controllerAction) {
-        super(contentRenderer, formFactory);
-        this.pageContentFactory = pageContentFactory;
-        this.controllerAction = controllerAction;
-        this.formData = formData;
-    }
 
     @Override
     public Set<String> getFrameworkTags() {
@@ -80,50 +71,65 @@ public abstract class SunriseRecoverPasswordController extends SunriseFrameworkC
     }
 
     @Override
-    public CompletionStage<? extends CustomerSignInResult> doAction(final SignUpFormData formData, final Void context) {
-        final String cartId = injector().getInstance(CartInSession.class).findCartId().orElse(null);
-        final CustomerDraft customerDraft = formData.toCustomerDraftBuilder()
-                .customerNumber(generateCustomerNumber())
-                .anonymousCartId(cartId)
-                .build();
-        final CustomerCreateCommand customerCreateCommand = CustomerCreateCommand.of(customerDraft);
-        return sphere().execute(customerCreateCommand);
+    public CompletionStage<? extends CustomerToken> doAction(final RecoverPasswordFormData formData, final Void context) {
+        return sphere().execute(CustomerCreatePasswordTokenCommand.of(formData.email()))
+                .thenComposeAsync(customerToken -> onResetPasswordTokenCreated(customerToken, formData), HttpExecution.defaultContext());
+    }
+
+    protected CompletionStage<CustomerToken> onResetPasswordTokenCreated(final CustomerToken resetPasswordToken, final RecoverPasswordFormData formData) {
+        final EmailSender emailSender = injector().getInstance(EmailSender.class);
+        return injector().getInstance(RecoverPasswordMessageEditorProvider.class).get(resetPasswordToken, formData)
+                .thenCompose(emailSender::send)
+                .thenApply(messageId -> resetPasswordToken);
     }
 
     @Override
-    public CompletionStage<CustomerToken> executeAction(final Void input, final RecoverPasswordFormData formData) {
-        return controllerAction.apply(formData);
-    }
-
-    @Override
-    public CompletionStage<Result> handleFailedAction(final Void input, final Form<? extends RecoverPasswordFormData> form, final Throwable throwable) {
+    public CompletionStage<Result> handleFailedAction(final Form<? extends RecoverPasswordFormData> form, final Void context, final Throwable throwable) {
         final Throwable cause = throwable.getCause();
         if (cause instanceof EmailDeliveryException) {
             final EmailDeliveryException emailDeliveryException = (EmailDeliveryException) cause;
             return handleEmailDeliveryException(form, emailDeliveryException);
         }
-        return WithContentFormFlow.super.handleFailedAction(input, form, throwable);
+        return WithFormFlow.super.handleFailedAction(form, context, throwable);
     }
 
     @Override
-    public CompletionStage<Result> handleClientErrorFailedAction(final Void input, final Form<? extends RecoverPasswordFormData> form, final ClientErrorException clientErrorException) {
+    public CompletionStage<Result> handleClientErrorFailedAction(final Form<? extends RecoverPasswordFormData> form, final Void context, final ClientErrorException clientErrorException) {
         if (clientErrorException instanceof NotFoundException) {
             return handleNotFoundEmail(form);
         }
-        return WithContentFormFlow.super.handleClientErrorFailedAction(input, form, clientErrorException);
+        return asyncBadRequest(renderPage(form, context, null));
     }
 
-    protected abstract CompletionStage<Result> handleNotFoundEmail(final Form<? extends RecoverPasswordFormData> form);
+    protected CompletionStage<Result> handleNotFoundEmail(final Form<? extends RecoverPasswordFormData> form) {
+        saveFormError(form, "Email not found");
+        return asyncBadRequest(renderPage(form, null, null));
+    }
 
-    protected abstract CompletionStage<Result> handleEmailDeliveryException(final Form<? extends RecoverPasswordFormData> form, final EmailDeliveryException emailDeliveryException);
-
-    @Override
-    public PageContent createPageContent(final Void input, final Form<? extends RecoverPasswordFormData> form) {
-        return pageContentFactory.create(form);
+    protected CompletionStage<Result> handleEmailDeliveryException(final Form<? extends RecoverPasswordFormData> form, final EmailDeliveryException emailDeliveryException) {
+        saveFormError(form, "Email delivery error");
+        return asyncInternalServerError(renderPage(form, null, null));
     }
 
     @Override
-    public void preFillFormData(final Void input, final RecoverPasswordFormData formData) {
+    public CompletionStage<Result> handleSuccessfulAction(final RecoverPasswordFormData formData, final Void context, final CustomerToken customerToken) {
+        flash("success", "A message with further instructions has been sent to your email address");
+        return redirectToSameForm();
+    }
+
+    @Override
+    public CompletionStage<Html> renderPage(final Form<? extends RecoverPasswordFormData> form, final Void context, final CustomerToken customerToken) {
+        final RecoverPasswordPageContent pageContent = injector().getInstance(RecoverPasswordPageContentFactory.class).create(form);
+        return renderPageWithTemplate(pageContent, getTemplateName());
+    }
+
+    @Override
+    public void fillFormData(final RecoverPasswordFormData formData, final Void context) {
         // Do nothing
+    }
+
+    protected final CompletionStage<Result> redirectToSameForm() {
+        final Call call = injector().getInstance(RecoverPasswordReverseRouter.class).showRequestRecoveryEmailForm(userContext().languageTag());
+        return completedFuture(redirect(call));
     }
 }

@@ -27,43 +27,5 @@ import java.util.concurrent.CompletionStage;
         PageHeaderControllerComponentSupplier.class
 })
 public class RecoverPasswordController extends SunriseRecoverPasswordController {
-    private final RecoverPasswordReverseRouter recoverPasswordReverseRouter;
 
-    @Inject
-    RecoverPasswordController(final ContentRenderer contentRenderer, final FormFactory formFactory,
-                              final RecoverPasswordPageContentFactory pageContentFactory,
-                              final RecoverPasswordFormData formData,
-                              final RecoverPasswordControllerAction controllerAction,
-                              final RecoverPasswordReverseRouter recoverPasswordReverseRouter) {
-        super(contentRenderer, formFactory, pageContentFactory, formData, controllerAction);
-        this.recoverPasswordReverseRouter = recoverPasswordReverseRouter;
-    }
-
-    @Override
-    public String getTemplateName() {
-        return "my-account-forgot-password";
-    }
-
-    @Override
-    public String getCmsPageKey() {
-        return "default";
-    }
-
-    @Override
-    public CompletionStage<Result> handleSuccessfulAction(final CustomerToken customerToken, final RecoverPasswordFormData formData) {
-        flash("success", "A message with further instructions has been sent to your email address");
-        return redirectToCall(recoverPasswordReverseRouter.requestRecoveryEmailPageCall());
-    }
-
-    @Override
-    protected CompletionStage<Result> handleNotFoundEmail(final Form<? extends RecoverPasswordFormData> form) {
-        saveFormError(form, "Email not found");
-        return showFormPageWithErrors(null, form);
-    }
-
-    @Override
-    protected CompletionStage<Result> handleEmailDeliveryException(final Form<? extends RecoverPasswordFormData> form, final EmailDeliveryException emailDeliveryException) {
-        saveFormError(form, "Email delivery error");
-        return internalServerErrorResultWithPageContent(createPageContent(null, form));
-    }
 }
