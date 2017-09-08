@@ -1,7 +1,7 @@
-package com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover.viewmodels;
+package com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover;
 
-import com.commercetools.sunrise.framework.reverserouters.myaccount.recoverpassword.RecoverPasswordReverseRouter;
-import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
+import com.commercetools.sunrise.common.contexts.UserContext;
+import com.commercetools.sunrise.common.reverserouter.RecoverPasswordReverseRouter;
 import io.sphere.sdk.customers.CustomerToken;
 import play.mvc.Http;
 
@@ -10,30 +10,27 @@ import javax.inject.Inject;
 /**
  * Creates the page content to render the password reset email content.
  */
-public class RecoverPasswordEmailContentFactory extends SimpleViewModelFactory<RecoverPasswordEmailContent, CustomerToken> {
-
-    private final RecoverPasswordReverseRouter recoverPasswordReverseRouter;
+public class RecoverPasswordEmailContentFactory {
 
     @Inject
-    protected RecoverPasswordEmailContentFactory(final RecoverPasswordReverseRouter recoverPasswordReverseRouter) {
-        this.recoverPasswordReverseRouter = recoverPasswordReverseRouter;
-    }
+    private UserContext userContext;
+    @Inject
+    private RecoverPasswordReverseRouter recoverPasswordReverseRouter;
 
     protected final RecoverPasswordReverseRouter getRecoverPasswordReverseRouter() {
         return recoverPasswordReverseRouter;
     }
 
-    @Override
-    protected RecoverPasswordEmailContent newViewModelInstance(final CustomerToken resetPasswordToken) {
-        return new RecoverPasswordEmailContent();
+    protected final UserContext getUserContext() {
+        return userContext;
     }
 
-    @Override
     public RecoverPasswordEmailContent create(final CustomerToken customerToken) {
-        return super.create(customerToken);
+        final RecoverPasswordEmailContent bean = new RecoverPasswordEmailContent();
+        initialize(bean, customerToken);
+        return bean;
     }
 
-    @Override
     protected final void initialize(final RecoverPasswordEmailContent viewModel, final CustomerToken resetPasswordToken) {
         fillPasswordResetUrl(viewModel, resetPasswordToken);
     }
@@ -45,7 +42,7 @@ public class RecoverPasswordEmailContentFactory extends SimpleViewModelFactory<R
 
     private String createPasswordResetUrl(final CustomerToken resetPasswordToken) {
         final Http.Request request = Http.Context.current().request();
-        return recoverPasswordReverseRouter.resetPasswordPageCall(resetPasswordToken.getValue())
+        return recoverPasswordReverseRouter.showResetPasswordForm(userContext.languageTag(), resetPasswordToken.getValue())
                 .absoluteURL(request);
     }
 }

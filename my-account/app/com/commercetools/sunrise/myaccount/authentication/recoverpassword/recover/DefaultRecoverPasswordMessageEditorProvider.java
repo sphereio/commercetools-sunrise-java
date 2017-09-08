@@ -1,18 +1,22 @@
 package com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover;
 
-import com.commercetools.sunrise.framework.template.engine.EmailContentRenderer;
-import com.commercetools.sunrise.framework.template.i18n.I18nIdentifierResolver;
-import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover.viewmodels.RecoverPasswordEmailContent;
-import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover.viewmodels.RecoverPasswordEmailContentFactory;
+import com.commercetools.sunrise.common.contexts.UserContext;
+import com.commercetools.sunrise.common.pages.SunrisePageData;
+import com.commercetools.sunrise.common.template.engine.TemplateContext;
+import com.commercetools.sunrise.common.template.engine.TemplateEngine;
+import com.commercetools.sunrise.common.template.i18n.I18nIdentifier;
+import com.commercetools.sunrise.common.template.i18n.I18nResolver;
 import com.commercetools.sunrise.email.MessageEditor;
 import io.sphere.sdk.customers.CustomerToken;
+import play.inject.Injector;
 import play.libs.concurrent.HttpExecution;
-import play.twirl.api.Content;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.mail.Message;
 import java.util.concurrent.CompletionStage;
+
+import static java.util.concurrent.CompletableFuture.completedFuture;
 
 /**
  * Default provider which obtains the email contents from the template {@code password-reset-email}.
@@ -39,25 +43,22 @@ import java.util.concurrent.CompletionStage;
  */
 public class DefaultRecoverPasswordMessageEditorProvider implements RecoverPasswordMessageEditorProvider {
 
-    private final I18nIdentifierResolver i18nIdentifierResolver;
-    private final EmailContentRenderer emailContentRenderer;
-    private final RecoverPasswordEmailContentFactory recoverPasswordEmailContentFactory;
-
     @Inject
-    protected DefaultRecoverPasswordMessageEditorProvider(final I18nIdentifierResolver i18nIdentifierResolver,
-                                                          final EmailContentRenderer emailContentRenderer,
-                                                          final RecoverPasswordEmailContentFactory recoverPasswordEmailContentFactory) {
-        this.i18nIdentifierResolver = i18nIdentifierResolver;
-        this.emailContentRenderer = emailContentRenderer;
-        this.recoverPasswordEmailContentFactory = recoverPasswordEmailContentFactory;
+    private UserContext userContext;
+    @Inject
+    private I18nResolver i18nResolver;
+    @Inject
+    private RecoverPasswordEmailContentFactory recoverPasswordEmailContentFactory;
+    @Inject
+    private Injector injector;
+
+
+    protected final UserContext getUserContext() {
+        return userContext;
     }
 
-    protected final I18nIdentifierResolver getI18nIdentifierResolver() {
-        return i18nIdentifierResolver;
-    }
-
-    protected final EmailContentRenderer getEmailContentRenderer() {
-        return emailContentRenderer;
+    protected final I18nResolver getI18nResolver() {
+        return i18nResolver;
     }
 
     protected final RecoverPasswordEmailContentFactory getRecoverPasswordEmailContentFactory() {
@@ -77,17 +78,22 @@ public class DefaultRecoverPasswordMessageEditorProvider implements RecoverPassw
 
     private CompletionStage<String> createEmailContent(final CustomerToken resetPasswordToken) {
         final RecoverPasswordEmailContent viewModel = recoverPasswordEmailContentFactory.create(resetPasswordToken);
-        return emailContentRenderer.render(viewModel, "password-reset-email")
-                .thenApply(Content::body);
+        final SunrisePageData pageData = new SunrisePageData();
+        pageData.setContent(viewModel);
+        final TemplateContext templateContext = new TemplateContext(pageData, userContext.locales(), null);
+        final String content = injector.instanceOf(TemplateEngine.class).render("password-reset-email", templateContext);
+        return completedFuture(content);
     }
 
     @Nullable
     private String createFromField() {
-        return i18nIdentifierResolver.resolve("my-account:forgotPassword.email.from").orElse(null);
+        final I18nIdentifier i18nIdentifier = I18nIdentifier.of("my-account", "forgotPassword.email.from");
+        return i18nResolver.get(userContext.locales(), i18nIdentifier).orElse(null);
     }
 
     @Nullable
     private String createSubjectField() {
-        return i18nIdentifierResolver.resolve("my-account:forgotPassword.email.subject").orElse(null);
+        final I18nIdentifier i18nIdentifier = I18nIdentifier.of("my-account", "forgotPassword.email.subject");
+        return i18nResolver.get(userContext.locales(), i18nIdentifier).orElse(null);
     }
 }

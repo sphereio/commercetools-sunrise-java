@@ -8,8 +8,6 @@ import com.commercetools.sunrise.email.EmailDeliveryException;
 import com.commercetools.sunrise.email.EmailSender;
 import com.commercetools.sunrise.framework.annotations.IntroducingMultiControllerComponents;
 import com.commercetools.sunrise.framework.annotations.SunriseRoute;
-import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover.viewmodels.RecoverPasswordPageContent;
-import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover.viewmodels.RecoverPasswordPageContentFactory;
 import io.sphere.sdk.client.ClientErrorException;
 import io.sphere.sdk.client.NotFoundException;
 import io.sphere.sdk.customers.CustomerToken;
