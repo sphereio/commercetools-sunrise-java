@@ -41,6 +41,7 @@ lazy val common = project
   .configs(IntegrationTest, TestCommon.PlayTest)
   .settings(Release.enableSignedRelease ++ TestCommon.defaultSettings: _*)
   .settings(Dependencies.jvmSdk ++ Dependencies.sunriseTheme ++ Dependencies.sunriseModules ++ Dependencies.commonLib: _*)
+  .dependsOn(`move-to-sdk`)
 
 lazy val `product-catalog` = project
   .enablePlugins(PlayJava, GenJavadocPlugin)
