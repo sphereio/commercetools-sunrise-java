@@ -1,4 +1,4 @@
-package controllers.myaccount;
+package demo.myaccount;
 
 import com.commercetools.sunrise.it.WithSphereClient;
 import io.sphere.sdk.customers.CustomerToken;

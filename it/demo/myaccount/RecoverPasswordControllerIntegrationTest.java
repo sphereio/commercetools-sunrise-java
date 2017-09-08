@@ -1,4 +1,4 @@
-package controllers.myaccount;
+package demo.myaccount;
 
 import com.commercetools.sunrise.it.WithSphereClient;
 import com.google.inject.AbstractModule;
