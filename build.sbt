@@ -27,7 +27,8 @@ val childProjects: List[sbt.ProjectReference] =
 
 lazy val `commercetools-sunrise` = (project in file("."))
   .enablePlugins(PlayJava)
-  .settings(javadocSettings ++ Release.disablePublish: _*)
+  .configs(IntegrationTest, TestCommon.PlayTest)
+  .settings(javadocSettings ++ Release.disablePublish ++ TestCommon.defaultSettings: _*)
   .settings(Dependencies.sunriseDefaultTheme)
   .aggregate(childProjects: _*)
   .dependsOn(`product-catalog`, `shopping-cart`, `my-account`)
