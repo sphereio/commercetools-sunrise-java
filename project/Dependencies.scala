@@ -4,6 +4,7 @@ import sbt._
 
 object Dependencies {
   private val sunriseThemeVersion = "0.70.0"
+  private val sunriseEmailVersion = "0.3.0"
   private val jvmSdkVersion = "1.21.0"
   private val jacksonVersion = "2.7.5"
 
@@ -35,6 +36,12 @@ object Dependencies {
       "com.commercetools.sunrise.email" % "email-api" % "0.3.0"
     )
   )
+
+  lazy val sunriseEmailSmtp = Seq {
+    libraryDependencies ++= Seq (
+      "com.commercetools.sunrise.email" % "email-smtp" % sunriseEmailVersion
+    )
+  }
 
   lazy val commonLib = Seq (
     libraryDependencies ++= Seq (
