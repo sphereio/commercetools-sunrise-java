@@ -25,7 +25,7 @@ Heroku.deploySettings
 Version.generateVersionInfo
 
 val childProjects: List[sbt.ProjectReference] =
-  List(common, `product-catalog`, `shopping-cart`, `my-account`)
+  List(common, `product-catalog`, `shopping-cart`, `my-account`, `move-to-sdk`, `sbt-tasks`)
 
 lazy val `commercetools-sunrise` = (project in file("."))
   .enablePlugins(PlayJava, JavaUnidocPlugin)
