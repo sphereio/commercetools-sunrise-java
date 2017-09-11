@@ -17,12 +17,12 @@ final class SmtpEmailSenderSettingsImpl extends Base implements SmtpEmailSenderS
     SmtpEmailSenderSettingsImpl(final Configuration globalConfig, final String configPath) {
         final Configuration config = globalConfig.getConfig(configPath);
         final String host = config.getString("host");
-        final int port = config.getInt("port");
+        final int port = config.getInt("port", 25);
         final String username = config.getString("username");
         final String password = config.getString("password");
         final SmtpConfiguration.TransportSecurity security = getTransportSecurity(config);
         smtpConfiguration = new SmtpConfiguration(host, port, security, username, password);
-        timeoutMs = config.getInt("timeoutMs");
+        timeoutMs = config.getInt("timeoutMs", 3000);
     }
 
     @Override
@@ -36,7 +36,7 @@ final class SmtpEmailSenderSettingsImpl extends Base implements SmtpEmailSenderS
     }
 
     private static SmtpConfiguration.TransportSecurity getTransportSecurity(final Configuration config) {
-        final String security = config.getString("security");
+        final String security = config.getString("security", "SSL_TLS");
         return SmtpConfiguration.TransportSecurity.valueOf(security);
     }
 }
