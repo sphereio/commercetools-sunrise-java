@@ -1,12 +1,11 @@
 package demo.myaccount;
 
-import com.commercetools.sunrise.it.WithSphereClient;
-import com.google.common.base.Charsets;
-import com.google.common.io.Resources;
-import com.google.inject.AbstractModule;
 import com.commercetools.sunrise.email.EmailDeliveryException;
 import com.commercetools.sunrise.email.EmailSender;
 import com.commercetools.sunrise.email.MessageEditor;
+import com.commercetools.sunrise.it.WithSphereClient;
+import com.google.inject.AbstractModule;
+import com.google.inject.name.Names;
 import io.sphere.sdk.client.SphereClient;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,8 +19,6 @@ import play.mvc.Http;
 import play.mvc.Result;
 
 import javax.mail.internet.MimeMessage;
-
-import java.net.URL;
 
 import static com.commercetools.sunrise.it.CustomerTestFixtures.customerDraft;
 import static com.commercetools.sunrise.it.CustomerTestFixtures.withCustomer;
@@ -50,6 +47,7 @@ public class RecoverPasswordControllerIntegrationTest extends WithSphereClient {
                 .overrides(new AbstractModule() {
                     @Override
                     protected void configure() {
+                        bind(SphereClient.class).annotatedWith(Names.named("global")).toInstance(sphereClient);
                         bind(SphereClient.class).toInstance(sphereClient);
                         bind(EmailSender.class).toInstance(emailSender);
                     }
@@ -58,9 +56,6 @@ public class RecoverPasswordControllerIntegrationTest extends WithSphereClient {
 
     @Test
     public void showsForm() throws Exception {
-        final URL resource = Thread.currentThread().getContextClassLoader().getResource("it.conf");
-        final String content = Resources.toString(resource, Charsets.UTF_8);
-        System.out.println(content);
         final Result result = route(new Http.RequestBuilder()
                 .uri("/en/password/recovery"));
 
