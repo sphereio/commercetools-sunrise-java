@@ -19,6 +19,8 @@ import play.mvc.Result;
 
 import javax.mail.internet.MimeMessage;
 
+import java.net.URL;
+
 import static com.commercetools.sunrise.it.CustomerTestFixtures.customerDraft;
 import static com.commercetools.sunrise.it.CustomerTestFixtures.withCustomer;
 import static com.commercetools.sunrise.it.EmailTestFixtures.addressOf;
@@ -42,6 +44,8 @@ public class RecoverPasswordControllerIntegrationTest extends WithSphereClient {
 
     @Override
     protected Application provideApplication() {
+        final URL url = Thread.currentThread().getContextClassLoader().getResource("it.conf");
+        System.out.println(url.getPath());
         return new GuiceApplicationBuilder()
                 .overrides(new AbstractModule() {
                     @Override
