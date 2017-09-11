@@ -21,7 +21,7 @@ before_cache:
   - find $HOME/.sbt -name "*.lock" -delete
 
 script:
-- sbt compile test it:test pt:test unidoc
+- sbt clean compile test pt:test it:test unidoc
 
 notifications:
   email:

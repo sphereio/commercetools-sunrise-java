@@ -1,6 +1,8 @@
 package demo.myaccount;
 
 import com.commercetools.sunrise.it.WithSphereClient;
+import com.google.common.base.Charsets;
+import com.google.common.io.Resources;
 import com.google.inject.AbstractModule;
 import com.commercetools.sunrise.email.EmailDeliveryException;
 import com.commercetools.sunrise.email.EmailSender;
@@ -44,8 +46,6 @@ public class RecoverPasswordControllerIntegrationTest extends WithSphereClient {
 
     @Override
     protected Application provideApplication() {
-        final URL url = Thread.currentThread().getContextClassLoader().getResource("it.conf");
-        System.out.println(url.getPath());
         return new GuiceApplicationBuilder()
                 .overrides(new AbstractModule() {
                     @Override
@@ -58,6 +58,9 @@ public class RecoverPasswordControllerIntegrationTest extends WithSphereClient {
 
     @Test
     public void showsForm() throws Exception {
+        final URL resource = Thread.currentThread().getContextClassLoader().getResource("it.conf");
+        final String content = Resources.toString(resource, Charsets.UTF_8);
+        System.out.println(content);
         final Result result = route(new Http.RequestBuilder()
                 .uri("/en/password/recovery"));
 
