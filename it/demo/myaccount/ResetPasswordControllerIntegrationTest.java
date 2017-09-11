@@ -1,9 +1,14 @@
 package demo.myaccount;
 
 import com.commercetools.sunrise.it.WithSphereClient;
+import com.google.inject.AbstractModule;
+import com.google.inject.name.Names;
+import io.sphere.sdk.client.SphereClient;
 import io.sphere.sdk.customers.CustomerToken;
 import io.sphere.sdk.customers.commands.CustomerCreatePasswordTokenCommand;
 import org.junit.Test;
+import play.Application;
+import play.inject.guice.GuiceApplicationBuilder;
 import play.mvc.Http;
 import play.mvc.Result;
 
@@ -17,6 +22,18 @@ import static play.mvc.Http.Status.OK;
 import static play.test.Helpers.*;
 
 public class ResetPasswordControllerIntegrationTest extends WithSphereClient {
+
+    @Override
+    protected Application provideApplication() {
+        return new GuiceApplicationBuilder()
+                .overrides(new AbstractModule() {
+                    @Override
+                    protected void configure() {
+                        bind(SphereClient.class).annotatedWith(Names.named("global")).toInstance(sphereClient);
+                        bind(SphereClient.class).toInstance(sphereClient);
+                    }
+                }).build();
+    }
 
     @Test
     public void showsForm() throws Exception {
