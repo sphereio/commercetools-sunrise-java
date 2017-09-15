@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.categorytree;
+package com.commercetools.sunrise.ctp.categories;
 
 import com.commercetools.sunrise.play.configuration.SunriseConfigurationException;
 import io.sphere.sdk.models.Base;
@@ -9,27 +9,30 @@ import java.util.Optional;
 
 import static java.util.Collections.emptyList;
 
-public final class SpecialCategoryConfiguration extends Base {
+final class SpecialCategorySettingsImpl extends Base implements SpecialCategorySettings {
 
     private final String externalId;
-    private final List<String> filterExpressions;
+    private final List<String> productFilterExpressions;
     private final boolean sale;
 
-    SpecialCategoryConfiguration(final Configuration configuration) {
+    SpecialCategorySettingsImpl(final Configuration configuration) {
         this.externalId = Optional.ofNullable(configuration.getString("externalId"))
                 .orElseThrow(() -> new SunriseConfigurationException("Required category external ID", "externalId"));
-        this.filterExpressions = configuration.getStringList("filterExpressions", emptyList());
+        this.productFilterExpressions = configuration.getStringList("productFilterExpressions", emptyList());
         this.sale = configuration.getBoolean("sale", false);
     }
 
+    @Override
     public String externalId() {
         return externalId;
     }
 
-    public List<String> filterExpressions() {
-        return filterExpressions;
+    @Override
+    public List<String> productFilterExpressions() {
+        return productFilterExpressions;
     }
 
+    @Override
     public boolean isSale() {
         return sale;
     }

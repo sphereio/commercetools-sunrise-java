@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.ctp;
+package com.commercetools.sunrise.ctp.client;
 
 public class SphereClientCredentialsException extends RuntimeException {
 

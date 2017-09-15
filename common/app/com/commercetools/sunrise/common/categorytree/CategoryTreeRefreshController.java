@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.common.categorytree;
 
-import com.commercetools.sunrise.categorytree.CategoryTreeConfiguration;
+import com.commercetools.sunrise.ctp.categories.CategoriesSettings;
 import com.commercetools.sunrise.framework.reverserouters.productcatalog.home.HomeReverseRouter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,17 +10,17 @@ import play.mvc.Result;
 
 import javax.inject.Inject;
 
-public class CategoriesRefreshController extends Controller {
+public class CategoryTreeRefreshController extends Controller {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CategoriesRefreshController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CategoryTreeRefreshController.class);
 
-    private final CategoryTreeConfiguration configuration;
+    private final CategoriesSettings configuration;
     private final CacheApi cacheApi;
     private final HomeReverseRouter homeReverseRouter;
 
     @Inject
-    public CategoriesRefreshController(final CategoryTreeConfiguration configuration,
-                                       final CacheApi cacheApi, final HomeReverseRouter homeReverseRouter) {
+    public CategoryTreeRefreshController(final CategoriesSettings configuration,
+                                         final CacheApi cacheApi, final HomeReverseRouter homeReverseRouter) {
         this.configuration = configuration;
         this.cacheApi = cacheApi;
         this.homeReverseRouter = homeReverseRouter;

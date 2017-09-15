@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.ctp;
+package com.commercetools.sunrise.ctp.client;
 
 import com.google.inject.Provider;
 import io.sphere.sdk.client.SphereClient;
@@ -16,7 +16,7 @@ public final class SphereClientProvider implements Provider<SphereClient> {
     private final SphereClientConfig sphereClientConfig;
 
     @Inject
-    public SphereClientProvider(final ApplicationLifecycle applicationLifecycle, final SphereClientConfig sphereClientConfig) {
+    SphereClientProvider(final ApplicationLifecycle applicationLifecycle, final SphereClientConfig sphereClientConfig) {
         this.applicationLifecycle = applicationLifecycle;
         this.sphereClientConfig = sphereClientConfig;
     }

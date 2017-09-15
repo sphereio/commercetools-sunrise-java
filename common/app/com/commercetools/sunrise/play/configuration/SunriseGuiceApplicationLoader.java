@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.play.inject;
+package com.commercetools.sunrise.play.configuration;
 
 import play.ApplicationLoader;
 import play.Configuration;
