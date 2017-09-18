@@ -31,7 +31,7 @@ public class CategoriesSettingsTest extends WithApplication {
                 .isFalse();
         assertThat(configuration.sortExpressions())
                 .as("Sort expressions")
-                .isEmpty();
+                .isNotEmpty();
         assertThat(configuration.navigationExternalId())
                 .as("Navigation external ID")
                 .isEmpty();
