@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.categorytree;
+package com.commercetools.sunrise.ctp.categories;
 
 import org.junit.Test;
 import play.Application;
@@ -8,7 +8,7 @@ import play.test.WithApplication;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CategoryTreeConfigurationTest extends WithApplication {
+public class CategoriesSettingsTest extends WithApplication {
 
     @Override
     protected Application provideApplication() {
@@ -19,7 +19,7 @@ public class CategoryTreeConfigurationTest extends WithApplication {
 
     @Test
     public void fallbacksToDefaultValues() throws Exception {
-        final CategoryTreeConfiguration configuration = app.injector().instanceOf(CategoryTreeConfiguration.class);
+        final CategoriesSettings configuration = app.injector().instanceOf(CategoriesSettings.class);
         assertThat(configuration.cacheExpiration())
                 .as("Cache expiration")
                 .isEmpty();
