@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.categorytree;
+package com.commercetools.sunrise.ctp.categories;
 
 import com.commercetools.sunrise.test.JsonUtils;
 import io.sphere.sdk.categories.Category;
@@ -24,11 +24,11 @@ public class CategoryTreeProviderTest {
     private static PagedQueryResult<Category> categoryQueryResult = JsonUtils.readCtpObject("categorytree/providerCategoryQueryResult.json", CategoryQuery.resultTypeReference());
 
     private SphereClient sphereClient;
-    private CategoryTreeConfiguration configuration;
+    private CategoriesSettings configuration;
 
     @Before
     public void setUp() throws Exception {
-        this.configuration = mock(CategoryTreeConfiguration.class);
+        this.configuration = mock(CategoriesSettings.class);
         this.sphereClient = mock(SphereClient.class);
         when(sphereClient.execute(any(CategoryQuery.class))).thenReturn(completedFuture(categoryQueryResult));
     }

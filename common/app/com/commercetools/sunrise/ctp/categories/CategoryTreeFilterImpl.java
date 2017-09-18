@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.categorytree;
+package com.commercetools.sunrise.ctp.categories;
 
 import io.sphere.sdk.categories.Category;
 import io.sphere.sdk.categories.CategoryTree;
@@ -14,18 +14,18 @@ import static java.util.stream.Collectors.toList;
 
 class CategoryTreeFilterImpl implements CategoryTreeFilter {
 
-    private final CategoryTreeConfiguration configuration;
+    private final CategoriesSettings categoriesSettings;
     private final SphereClient sphereClient;
 
     @Inject
-    CategoryTreeFilterImpl(final CategoryTreeConfiguration configuration, final SphereClient sphereClient) {
-        this.configuration = configuration;
+    CategoryTreeFilterImpl(final CategoriesSettings categoriesSettings, final SphereClient sphereClient) {
+        this.categoriesSettings = categoriesSettings;
         this.sphereClient = sphereClient;
     }
 
     @Override
     public CompletionStage<CategoryTree> filter(final CategoryTree categoryTree) {
-        if (configuration.discardEmpty()) {
+        if (categoriesSettings.discardEmpty()) {
             return fetchEmptyCategoryIds()
                     .thenApply(emptyCategoryIds -> discardEmptyCategories(categoryTree, emptyCategoryIds))
                     .thenApply(CategoryTree::of);

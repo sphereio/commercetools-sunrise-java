@@ -13,7 +13,7 @@ public final class SphereClientConfigProvider implements Provider<SphereClientCo
 
     @Inject
     SphereClientConfigProvider(final Configuration globalConfig) {
-        this.configuration = globalConfig.getConfig("ctp.client");
+        this.configuration = globalConfig.getConfig("sunrise.ctp.client");
     }
 
     @Override

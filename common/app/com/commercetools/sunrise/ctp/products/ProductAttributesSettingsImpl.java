@@ -19,7 +19,7 @@ final class ProductAttributesSettingsImpl implements ProductAttributesSettings {
 
     @Inject
     ProductAttributesSettingsImpl(final Configuration globalConfig) {
-        this(globalConfig, "ctp.products.attributes");
+        this(globalConfig, "sunrise.ctp.products.attributes");
     }
 
     ProductAttributesSettingsImpl(final Configuration globalConfig, final String configPath) {

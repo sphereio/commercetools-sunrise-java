@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.categorytree;
+package com.commercetools.sunrise.ctp.categories;
 
 import com.commercetools.sunrise.it.WithSphereClient;
 import io.sphere.sdk.categories.queries.CategoryQueryModel;

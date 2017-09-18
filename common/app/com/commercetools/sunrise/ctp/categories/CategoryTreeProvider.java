@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.categorytree;
+package com.commercetools.sunrise.ctp.categories;
 
 import io.sphere.sdk.categories.Category;
 import io.sphere.sdk.categories.CategoryTree;
@@ -23,12 +23,12 @@ public final class CategoryTreeProvider implements Provider<CategoryTree> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CategoryTreeProvider.class);
 
-    private final CategoryTreeConfiguration configuration;
+    private final CategoriesSettings configuration;
     private final CategoryTreeFilter categoryTreeFilter;
     private final SphereClient sphereClient;
 
     @Inject
-    CategoryTreeProvider(final CategoryTreeConfiguration configuration, final CategoryTreeFilter categoryTreeFilter,
+    CategoryTreeProvider(final CategoriesSettings configuration, final CategoryTreeFilter categoryTreeFilter,
                          final SphereClient sphereClient) {
         this.categoryTreeFilter = categoryTreeFilter;
         this.configuration = configuration;

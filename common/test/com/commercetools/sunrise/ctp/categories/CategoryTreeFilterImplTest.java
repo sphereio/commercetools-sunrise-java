@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.categorytree;
+package com.commercetools.sunrise.ctp.categories;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import io.sphere.sdk.categories.Category;
@@ -24,12 +24,12 @@ public class CategoryTreeFilterImplTest {
     private static PagedQueryResult<CategoryWithProductCount> categoriesWithProductCountQueryResult = readCtpObject("categorytree/categoriesWithProductCountQueryResult.json", CategoriesWithProductCountQuery.resultTypeReference());
 
     private SphereClient sphereClient;
-    private CategoryTreeConfiguration configuration;
+    private CategoriesSettings categoriesSettings;
     private CategoryTree categoryTree;
 
     @Before
     public void setUp() throws Exception {
-        this.configuration = mock(CategoryTreeConfiguration.class);
+        this.categoriesSettings = mock(CategoriesSettings.class);
         this.sphereClient = mock(SphereClient.class);
         when(sphereClient.execute(any(CategoriesWithProductCountQuery.class))).thenReturn(completedFuture(categoriesWithProductCountQueryResult));
         this.categoryTree = CategoryTree.of(categoryList);
@@ -37,7 +37,7 @@ public class CategoryTreeFilterImplTest {
 
     @Test
     public void keepsEmptyCategories() throws Exception {
-        when(configuration.discardEmpty()).thenReturn(false);
+        when(categoriesSettings.discardEmpty()).thenReturn(false);
         final CategoryTree filteredCategoryTree = filterCategoryTree(categoryTree);
         assertThat(filteredCategoryTree).isSameAs(categoryTree);
         assertThat(filteredCategoryTree.getAllAsFlatList()).hasSize(8);
@@ -45,7 +45,7 @@ public class CategoryTreeFilterImplTest {
 
     @Test
     public void discardsEmptyCategories() throws Exception {
-        when(configuration.discardEmpty()).thenReturn(true);
+        when(categoriesSettings.discardEmpty()).thenReturn(true);
         final CategoryTree filteredCategoryTree = filterCategoryTree(categoryTree);
         assertThat(filteredCategoryTree).isNotSameAs(categoryTree);
         assertThat(filteredCategoryTree.getAllAsFlatList())
@@ -55,6 +55,6 @@ public class CategoryTreeFilterImplTest {
     }
 
     private CategoryTree filterCategoryTree(final CategoryTree categoryTree) {
-        return new CategoryTreeFilterImpl(configuration, sphereClient).filter(categoryTree).toCompletableFuture().join();
+        return new CategoryTreeFilterImpl(categoriesSettings, sphereClient).filter(categoryTree).toCompletableFuture().join();
     }
 }

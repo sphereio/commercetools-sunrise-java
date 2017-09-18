@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.categorytree;
+package com.commercetools.sunrise.ctp.categories;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import io.sphere.sdk.json.SphereJsonUtils;

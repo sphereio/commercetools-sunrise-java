@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.categorytree;
+package com.commercetools.sunrise.ctp.categories;
 
 import com.commercetools.sunrise.ctp.graphql.SingleGraphQLRequest;
 import com.fasterxml.jackson.core.type.TypeReference;

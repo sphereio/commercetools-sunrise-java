@@ -26,7 +26,7 @@ final class CategoriesSettingsImpl extends Base implements CategoriesSettings {
 
     @Inject
     CategoriesSettingsImpl(final Configuration configuration) {
-        this(configuration, "ctp.categories");
+        this(configuration, "sunrise.ctp.categories");
     }
 
     CategoriesSettingsImpl(final Configuration globalConfig, final String configPath) {
