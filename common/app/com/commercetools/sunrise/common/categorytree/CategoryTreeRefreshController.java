@@ -14,20 +14,20 @@ public class CategoryTreeRefreshController extends Controller {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CategoryTreeRefreshController.class);
 
-    private final CategoriesSettings configuration;
+    private final CategoriesSettings categoriesSettings;
     private final CacheApi cacheApi;
     private final HomeReverseRouter homeReverseRouter;
 
     @Inject
     public CategoryTreeRefreshController(final CategoriesSettings categoriesSettings,
                                          final CacheApi cacheApi, final HomeReverseRouter homeReverseRouter) {
-        this.configuration = categoriesSettings;
+        this.categoriesSettings = categoriesSettings;
         this.cacheApi = cacheApi;
         this.homeReverseRouter = homeReverseRouter;
     }
 
     public Result refresh() {
-        cacheApi.remove(configuration.cacheKey());
+        cacheApi.remove(categoriesSettings.cacheKey());
         LOGGER.info("Cached category tree removed");
         return redirect(homeReverseRouter.homePageCall());
     }
