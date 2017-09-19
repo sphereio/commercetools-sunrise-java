@@ -124,8 +124,8 @@ public class Module extends AbstractModule {
     @Provides
     @RequestScoped
     @NavigationCategoryTree
-    private CategoryTree provideNavigationCategoryTree(final CategoriesSettings configuration, final CategoryTree categoryTree) {
-        return configuration.navigationExternalId()
+    private CategoryTree provideNavigationCategoryTree(final CategoriesSettings categoriesSettings, final CategoryTree categoryTree) {
+        return categoriesSettings.navigationExternalId()
                 .flatMap(categoryTree::findByExternalId)
                 .map(categoryTree::findChildren)
                 .map(categoryTree::getSubtree)
@@ -135,8 +135,8 @@ public class Module extends AbstractModule {
     @Provides
     @RequestScoped
     @NewCategoryTree
-    private CategoryTree provideNewCategoryTree(final CategoriesSettings configuration, final CategoryTree categoryTree) {
-        return configuration.newExtId()
+    private CategoryTree provideNewCategoryTree(final CategoriesSettings categoriesSettings, final CategoryTree categoryTree) {
+        return categoriesSettings.newExtId()
                 .flatMap(categoryTree::findByExternalId)
                 .map(categoryTree::findChildren)
                 .map(categoryTree::getSubtree)

@@ -11,21 +11,21 @@ import javax.inject.Singleton;
 public final class CachedCategoryTreeProvider implements Provider<CategoryTree> {
 
     private final CacheApi cacheApi;
-    private final CategoriesSettings configuration;
+    private final CategoriesSettings categoriesSettings;
     private final CategoryTreeProvider categoryTreeProvider;
 
     @Inject
-    CachedCategoryTreeProvider(final CacheApi cacheApi, final CategoriesSettings configuration,
+    CachedCategoryTreeProvider(final CacheApi cacheApi, final CategoriesSettings categoriesSettings,
                                final CategoryTreeProvider categoryTreeProvider) {
         this.cacheApi = cacheApi;
-        this.configuration = configuration;
+        this.categoriesSettings = categoriesSettings;
         this.categoryTreeProvider = categoryTreeProvider;
     }
 
     @Override
     public CategoryTree get() {
-        return configuration.cacheExpiration()
-                .map(expiration -> cacheApi.getOrElse(configuration.cacheKey(), categoryTreeProvider::get, expiration))
-                .orElseGet(() -> cacheApi.getOrElse(configuration.cacheKey(), categoryTreeProvider::get));
+        return categoriesSettings.cacheExpiration()
+                .map(expiration -> cacheApi.getOrElse(categoriesSettings.cacheKey(), categoryTreeProvider::get, expiration))
+                .orElseGet(() -> cacheApi.getOrElse(categoriesSettings.cacheKey(), categoryTreeProvider::get));
     }
 }

@@ -24,25 +24,25 @@ public class CategoryTreeProviderTest {
     private static PagedQueryResult<Category> categoryQueryResult = JsonUtils.readCtpObject("categorytree/providerCategoryQueryResult.json", CategoryQuery.resultTypeReference());
 
     private SphereClient sphereClient;
-    private CategoriesSettings configuration;
+    private CategoriesSettings categoriesSettings;
 
     @Before
     public void setUp() throws Exception {
-        this.configuration = mock(CategoriesSettings.class);
+        this.categoriesSettings = mock(CategoriesSettings.class);
         this.sphereClient = mock(SphereClient.class);
         when(sphereClient.execute(any(CategoryQuery.class))).thenReturn(completedFuture(categoryQueryResult));
     }
 
     @Test
     public void buildsCategoryTreeWithoutSorting() throws Exception {
-        when(configuration.sortExpressions()).thenReturn(emptyList());
+        when(categoriesSettings.sortExpressions()).thenReturn(emptyList());
         assertThat(provideCategoryTree().getAllAsFlatList()).hasSize(131);
         verify(sphereClient).execute(queryAllBaseQuery());
     }
 
     @Test
     public void buildsCategoryTreeWithSorting() throws Exception {
-        when(configuration.sortExpressions()).thenReturn(asList("sort A", "sort B", "sort C"));
+        when(categoriesSettings.sortExpressions()).thenReturn(asList("sort A", "sort B", "sort C"));
         assertThat(provideCategoryTree().getAllAsFlatList()).hasSize(131);
         verify(sphereClient).execute(queryAllBaseQuery()
                 .withSort(asList(QuerySort.of("sort A"), QuerySort.of("sort B"), QuerySort.of("sort C"))));
@@ -56,6 +56,6 @@ public class CategoryTreeProviderTest {
     }
 
     private CategoryTree provideCategoryTree() {
-        return new CategoryTreeProvider(configuration, CompletableFuture::completedFuture, sphereClient).get();
+        return new CategoryTreeProvider(categoriesSettings, CompletableFuture::completedFuture, sphereClient).get();
     }
 }

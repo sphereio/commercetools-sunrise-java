@@ -19,26 +19,26 @@ public class CategoriesSettingsTest extends WithApplication {
 
     @Test
     public void fallbacksToDefaultValues() throws Exception {
-        final CategoriesSettings configuration = app.injector().instanceOf(CategoriesSettings.class);
-        assertThat(configuration.cacheExpiration())
+        final CategoriesSettings categoriesSettings = app.injector().instanceOf(CategoriesSettings.class);
+        assertThat(categoriesSettings.cacheExpiration())
                 .as("Cache expiration")
                 .isEmpty();
-        assertThat(configuration.cacheKey())
+        assertThat(categoriesSettings.cacheKey())
                 .as("Cache key")
                 .isNotNull();
-        assertThat(configuration.discardEmpty())
+        assertThat(categoriesSettings.discardEmpty())
                 .as("Discard empty")
                 .isFalse();
-        assertThat(configuration.sortExpressions())
+        assertThat(categoriesSettings.sortExpressions())
                 .as("Sort expressions")
                 .isNotEmpty();
-        assertThat(configuration.navigationExternalId())
+        assertThat(categoriesSettings.navigationExternalId())
                 .as("Navigation external ID")
                 .isEmpty();
-        assertThat(configuration.newExtId())
+        assertThat(categoriesSettings.newExtId())
                 .as("New external ID")
                 .isEmpty();
-        assertThat(configuration.specialCategories())
+        assertThat(categoriesSettings.specialCategories())
                 .as("Special categories")
                 .isEmpty();
     }

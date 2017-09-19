@@ -19,9 +19,9 @@ public class CategoryTreeRefreshController extends Controller {
     private final HomeReverseRouter homeReverseRouter;
 
     @Inject
-    public CategoryTreeRefreshController(final CategoriesSettings configuration,
+    public CategoryTreeRefreshController(final CategoriesSettings categoriesSettings,
                                          final CacheApi cacheApi, final HomeReverseRouter homeReverseRouter) {
-        this.configuration = configuration;
+        this.configuration = categoriesSettings;
         this.cacheApi = cacheApi;
         this.homeReverseRouter = homeReverseRouter;
     }

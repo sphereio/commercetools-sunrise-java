@@ -23,15 +23,15 @@ public final class CategoryTreeProvider implements Provider<CategoryTree> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CategoryTreeProvider.class);
 
-    private final CategoriesSettings configuration;
+    private final CategoriesSettings categoriesSettings;
     private final CategoryTreeFilter categoryTreeFilter;
     private final SphereClient sphereClient;
 
     @Inject
-    CategoryTreeProvider(final CategoriesSettings configuration, final CategoryTreeFilter categoryTreeFilter,
+    CategoryTreeProvider(final CategoriesSettings categoriesSettings, final CategoryTreeFilter categoryTreeFilter,
                          final SphereClient sphereClient) {
         this.categoryTreeFilter = categoryTreeFilter;
-        this.configuration = configuration;
+        this.categoriesSettings = categoriesSettings;
         this.sphereClient = sphereClient;
     }
 
@@ -49,7 +49,7 @@ public final class CategoryTreeProvider implements Provider<CategoryTree> {
     }
 
     private CategoryQuery buildQuery() {
-        final List<QuerySort<Category>> sortExpressions = configuration.sortExpressions().stream()
+        final List<QuerySort<Category>> sortExpressions = categoriesSettings.sortExpressions().stream()
                 .map(QuerySort::<Category>of)
                 .collect(toList());
         return CategoryQuery.of()
