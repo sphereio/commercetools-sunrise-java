@@ -13,6 +13,7 @@ final class SimpleRecoverPasswordReverseRouterByReflection extends AbstractRefle
     private final ReverseCaller resetPasswordProcessCaller;
     private final ReverseCaller requestRecoveryEmailPageCaller;
     private final ReverseCaller requestRecoveryEmailProcessCaller;
+    private final ReverseCaller resetPasswordSuccessCaller;
 
     @Inject
     public SimpleRecoverPasswordReverseRouterByReflection(final ParsedRoutes parsedRoutes) {
@@ -22,6 +23,7 @@ final class SimpleRecoverPasswordReverseRouterByReflection extends AbstractRefle
                 parsedRoutes);
         requestRecoveryEmailProcessCaller = getReverseCallerForSunriseRoute(REQUEST_RECOVERY_EMAIL_PROCESS,
                 parsedRoutes);
+        resetPasswordSuccessCaller = getReverseCallerForSunriseRoute(RESET_PASSWORD_SUCCESS, parsedRoutes);
     }
 
     @Override
@@ -42,5 +44,10 @@ final class SimpleRecoverPasswordReverseRouterByReflection extends AbstractRefle
     @Override
     public Call requestRecoveryEmailProcessCall(final String languageTag) {
         return requestRecoveryEmailProcessCaller.call(languageTag);
+    }
+
+    @Override
+    public Call resetPasswordSuccessCall(String languageTag) {
+        return resetPasswordSuccessCaller.call(languageTag);
     }
 }

@@ -100,6 +100,8 @@ GET         /:languageTag/user/logout                                           
 GET         /:languageTag/password/recovery                                     @controllers.myaccount.RecoverPasswordController.show(languageTag: String)
 # Send recovery password email
 POST        /:languageTag/password/recovery                                     @controllers.myaccount.RecoverPasswordController.process(languageTag: String)
+#Passord recovery success page
+GET        /:languageTag/password/success                                  @controllers.myaccount.SuccessfulPasswordRecoverController.show(languageTag: String)
 
 # View password reset
 GET         /:languageTag/password/reset/:token                                 @controllers.myaccount.ResetPasswordController.show(languageTag: String, token: String)
