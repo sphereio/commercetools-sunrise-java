@@ -59,7 +59,7 @@ public class SunriseConfigurationTest {
     }
 
     @Test
-    public void returnsDefaultStringListWithEmptyString() throws Exception {
+    public void returnsDefaultStringListWithEmptyConfig() throws Exception {
         final List<String> defaultList = asList("foo", "qux");
         testWithConfig(emptyMap(), config ->
                 assertThat(config.getStringList(CONFIG_KEY, defaultList)).containsExactlyElementsOf(defaultList));
@@ -79,7 +79,7 @@ public class SunriseConfigurationTest {
     }
 
     @Test
-    public void returnsDefaultBooleanListWithEmptyString() throws Exception {
+    public void returnsDefaultBooleanListWithEmptyConfig() throws Exception {
         final List<Boolean> defaultList = asList(false, true);
         testWithConfig(emptyMap(), config ->
                 assertThat(config.getBooleanList(CONFIG_KEY, defaultList)).containsExactlyElementsOf(defaultList));
@@ -99,7 +99,7 @@ public class SunriseConfigurationTest {
     }
 
     @Test
-    public void returnsDefaultIntListWithEmptyString() throws Exception {
+    public void returnsDefaultIntListWithEmptyConfig() throws Exception {
         final List<Integer> defaultList = asList(6, 20);
         testWithConfig(emptyMap(), config ->
                 assertThat(config.getIntList(CONFIG_KEY, defaultList)).containsExactlyElementsOf(defaultList));
@@ -131,7 +131,7 @@ public class SunriseConfigurationTest {
     }
 
     @Test
-    public void returnsDefaultConfigListWhenUndefinedAsSunriseConfigurations() throws Exception {
+    public void returnsDefaultConfigListAsSunriseConfigurationsWithEmptyConfig() throws Exception {
         final List<Map<String, Object>> defaultConfigAsMap = asList(singletonMap("foo", "bar"), singletonMap("x", "y"));
         final List<Configuration> defaultConfigList = defaultConfigAsMap.stream()
                 .map(Configuration::new)
