@@ -2,6 +2,8 @@ package com.commercetools.sunrise.framework.localization;
 
 import com.google.inject.ImplementedBy;
 import com.neovisionaries.i18n.CountryCode;
+import io.sphere.sdk.projects.Project;
+import play.Configuration;
 
 import javax.money.CurrencyUnit;
 import java.util.List;
@@ -63,5 +65,9 @@ public interface ProjectContext {
 
     default boolean isCurrencySupported(final CurrencyUnit currency) {
         return currencies().contains(currency);
+    }
+
+    static ProjectContext of(final Configuration globalConfig, final String configPath, final Project project) {
+        return new ProjectContextImpl(globalConfig, configPath, project);
     }
 }
