@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.framework.injection;
+package com.commercetools.sunrise.ctp.project;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
