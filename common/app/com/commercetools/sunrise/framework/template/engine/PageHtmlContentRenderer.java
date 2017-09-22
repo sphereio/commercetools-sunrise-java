@@ -3,7 +3,7 @@ package com.commercetools.sunrise.framework.template.engine;
 import com.commercetools.sunrise.cms.CmsService;
 import com.commercetools.sunrise.framework.hooks.RequestHookRunner;
 import com.commercetools.sunrise.framework.hooks.application.PageDataReadyHook;
-import com.commercetools.sunrise.framework.localization.UserLanguage;
+import com.commercetools.sunrise.ctp.project.UserLanguage;
 import com.commercetools.sunrise.framework.viewmodels.PageData;
 import com.commercetools.sunrise.framework.viewmodels.PageDataFactory;
 import com.commercetools.sunrise.framework.viewmodels.content.PageContent;

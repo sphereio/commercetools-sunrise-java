@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.framework.localization;
+package com.commercetools.sunrise.ctp.project;
 
 import play.mvc.Http;
 
@@ -15,7 +15,7 @@ public final class LocaleFromUrlProvider implements Provider<Locale> {
     private final ProjectContext projectContext;
 
     @Inject
-    public LocaleFromUrlProvider(final ProjectContext projectContext) {
+    LocaleFromUrlProvider(final ProjectContext projectContext) {
         this.projectContext = projectContext;
     }
 

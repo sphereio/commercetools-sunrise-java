@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.framework.localization;
+package com.commercetools.sunrise.ctp.project;
 
 import com.commercetools.sunrise.sessions.country.CountryInSession;
 import com.neovisionaries.i18n.CountryCode;
@@ -13,7 +13,7 @@ public final class CountryFromSessionProvider implements Provider<CountryCode> {
     private final CountryInSession countryInSession;
 
     @Inject
-    public CountryFromSessionProvider(final ProjectContext projectContext, final CountryInSession countryInSession) {
+    CountryFromSessionProvider(final ProjectContext projectContext, final CountryInSession countryInSession) {
         this.projectContext = projectContext;
         this.countryInSession = countryInSession;
     }

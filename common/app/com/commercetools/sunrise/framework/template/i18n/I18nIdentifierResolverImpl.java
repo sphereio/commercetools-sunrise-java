@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.framework.template.i18n;
 
-import com.commercetools.sunrise.framework.localization.UserLanguage;
+import com.commercetools.sunrise.ctp.project.UserLanguage;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
 
 import javax.inject.Inject;

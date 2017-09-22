@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.framework.localization;
+package com.commercetools.sunrise.ctp.project;
 
 import org.junit.Test;
 import play.test.WithApplication;

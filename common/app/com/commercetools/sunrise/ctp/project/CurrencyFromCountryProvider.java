@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.framework.localization;
+package com.commercetools.sunrise.ctp.project;
 
 import com.neovisionaries.i18n.CountryCode;
 
@@ -14,7 +14,7 @@ public final class CurrencyFromCountryProvider implements Provider<CurrencyUnit>
     private final ProjectContext projectContext;
 
     @Inject
-    public CurrencyFromCountryProvider(final CountryCode country, final ProjectContext projectContext) {
+    CurrencyFromCountryProvider(final CountryCode country, final ProjectContext projectContext) {
         this.country = country;
         this.projectContext = projectContext;
     }

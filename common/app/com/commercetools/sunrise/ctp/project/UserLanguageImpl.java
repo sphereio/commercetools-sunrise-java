@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.framework.localization;
+package com.commercetools.sunrise.ctp.project;
 
 import com.commercetools.sunrise.framework.injection.RequestScoped;
 import io.sphere.sdk.models.Base;

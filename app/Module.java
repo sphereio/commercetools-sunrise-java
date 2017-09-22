@@ -6,9 +6,6 @@ import com.commercetools.sunrise.ctp.categories.NewCategoryTree;
 import com.commercetools.sunrise.email.EmailSender;
 import com.commercetools.sunrise.framework.controllers.metrics.SimpleMetricsSphereClientProvider;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
-import com.commercetools.sunrise.framework.localization.CountryFromSessionProvider;
-import com.commercetools.sunrise.framework.localization.CurrencyFromCountryProvider;
-import com.commercetools.sunrise.framework.localization.LocaleFromUrlProvider;
 import com.commercetools.sunrise.framework.template.cms.FileBasedCmsServiceProvider;
 import com.commercetools.sunrise.framework.template.engine.HandlebarsTemplateEngineProvider;
 import com.commercetools.sunrise.framework.template.engine.TemplateEngine;
@@ -89,17 +86,6 @@ public class Module extends AbstractModule {
         bind(EmailSender.class)
                 .toProvider(EmailSenderProvider.class)
                 .in(Singleton.class);
-
-        // Bindings for all user context related
-        bind(Locale.class)
-                .toProvider(LocaleFromUrlProvider.class)
-                .in(RequestScoped.class);
-        bind(CountryCode.class)
-                .toProvider(CountryFromSessionProvider.class)
-                .in(RequestScoped.class);
-        bind(CurrencyUnit.class)
-                .toProvider(CurrencyFromCountryProvider.class)
-                .in(RequestScoped.class);
 
         // Bindings for the configured faceted search mappers
         bind(TermFacetViewModelFactory.class)

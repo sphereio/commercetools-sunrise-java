@@ -9,6 +9,8 @@ public final class ProjectModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        bind(Project.class).toProvider(ProjectProvider.class).in(Singleton.class);
+        bind(Project.class)
+                .toProvider(ProjectProvider.class)
+                .in(Singleton.class);
     }
 }

@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.framework.localization;
+package com.commercetools.sunrise.ctp.project;
 
 import com.neovisionaries.i18n.CountryCode;
 import org.junit.Test;

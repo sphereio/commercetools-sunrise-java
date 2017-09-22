@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.framework.localization;
+package com.commercetools.sunrise.ctp.project;
 
 import com.commercetools.sunrise.play.configuration.SunriseConfigurationException;
 import com.neovisionaries.i18n.CountryCode;
@@ -35,7 +35,7 @@ final class ProjectContextImpl extends Base implements ProjectContext {
 
     @Inject
     ProjectContextImpl(final Configuration globalConfig, final Project project) {
-        this(globalConfig, "sunrise.localization", project);
+        this(globalConfig, "sunrise.ctp.project", project);
     }
 
     ProjectContextImpl(final Configuration globalConfig, final String configPath, final Project project) {
