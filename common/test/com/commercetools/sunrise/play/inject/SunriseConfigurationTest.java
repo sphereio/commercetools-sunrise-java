@@ -118,6 +118,14 @@ public class SunriseConfigurationTest {
     }
 
     @Test
+    public void returnsConfigAsSunriseConfigurationWithEmptyConfig() throws Exception {
+        testWithConfig(emptyMap(), globalConfig -> {
+            final Configuration configuration = globalConfig.getConfig(CONFIG_KEY);
+            assertThat(configuration).isNull();
+        });
+    }
+
+    @Test
     public void returnsConfigListAsSunriseConfigurations() throws Exception {
         final List<Map<String, Object>> nestedConfig = asList(singletonMap("foo", "bar"), singletonMap("x", "y"));
         testWithConfig(singletonMap(CONFIG_KEY, nestedConfig), globalConfig -> {
@@ -127,6 +135,14 @@ public class SunriseConfigurationTest {
                     .hasSize(2)
                     .extracting(Configuration::asMap)
                     .isEqualTo(nestedConfig);
+        });
+    }
+
+    @Test
+    public void returnsConfigListAsSunriseConfigurationsWithEmptyConfig() throws Exception {
+        testWithConfig(emptyMap(), globalConfig -> {
+            final List<Configuration> configuration = globalConfig.getConfigList(CONFIG_KEY);
+            assertThat(configuration).isNull();
         });
     }
 

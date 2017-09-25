@@ -78,7 +78,9 @@ public final class SunriseConfiguration extends Configuration {
 
     @Override
     public Configuration getConfig(final String key) {
-        return of(super.getConfig(key));
+        return Optional.ofNullable(super.getConfig(key))
+                .map(SunriseConfiguration::of)
+                .orElse(null);
     }
 
     @Override
