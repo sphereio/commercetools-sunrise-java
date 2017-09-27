@@ -22,4 +22,8 @@ public interface CartReverseRouter extends SimpleCartReverseRouter, LocalizedRev
     default Call removeLineItemProcessCall() {
         return removeLineItemProcessCall(locale().toLanguageTag());
     }
+
+    default Call addDiscountCodeProcessCall() {
+        return addDiscountCodeProcessCall(locale().toLanguageTag());
+    }
 }
