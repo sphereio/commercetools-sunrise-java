@@ -9,13 +9,17 @@ import com.commercetools.sunrise.framework.template.engine.ContentRenderer;
 import com.commercetools.sunrise.framework.viewmodels.content.PageContent;
 import com.commercetools.sunrise.shoppingcart.CartFinder;
 import com.commercetools.sunrise.shoppingcart.WithRequiredCart;
+import com.commercetools.sunrise.shoppingcart.content.viewmodels.CartPageContent;
 import com.commercetools.sunrise.shoppingcart.content.viewmodels.CartPageContentFactory;
 import io.sphere.sdk.carts.Cart;
+import io.sphere.sdk.client.ClientErrorException;
 import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Result;
 
 import java.util.concurrent.CompletionStage;
+
+import static com.commercetools.sunrise.ctp.CtpExceptionUtils.isDiscountCodeNonApplicableError;
 
 public abstract class SunriseAddDiscountCodeController extends SunriseContentFormController
         implements WithContentFormFlow<Cart, Cart, AddDiscountCodeFormData>, WithRequiredCart {
@@ -62,8 +66,25 @@ public abstract class SunriseAddDiscountCodeController extends SunriseContentFor
 
     @Override
     public PageContent createPageContent(final Cart cart, final Form<? extends AddDiscountCodeFormData> form) {
-        return pageContentFactory.create(cart);
+        final CartPageContent cartPageContent = pageContentFactory.create(cart);
+        cartPageContent.put("errors", form);
+        return cartPageContent;
     }
+
+    @Override
+    public CompletionStage<Result> handleClientErrorFailedAction(final Cart input,
+                                                                 final Form<? extends AddDiscountCodeFormData> form,
+                                                                 final ClientErrorException clientErrorException) {
+        if (isDiscountCodeNonApplicableError(clientErrorException)) {
+            return handleDiscountCodeNonApplicable(input, form, clientErrorException);
+        } else {
+            return WithContentFormFlow.super.handleClientErrorFailedAction(input, form, clientErrorException);
+        }
+    }
+
+    protected abstract CompletionStage<Result> handleDiscountCodeNonApplicable(final Cart input,
+                                                                    final Form<? extends AddDiscountCodeFormData> form,
+                                                                    final ClientErrorException clientErrorException);
 
     @Override
     public void preFillFormData(final Cart cart, final AddDiscountCodeFormData formData) {

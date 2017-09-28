@@ -16,6 +16,8 @@ import com.commercetools.sunrise.shoppingcart.content.viewmodels.CartPageContent
 import com.commercetools.sunrise.wishlist.MiniWishlistControllerComponent;
 import com.google.inject.Inject;
 import io.sphere.sdk.carts.Cart;
+import io.sphere.sdk.client.ClientErrorException;
+import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Result;
 
@@ -60,5 +62,13 @@ public class AddDiscountCodeController extends SunriseAddDiscountCodeController 
     @Override
     public CompletionStage<Result> handleSuccessfulAction(final Cart updatedCart, final AddDiscountCodeFormData formData) {
         return redirectToCall(cartReverseRouter.cartDetailPageCall());
+    }
+
+    @Override
+    protected CompletionStage<Result> handleDiscountCodeNonApplicable(final Cart input,
+                                                                      final Form<? extends AddDiscountCodeFormData> form,
+                                                                      final ClientErrorException clientErrorException) {
+        saveFormError(form, "Invalid discount code");
+        return showFormPageWithErrors(input, form);
     }
 }

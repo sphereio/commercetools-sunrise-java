@@ -1,0 +1,18 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="promotion-info">
+            <span class="text-uppercase promo-info-text">Promotion codes</span>
+        </div>
+    </div>
+</div>
+{{#each content.cart.discountCodes}}
+    <div class="row text-right payment-code-applied">
+        <div class="col-sm-12">
+            <span class="payment-code">{{name}}</span>
+        </div>
+        <div class="col-sm-12">
+            <span class="payment-code-title">{{description}}</span>
+        </div>
+    </div>
+{{/each}}
+
