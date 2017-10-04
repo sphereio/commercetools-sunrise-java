@@ -23,8 +23,13 @@ public class DiscountCodeViewModelFactory extends SimpleViewModelFactory<Discoun
 
     @Override
     protected void initialize(final DiscountCodeViewModel viewModel, final DiscountCode input) {
+        fillId(viewModel, input);
         fillName(viewModel, input);
         fillDescription(viewModel, input);
+    }
+
+    protected void fillId(final DiscountCodeViewModel viewModel, final DiscountCode input) {
+        viewModel.setId(input.getId());
     }
 
     protected void fillName(final DiscountCodeViewModel viewModel, final DiscountCode input) {

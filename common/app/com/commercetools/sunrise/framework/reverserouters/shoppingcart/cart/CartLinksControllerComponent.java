@@ -26,5 +26,6 @@ public class CartLinksControllerComponent extends AbstractLinksControllerCompone
         meta.addHalLink(reverseRouter.changeLineItemQuantityProcessCall(), "changeLineItem");
         meta.addHalLink(reverseRouter.removeLineItemProcessCall(), "deleteLineItem");
         meta.addHalLink(reverseRouter.addDiscountCodeProcessCall(), "addDiscountCode");
+        meta.addHalLink(reverseRouter.removeDiscountCodeProcessCall(), "removeDiscountCode");
     }
 }

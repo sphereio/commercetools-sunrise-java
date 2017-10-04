@@ -6,12 +6,22 @@
     </div>
 </div>
 {{#each content.cart.discountCodes}}
-    <div class="row text-right payment-code-applied">
-        <div class="col-sm-12">
-            <span class="payment-code">{{name}}</span>
+    <div class="row single-cart-item">
+        <div class="col-sm-4 col-xs-8">
+            <p class="payment-code">{{name}}</p>
+            <p class="payment-code-title">{{description}}</p>
         </div>
-        <div class="col-sm-12">
-            <span class="payment-code-title">{{description}}</span>
+        <div class="col-sm-2 col-xs-4">
+            <form action="{{@root.meta._links.removeDiscountCode.href}}" method="post">
+                <input type="hidden" name="csrfToken" value="{{@root.meta.csrfToken}}"/>
+                <input type="hidden" name="discountCodeId" value="{{id}}">
+                <button id="cart-apply-promocode-btn">
+                    <span>
+                        <img class="cart-action-icon" src="{{@root.meta.assetsPath}}/img/delete-1-421d04c332afe6d751d51e28934399fd.png"
+                             alt="delete">{{i18n "main:form.delete"}}
+                    </span>
+                </button>
+            </form>
         </div>
     </div>
 {{/each}}
