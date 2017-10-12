@@ -5,6 +5,7 @@ import play.data.validation.Constraints;
 
 public class DefaultRemoveDiscountCodeFormData extends SunriseModel implements RemoveDiscountCodeFormData {
     @Constraints.Required
+    @Constraints.MinLength(1)
     private String discountCodeId;
 
     @Override
