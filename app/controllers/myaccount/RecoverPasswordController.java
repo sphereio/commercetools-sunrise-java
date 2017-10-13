@@ -51,7 +51,6 @@ public final class RecoverPasswordController extends SunriseRecoverPasswordContr
 
     @Override
     public CompletionStage<Result> handleSuccessfulAction(final CustomerToken customerToken, final RecoverPasswordFormData formData) {
-//        flash("success", "A message with further instructions has been sent to your email address");
         return redirectToCall(recoverPasswordReverseRouter.resetPasswordSuccessCall());
     }
 
