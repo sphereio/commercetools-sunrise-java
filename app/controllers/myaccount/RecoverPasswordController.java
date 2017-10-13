@@ -12,6 +12,7 @@ import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recove
 import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover.SunriseRecoverPasswordController;
 import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover.viewmodels.RecoverPasswordPageContentFactory;
 import com.commercetools.sunrise.email.EmailDeliveryException;
+import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover.viewmodels.SuccessfulRecoveryPageContentFactory;
 import io.sphere.sdk.customers.CustomerToken;
 import play.data.Form;
 import play.data.FormFactory;
@@ -34,14 +35,20 @@ public final class RecoverPasswordController extends SunriseRecoverPasswordContr
                               final RecoverPasswordPageContentFactory pageContentFactory,
                               final RecoverPasswordFormData formData,
                               final RecoverPasswordControllerAction controllerAction,
-                              final RecoverPasswordReverseRouter recoverPasswordReverseRouter) {
-        super(contentRenderer, formFactory, pageContentFactory, formData, controllerAction);
+                              final RecoverPasswordReverseRouter recoverPasswordReverseRouter,
+                              final SuccessfulRecoveryPageContentFactory successContentFactory) {
+        super(contentRenderer, formFactory, pageContentFactory, formData, controllerAction,successContentFactory);
         this.recoverPasswordReverseRouter = recoverPasswordReverseRouter;
     }
 
     @Override
     public String getTemplateName() {
         return "my-account-forgot-password";
+    }
+
+    @Override
+    protected String getSuccessRecoveryTemplateName() {
+        return "my-account-forgot-password-success";
     }
 
     @Override

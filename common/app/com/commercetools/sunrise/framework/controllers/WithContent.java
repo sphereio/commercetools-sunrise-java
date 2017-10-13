@@ -13,11 +13,20 @@ import java.util.concurrent.CompletionStage;
 public interface WithContent {
 
     default CompletionStage<Content> renderContent(final PageContent pageContent) {
-        return getContentRenderer().render(pageContent, getTemplateName(), getCmsPageKey());
+        return renderContent(pageContent,getTemplateName());
+    }
+
+    default CompletionStage<Content> renderContent(final PageContent pageContent, final String templateName) {
+        return getContentRenderer().render(pageContent, templateName, getCmsPageKey());
     }
 
     default CompletionStage<Result> okResultWithPageContent(final PageContent pageContent) {
         return renderContent(pageContent)
+                .thenApplyAsync(Results::ok, HttpExecution.defaultContext());
+    }
+
+    default CompletionStage<Result> okResultWithPageContent(final PageContent pageContent,final String templateName) {
+        return renderContent(pageContent, templateName)
                 .thenApplyAsync(Results::ok, HttpExecution.defaultContext());
     }
 
