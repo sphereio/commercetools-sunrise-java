@@ -36,7 +36,7 @@ public final class SuccessfulPasswordRecoverController extends SunriseContentCon
 
 
     @EnableHooks
-    @SunriseRoute(RecoverPasswordReverseRouter.RESET_PASSWORD_SUCCESS)
+    @SunriseRoute(RecoverPasswordReverseRouter.REQUEST_RECOVERY_EMAIL_SUCCESS)
     public CompletionStage<Result> show(final String languageTag) {
         return showPage(null);
     }

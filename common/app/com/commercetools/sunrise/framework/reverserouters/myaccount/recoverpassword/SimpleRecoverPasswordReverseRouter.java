@@ -24,7 +24,7 @@ public interface SimpleRecoverPasswordReverseRouter {
 
     Call resetPasswordProcessCall(final String languageTag, final String resetToken);
 
-    String RESET_PASSWORD_SUCCESS = "resetPasswordSuccessCall";
+    String REQUEST_RECOVERY_EMAIL_SUCCESS = "requestRecoveryEmailSuccessCall";
 
-    Call resetPasswordSuccessCall(final String languageTag);
+    Call requestRecoveryEmailSuccessCall(final String languageTag);
 }

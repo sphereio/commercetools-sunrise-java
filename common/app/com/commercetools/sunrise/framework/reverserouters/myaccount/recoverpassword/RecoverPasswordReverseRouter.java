@@ -25,6 +25,6 @@ public interface RecoverPasswordReverseRouter extends SimpleRecoverPasswordRever
 
 
     default Call resetPasswordSuccessCall() {
-        return resetPasswordSuccessCall(locale().toLanguageTag());
+        return requestRecoveryEmailSuccessCall(locale().toLanguageTag());
     }
 }

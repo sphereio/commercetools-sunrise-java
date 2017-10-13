@@ -36,7 +36,7 @@ public class DefaultRecoverPasswordReverseRouter extends AbstractLocalizedRevers
     }
 
     @Override
-    public Call resetPasswordSuccessCall(String languageTag) {
-        return delegate.resetPasswordSuccessCall(languageTag);
+    public Call requestRecoveryEmailSuccessCall(String languageTag) {
+        return delegate.requestRecoveryEmailSuccessCall(languageTag);
     }
 }
