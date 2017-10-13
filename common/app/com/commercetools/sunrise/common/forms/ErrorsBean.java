@@ -16,7 +16,7 @@ public class ErrorsBean extends Base {
     }
 
     public ErrorsBean(final String errorMessage, final String field) {
-            this.globalErrors = singletonList(new ErrorBean(field, errorMessage));
+        this.globalErrors = singletonList(new ErrorBean(field, errorMessage));
     }
 
     @Deprecated
