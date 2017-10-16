@@ -16,6 +16,8 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static java.util.Collections.singletonList;
 import static java.util.Collections.singletonMap;
@@ -49,15 +51,13 @@ public class SelectableProductAttributeViewModelFactoryTest  {
     public void createFromSelectableStringAttributeAndSelectableNumberAttribute() {
         final String stringValue = "v1";
         final AttributeWithProductType stringAttributeWithProductType = attributeWithProductType(STRING_ATTRIBUTE_NAME, AttributeAccess.ofString(), stringValue);
-        final Attribute stringAttribute = stringAttributeWithProductType.getAttribute();
         when(fakeAttributeFormatter.encodedValue(eq(stringAttributeWithProductType))).thenReturn(stringValue);
 
         final AttributeWithProductType numberAttributeWithProductType = attributeWithProductType(NUMBER_ATTRIBUTE_NAME, AttributeAccess.ofDouble(), 12.0);
-        final Attribute numberAttribute = numberAttributeWithProductType.getAttribute();
         when(fakeAttributeFormatter.encodedValue(eq(numberAttributeWithProductType))).thenReturn("120");
 
         mockProductAttributeSettings(STRING_ATTRIBUTE_NAME, NUMBER_ATTRIBUTE_NAME);
-        final ProductVariant productVariant = mockProductVariant(stringAttribute, numberAttribute);
+        final ProductVariant productVariant = mockProductVariant(stringAttributeWithProductType, numberAttributeWithProductType);
         final List<ProductVariant> variants = Collections.singletonList(productVariant);
 
         final SelectableProductAttributeViewModel attributeViewModel = viewModelFactory.create(variants, stringAttributeWithProductType);
@@ -78,8 +78,12 @@ public class SelectableProductAttributeViewModelFactoryTest  {
         when(fakeProductAttributeSettings.selectable()).thenReturn(Arrays.asList(selectablePrimaryAttribute, selectableSecondaryAttribute));
     }
 
-    private ProductVariant mockProductVariant(final Attribute... attributes) {
+    private ProductVariant mockProductVariant(final AttributeWithProductType... attributeWithProductTypes) {
         final ProductVariant productVariant = mock(ProductVariant.class);
+
+        final List<Attribute> attributes = Stream.of(attributeWithProductTypes)
+                .map(AttributeWithProductType::getAttribute)
+                .collect(Collectors.toList());
 
         for (final Attribute attribute : attributes) {
             when(productVariant.getAttribute(attribute.getName())).thenReturn(attribute);
