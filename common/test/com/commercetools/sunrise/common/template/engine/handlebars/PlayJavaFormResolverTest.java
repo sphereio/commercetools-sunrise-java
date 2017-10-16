@@ -17,25 +17,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class PlayJavaFormResolverTest {
 
-    PlayJavaFormResolver formResolver = new PlayJavaFormResolver(singletonList(Locale.ENGLISH), new ErrorFormatter() {
-        @Override
-        public String format(List<Locale> locales, String message) {
-            return message;
-        }
-    });
+    PlayJavaFormResolver formResolver = new PlayJavaFormResolver(singletonList(Locale.ENGLISH), (locales, message) ->
+            message);
 
     @Test
     public void extractErrors() throws Exception {
         String errorField1 = "field1";
         String errorField2 = "field2";
-        Form form = Mockito.mock(Form.class);
-        Map<String, List<ValidationError>> errorMap = new HashMap<String, List<ValidationError>>();
-        errorMap.put(errorField1, Arrays.asList(new ValidationError("errorkey1", "errorMessage1"),
-                new ValidationError("errorkey2", "errorMessage2")));
-        errorMap.put(errorField2, Collections.singletonList(new ValidationError("errorkey21", "errorMessage21")));
-
-        Mockito.when(form.errors()).thenReturn(errorMap);
+        Form form = formWithSomeErrorsForFields(errorField1, errorField2);
         ErrorsBean result = formResolver.extractErrors(form);
+
         List<ErrorBean> errors = result.getGlobalErrors();
         checkError(errors.get(0), errorField1, "errorkey1", "errorMessage1");
         checkError(errors.get(1), errorField1, "errorkey2", "errorMessage2");
@@ -46,7 +37,17 @@ public class PlayJavaFormResolverTest {
         assertThat(error.getField()).isEqualTo(field);
         assertThat(error.getMessage()).isEqualTo(message + ": " + key);
 
-
     }
 
+    private Form formWithSomeErrorsForFields(String field1, String field2) {
+
+        Form form = Mockito.mock(Form.class);
+        Map<String, List<ValidationError>> errorMap = new HashMap<String, List<ValidationError>>();
+        errorMap.put(field1, Arrays.asList(
+                new ValidationError("errorkey1", "errorMessage1"),
+                new ValidationError("errorkey2", "errorMessage2")));
+        errorMap.put(field2, Collections.singletonList(new ValidationError("errorkey21", "errorMessage21")));
+        Mockito.when(form.errors()).thenReturn(errorMap);
+        return form;
+    }
 }
