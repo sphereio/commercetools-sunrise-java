@@ -134,7 +134,7 @@ public abstract class SunriseCheckoutPaymentController extends SunriseFrameworkS
                     .thenApply(paymentMethods -> {
                         final boolean isValidPaymentMethod = isValidPaymentMethod(paymentMethods, selectedPaymentMethod);
                         if (!isValidPaymentMethod) {
-                            filledForm.reject(resolveError("checkout.payment.invalidPayment"));
+                            filledForm.reject("messages:checkout.payment.invalidPayment");
                         }
                         return filledForm;
                     });
