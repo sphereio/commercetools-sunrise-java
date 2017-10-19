@@ -252,7 +252,11 @@ public abstract class SunriseFrameworkController extends Controller {
     }
 
     protected final void saveUnexpectedFormError(final Form<?> form, final Throwable throwable, final Logger logger) {
-        form.reject("Something went wrong, please try again"); // TODO i18n
+        form.reject(resolveError("default"));
         logger.error("The CTP request raised an unexpected exception", throwable);
+    }
+
+    protected final String resolveError(final String errorKey) {
+        return i18nResolver.getOrKey(userContext.locales(), I18nIdentifier.of("errors", errorKey));
     }
 }
