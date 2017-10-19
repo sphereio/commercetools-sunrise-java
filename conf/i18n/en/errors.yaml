@@ -1,1 +1,14 @@
 default: Something went wrong, please try again
+checkout:
+  payment:
+    invalidPayment: Invalid payment
+myAccount:
+  logIn:
+    invalidCredentials: Invalid credentials
+  signUp:
+    duplicatedEmail: A user with this email already exists
+  recoverPassword:
+    emailNotFound: Email not found
+    emailNotDelivered: Email could not be delivered
+  resetPassword:
+    invalidToken: Reset token is not valid
