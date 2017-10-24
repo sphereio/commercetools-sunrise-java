@@ -25,12 +25,12 @@ public class PlayJavaFormResolverTest {
         ErrorsBean result = formResolver.extractErrors(form);
 
         List<ErrorBean> errors = result.getGlobalErrors();
-        checkError(errors.get(0), errorField1, "errorkey1", "errorMessage1");
-        checkError(errors.get(1), errorField1, "errorkey2", "errorMessage2");
-        checkError(errors.get(2), errorField2, "errorkey21", "errorMessage21");
+        checkError(errors.get(0), errorField1, "errorMessage1");
+        checkError(errors.get(1), errorField1, "errorMessage2");
+        checkError(errors.get(2), errorField2, "errorMessage21");
     }
 
-    private void checkError(ErrorBean error, String field, String key, String message) {
+    private void checkError(ErrorBean error, String field, String message) {
         assertThat(error.getField()).isEqualTo(field);
         assertThat(error.getMessage()).isEqualTo(message);
 
