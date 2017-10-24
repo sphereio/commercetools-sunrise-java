@@ -7,6 +7,7 @@ import com.commercetools.sunrise.common.template.i18n.I18nResolver;
 import javax.inject.Inject;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 class ErrorFormatterImpl implements ErrorFormatter {
 
@@ -20,8 +21,8 @@ class ErrorFormatterImpl implements ErrorFormatter {
     }
 
     @Override
-    public String format(final List<Locale> locales, final String messageKey) {
+    public String format(final List<Locale> locales, final String messageKey, final Map<String, Object> hashArgs) {
         final I18nIdentifier i18nIdentifier = i18nIdentifierFactory.create(messageKey);
-        return i18nResolver.getOrKey(locales, i18nIdentifier);
+        return i18nResolver.getOrKey(locales, i18nIdentifier, hashArgs);
     }
 }

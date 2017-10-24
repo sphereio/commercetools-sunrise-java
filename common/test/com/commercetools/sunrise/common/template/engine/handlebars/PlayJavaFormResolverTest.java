@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class PlayJavaFormResolverTest {
 
-    PlayJavaFormResolver formResolver = new PlayJavaFormResolver(singletonList(Locale.ENGLISH), (locales, message) ->
+    PlayJavaFormResolver formResolver = new PlayJavaFormResolver(singletonList(Locale.ENGLISH), (locales, message, args) ->
             message);
 
     @Test
