@@ -32,7 +32,7 @@ public class PlayJavaFormResolverTest {
 
     private void checkError(ErrorBean error, String field, String key, String message) {
         assertThat(error.getField()).isEqualTo(field);
-        assertThat(error.getMessage()).isEqualTo(message + ": " + key);
+        assertThat(error.getMessage()).isEqualTo(message);
 
     }
 
