@@ -28,6 +28,7 @@ public interface ErrorFormatter {
      */
     default String format(final List<Locale> locales, final ValidationError error) {
         final String message = format(locales, error.message());
-        return !error.key().isEmpty() ? message + ": " + error.key() : message;
+        final boolean hasFieldKey = error.key() != null && !error.key().isEmpty();
+        return hasFieldKey ? message + ": " + error.key() : message;
     }
 }

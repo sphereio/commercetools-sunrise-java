@@ -2,15 +2,12 @@ package com.commercetools.sunrise.common.template.engine.handlebars;
 
 import com.commercetools.sunrise.common.forms.ErrorBean;
 import com.commercetools.sunrise.common.forms.ErrorsBean;
-import com.commercetools.sunrise.common.utils.ErrorFormatter;
-import com.google.common.collect.Maps;
 import org.junit.Test;
 import org.mockito.Mockito;
 import play.data.Form;
 import play.data.validation.ValidationError;
 
 import java.util.*;
-import java.util.function.Predicate;
 
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
