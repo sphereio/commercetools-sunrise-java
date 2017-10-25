@@ -6,6 +6,8 @@ import io.sphere.sdk.client.NotFoundException;
 import io.sphere.sdk.client.SphereRequest;
 import io.sphere.sdk.models.LocalizedString;
 import io.sphere.sdk.models.Versioned;
+import play.inject.guice.GuiceApplicationBuilder;
+import play.inject.guice.Guiceable;
 
 import java.util.Locale;
 import java.util.Random;
@@ -48,5 +50,16 @@ public final class TestFixtures {
 
     public static LocalizedString randomLocalizedKey() {
         return LocalizedString.of(Locale.ENGLISH, randomKey());
+    }
+
+    /**
+     * Provide application builder with no Sunrise built-in modules.
+     * @return a pure Play application builder
+     */
+    public static GuiceApplicationBuilder provideSimpleApplicationBuilder() {
+        return new GuiceApplicationBuilder()
+                .load(Guiceable.modules(
+                        new play.api.inject.BuiltinModule(),
+                        new play.inject.BuiltInModule()));
     }
 }

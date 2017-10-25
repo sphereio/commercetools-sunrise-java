@@ -5,6 +5,7 @@ import com.commercetools.sunrise.framework.reverserouters.productcatalog.product
 import com.commercetools.sunrise.framework.viewmodels.forms.FormSelectableOptionViewModel;
 import com.commercetools.sunrise.search.facetedsearch.viewmodels.FacetOptionViewModel;
 import com.commercetools.sunrise.test.TestableCall;
+import com.commercetools.sunrise.test.WithPlayApplication;
 import io.sphere.sdk.categories.Category;
 import io.sphere.sdk.categories.CategoryTree;
 import io.sphere.sdk.models.LocalizedString;
@@ -13,7 +14,6 @@ import io.sphere.sdk.search.TermStats;
 import org.junit.Test;
 import play.Application;
 import play.mvc.Http;
-import play.test.WithApplication;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -29,7 +29,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static play.test.Helpers.fakeRequest;
 
-public class CategoryTreeFacetOptionViewModelFactoryTest extends WithApplication {
+public class CategoryTreeFacetOptionViewModelFactoryTest extends WithPlayApplication {
 
     private final static String CAT_A_ID = "d5a0952b-6574-49c9-b0cd-61e0d21d36cc";
     private final static String CAT_B_ID = "e92b6d26-7a34-4960-804c-0fc9e40c64e3";

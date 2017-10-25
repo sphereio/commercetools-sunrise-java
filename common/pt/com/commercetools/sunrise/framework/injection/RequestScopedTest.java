@@ -1,19 +1,32 @@
 package com.commercetools.sunrise.framework.injection;
 
+import com.commercetools.sunrise.test.WithPlayApplication;
 import com.google.inject.AbstractModule;
 import com.google.inject.Module;
 import org.junit.Test;
 import play.Application;
-import play.inject.guice.GuiceApplicationBuilder;
-import play.test.WithApplication;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static com.commercetools.sunrise.it.TestFixtures.provideSimpleApplicationBuilder;
 import static org.assertj.core.api.Assertions.assertThat;
 import static play.test.Helpers.fakeRequest;
 import static play.test.Helpers.invokeWithContext;
 
-public class RequestScopedTest extends WithApplication {
+public class RequestScopedTest extends WithPlayApplication {
+
+    @Override
+    protected Application provideApplication() {
+        final Module module = new AbstractModule() {
+            @Override
+            protected void configure() {
+                bindScope(RequestScoped.class, new RequestScope());
+            }
+        };
+        return provideSimpleApplicationBuilder()
+                .overrides(module)
+                .build();
+    }
 
     @Test
     public void keepsAliveInTheSameRequest() throws Exception {
@@ -48,20 +61,6 @@ public class RequestScopedTest extends WithApplication {
         assertThat(instance1)
                 .as("New request scoped instances are created when no HTTP context available")
                 .isNotSameAs(instance2);
-    }
-
-    @Override
-    protected Application provideApplication() {
-        final Module module = new AbstractModule() {
-            @Override
-            protected void configure() {
-                final RequestScope requestScope = new RequestScope();
-                bindScope(RequestScoped.class, requestScope);
-            }
-        };
-        return new GuiceApplicationBuilder()
-                .overrides(module)
-                .build();
     }
 
     @RequestScoped

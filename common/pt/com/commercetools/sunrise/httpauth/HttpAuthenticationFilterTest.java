@@ -1,10 +1,7 @@
 package com.commercetools.sunrise.httpauth;
 
-import com.google.inject.AbstractModule;
-import com.google.inject.Module;
 import org.junit.Test;
 import play.Application;
-import play.inject.guice.GuiceApplicationBuilder;
 import play.libs.ws.WS;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSResponse;
@@ -14,7 +11,9 @@ import play.routing.RoutingDsl;
 import play.test.Helpers;
 import play.test.TestServer;
 
+import static com.commercetools.sunrise.it.TestFixtures.provideSimpleApplicationBuilder;
 import static org.assertj.core.api.Assertions.assertThat;
+import static play.inject.Bindings.bind;
 import static play.mvc.Results.ok;
 import static play.test.Helpers.running;
 
@@ -22,6 +21,19 @@ public class HttpAuthenticationFilterTest {
 
     private static final String AUTHENTICATE_HEADER_CONTENT = "Auth required";
     private static final String URI = "/";
+
+    private TestServer testServer(final boolean isAuthEnabled) {
+        final Router router = new RoutingDsl()
+                .GET(URI).routeTo(() -> ok())
+                .build();
+        final Application app = provideSimpleApplicationBuilder()
+                .configure("play.http.filters", "com.commercetools.sunrise.httpauth.basic.BasicHttpAuthenticationFilters")
+                .overrides(
+                        bind(HttpAuthentication.class).toInstance(httpAuthentication(isAuthEnabled)),
+                        bind(play.api.routing.Router.class).toInstance(router.asScala()))
+                .build();
+        return Helpers.testServer(app);
+    }
 
     @Test
     public void allowsAccessWhenDisabled() throws Exception {
@@ -52,24 +64,6 @@ public class HttpAuthenticationFilterTest {
                 throw new RuntimeException(e);
             }
         });
-    }
-
-    private TestServer testServer(final boolean isAuthEnabled) {
-        final Router router = new RoutingDsl()
-                .GET(URI).routeTo(() -> ok())
-                .build();
-        final Module module = new AbstractModule() {
-            @Override
-            protected void configure() {
-                bind(HttpAuthentication.class).toInstance(httpAuthentication(isAuthEnabled));
-                bind(play.api.routing.Router.class).toInstance(router.asScala());
-            }
-        };
-        final Application app = new GuiceApplicationBuilder()
-                .overrides(module)
-                .configure("play.http.filters", "com.commercetools.sunrise.httpauth.basic.BasicHttpAuthenticationFilters")
-                .build();
-        return Helpers.testServer(app);
     }
 
     private static HttpAuthentication httpAuthentication(final boolean enabled) {

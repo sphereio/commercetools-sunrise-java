@@ -1,21 +1,11 @@
 package com.commercetools.sunrise.ctp.categories;
 
+import com.commercetools.sunrise.test.WithPlayApplication;
 import org.junit.Test;
-import play.Application;
-import play.Configuration;
-import play.inject.guice.GuiceApplicationBuilder;
-import play.test.WithApplication;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CategoriesSettingsTest extends WithApplication {
-
-    @Override
-    protected Application provideApplication() {
-        return new GuiceApplicationBuilder()
-                .configure(Configuration.empty())
-                .build();
-    }
+public class CategoriesSettingsTest extends WithPlayApplication {
 
     @Test
     public void fallbacksToDefaultValues() throws Exception {

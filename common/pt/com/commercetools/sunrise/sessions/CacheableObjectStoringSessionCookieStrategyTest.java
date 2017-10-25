@@ -1,11 +1,11 @@
 package com.commercetools.sunrise.sessions;
 
+import com.commercetools.sunrise.test.WithPlayApplication;
 import io.sphere.sdk.models.Base;
 import org.junit.Test;
 import play.Configuration;
 import play.cache.CacheApi;
 import play.mvc.Http;
-import play.test.WithApplication;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static play.test.Helpers.fakeRequest;
 import static play.test.Helpers.invokeWithContext;
 
-public class CacheableObjectStoringSessionCookieStrategyTest extends WithApplication {
+public class CacheableObjectStoringSessionCookieStrategyTest extends WithPlayApplication {
 
     private static final SomeObject SOME_OBJECT = new SomeObject("hello", 2);
     private static final SomeObject SOME_OTHER_OBJECT = new SomeObject("world", 4);

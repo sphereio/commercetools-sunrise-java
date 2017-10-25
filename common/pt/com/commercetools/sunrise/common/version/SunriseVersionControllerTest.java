@@ -1,15 +1,15 @@
 package com.commercetools.sunrise.common.version;
 
+import com.commercetools.sunrise.test.WithPlayApplication;
 import org.junit.Test;
 import play.Application;
 import play.mvc.Http;
 import play.mvc.Result;
-import play.test.WithApplication;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static play.test.Helpers.contentAsString;
 
-public class SunriseVersionControllerTest extends WithApplication {
+public class SunriseVersionControllerTest extends WithPlayApplication {
 
     @Test
     public void showsVersion() throws Exception {

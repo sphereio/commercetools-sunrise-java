@@ -2,11 +2,11 @@ package com.commercetools.sunrise.search.pagination.viewmodels;
 
 import com.commercetools.sunrise.framework.viewmodels.forms.QueryStringUtils;
 import com.commercetools.sunrise.search.pagination.PaginationSettings;
+import com.commercetools.sunrise.test.WithPlayApplication;
 import io.sphere.sdk.products.ProductProjection;
 import io.sphere.sdk.queries.PagedResult;
 import org.junit.Test;
 import play.mvc.Http;
-import play.test.WithApplication;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -17,7 +17,7 @@ import java.util.stream.Stream;
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class AbstractPaginationViewModelFactoryTest extends WithApplication {
+public class AbstractPaginationViewModelFactoryTest extends WithPlayApplication {
     private static final String URL_PATH = "www.url.dom/path/to/";
     private static final int PAGE_SIZE = 9;
 
