@@ -21,8 +21,8 @@ class ErrorFormatterImpl implements ErrorFormatter {
     }
 
     @Override
-    public String format(final List<Locale> locales, final String messageKey, final Map<String, Object> hashArgs) {
+    public String format(final List<Locale> locales, final String messageKey, final Map<String, Object> args) {
         final I18nIdentifier i18nIdentifier = i18nIdentifierFactory.create(messageKey);
-        return i18nResolver.getOrKey(locales, i18nIdentifier, hashArgs);
+        return i18nResolver.getOrKey(locales, i18nIdentifier, args);
     }
 }

@@ -19,9 +19,10 @@ public interface ErrorFormatter {
      * Formats the error message somehow, with the translation to the first available locale.
      * @param locales current given locales
      * @param message error message
+     * @param args list of named arguments
      * @return the error message localized and formatted
      */
-    String format(final List<Locale> locales, final String message, final Map<String, Object> hashArgs);
+    String format(final List<Locale> locales, final String message, final Map<String, Object> args);
 
     /**
      * Formats the Play error message somehow, with the translation to the first available locale.
@@ -31,12 +32,12 @@ public interface ErrorFormatter {
      * @return the error message localized and formatted
      */
     default String format(final List<Locale> locales, final ValidationError error) {
-        final Map<String, Object> hashArgs = new HashMap<>();
+        final Map<String, Object> args = new HashMap<>();
         if (error.key() != null && !error.key().isEmpty()) {
-            hashArgs.put("field", error.key());
+            args.put("field", error.key());
         }
         IntStream.range(0, error.arguments().size())
-                .forEach(index -> hashArgs.put(String.valueOf(index), error.arguments().get(index)));
-        return format(locales, error.message(), hashArgs);
+                .forEach(index -> args.put(String.valueOf(index), error.arguments().get(index)));
+        return format(locales, error.message(), args);
     }
 }
