@@ -56,15 +56,18 @@ public abstract class AbstractCartLikeViewModelFactory<M extends CartViewModel, 
     }
 
     protected void fillDiscountCodes(final M viewModel, final I cartLike) {
-        final List<DiscountCodeViewModel> discountCodes = cartLike.getDiscountCodes().stream()
-                .filter(discountCodeInfo -> discountCodeInfo.getState() == DiscountCodeState.MATCHES_CART)
-                .map(DiscountCodeInfo::getDiscountCode)
-                .filter(discountCodeReference -> discountCodeReference.getObj() != null)
-                .map(Reference::getObj)
-                .map(discountCodeViewModelFactory::create)
-                .collect(Collectors.toList());
+        if (cartLike != null) {
+            final List<DiscountCodeInfo> discountCodes = cartLike.getDiscountCodes();
+            final List<DiscountCodeViewModel> discountCodeViewModels = discountCodes.stream()
+                    .filter(discountCodeInfo -> discountCodeInfo.getState() == DiscountCodeState.MATCHES_CART)
+                    .map(DiscountCodeInfo::getDiscountCode)
+                    .filter(discountCodeReference -> discountCodeReference.getObj() != null)
+                    .map(Reference::getObj)
+                    .map(discountCodeViewModelFactory::create)
+                    .collect(Collectors.toList());
 
-        viewModel.setDiscountCodes(discountCodes);
+            viewModel.setDiscountCodes(discountCodeViewModels);
+        }
     }
 
     protected void fillSalesTax(final M viewModel, @Nullable final I cartLike) {
