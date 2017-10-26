@@ -18,7 +18,7 @@ public abstract class AbstractCartLikeViewModelFactory<M extends CartViewModel, 
     private final ShippingInfoViewModelFactory shippingInfoViewModelFactory;
     private final PaymentInfoViewModelFactory paymentInfoViewModelFactory;
     private final AddressViewModelFactory addressViewModelFactory;
-    private final  DiscountCodeViewModelFactory discountCodeViewModelFactory;
+    private final DiscountCodeViewModelFactory discountCodeViewModelFactory;
 
     protected AbstractCartLikeViewModelFactory(final CurrencyUnit currency, final PriceFormatter priceFormatter, final ShippingInfoViewModelFactory shippingInfoViewModelFactory,
                                                final PaymentInfoViewModelFactory paymentInfoViewModelFactory, final AddressViewModelFactory addressViewModelFactory,

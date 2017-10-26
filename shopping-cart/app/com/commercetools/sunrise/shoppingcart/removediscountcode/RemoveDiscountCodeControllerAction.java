@@ -8,7 +8,7 @@ import java.util.concurrent.CompletionStage;
 import java.util.function.BiFunction;
 
 /**
- * Controller action to add a discount code to a cart.
+ * Controller action to remove a discount code to a cart.
  */
 @ImplementedBy(DefaultRemoveDiscountCodeControllerAction.class)
 @FunctionalInterface
