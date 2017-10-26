@@ -2,17 +2,17 @@ package com.commercetools.sunrise.email.fake;
 
 import com.commercetools.sunrise.email.EmailSender;
 import com.commercetools.sunrise.email.MessageEditor;
-import com.commercetools.sunrise.test.WithPlayApplication;
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 import org.junit.After;
 import org.junit.Test;
+import play.test.WithApplication;
 
 import java.io.File;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class FakeEmailSenderTest extends WithPlayApplication {
+public class FakeEmailSenderTest extends WithApplication {
 
     private static final String EMAIL_CONTENT = "Some content";
 

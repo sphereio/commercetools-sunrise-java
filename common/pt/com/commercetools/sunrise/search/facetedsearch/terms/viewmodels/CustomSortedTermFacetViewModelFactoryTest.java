@@ -5,12 +5,12 @@ import com.commercetools.sunrise.search.facetedsearch.terms.TermFacetMapperSetti
 import com.commercetools.sunrise.search.facetedsearch.terms.TermFacetedSearchFormSettings;
 import com.commercetools.sunrise.search.facetedsearch.terms.TermFacetedSearchFormSettingsFactory;
 import com.commercetools.sunrise.search.facetedsearch.viewmodels.FacetOptionViewModel;
-import com.commercetools.sunrise.test.WithPlayApplication;
 import io.sphere.sdk.search.TermFacetResult;
 import io.sphere.sdk.search.TermStats;
 import org.junit.Test;
 import play.mvc.Http;
 import play.test.Helpers;
+import play.test.WithApplication;
 
 import java.util.List;
 import java.util.Locale;
@@ -23,7 +23,7 @@ import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CustomSortedTermFacetViewModelFactoryTest extends WithPlayApplication {
+public class CustomSortedTermFacetViewModelFactoryTest extends WithApplication {
 
     @Test
     public void sortsOptionsAsGivenList() throws Exception {

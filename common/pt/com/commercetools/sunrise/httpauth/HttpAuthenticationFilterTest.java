@@ -2,6 +2,7 @@ package com.commercetools.sunrise.httpauth;
 
 import org.junit.Test;
 import play.Application;
+import play.inject.guice.GuiceApplicationBuilder;
 import play.libs.ws.WS;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSResponse;
@@ -11,7 +12,6 @@ import play.routing.RoutingDsl;
 import play.test.Helpers;
 import play.test.TestServer;
 
-import static com.commercetools.sunrise.it.TestFixtures.provideSimpleApplicationBuilder;
 import static org.assertj.core.api.Assertions.assertThat;
 import static play.inject.Bindings.bind;
 import static play.mvc.Results.ok;
@@ -26,7 +26,7 @@ public class HttpAuthenticationFilterTest {
         final Router router = new RoutingDsl()
                 .GET(URI).routeTo(() -> ok())
                 .build();
-        final Application app = provideSimpleApplicationBuilder()
+        final Application app = new GuiceApplicationBuilder()
                 .configure("play.http.filters", "com.commercetools.sunrise.httpauth.basic.BasicHttpAuthenticationFilters")
                 .overrides(
                         bind(HttpAuthentication.class).toInstance(httpAuthentication(isAuthEnabled)),

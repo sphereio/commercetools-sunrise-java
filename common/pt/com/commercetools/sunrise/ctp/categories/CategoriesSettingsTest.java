@@ -1,11 +1,11 @@
 package com.commercetools.sunrise.ctp.categories;
 
-import com.commercetools.sunrise.test.WithPlayApplication;
 import org.junit.Test;
+import play.test.WithApplication;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CategoriesSettingsTest extends WithPlayApplication {
+public class CategoriesSettingsTest extends WithApplication {
 
     @Test
     public void fallbacksToDefaultValues() throws Exception {

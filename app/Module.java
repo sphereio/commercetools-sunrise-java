@@ -3,7 +3,6 @@ import com.commercetools.sunrise.ctp.categories.CategoriesSettings;
 import com.commercetools.sunrise.ctp.categories.NavigationCategoryTree;
 import com.commercetools.sunrise.ctp.categories.NewCategoryTree;
 import com.commercetools.sunrise.email.EmailSender;
-import com.commercetools.sunrise.framework.controllers.metrics.SimpleMetricsSphereClientProvider;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
 import com.commercetools.sunrise.framework.viewmodels.content.carts.MiniCartViewModelFactory;
 import com.commercetools.sunrise.httpauth.HttpAuthentication;
@@ -52,11 +51,6 @@ public class Module extends AbstractModule {
 
     @Override
     protected void configure() {
-        // Binding for the client to connect commercetools
-        bind(SphereClient.class)
-                .toProvider(SimpleMetricsSphereClientProvider.class)
-                .in(Singleton.class);
-
         // Binding for the HTTP Authentication
         bind(HttpAuthentication.class)
                 .toProvider(BasicAuthenticationProvider.class)

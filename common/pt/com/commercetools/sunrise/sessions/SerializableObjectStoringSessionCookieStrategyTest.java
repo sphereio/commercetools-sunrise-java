@@ -1,17 +1,17 @@
 package com.commercetools.sunrise.sessions;
 
-import com.commercetools.sunrise.test.WithPlayApplication;
 import io.sphere.sdk.models.Base;
 import org.junit.Test;
 import play.libs.Json;
 import play.mvc.Http;
+import play.test.WithApplication;
 
 import static java.util.Collections.singletonMap;
 import static org.assertj.core.api.Assertions.assertThat;
 import static play.test.Helpers.fakeRequest;
 import static play.test.Helpers.invokeWithContext;
 
-public class SerializableObjectStoringSessionCookieStrategyTest extends WithPlayApplication {
+public class SerializableObjectStoringSessionCookieStrategyTest extends WithApplication {
 
     private static final SomeObject SOME_OBJECT = new SomeObject("hello", 2);
     private static final SomeObject SOME_OTHER_OBJECT = new SomeObject("world", 4);

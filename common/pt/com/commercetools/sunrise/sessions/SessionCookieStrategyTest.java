@@ -1,15 +1,15 @@
 package com.commercetools.sunrise.sessions;
 
-import com.commercetools.sunrise.test.WithPlayApplication;
 import org.junit.Test;
 import play.mvc.Http;
+import play.test.WithApplication;
 
 import static java.util.Collections.singletonMap;
 import static org.assertj.core.api.Assertions.assertThat;
 import static play.test.Helpers.fakeRequest;
 import static play.test.Helpers.invokeWithContext;
 
-public class SessionCookieStrategyTest extends WithPlayApplication {
+public class SessionCookieStrategyTest extends WithApplication {
 
     @Test
     public void findsWhenInSession() throws Exception {

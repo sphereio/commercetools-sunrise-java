@@ -1,30 +1,21 @@
 package com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover;
 
-import com.commercetools.sunrise.test.WithPlayApplication;
 import com.google.common.collect.ImmutableMap;
 import org.junit.Before;
 import org.junit.Test;
-import play.Application;
 import play.data.Form;
 import play.data.FormFactory;
+import play.test.WithApplication;
 
 import java.util.Map;
 
-import static com.commercetools.sunrise.it.TestFixtures.provideSimpleApplicationBuilder;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Unit tests for {@link DefaultRecoverPasswordFormData}.
  */
-public class DefaultRecoverPasswordFormDataTest extends WithPlayApplication {
+public class DefaultRecoverPasswordFormDataTest extends WithApplication {
     private Form<DefaultRecoverPasswordFormData> form;
-
-    @Override
-    protected Application provideApplication() {
-        final Application app = provideSimpleApplicationBuilder()
-                .build();
-        return app;
-    }
 
     @Before
     public void setup() {

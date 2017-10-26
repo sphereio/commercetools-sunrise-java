@@ -3,6 +3,7 @@ package com.commercetools.sunrise.httpauth.basic;
 import com.commercetools.sunrise.httpauth.HttpAuthentication;
 import org.junit.Test;
 import play.Application;
+import play.inject.guice.GuiceApplicationBuilder;
 import play.libs.ws.WS;
 import play.libs.ws.WSAuthScheme;
 import play.libs.ws.WSClient;
@@ -12,7 +13,6 @@ import play.routing.Router;
 import play.routing.RoutingDsl;
 import play.test.WithServer;
 
-import static com.commercetools.sunrise.it.TestFixtures.provideSimpleApplicationBuilder;
 import static org.assertj.core.api.Assertions.assertThat;
 import static play.inject.Bindings.bind;
 import static play.mvc.Results.ok;
@@ -29,7 +29,7 @@ public class BasicHttpAuthenticationFilterTest extends WithServer {
         final Router router = new RoutingDsl()
                 .GET(URI).routeTo(() -> ok())
                 .build();
-        return provideSimpleApplicationBuilder()
+        return new GuiceApplicationBuilder()
                 .configure("play.http.filters", "com.commercetools.sunrise.httpauth.basic.BasicHttpAuthenticationFilters")
                 .overrides(
                         bind(HttpAuthentication.class).toInstance(new BasicHttpAuthentication(REALM, USERNAME + ":" + PASSWORD)),

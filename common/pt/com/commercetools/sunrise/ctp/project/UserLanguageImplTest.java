@@ -1,7 +1,7 @@
 package com.commercetools.sunrise.ctp.project;
 
-import com.commercetools.sunrise.test.WithPlayApplication;
 import org.junit.Test;
+import play.test.WithApplication;
 
 import java.util.Locale;
 
@@ -13,7 +13,7 @@ import static play.mvc.Http.HeaderNames.ACCEPT_LANGUAGE;
 import static play.test.Helpers.fakeRequest;
 import static play.test.Helpers.invokeWithContext;
 
-public class UserLanguageImplTest extends WithPlayApplication {
+public class UserLanguageImplTest extends WithApplication {
 
     @Test
     public void addsAcceptedLanguages() throws Exception {
