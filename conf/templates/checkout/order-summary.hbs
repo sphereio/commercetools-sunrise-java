@@ -69,10 +69,10 @@
           </div>
       </div>
   {{/each}}
-    {{> checkout/order-summary/discount-summary}}
-    {{> checkout/order-summary/discount-code-input}}
-    {{#if checkoutConfirmation}}
-  {{> checkout/order-summary/confirmation-checkboxes}}
+  {{> checkout/order-summary/discount-code-input}}
+  {{> checkout/order-summary/discount-summary}}
+  {{#if checkoutConfirmation}}
+    {{> checkout/order-summary/confirmation-checkboxes}}
   {{/if}}
     <div class="row">
         <div class="col-sm-12">
