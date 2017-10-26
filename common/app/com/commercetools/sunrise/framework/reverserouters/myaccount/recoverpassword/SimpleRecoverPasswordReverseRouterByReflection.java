@@ -43,5 +43,4 @@ final class SimpleRecoverPasswordReverseRouterByReflection extends AbstractRefle
     public Call requestRecoveryEmailProcessCall(final String languageTag) {
         return requestRecoveryEmailProcessCaller.call(languageTag);
     }
-
 }

@@ -34,5 +34,4 @@ public class DefaultRecoverPasswordReverseRouter extends AbstractLocalizedRevers
     public Call requestRecoveryEmailProcessCall(final String languageTag) {
         return delegate.requestRecoveryEmailProcessCall(languageTag);
     }
-
 }
