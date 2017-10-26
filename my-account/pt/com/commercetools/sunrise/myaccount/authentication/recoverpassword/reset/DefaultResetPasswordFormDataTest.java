@@ -1,11 +1,11 @@
 package com.commercetools.sunrise.myaccount.authentication.recoverpassword.reset;
 
+import com.commercetools.sunrise.test.WithPlayApplication;
 import com.google.common.collect.ImmutableMap;
 import org.junit.Before;
 import org.junit.Test;
 import play.data.Form;
 import play.data.FormFactory;
-import play.test.WithApplication;
 
 import java.util.Map;
 
@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * Unit tests for {@link DefaultResetPasswordFormData}.
  */
-public class DefaultResetPasswordFormDataTest extends WithApplication {
+public class DefaultResetPasswordFormDataTest extends WithPlayApplication {
 
     private Form<DefaultResetPasswordFormData> form;
 

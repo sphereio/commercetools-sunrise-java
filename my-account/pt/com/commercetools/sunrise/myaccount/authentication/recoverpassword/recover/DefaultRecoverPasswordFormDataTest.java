@@ -23,7 +23,6 @@ public class DefaultRecoverPasswordFormDataTest extends WithPlayApplication {
     protected Application provideApplication() {
         final Application app = provideSimpleApplicationBuilder()
                 .build();
-        System.out.println(app.configuration().asMap());
         return app;
     }
 

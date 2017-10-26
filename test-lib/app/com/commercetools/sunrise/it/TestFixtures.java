@@ -6,6 +6,7 @@ import io.sphere.sdk.client.NotFoundException;
 import io.sphere.sdk.client.SphereRequest;
 import io.sphere.sdk.models.LocalizedString;
 import io.sphere.sdk.models.Versioned;
+import play.api.i18n.I18nModule;
 import play.inject.guice.GuiceApplicationBuilder;
 import play.inject.guice.Guiceable;
 
@@ -60,6 +61,7 @@ public final class TestFixtures {
         return new GuiceApplicationBuilder()
                 .load(Guiceable.modules(
                         new play.api.inject.BuiltinModule(),
-                        new play.inject.BuiltInModule()));
+                        new play.inject.BuiltInModule(),
+                        new I18nModule()));
     }
 }
