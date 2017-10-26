@@ -1,5 +1,3 @@
 payment:
   prepaid: Prepaid
   creditcard: Credit card
-changePassword:
-  messageSentTitle: A recovery email has been sent, please check your email for instruction on how to reset your password.

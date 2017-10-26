@@ -91,6 +91,7 @@ changePassword:
   changeBtn: Passwort ändern
   backBtn: Zurück
   feedbackMessage: Kennwort erfolgreich geändert.
+  messageSentTitle: Eine Wiederherstellungs-E-Mail wurde gesendet, bitte überprüfen Sie Ihre E-Mail für Anweisungen zum Zurücksetzen Ihres Passworts.
 resetPassword:
   title: Passwort zurücksetzen
   newPasswordLabelTxt: Neues Passwort

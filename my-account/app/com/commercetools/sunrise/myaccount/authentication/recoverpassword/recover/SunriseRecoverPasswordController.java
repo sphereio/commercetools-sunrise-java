@@ -9,8 +9,8 @@ import com.commercetools.sunrise.framework.reverserouters.myaccount.recoverpassw
 import com.commercetools.sunrise.framework.template.engine.ContentRenderer;
 import com.commercetools.sunrise.framework.viewmodels.content.PageContent;
 import com.commercetools.sunrise.myaccount.MyAccountController;
+import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover.viewmodels.RecoverPasswordPageContent;
 import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover.viewmodels.RecoverPasswordPageContentFactory;
-import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover.viewmodels.SuccessfulRecoveryPageContentFactory;
 import io.sphere.sdk.client.ClientErrorException;
 import io.sphere.sdk.client.NotFoundException;
 import io.sphere.sdk.customers.CustomerToken;
@@ -18,6 +18,7 @@ import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Result;
 
+import java.util.Arrays;
 import java.util.concurrent.CompletionStage;
 
 /**
@@ -27,21 +28,20 @@ import java.util.concurrent.CompletionStage;
 public abstract class SunriseRecoverPasswordController extends SunriseContentFormController
         implements MyAccountController, WithContentFormFlow<Void, CustomerToken, RecoverPasswordFormData> {
     private final RecoverPasswordPageContentFactory pageContentFactory;
-    private final SuccessfulRecoveryPageContentFactory successContentFactory;
     private final RecoverPasswordControllerAction controllerAction;
     private final RecoverPasswordFormData formData;
+
+    protected static final String SUCCESSFUL = "successful";
 
     protected SunriseRecoverPasswordController(final ContentRenderer contentRenderer, final FormFactory formFactory,
                                                final RecoverPasswordPageContentFactory pageContentFactory,
                                                final RecoverPasswordFormData formData,
-                                               final RecoverPasswordControllerAction controllerAction,
-                                               final SuccessfulRecoveryPageContentFactory successContentFactory
+                                               final RecoverPasswordControllerAction controllerAction
     ) {
         super(contentRenderer, formFactory);
         this.pageContentFactory = pageContentFactory;
         this.controllerAction = controllerAction;
         this.formData = formData;
-        this.successContentFactory = successContentFactory;
     }
 
     @Override
@@ -60,15 +60,6 @@ public abstract class SunriseRecoverPasswordController extends SunriseContentFor
     public CompletionStage<Result> process(final String languageTag) {
         return processForm(null);
     }
-
-    @EnableHooks
-    @SunriseRoute(RecoverPasswordReverseRouter.REQUEST_RECOVERY_EMAIL_SUCCESS)
-    public CompletionStage<Result> showSuccess(final String languageTag) {
-
-        return okResultWithPageContent(successContentFactory.create(), getSuccessRecoveryTemplateName());
-    }
-
-    protected abstract String getSuccessRecoveryTemplateName();
 
     @Override
     public CompletionStage<CustomerToken> executeAction(final Void input, final RecoverPasswordFormData formData) {
@@ -99,7 +90,11 @@ public abstract class SunriseRecoverPasswordController extends SunriseContentFor
 
     @Override
     public PageContent createPageContent(final Void input, final Form<? extends RecoverPasswordFormData> form) {
-        return pageContentFactory.create(form);
+        RecoverPasswordPageContent pageContent =  pageContentFactory.create(form);
+        if(Boolean.valueOf(flash(SUCCESSFUL))){
+            pageContent.setMessages(Arrays.asList("my-account:recoverPassword.recoverDescription"));
+        }
+        return pageContent;
     }
 
     @Override

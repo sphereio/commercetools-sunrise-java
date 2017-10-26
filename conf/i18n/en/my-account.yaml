@@ -92,6 +92,7 @@ changePassword:
   changeBtn: Change password
   backBtn: Back
   feedbackMessage: Password changed successfully.
+  messageSentTitle: A recovery email has been sent, please check your email for instruction on how to reset your password.
 resetPassword:
   title: Reset Password
   newPasswordLabelTxt: New password

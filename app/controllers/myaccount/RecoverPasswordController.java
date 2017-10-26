@@ -1,5 +1,6 @@
 package controllers.myaccount;
 
+import com.commercetools.sunrise.email.EmailDeliveryException;
 import com.commercetools.sunrise.framework.components.controllers.PageHeaderControllerComponentSupplier;
 import com.commercetools.sunrise.framework.components.controllers.RegisteredComponents;
 import com.commercetools.sunrise.framework.controllers.cache.NoCache;
@@ -11,8 +12,6 @@ import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recove
 import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover.RecoverPasswordFormData;
 import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover.SunriseRecoverPasswordController;
 import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover.viewmodels.RecoverPasswordPageContentFactory;
-import com.commercetools.sunrise.email.EmailDeliveryException;
-import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover.viewmodels.SuccessfulRecoveryPageContentFactory;
 import io.sphere.sdk.customers.CustomerToken;
 import play.data.Form;
 import play.data.FormFactory;
@@ -35,9 +34,8 @@ public final class RecoverPasswordController extends SunriseRecoverPasswordContr
                               final RecoverPasswordPageContentFactory pageContentFactory,
                               final RecoverPasswordFormData formData,
                               final RecoverPasswordControllerAction controllerAction,
-                              final RecoverPasswordReverseRouter recoverPasswordReverseRouter,
-                              final SuccessfulRecoveryPageContentFactory successContentFactory) {
-        super(contentRenderer, formFactory, pageContentFactory, formData, controllerAction,successContentFactory);
+                              final RecoverPasswordReverseRouter recoverPasswordReverseRouter) {
+        super(contentRenderer, formFactory, pageContentFactory, formData, controllerAction);
         this.recoverPasswordReverseRouter = recoverPasswordReverseRouter;
     }
 
@@ -47,18 +45,14 @@ public final class RecoverPasswordController extends SunriseRecoverPasswordContr
     }
 
     @Override
-    protected String getSuccessRecoveryTemplateName() {
-        return "my-account-forgot-password-success";
-    }
-
-    @Override
     public String getCmsPageKey() {
         return "default";
     }
 
     @Override
     public CompletionStage<Result> handleSuccessfulAction(final CustomerToken customerToken, final RecoverPasswordFormData formData) {
-        return redirectToCall(recoverPasswordReverseRouter.resetPasswordSuccessCall());
+        flash(SUCCESSFUL,Boolean.TRUE.toString());
+        return redirectToCall(recoverPasswordReverseRouter.requestRecoveryEmailPageCall());
     }
 
     @Override
