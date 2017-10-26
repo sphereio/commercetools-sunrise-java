@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.ctp.project;
+package com.commercetools.sunrise.framework.localization;
 
 public class NoCountryFoundException extends RuntimeException {
 

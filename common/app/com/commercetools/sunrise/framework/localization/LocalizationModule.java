@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.ctp.project;
+package com.commercetools.sunrise.framework.localization;
 
 import com.commercetools.sunrise.framework.injection.RequestScoped;
 import com.google.inject.AbstractModule;

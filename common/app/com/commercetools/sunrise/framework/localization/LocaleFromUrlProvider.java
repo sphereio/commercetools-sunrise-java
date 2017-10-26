@@ -1,5 +1,6 @@
-package com.commercetools.sunrise.ctp.project;
+package com.commercetools.sunrise.framework.localization;
 
+import com.commercetools.sunrise.ctp.project.ProjectContext;
 import play.mvc.Http;
 
 import javax.inject.Inject;

@@ -1,5 +1,8 @@
 package com.commercetools.sunrise.ctp.project;
 
+import com.commercetools.sunrise.framework.localization.NoCountryFoundException;
+import com.commercetools.sunrise.framework.localization.NoCurrencyFoundException;
+import com.commercetools.sunrise.framework.localization.NoLocaleFoundException;
 import com.google.inject.ImplementedBy;
 import com.neovisionaries.i18n.CountryCode;
 import io.sphere.sdk.projects.Project;

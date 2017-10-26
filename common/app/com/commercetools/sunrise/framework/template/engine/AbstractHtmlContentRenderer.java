@@ -2,7 +2,7 @@ package com.commercetools.sunrise.framework.template.engine;
 
 import com.commercetools.sunrise.cms.CmsPage;
 import com.commercetools.sunrise.cms.CmsService;
-import com.commercetools.sunrise.ctp.project.UserLanguage;
+import com.commercetools.sunrise.framework.localization.UserLanguage;
 import com.commercetools.sunrise.framework.viewmodels.PageData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

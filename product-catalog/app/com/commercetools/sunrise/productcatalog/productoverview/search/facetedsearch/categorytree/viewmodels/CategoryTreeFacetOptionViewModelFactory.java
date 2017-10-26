@@ -2,7 +2,7 @@ package com.commercetools.sunrise.productcatalog.productoverview.search.faceteds
 
 import com.commercetools.sunrise.ctp.categories.NavigationCategoryTree;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
-import com.commercetools.sunrise.ctp.project.UserLanguage;
+import com.commercetools.sunrise.framework.localization.UserLanguage;
 import com.commercetools.sunrise.framework.reverserouters.productcatalog.product.ProductReverseRouter;
 import com.commercetools.sunrise.search.facetedsearch.viewmodels.AbstractFacetOptionViewModelFactory;
 import com.commercetools.sunrise.search.facetedsearch.viewmodels.FacetOptionViewModel;
