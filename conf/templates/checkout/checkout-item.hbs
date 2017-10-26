@@ -74,18 +74,12 @@
       <div class="col-lg-8 col-md-7 col-sm-7 col-xs-7">
         <div class="text-right checkout-price-text">
           <span>{{i18n "checkout:subtotal"}}</span><br>
-          {{#if meta.features.cartDiscounts.active}}
-          <span>{{i18n "checkout:orderDiscount"}}</span><br>
-          {{/if}}
           <span>{{i18n "checkout:shipping"}}</span>
         </div>
       </div>
       <div class="col-lg-4 col-md-5 col-sm-5 col-xs-5">
         <div class="text-right checkout-price-digits">
           <span>{{content.cart.subtotalPrice}}</span><br>
-          {{#if meta.features.cartDiscounts.active}}
-          <span>{{content.cart.discount}}</span><br>
-          {{/if}}
           <span>{{content.cart.shippingMethod.price}}</span>
         </div>
       </div>
