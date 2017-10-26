@@ -67,7 +67,7 @@ public abstract class SunriseAddDiscountCodeController extends SunriseContentFor
     @Override
     public PageContent createPageContent(final Cart cart, final Form<? extends AddDiscountCodeFormData> form) {
         final CartPageContent cartPageContent = pageContentFactory.create(cart);
-        cartPageContent.put("errors", form);
+        cartPageContent.getCart().setAddDiscountCodeForm(form);
         return cartPageContent;
     }
 
