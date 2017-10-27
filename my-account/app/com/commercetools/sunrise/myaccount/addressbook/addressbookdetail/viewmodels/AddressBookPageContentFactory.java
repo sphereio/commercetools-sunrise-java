@@ -1,7 +1,8 @@
 package com.commercetools.sunrise.myaccount.addressbook.addressbookdetail.viewmodels;
 
-import com.commercetools.sunrise.framework.viewmodels.content.PageContentFactory;
+import com.commercetools.sunrise.framework.template.i18n.I18nIdentifierResolver;
 import com.commercetools.sunrise.framework.viewmodels.PageTitleResolver;
+import com.commercetools.sunrise.framework.viewmodels.content.PageContentFactory;
 import io.sphere.sdk.customers.Customer;
 import io.sphere.sdk.models.Address;
 
@@ -15,7 +16,10 @@ public class AddressBookPageContentFactory extends PageContentFactory<AddressBoo
     private final EditableAddressViewModelFactory editableAddressViewModelFactory;
 
     @Inject
-    public AddressBookPageContentFactory(final PageTitleResolver pageTitleResolver, final EditableAddressViewModelFactory editableAddressViewModelFactory) {
+    public AddressBookPageContentFactory(final I18nIdentifierResolver i18nIdentifierResolver,
+                                         final PageTitleResolver pageTitleResolver,
+                                         final EditableAddressViewModelFactory editableAddressViewModelFactory) {
+        super(i18nIdentifierResolver);
         this.pageTitleResolver = pageTitleResolver;
         this.editableAddressViewModelFactory = editableAddressViewModelFactory;
     }

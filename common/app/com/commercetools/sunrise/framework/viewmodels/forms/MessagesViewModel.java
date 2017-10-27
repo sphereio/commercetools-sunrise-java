@@ -6,16 +6,20 @@ import java.util.List;
 
 public class MessagesViewModel extends ViewModel {
 
-    private List<ErrorViewModel> globalErrors;
+    private List<MessageViewModel> messages;
 
     public MessagesViewModel() {
     }
 
-    public List<ErrorViewModel> getGlobalErrors() {
-        return globalErrors;
+    public List<MessageViewModel> getMessages() {
+        return messages;
     }
 
-    public void setGlobalErrors(final List<ErrorViewModel> globalErrors) {
-        this.globalErrors = globalErrors;
+    public void setMessages(final List<MessageViewModel> messages) {
+        this.messages = messages;
+    }
+
+    public void addMessage(final MessageViewModel message) {
+        this.messages.add(message);
     }
 }

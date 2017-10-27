@@ -1,5 +1,6 @@
 package com.commercetools.sunrise.shoppingcart.content.viewmodels;
 
+import com.commercetools.sunrise.framework.template.i18n.I18nIdentifierResolver;
 import com.commercetools.sunrise.framework.viewmodels.PageTitleResolver;
 import com.commercetools.sunrise.framework.viewmodels.content.PageContentFactory;
 import com.commercetools.sunrise.framework.viewmodels.content.carts.CartViewModelFactory;
@@ -14,7 +15,10 @@ public class CartPageContentFactory extends PageContentFactory<CartPageContent, 
     private final CartViewModelFactory cartViewModelFactory;
 
     @Inject
-    public CartPageContentFactory(final PageTitleResolver pageTitleResolver, final CartViewModelFactory cartViewModelFactory) {
+    public CartPageContentFactory(final I18nIdentifierResolver i18nIdentifierResolver,
+                                  final PageTitleResolver pageTitleResolver,
+                                  final CartViewModelFactory cartViewModelFactory) {
+        super(i18nIdentifierResolver);
         this.pageTitleResolver = pageTitleResolver;
         this.cartViewModelFactory = cartViewModelFactory;
     }

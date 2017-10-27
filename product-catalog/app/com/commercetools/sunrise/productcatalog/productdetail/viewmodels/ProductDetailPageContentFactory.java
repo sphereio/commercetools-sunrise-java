@@ -1,5 +1,6 @@
 package com.commercetools.sunrise.productcatalog.productdetail.viewmodels;
 
+import com.commercetools.sunrise.framework.template.i18n.I18nIdentifierResolver;
 import com.commercetools.sunrise.framework.viewmodels.PageTitleResolver;
 import com.commercetools.sunrise.framework.viewmodels.content.PageContentFactory;
 import com.commercetools.sunrise.framework.viewmodels.content.products.ProductViewModelFactory;
@@ -18,8 +19,11 @@ public class ProductDetailPageContentFactory extends PageContentFactory<ProductD
     private final ProductViewModelFactory productViewModelFactory;
 
     @Inject
-    public ProductDetailPageContentFactory(final Locale locale, final PageTitleResolver pageTitleResolver,
-                                           final ProductBreadcrumbViewModelFactory productBreadcrumbViewModelFactory, final ProductViewModelFactory productViewModelFactory) {
+    public ProductDetailPageContentFactory(final I18nIdentifierResolver i18nIdentifierResolver,
+                                           final Locale locale, final PageTitleResolver pageTitleResolver,
+                                           final ProductBreadcrumbViewModelFactory productBreadcrumbViewModelFactory,
+                                           final ProductViewModelFactory productViewModelFactory) {
+        super(i18nIdentifierResolver);
         this.locale = locale;
         this.pageTitleResolver = pageTitleResolver;
         this.productBreadcrumbViewModelFactory = productBreadcrumbViewModelFactory;

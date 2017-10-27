@@ -9,7 +9,6 @@ import com.commercetools.sunrise.framework.reverserouters.myaccount.recoverpassw
 import com.commercetools.sunrise.framework.template.engine.ContentRenderer;
 import com.commercetools.sunrise.framework.viewmodels.content.PageContent;
 import com.commercetools.sunrise.myaccount.MyAccountController;
-import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover.viewmodels.RecoverPasswordPageContent;
 import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover.viewmodels.RecoverPasswordPageContentFactory;
 import io.sphere.sdk.client.ClientErrorException;
 import io.sphere.sdk.client.NotFoundException;
@@ -18,7 +17,6 @@ import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Result;
 
-import java.util.Arrays;
 import java.util.concurrent.CompletionStage;
 
 /**
@@ -31,13 +29,10 @@ public abstract class SunriseRecoverPasswordController extends SunriseContentFor
     private final RecoverPasswordControllerAction controllerAction;
     private final RecoverPasswordFormData formData;
 
-    protected static final String SUCCESSFUL = "successful";
-
     protected SunriseRecoverPasswordController(final ContentRenderer contentRenderer, final FormFactory formFactory,
                                                final RecoverPasswordPageContentFactory pageContentFactory,
                                                final RecoverPasswordFormData formData,
-                                               final RecoverPasswordControllerAction controllerAction
-    ) {
+                                               final RecoverPasswordControllerAction controllerAction) {
         super(contentRenderer, formFactory);
         this.pageContentFactory = pageContentFactory;
         this.controllerAction = controllerAction;
@@ -90,11 +85,7 @@ public abstract class SunriseRecoverPasswordController extends SunriseContentFor
 
     @Override
     public PageContent createPageContent(final Void input, final Form<? extends RecoverPasswordFormData> form) {
-        RecoverPasswordPageContent pageContent =  pageContentFactory.create(form);
-        if(Boolean.valueOf(flash(SUCCESSFUL))){
-            pageContent.setMessages(Arrays.asList("my-account:recoverPassword.recoverDescription"));
-        }
-        return pageContent;
+        return pageContentFactory.create(form);
     }
 
     @Override

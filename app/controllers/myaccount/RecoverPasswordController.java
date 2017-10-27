@@ -8,6 +8,7 @@ import com.commercetools.sunrise.framework.controllers.metrics.LogMetrics;
 import com.commercetools.sunrise.framework.reverserouters.myaccount.recoverpassword.RecoverPasswordReverseRouter;
 import com.commercetools.sunrise.framework.template.TemplateControllerComponentsSupplier;
 import com.commercetools.sunrise.framework.template.engine.ContentRenderer;
+import com.commercetools.sunrise.framework.viewmodels.content.PageContentFactory;
 import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover.RecoverPasswordControllerAction;
 import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover.RecoverPasswordFormData;
 import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover.SunriseRecoverPasswordController;
@@ -51,7 +52,7 @@ public final class RecoverPasswordController extends SunriseRecoverPasswordContr
 
     @Override
     public CompletionStage<Result> handleSuccessfulAction(final CustomerToken customerToken, final RecoverPasswordFormData formData) {
-        flash(SUCCESSFUL,Boolean.TRUE.toString());
+        flash(PageContentFactory.SUCCESS, "my-account:recoverPassword.recoverDescription");
         return redirectToCall(recoverPasswordReverseRouter.requestRecoveryEmailPageCall());
     }
 
