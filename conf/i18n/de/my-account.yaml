@@ -91,7 +91,6 @@ changePassword:
   changeBtn: Passwort ändern
   backBtn: Zurück
   feedbackMessage: Kennwort erfolgreich geändert.
-  messageSentTitle: Eine Wiederherstellungs-E-Mail wurde gesendet, bitte überprüfen Sie Ihre E-Mail für Anweisungen zum Zurücksetzen Ihres Passworts.
 resetPassword:
   title: Passwort zurücksetzen
   newPasswordLabelTxt: Neues Passwort
@@ -117,6 +116,4 @@ forgotPassword:
     bannerTitle: Frauen
     bannerText: Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem
     bottomTextTwo: Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id, mattis vel, nisi. Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Nullam mollis. Ut justo. Suspendisse potenti. Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing, commodo quis, gravida id, est. Sed lectus.
-recoverPassword:
-  title: Passwort vergessen
-  recoverDescription: Ihr Passwort wurde zurückgesetzt, bitte überprüfen Sie Ihre E-Mail für weitere Details.
+  feedbackMessage: Eine Wiederherstellungs-E-Mail wurde gesendet, bitte überprüfen Sie Ihre E-Mail für Anweisungen zum Zurücksetzen Ihres Passworts.
