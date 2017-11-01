@@ -1,5 +1,6 @@
 package com.commercetools.sunrise.framework.controllers;
 
+import com.commercetools.sunrise.framework.viewmodels.forms.MessageType;
 import io.sphere.sdk.client.ClientErrorException;
 import org.slf4j.Logger;
 import play.data.Form;
@@ -11,6 +12,7 @@ import java.util.concurrent.CompletionStage;
 import static io.sphere.sdk.utils.CompletableFutureUtils.exceptionallyCompletedFuture;
 import static io.sphere.sdk.utils.CompletableFutureUtils.recoverWith;
 import static java.util.concurrent.CompletableFuture.completedFuture;
+import static play.mvc.Http.Context.Implicit.flash;
 
 /**
  * Approach to handle form data (Template Method Pattern).
@@ -69,5 +71,9 @@ public interface WithFormFlow<I, O, F> extends WithForm<F> {
     default void saveUnexpectedFormError(final Form<? extends F> form, final Throwable throwable) {
         form.reject("Something went wrong, please try again"); // TODO i18n
         getLogger().error("The CTP request raised an unexpected exception", throwable);
+    }
+
+    default void saveMessage(final MessageType type, final String message) {
+        flash().put(type.name(), message);
     }
 }
