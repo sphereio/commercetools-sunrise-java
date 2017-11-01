@@ -1,6 +1,5 @@
 package com.commercetools.sunrise.wishlist.content.viewmodels;
 
-import com.commercetools.sunrise.framework.template.i18n.I18nIdentifierResolver;
 import com.commercetools.sunrise.framework.viewmodels.GenericListViewModel;
 import com.commercetools.sunrise.framework.viewmodels.PageTitleResolver;
 import com.commercetools.sunrise.framework.viewmodels.content.PageContentFactory;
@@ -21,10 +20,8 @@ public class WishlistPageContentFactory extends PageContentFactory<WishlistPageC
     private final LineItemThumbnailViewModelFactory thumbnailViewModelFactory;
 
     @Inject
-    public WishlistPageContentFactory(final I18nIdentifierResolver i18nIdentifierResolver,
-                                      final PageTitleResolver pageTitleResolver,
+    public WishlistPageContentFactory(final PageTitleResolver pageTitleResolver,
                                       final LineItemThumbnailViewModelFactory thumbnailViewModelFactory) {
-        super(i18nIdentifierResolver);
         this.pageTitleResolver = pageTitleResolver;
         this.thumbnailViewModelFactory = thumbnailViewModelFactory;
     }

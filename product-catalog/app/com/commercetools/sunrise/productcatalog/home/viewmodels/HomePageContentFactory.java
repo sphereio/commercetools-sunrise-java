@@ -1,6 +1,5 @@
 package com.commercetools.sunrise.productcatalog.home.viewmodels;
 
-import com.commercetools.sunrise.framework.template.i18n.I18nIdentifierResolver;
 import com.commercetools.sunrise.framework.viewmodels.PageTitleResolver;
 import com.commercetools.sunrise.framework.viewmodels.content.PageContentFactory;
 
@@ -11,8 +10,7 @@ public class HomePageContentFactory extends PageContentFactory<HomePageContent, 
     private final PageTitleResolver pageTitleResolver;
 
     @Inject
-    public HomePageContentFactory(final I18nIdentifierResolver i18nIdentifierResolver, final PageTitleResolver pageTitleResolver) {
-        super(i18nIdentifierResolver);
+    public HomePageContentFactory(final PageTitleResolver pageTitleResolver) {
         this.pageTitleResolver = pageTitleResolver;
     }
 

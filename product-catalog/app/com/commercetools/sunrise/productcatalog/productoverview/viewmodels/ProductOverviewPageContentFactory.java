@@ -1,6 +1,5 @@
 package com.commercetools.sunrise.productcatalog.productoverview.viewmodels;
 
-import com.commercetools.sunrise.framework.template.i18n.I18nIdentifierResolver;
 import com.commercetools.sunrise.framework.viewmodels.content.PageContentFactory;
 import com.commercetools.sunrise.productcatalog.productoverview.ProductsWithCategory;
 import play.mvc.Http;
@@ -20,13 +19,12 @@ public class ProductOverviewPageContentFactory extends PageContentFactory<Produc
     private final SeoViewModelFactory seoViewModelFactory;
 
     @Inject
-    public ProductOverviewPageContentFactory(final I18nIdentifierResolver i18nIdentifierResolver, final Locale locale,
+    public ProductOverviewPageContentFactory(final Locale locale,
                                              final CategoryBreadcrumbViewModelFactory categoryBreadcrumbViewModelFactory,
                                              final ProductListViewModelFactory productListViewModelFactory,
                                              final BannerViewModelFactory bannerViewModelFactory,
                                              final JumbotronViewModelFactory jumbotronViewModelFactory,
                                              final SeoViewModelFactory seoViewModelFactory) {
-        super(i18nIdentifierResolver);
         this.locale = locale;
         this.categoryBreadcrumbViewModelFactory = categoryBreadcrumbViewModelFactory;
         this.productListViewModelFactory = productListViewModelFactory;

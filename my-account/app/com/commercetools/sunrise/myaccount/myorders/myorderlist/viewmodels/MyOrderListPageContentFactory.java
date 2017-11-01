@@ -1,6 +1,5 @@
 package com.commercetools.sunrise.myaccount.myorders.myorderlist.viewmodels;
 
-import com.commercetools.sunrise.framework.template.i18n.I18nIdentifierResolver;
 import com.commercetools.sunrise.framework.viewmodels.content.PageContentFactory;
 import com.commercetools.sunrise.myaccount.myorders.myorderlist.OrderListWithCustomer;
 
@@ -13,9 +12,7 @@ public class MyOrderListPageContentFactory extends PageContentFactory<MyOrderLis
     private final OrderOverviewViewModelFactory orderOverviewViewModelFactory;
 
     @Inject
-    public MyOrderListPageContentFactory(final I18nIdentifierResolver i18nIdentifierResolver,
-                                         final OrderOverviewViewModelFactory orderOverviewViewModelFactory) {
-        super(i18nIdentifierResolver);
+    public MyOrderListPageContentFactory(final OrderOverviewViewModelFactory orderOverviewViewModelFactory) {
         this.orderOverviewViewModelFactory = orderOverviewViewModelFactory;
     }
 
