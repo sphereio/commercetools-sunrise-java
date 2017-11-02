@@ -30,7 +30,7 @@ final class HandlebarsI18nHelper extends SunriseModel implements Helper<String> 
     public CharSequence apply(final String context, final Options options) throws IOException {
         final List<Locale> locales = getLocalesFromContext(options.context);
         final I18nIdentifier i18nIdentifier = i18nIdentifierFactory.create(context);
-        return i18nResolver.getOrKey(locales, i18nIdentifier, options.hash);
+        return i18nResolver.getOrEmpty(locales, i18nIdentifier, options.hash);
     }
 
     @SuppressWarnings("unchecked")
