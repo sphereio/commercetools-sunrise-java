@@ -76,10 +76,6 @@ public class CartViewModel extends MiniCartViewModel {
         this.salesTax = salesTax;
     }
 
-    public boolean hasDiscountCodes() {
-        return discountCodes != null && discountCodes.size() > 0;
-    }
-
     public List<DiscountCodeViewModel> getDiscountCodes() {
         return discountCodes;
     }
