@@ -9,9 +9,24 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+import static play.mvc.Http.Context.Implicit.flash;
+
 public abstract class ViewModelFactory {
 
-    protected static List<MessageViewModel> extractMessages(final Map<String, String> map) {
+    /**
+     * Extracts all messages saved via
+     * {@link com.commercetools.sunrise.framework.controllers.WithFormFlow#saveMessage(MessageType, String)}
+     * and returns a list of view models with those messages. These view models can be set for example in the
+     * {@link com.commercetools.sunrise.framework.viewmodels.content.PageContent} using
+     * {@link com.commercetools.sunrise.framework.viewmodels.content.PageContent#setMessages(List)}
+     *
+     * @return list of view models with the extracted messages
+     */
+    protected static List<MessageViewModel> extractMessages() {
+        return extractMessages(flash());
+    }
+
+    private static List<MessageViewModel> extractMessages(final Map<String, String> map) {
         final List<MessageViewModel> messageViewModels = new ArrayList<>();
         Stream.of(MessageType.values())
                 .forEach(type -> findMessage(type, map)
@@ -19,15 +34,16 @@ public abstract class ViewModelFactory {
         return messageViewModels;
     }
 
-    private static Optional<MessageViewModel> findMessage(final MessageType type, final Map<String, String> map) {
-        return Optional.ofNullable(map.get(type.name()))
-                .map(message -> createMessage(type, message));
+    private static Optional<MessageViewModel> findMessage(final MessageType messageType, final Map<String, String> map) {
+        final String type = messageType.name();
+        return Optional.ofNullable(map.get(type))
+                .map(message -> createMessage(type.toLowerCase(), message));
     }
 
-    private static MessageViewModel createMessage(final MessageType type, final String message) {
+    private static MessageViewModel createMessage(final String type, final String message) {
         final MessageViewModel messageViewModel = new MessageViewModel();
         messageViewModel.setMessage(message);
-        messageViewModel.setType(type.name().toLowerCase());
+        messageViewModel.setType(type);
         return messageViewModel;
     }
 }

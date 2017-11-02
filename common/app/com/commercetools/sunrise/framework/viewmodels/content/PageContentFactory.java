@@ -2,8 +2,6 @@ package com.commercetools.sunrise.framework.viewmodels.content;
 
 import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
 
-import static play.mvc.Http.Context.Implicit.flash;
-
 public abstract class PageContentFactory<M extends PageContent, I> extends SimpleViewModelFactory<M, I> {
 
     @Override
@@ -15,6 +13,6 @@ public abstract class PageContentFactory<M extends PageContent, I> extends Simpl
     protected abstract void fillTitle(final M viewModel, final I input);
 
     protected void fillMessages(final M viewModel, final I input) {
-        viewModel.addMessages(extractMessages(flash()));
+        viewModel.addMessages(extractMessages());
     }
 }
