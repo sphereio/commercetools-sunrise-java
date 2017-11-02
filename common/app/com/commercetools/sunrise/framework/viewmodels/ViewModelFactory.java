@@ -1,7 +1,7 @@
 package com.commercetools.sunrise.framework.viewmodels;
 
-import com.commercetools.sunrise.framework.viewmodels.forms.MessageType;
-import com.commercetools.sunrise.framework.viewmodels.forms.MessageViewModel;
+import com.commercetools.sunrise.framework.viewmodels.content.messages.MessageType;
+import com.commercetools.sunrise.framework.viewmodels.content.messages.MessageViewModel;
 
 import java.util.ArrayList;
 import java.util.List;

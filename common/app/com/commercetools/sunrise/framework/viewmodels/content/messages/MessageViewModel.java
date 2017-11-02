@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.framework.viewmodels.forms;
+package com.commercetools.sunrise.framework.viewmodels.content.messages;
 
 import com.commercetools.sunrise.framework.viewmodels.ViewModel;
 

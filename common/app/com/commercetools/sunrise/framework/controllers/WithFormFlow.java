@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.framework.controllers;
 
-import com.commercetools.sunrise.framework.viewmodels.forms.MessageType;
+import com.commercetools.sunrise.framework.viewmodels.content.messages.MessageType;
 import io.sphere.sdk.client.ClientErrorException;
 import org.slf4j.Logger;
 import play.data.Form;

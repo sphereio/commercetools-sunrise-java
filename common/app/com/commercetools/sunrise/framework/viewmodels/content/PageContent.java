@@ -2,7 +2,7 @@ package com.commercetools.sunrise.framework.viewmodels.content;
 
 import com.commercetools.sunrise.framework.components.viewmodels.ViewModelComponent;
 import com.commercetools.sunrise.framework.viewmodels.ViewModel;
-import com.commercetools.sunrise.framework.viewmodels.forms.MessageViewModel;
+import com.commercetools.sunrise.framework.viewmodels.content.messages.MessageViewModel;
 
 import java.util.LinkedList;
 import java.util.List;
