@@ -15,7 +15,7 @@ public abstract class ViewModelFactory {
 
     /**
      * Extracts all messages saved via
-     * {@link com.commercetools.sunrise.framework.controllers.WithFormFlow#saveMessage(MessageType, String)}
+     * {@link com.commercetools.sunrise.framework.controllers.SunriseController#saveMessage(MessageType, String)}
      * and returns a list of view models with those messages. These view models can be set for example in the
      * {@link com.commercetools.sunrise.framework.viewmodels.content.PageContent} using
      * {@link com.commercetools.sunrise.framework.viewmodels.content.PageContent#setMessages(List)}
