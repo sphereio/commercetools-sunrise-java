@@ -27,8 +27,8 @@ public abstract class SunriseController extends Controller {
      *
      * Example use case: the user submitted a successful form, then the user is redirected to a page where the message
      * informing of the successful action is shown.
-     * In this case {@code saveMessage(MessageType.SUCCESS, "The action was successful!")} is invoked right before
-     * the redirection is executed.
+     * In this case {@code saveMessage(MessageType.SUCCESS, "The action was successful!")} would be invoked right
+     * before the redirection is executed.
      *
      * @param messageType type of the message to be saved (e.g. success, info)
      * @param message the content of the message to be saved
