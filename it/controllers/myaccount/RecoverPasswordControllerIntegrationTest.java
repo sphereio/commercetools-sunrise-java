@@ -83,7 +83,7 @@ public class RecoverPasswordControllerIntegrationTest extends WithSphereClient {
                 messageEditorCaptor.getValue().edit(message);
 
                 assertThat(message.getAllRecipients()).containsOnly(addressOf(email));
-                assertThat((String) message.getContent()).containsPattern("en\\/password\\/reset\\/[\\w]+");
+                assertThat((String) message.getContent()).containsPattern("en\\/password\\/reset\\/[\\w_-]+");
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
