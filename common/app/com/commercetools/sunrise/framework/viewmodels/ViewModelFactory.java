@@ -37,13 +37,13 @@ public abstract class ViewModelFactory {
     private static Optional<MessageViewModel> findMessage(final MessageType messageType, final Map<String, String> map) {
         final String type = messageType.name();
         return Optional.ofNullable(map.get(type))
-                .map(message -> createMessage(type.toLowerCase(), message));
+                .map(message -> createMessage(type, message));
     }
 
     private static MessageViewModel createMessage(final String type, final String message) {
         final MessageViewModel messageViewModel = new MessageViewModel();
         messageViewModel.setMessage(message);
-        messageViewModel.setType(type);
+        messageViewModel.setType(type.toLowerCase());
         return messageViewModel;
     }
 }
