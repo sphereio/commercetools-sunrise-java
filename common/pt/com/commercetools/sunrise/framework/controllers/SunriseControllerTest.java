@@ -12,7 +12,7 @@ import static play.test.Helpers.invokeWithContext;
 
 public class SunriseControllerTest extends WithApplication {
 
-    private TestController testController = new TestController();
+    private SunriseController testController = new SunriseController() {};
 
     @Test
     public void savesMessageInFlash() throws Exception {
@@ -53,9 +53,5 @@ public class SunriseControllerTest extends WithApplication {
                     .containsEntry(INFO.name(), message2);
             return null;
         });
-    }
-
-    private static class TestController extends SunriseController {
-
     }
 }
