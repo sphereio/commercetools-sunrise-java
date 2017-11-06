@@ -9,6 +9,9 @@ import javax.money.CurrencyUnit;
 import javax.money.Monetary;
 import java.util.Optional;
 
+/**
+ * Provides the {@link CurrencyUnit} corresponding to the injected {@link CountryCode}.
+ */
 public final class CurrencyFromCountryProvider implements Provider<CurrencyUnit> {
 
     private final CountryCode country;

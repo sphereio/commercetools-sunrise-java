@@ -11,6 +11,9 @@ import java.time.Duration;
 
 import static io.sphere.sdk.client.SphereClientUtils.blockingWait;
 
+/**
+ * Provides the commercetools {@link Project} associated with the injected {@link SphereClient}.
+ */
 public final class ProjectProvider implements Provider<Project> {
 
     private final SphereClient sphereClient;

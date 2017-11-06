@@ -8,6 +8,10 @@ import javax.inject.Inject;
 import javax.inject.Provider;
 import java.util.Optional;
 
+/**
+ * Provides the {@link CountryCode} instance of the country saved in the user's session.
+ * If not set, it provides the default country from the project.
+ */
 public final class CountryFromSessionProvider implements Provider<CountryCode> {
 
     private final ProjectContext projectContext;

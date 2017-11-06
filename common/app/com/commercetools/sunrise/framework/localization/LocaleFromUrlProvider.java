@@ -11,7 +11,12 @@ import java.util.Optional;
 
 import static java.util.Arrays.asList;
 
+/**
+ * Provides the {@link Locale} instance extracted from the URL using {@code languageTag} as the route variable name.
+ */
 public final class LocaleFromUrlProvider implements Provider<Locale> {
+
+    private static final String ROUTE_LANGUAGE_VAR = "languageTag";
 
     private final ProjectContext projectContext;
 
@@ -45,7 +50,7 @@ public final class LocaleFromUrlProvider implements Provider<Locale> {
                 .map(routePattern -> routePattern.toString().replaceAll("<[^>]+>", "")) // Remove regex because splitting '$languageTag<[^/]+>' with '/' would create more words
                 .map(routePattern -> {
                     final List<String> paths = asList(routePattern.split("/"));
-                    return paths.indexOf("$languageTag");
+                    return paths.indexOf("$" + ROUTE_LANGUAGE_VAR);
                 })
                 .filter(index -> index >= 0);
     }
