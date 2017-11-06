@@ -1,23 +1,24 @@
 package com.commercetools.sunrise.framework.viewmodels.content.carts;
 
 import com.commercetools.sunrise.framework.injection.RequestScoped;
+import com.commercetools.sunrise.framework.localization.UserLanguage;
 import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
 import com.google.inject.Inject;
 import io.sphere.sdk.discountcodes.DiscountCode;
 
-import java.util.Locale;
+import java.util.Optional;
 
 @RequestScoped
 public class DiscountCodeViewModelFactory extends SimpleViewModelFactory<DiscountCodeViewModel, DiscountCode> {
-    private final Locale locale;
+    private final UserLanguage userLanguage;
 
     @Inject
-    public DiscountCodeViewModelFactory(final Locale locale) {
-        this.locale = locale;
+    public DiscountCodeViewModelFactory(final UserLanguage userLanguage) {
+        this.userLanguage = userLanguage;
     }
 
-    protected final Locale getLocale() {
-        return locale;
+    protected final UserLanguage getUserLanguage() {
+        return userLanguage;
     }
 
     @Override
@@ -37,13 +38,16 @@ public class DiscountCodeViewModelFactory extends SimpleViewModelFactory<Discoun
     }
 
     protected void fillName(final DiscountCodeViewModel viewModel, final DiscountCode discountCode) {
-        final String name = discountCode.getName() == null ? null : discountCode.getName().get(locale) ;
-        final String viewName = name == null ? discountCode.getCode() : name;
-        viewModel.setName(viewName);
+        final String displayName = Optional.ofNullable(discountCode.getName())
+                .flatMap(name -> name.find(userLanguage.locales()))
+                .orElseGet(() -> discountCode.getCode());
+        viewModel.setName(displayName);
     }
 
     protected void fillDescription(final DiscountCodeViewModel viewModel, final DiscountCode discountCode) {
-        final String description = discountCode.getDescription() == null ? null : discountCode.getDescription().get(locale);
-        viewModel.setDescription(description);
+        final String displayDescription = Optional.of(discountCode.getDescription())
+                .flatMap(description -> description.find(userLanguage.locales()))
+                .orElse(null);
+        viewModel.setDescription(displayDescription);
     }
 }

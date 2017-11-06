@@ -2,7 +2,6 @@ package controllers.shoppingcart;
 
 import com.commercetools.sunrise.it.WithSphereClient;
 import com.commercetools.sunrise.sessions.cart.CartInSession;
-import com.google.inject.AbstractModule;
 import io.sphere.sdk.cartdiscounts.*;
 import io.sphere.sdk.carts.Cart;
 import io.sphere.sdk.carts.CartDraft;
@@ -45,6 +44,7 @@ import static com.commercetools.sunrise.it.TaxCategoryTestFixtures.withTaxCatego
 import static com.commercetools.sunrise.it.TestFixtures.randomString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
+import static play.inject.Bindings.bind;
 import static play.mvc.Http.Status.BAD_REQUEST;
 import static play.test.Helpers.*;
 
@@ -56,13 +56,10 @@ public class AddDiscountCodeControllerIntegrationTest extends WithSphereClient {
     @Override
     protected Application provideApplication() {
         return new GuiceApplicationBuilder()
-                .overrides(new AbstractModule() {
-                    @Override
-                    protected void configure() {
-                        bind(SphereClient.class).toInstance(sphereClient);
-                        bind(CartInSession.class).toInstance(cartInSession);
-                    }
-                }).build();
+                .overrides(
+                        bind(SphereClient.class).toInstance(sphereClient),
+                        bind(CartInSession.class).toInstance(cartInSession)
+                ).build();
     }
 
     @Test
@@ -98,6 +95,9 @@ public class AddDiscountCodeControllerIntegrationTest extends WithSphereClient {
                         .bodyForm(bodyForm));
 
                 assertThat(result.status()).isEqualTo(SEE_OTHER);
+                assertThat(result.redirectLocation())
+                        .isPresent()
+                        .hasValue("/en/cart");
 
                 return cart;
             });
