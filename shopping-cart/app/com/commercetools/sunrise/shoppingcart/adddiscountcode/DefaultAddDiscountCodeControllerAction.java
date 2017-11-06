@@ -8,7 +8,6 @@ import io.sphere.sdk.carts.commands.CartUpdateCommand;
 import io.sphere.sdk.carts.commands.updateactions.AddDiscountCode;
 import io.sphere.sdk.client.SphereClient;
 
-import java.util.Arrays;
 import java.util.concurrent.CompletionStage;
 
 public class DefaultAddDiscountCodeControllerAction extends AbstractCartUpdateExecutor implements AddDiscountCodeControllerAction {
@@ -25,6 +24,6 @@ public class DefaultAddDiscountCodeControllerAction extends AbstractCartUpdateEx
 
     protected CartUpdateCommand buildRequest(final Cart cart, final AddDiscountCodeFormData addDiscountCodeFormData) {
         final AddDiscountCode addDiscountCode = AddDiscountCode.of(addDiscountCodeFormData.code());
-        return CartUpdateCommand.of(cart, Arrays.asList(addDiscountCode));
+        return CartUpdateCommand.of(cart, addDiscountCode);
     }
 }

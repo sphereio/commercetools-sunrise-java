@@ -5,10 +5,13 @@ import io.sphere.sdk.carts.Cart;
 import io.sphere.sdk.carts.commands.CartUpdateCommand;
 import io.sphere.sdk.carts.commands.updateactions.AddDiscountCode;
 import io.sphere.sdk.client.SphereClient;
-import io.sphere.sdk.commands.UpdateAction;
-import org.junit.Before;
 import org.junit.Test;
-import org.mockito.*;
+import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -20,12 +23,13 @@ import static org.mockito.Mockito.when;
 /**
  * Unit tests for {@link DefaultAddDiscountCodeControllerAction}.
  */
+@RunWith(MockitoJUnitRunner.class)
 public class DefaultAddDiscountCodeControllerActionTest {
     public static final String DISCOUNT_CODE = "SUNNY";
     @Mock
-    private SphereClient sphereClient;
+    private SphereClient fakeSphereClient;
     @Mock
-    private HookRunner hookRunner;
+    private HookRunner fakeHookRunner;
     @Mock
     private Cart cart;
     @Captor
@@ -34,38 +38,37 @@ public class DefaultAddDiscountCodeControllerActionTest {
     @InjectMocks
     private DefaultAddDiscountCodeControllerAction defaultAddDiscountCodeControllerAction;
 
-    @Before
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
-    }
-
     @Test
     public void execute() throws ExecutionException, InterruptedException {
         final DefaultAddDiscountCodeFormData addDiscountFormData = new DefaultAddDiscountCodeFormData();
         addDiscountFormData.setCode(DISCOUNT_CODE);
 
-        when:
-        {
-            when(hookRunner.runUnaryOperatorHook(any(), any(), cartUpdateCommandCaptor.capture()))
-                    .thenAnswer(invocation -> invocation.getArgument(2));
-            when(hookRunner.runActionHook(any(), any(), any()))
-                    .thenAnswer(invocation -> CompletableFuture.completedFuture(invocation.getArgument(2)));
-            when(sphereClient.execute(any()))
-                    .thenReturn(CompletableFuture.completedFuture(cart));
-        }
+        mockHookRunnerThatReturnsCart();
+        mockSphereClientThatReturnsCart();
 
         final Cart updatedCart = defaultAddDiscountCodeControllerAction.apply(cart, addDiscountFormData)
                 .toCompletableFuture().get();
 
-        then: {
-            assertThat(updatedCart).isNotNull();
+        assertThat(updatedCart).isNotNull();
 
-            final CartUpdateCommand cartUpdateCommand = cartUpdateCommandCaptor.getValue();
-            assertThat(cartUpdateCommand.getUpdateActions()).hasSize(1);
-            final UpdateAction<Cart> cartUpdateAction = cartUpdateCommand.getUpdateActions().get(0);
-            assertThat(cartUpdateAction).isInstanceOf(AddDiscountCode.class);
-            final AddDiscountCode addDiscountCode = (AddDiscountCode) cartUpdateAction;
-            assertThat(addDiscountCode.getCode()).isEqualTo(DISCOUNT_CODE);
-        }
+        final CartUpdateCommand cartUpdateCommand = cartUpdateCommandCaptor.getValue();
+        assertThat(cartUpdateCommand.getUpdateActions())
+                .hasSize(1)
+                .hasOnlyElementsOfType(AddDiscountCode.class);
+
+        final AddDiscountCode addDiscountCode = (AddDiscountCode) cartUpdateCommand.getUpdateActions().get(0);
+        assertThat(addDiscountCode.getCode()).isEqualTo(DISCOUNT_CODE);
+    }
+
+    private void mockSphereClientThatReturnsCart() {
+        when(fakeSphereClient.execute(any()))
+                .thenReturn(CompletableFuture.completedFuture(cart));
+    }
+
+    private void mockHookRunnerThatReturnsCart() {
+        when(fakeHookRunner.runUnaryOperatorHook(any(), any(), cartUpdateCommandCaptor.capture()))
+                .thenAnswer(invocation -> invocation.getArgument(2));
+        when(fakeHookRunner.runActionHook(any(), any(), any()))
+                .thenAnswer(invocation -> CompletableFuture.completedFuture(invocation.getArgument(2)));
     }
 }

@@ -31,12 +31,12 @@ import java.util.concurrent.CompletionStage;
         CartOperationsControllerComponentSupplier.class,
         MiniWishlistControllerComponent.class
 })
-public class AddDiscountCodeController extends SunriseAddDiscountCodeController {
+public final class AddDiscountCodeController extends SunriseAddDiscountCodeController {
 
     private final CartReverseRouter cartReverseRouter;
 
     @Inject
-    public AddDiscountCodeController(final ContentRenderer contentRenderer, final FormFactory formFactory,
+    AddDiscountCodeController(final ContentRenderer contentRenderer, final FormFactory formFactory,
                                      final AddDiscountCodeFormData formData, final CartFinder cartFinder,
                                      final CartPageContentFactory pageContentFactory, final AddDiscountCodeControllerAction controllerAction,
                                      final CartReverseRouter cartReverseRouter) {
@@ -65,10 +65,10 @@ public class AddDiscountCodeController extends SunriseAddDiscountCodeController 
     }
 
     @Override
-    protected CompletionStage<Result> handleDiscountCodeNonApplicable(final Cart input,
+    protected CompletionStage<Result> handleDiscountCodeNonApplicable(final Cart cart,
                                                                       final Form<? extends AddDiscountCodeFormData> form,
                                                                       final ClientErrorException clientErrorException) {
         saveFormError(form, "Invalid discount code");
-        return showFormPageWithErrors(input, form);
+        return showFormPageWithErrors(cart, form);
     }
 }

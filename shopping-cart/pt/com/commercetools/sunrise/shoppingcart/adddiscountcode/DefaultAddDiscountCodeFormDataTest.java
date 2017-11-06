@@ -1,12 +1,12 @@
 package com.commercetools.sunrise.shoppingcart.adddiscountcode;
 
-import com.google.common.collect.ImmutableMap;
 import org.junit.Before;
 import org.junit.Test;
 import play.data.Form;
 import play.data.FormFactory;
 import play.test.WithApplication;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -38,7 +38,17 @@ public class DefaultAddDiscountCodeFormDataTest extends WithApplication {
         assertThat(validFormData.error("code")).isNotNull();
     }
 
+    @Test
+    public void shouldReportNullDiscountCode() {
+        final Form<DefaultAddDiscountCodeFormData> validFormData =
+                form.bind(addDiscountCodeFormData(null));
+        assertThat(validFormData.errors()).hasSize(1);
+        assertThat(validFormData.error("code")).isNotNull();
+    }
+
     private Map<String, String> addDiscountCodeFormData(final String code) {
-        return ImmutableMap.of("code", code);
+        final Map<String, String> formData = new HashMap<>();
+        formData.put("code", code);
+        return formData;
     }
 }

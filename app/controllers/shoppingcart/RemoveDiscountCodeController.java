@@ -29,12 +29,12 @@ import java.util.concurrent.CompletionStage;
         CartOperationsControllerComponentSupplier.class,
         MiniWishlistControllerComponent.class
 })
-public class RemoveDiscountCodeController extends SunriseRemoveDiscountCodeController {
+public final class RemoveDiscountCodeController extends SunriseRemoveDiscountCodeController {
 
     private final CartReverseRouter cartReverseRouter;
 
     @Inject
-    public RemoveDiscountCodeController(final ContentRenderer contentRenderer, final FormFactory formFactory,
+    RemoveDiscountCodeController(final ContentRenderer contentRenderer, final FormFactory formFactory,
                                         final RemoveDiscountCodeFormData formData, final CartFinder cartFinder,
                                         final CartPageContentFactory pageContentFactory, final RemoveDiscountCodeControllerAction controllerAction,
                                         final CartReverseRouter cartReverseRouter) {

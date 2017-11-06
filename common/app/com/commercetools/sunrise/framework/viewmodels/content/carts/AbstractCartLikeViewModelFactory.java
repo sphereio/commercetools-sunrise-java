@@ -42,6 +42,10 @@ public abstract class AbstractCartLikeViewModelFactory<M extends CartViewModel, 
         return addressViewModelFactory;
     }
 
+    protected final DiscountCodeViewModelFactory getDiscountCodeViewModelFactory() {
+        return discountCodeViewModelFactory;
+    }
+
     @Override
     protected void initialize(final M viewModel, @Nullable final I cartLike) {
         super.initialize(viewModel, cartLike);
@@ -55,7 +59,7 @@ public abstract class AbstractCartLikeViewModelFactory<M extends CartViewModel, 
         fillDiscountCodes(viewModel, cartLike);
     }
 
-    protected void fillDiscountCodes(final M viewModel, final I cartLike) {
+    protected void fillDiscountCodes(final M viewModel, @Nullable final I cartLike) {
         if (cartLike != null) {
             final List<DiscountCodeInfo> discountCodes = cartLike.getDiscountCodes();
             final List<DiscountCodeViewModel> discountCodeViewModels = discountCodes.stream()

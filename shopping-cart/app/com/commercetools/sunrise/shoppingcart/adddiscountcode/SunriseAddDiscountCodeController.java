@@ -66,23 +66,22 @@ public abstract class SunriseAddDiscountCodeController extends SunriseContentFor
 
     @Override
     public PageContent createPageContent(final Cart cart, final Form<? extends AddDiscountCodeFormData> form) {
-        final CartPageContent cartPageContent = pageContentFactory.create(cart);
-        cartPageContent.getCart().setAddDiscountCodeForm(form);
+        final CartPageContent cartPageContent = pageContentFactory.create(cart, form);
         return cartPageContent;
     }
 
     @Override
-    public CompletionStage<Result> handleClientErrorFailedAction(final Cart input,
+    public CompletionStage<Result> handleClientErrorFailedAction(final Cart cart,
                                                                  final Form<? extends AddDiscountCodeFormData> form,
                                                                  final ClientErrorException clientErrorException) {
         if (isDiscountCodeNonApplicableError(clientErrorException)) {
-            return handleDiscountCodeNonApplicable(input, form, clientErrorException);
+            return handleDiscountCodeNonApplicable(cart, form, clientErrorException);
         } else {
-            return WithContentFormFlow.super.handleClientErrorFailedAction(input, form, clientErrorException);
+            return WithContentFormFlow.super.handleClientErrorFailedAction(cart, form, clientErrorException);
         }
     }
 
-    protected abstract CompletionStage<Result> handleDiscountCodeNonApplicable(final Cart input,
+    protected abstract CompletionStage<Result> handleDiscountCodeNonApplicable(final Cart cart,
                                                                     final Form<? extends AddDiscountCodeFormData> form,
                                                                     final ClientErrorException clientErrorException);
 

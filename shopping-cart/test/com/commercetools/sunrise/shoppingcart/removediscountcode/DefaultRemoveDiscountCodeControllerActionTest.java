@@ -5,10 +5,13 @@ import io.sphere.sdk.carts.Cart;
 import io.sphere.sdk.carts.commands.CartUpdateCommand;
 import io.sphere.sdk.carts.commands.updateactions.RemoveDiscountCode;
 import io.sphere.sdk.client.SphereClient;
-import io.sphere.sdk.commands.UpdateAction;
-import org.junit.Before;
 import org.junit.Test;
-import org.mockito.*;
+import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -21,11 +24,12 @@ import static org.mockito.Mockito.when;
 /**
  * Unit tests for {@link DefaultRemoveDiscountCodeControllerAction}.
  */
+@RunWith(MockitoJUnitRunner.class)
 public class DefaultRemoveDiscountCodeControllerActionTest {
     @Mock
-    private SphereClient sphereClient;
+    private SphereClient fakeSphereClient;
     @Mock
-    private HookRunner hookRunner;
+    private HookRunner fakeHookRunner;
     @Mock
     private Cart cart;
     @Captor
@@ -34,11 +38,6 @@ public class DefaultRemoveDiscountCodeControllerActionTest {
     @InjectMocks
     private DefaultRemoveDiscountCodeControllerAction defaultRemoveDiscountCodeControllerAction;
 
-    @Before
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
-    }
-
     @Test
     public void execute() throws ExecutionException, InterruptedException {
         final String discountCodeId = UUID.randomUUID().toString();
@@ -46,28 +45,32 @@ public class DefaultRemoveDiscountCodeControllerActionTest {
         final DefaultRemoveDiscountCodeFormData removeDiscountCodeFormData = new DefaultRemoveDiscountCodeFormData();
         removeDiscountCodeFormData.setDiscountCodeId(discountCodeId);
 
-        when:
-        {
-            when(hookRunner.runUnaryOperatorHook(any(), any(), cartUpdateCommandCaptor.capture()))
-                    .thenAnswer(invocation -> invocation.getArgument(2));
-            when(hookRunner.runActionHook(any(), any(), any()))
-                    .thenAnswer(invocation -> CompletableFuture.completedFuture(invocation.getArgument(2)));
-            when(sphereClient.execute(any()))
-                    .thenReturn(CompletableFuture.completedFuture(cart));
-        }
+        mockHookRunnerThatReturnsCart();
+        mockSphereClientThatReturnsCart();
 
         final Cart updatedCart = defaultRemoveDiscountCodeControllerAction.apply(cart, removeDiscountCodeFormData)
                 .toCompletableFuture().get();
 
-        then: {
-            assertThat(updatedCart).isNotNull();
+        assertThat(updatedCart).isNotNull();
 
-            final CartUpdateCommand cartUpdateCommand = cartUpdateCommandCaptor.getValue();
-            assertThat(cartUpdateCommand.getUpdateActions()).hasSize(1);
-            final UpdateAction<Cart> cartUpdateAction = cartUpdateCommand.getUpdateActions().get(0);
-            assertThat(cartUpdateAction).isInstanceOf(RemoveDiscountCode.class);
-            final RemoveDiscountCode removeDiscountCode = (RemoveDiscountCode) cartUpdateAction;
-            assertThat(removeDiscountCode.getDiscountCode().getId()).isEqualTo(discountCodeId);
-        }
+        final CartUpdateCommand cartUpdateCommand = cartUpdateCommandCaptor.getValue();
+        assertThat(cartUpdateCommand.getUpdateActions())
+                .hasSize(1)
+                .hasOnlyElementsOfType(RemoveDiscountCode.class);
+
+        final RemoveDiscountCode removeDiscountCode = (RemoveDiscountCode) cartUpdateCommand.getUpdateActions().get(0);
+        assertThat(removeDiscountCode.getDiscountCode().getId()).isEqualTo(discountCodeId);
+    }
+
+    private void mockHookRunnerThatReturnsCart() {
+        when(fakeHookRunner.runUnaryOperatorHook(any(), any(), cartUpdateCommandCaptor.capture()))
+                .thenAnswer(invocation -> invocation.getArgument(2));
+        when(fakeHookRunner.runActionHook(any(), any(), any()))
+                .thenAnswer(invocation -> CompletableFuture.completedFuture(invocation.getArgument(2)));
+    }
+
+    private void mockSphereClientThatReturnsCart() {
+        when(fakeSphereClient.execute(any()))
+                .thenReturn(CompletableFuture.completedFuture(cart));
     }
 }
