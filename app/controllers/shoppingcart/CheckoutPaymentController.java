@@ -31,7 +31,6 @@ import java.util.concurrent.CompletionStage;
         CheckoutStepControllerComponent.class,
         CartOperationsControllerComponentSupplier.class,
         CartDiscountCodesExpansionControllerComponent.class,
-        CartDiscountCodesExpansionControllerComponent.class,
         CartPaymentInfoExpansionControllerComponent.class
 })
 public final class CheckoutPaymentController extends SunriseCheckoutPaymentController {
