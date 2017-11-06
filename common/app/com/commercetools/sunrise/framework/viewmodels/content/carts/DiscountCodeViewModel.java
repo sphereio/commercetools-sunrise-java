@@ -1,11 +1,12 @@
 package com.commercetools.sunrise.framework.viewmodels.content.carts;
 
 import com.commercetools.sunrise.framework.viewmodels.ViewModel;
+import io.sphere.sdk.models.LocalizedString;
 
 public class DiscountCodeViewModel extends ViewModel {
     private String id;
     private String name;
-    private String description;
+    private LocalizedString description;
 
     public String getId() {
         return id;
@@ -23,11 +24,11 @@ public class DiscountCodeViewModel extends ViewModel {
         this.name = name;
     }
 
-    public String getDescription() {
+    public LocalizedString getDescription() {
         return description;
     }
 
-    public void setDescription(final String description) {
+    public void setDescription(final LocalizedString description) {
         this.description = description;
     }
 }

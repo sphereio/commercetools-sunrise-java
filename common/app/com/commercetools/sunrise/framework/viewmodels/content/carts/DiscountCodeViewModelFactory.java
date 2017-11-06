@@ -45,9 +45,6 @@ public class DiscountCodeViewModelFactory extends SimpleViewModelFactory<Discoun
     }
 
     protected void fillDescription(final DiscountCodeViewModel viewModel, final DiscountCode discountCode) {
-        final String displayDescription = Optional.of(discountCode.getDescription())
-                .flatMap(description -> description.find(userLanguage.locales()))
-                .orElse(null);
-        viewModel.setDescription(displayDescription);
+        viewModel.setDescription(discountCode.getDescription());
     }
 }

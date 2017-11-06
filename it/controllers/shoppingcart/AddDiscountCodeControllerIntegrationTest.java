@@ -21,6 +21,7 @@ import io.sphere.sdk.products.ProductVariantDraftBuilder;
 import io.sphere.sdk.taxcategories.TaxCategoryDraft;
 import io.sphere.sdk.taxcategories.TaxCategoryDraftBuilder;
 import io.sphere.sdk.utils.MoneyImpl;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -34,6 +35,7 @@ import java.math.BigDecimal;
 import java.util.*;
 import java.util.function.Function;
 
+import static com.commercetools.sunrise.it.CartDiscountTestFixtures.deleteCartDiscountAndDiscountCodes;
 import static com.commercetools.sunrise.it.CartDiscountTestFixtures.withCartDiscount;
 import static com.commercetools.sunrise.it.CartTestFixtures.withCart;
 import static com.commercetools.sunrise.it.DiscountCodeTestFixtures.withDiscountCode;
@@ -60,6 +62,11 @@ public class AddDiscountCodeControllerIntegrationTest extends WithSphereClient {
                         bind(SphereClient.class).toInstance(sphereClient),
                         bind(CartInSession.class).toInstance(cartInSession)
                 ).build();
+    }
+
+    @Before
+    public void deleteExistingCartDiscountAndDiscountCodes() {
+        deleteCartDiscountAndDiscountCodes(sphereClient, "CartDiscountValue", "0.6");
     }
 
     @Test
