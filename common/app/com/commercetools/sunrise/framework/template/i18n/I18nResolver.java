@@ -1,5 +1,7 @@
 package com.commercetools.sunrise.framework.template.i18n;
 
+import com.google.inject.ImplementedBy;
+
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -10,6 +12,7 @@ import static java.util.Collections.emptyMap;
 /**
  * Resolves i18n messages.
  */
+@ImplementedBy(MessagesApiI18nResolver.class)
 @FunctionalInterface
 public interface I18nResolver {
 

@@ -25,8 +25,8 @@ public final class ThemeModule extends AbstractModule {
                 .toProvider(HandlebarsTemplateEngineProvider.class)
                 .in(Singleton.class);
 
-        bind(I18nResolver.class)
-                .toProvider(ConfigurableI18nResolverProvider.class)
-                .in(Singleton.class);
+//        bind(I18nResolver.class)
+//                .toProvider(MessagesApiI18nResolver.class)
+//                .in(Singleton.class);
     }
 }
