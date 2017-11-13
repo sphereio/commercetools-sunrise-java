@@ -4,6 +4,7 @@ import com.commercetools.sunrise.cms.CmsPage;
 import com.commercetools.sunrise.cms.CmsService;
 import com.commercetools.sunrise.framework.template.i18n.I18nResolver;
 
+import javax.inject.Inject;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -24,7 +25,8 @@ public final class FileBasedCmsService implements CmsService {
 
     private I18nResolver i18nResolver;
 
-    private FileBasedCmsService(final I18nResolver i18nResolver) {
+    @Inject
+    FileBasedCmsService(final I18nResolver i18nResolver) {
         this.i18nResolver = i18nResolver;
     }
 
