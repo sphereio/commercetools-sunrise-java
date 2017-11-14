@@ -33,7 +33,7 @@ final class MessagesApiI18nResolver implements I18nResolver {
     private Optional<String> translate(final Locale locale, final String messageKey, final Map<String, Object> hashArgs) {
         final Lang lang = new Lang(locale);
         if (messagesApi.isDefinedAt(lang, messageKey)) {
-            return Optional.of(messagesApi.get(lang, messageKey, hashArgs));
+            return Optional.of(messagesApi.get(lang, messageKey, hashArgs.entrySet().toArray()));
         }
         return Optional.empty();
     }
