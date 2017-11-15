@@ -2,6 +2,7 @@ package com.commercetools.sunrise.framework.template.cms.filebased;
 
 import com.commercetools.sunrise.cms.CmsPage;
 import com.commercetools.sunrise.cms.CmsService;
+import com.commercetools.sunrise.framework.template.cms.CmsMessagesApi;
 import com.commercetools.sunrise.framework.template.i18n.I18nResolver;
 
 import javax.inject.Inject;
@@ -23,20 +24,16 @@ import static java.util.concurrent.CompletableFuture.completedFuture;
  */
 public final class FileBasedCmsService implements CmsService {
 
-    private I18nResolver i18nResolver;
+    private CmsMessagesApi cmsMessagesApi;
 
     @Inject
-    FileBasedCmsService(final I18nResolver i18nResolver) {
-        this.i18nResolver = i18nResolver;
+    FileBasedCmsService(final CmsMessagesApi cmsMessagesApi) {
+        this.cmsMessagesApi = cmsMessagesApi;
     }
 
     @Override
     public CompletionStage<Optional<CmsPage>> page(final String pageKey, final List<Locale> locales) {
-        final CmsPage cmsPage = new FileBasedCmsPage(i18nResolver, pageKey, locales);
+        final CmsPage cmsPage = new FileBasedCmsPage(cmsMessagesApi, pageKey, locales);
         return completedFuture(Optional.of(cmsPage));
-    }
-
-    public static FileBasedCmsService of(final I18nResolver i18nResolver) {
-        return new FileBasedCmsService(i18nResolver);
     }
 }

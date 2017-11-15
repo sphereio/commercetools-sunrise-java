@@ -1,3 +1,8 @@
+default:
+  header:
+    shopName: Sunrise
+    shopLogo: /assets/img/cms/logo.svg
+
 home:
   banners[0]:
     title: Summer Essentials

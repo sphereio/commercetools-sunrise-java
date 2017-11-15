@@ -14,9 +14,6 @@ import play.utils.Resources
 @Singleton
 class YamlMessagesApi @Inject()(environment: Environment, configuration: Configuration, langs: Langs) extends DefaultMessagesApi(environment, configuration, langs) {
 
-//  private val config = PlayConfig(configuration)
-//  protected val fileNames: Seq[String] = config.get[Seq[String]]("play.i18n.files")
-
   protected lazy val overridePath: Option[String] = configuration.getString("play.i18n.overridePath")
 
   override protected def loadMessages(file: String): Map[String, String] = {
@@ -77,8 +74,6 @@ class YamlMessagesApi @Inject()(environment: Environment, configuration: Configu
       res.orElse(messages.get(code).flatMap(_.get(appliedKey))))
     pattern.map(pattern => replaceParameters(pattern, hashArgs))
   }
-
-  // CMS messages API only: loadAllMessages, adding "filenames"
 }
 
 class MessagesModule extends Module {

@@ -13,6 +13,7 @@ import java.util.Locale;
 import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 
+@Deprecated
 public class CompositeI18nResolverFactory {
 
     private static final Logger logger = LoggerFactory.getLogger(CompositeI18nResolverFactory.class);
