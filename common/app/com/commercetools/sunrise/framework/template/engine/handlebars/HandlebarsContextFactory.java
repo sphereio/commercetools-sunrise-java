@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
-import static com.commercetools.sunrise.framework.template.engine.handlebars.HandlebarsCmsHelper.CMS_PAGE_IN_CONTEXT_KEY;
 import static com.commercetools.sunrise.framework.template.engine.handlebars.HandlebarsI18nHelper.LANGUAGE_TAGS_IN_CONTEXT_KEY;
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
@@ -45,7 +44,7 @@ public class HandlebarsContextFactory extends SunriseModel {
 
     protected final Context contextWithCmsPage(final Context context, final TemplateContext templateContext) {
         return cmsPageInContext(templateContext)
-                .map(cmsPage -> context.data(CMS_PAGE_IN_CONTEXT_KEY, cmsPage))
+                .map(cmsPage -> context.data(HandlebarsCmsHelper.CMS_PAGE_IN_CONTEXT_KEY, cmsPage))
                 .orElse(context);
     }
 

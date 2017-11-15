@@ -1,9 +1,9 @@
 package com.commercetools.sunrise.shoppingcart.checkout.payment;
 
 import com.commercetools.sunrise.ctp.project.ProjectContext;
-import com.commercetools.sunrise.framework.template.i18n.I18nIdentifier;
-import com.commercetools.sunrise.framework.template.i18n.I18nIdentifierFactory;
-import com.commercetools.sunrise.framework.template.i18n.I18nResolver;
+import com.commercetools.sunrise.framework.i18n.I18nIdentifier;
+import com.commercetools.sunrise.framework.i18n.I18nIdentifierFactory;
+import com.commercetools.sunrise.framework.i18n.I18nResolver;
 import io.sphere.sdk.carts.Cart;
 import io.sphere.sdk.models.LocalizedString;
 import io.sphere.sdk.models.LocalizedStringEntry;

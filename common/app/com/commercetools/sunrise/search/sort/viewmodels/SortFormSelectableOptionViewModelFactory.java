@@ -1,7 +1,7 @@
 package com.commercetools.sunrise.search.sort.viewmodels;
 
 import com.commercetools.sunrise.framework.injection.RequestScoped;
-import com.commercetools.sunrise.framework.template.i18n.I18nIdentifierResolver;
+import com.commercetools.sunrise.framework.i18n.I18nIdentifierResolver;
 import com.commercetools.sunrise.framework.viewmodels.forms.SelectableViewModelFactory;
 import com.commercetools.sunrise.search.sort.SortFormOption;
 

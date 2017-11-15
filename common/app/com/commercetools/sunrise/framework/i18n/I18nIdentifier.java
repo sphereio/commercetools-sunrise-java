@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.framework.template.i18n;
+package com.commercetools.sunrise.framework.i18n;
 
 import io.sphere.sdk.models.Base;
 

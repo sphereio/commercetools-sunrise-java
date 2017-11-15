@@ -1,8 +1,9 @@
 package com.commercetools.sunrise.framework.template.cms.filebased;
 
 import com.commercetools.sunrise.cms.CmsPage;
-import com.commercetools.sunrise.framework.template.i18n.I18nResolver;
-import com.commercetools.sunrise.framework.template.i18n.yaml.YamlI18nResolver;
+import com.commercetools.sunrise.framework.cms.filebased.FileBasedCmsService;
+import com.commercetools.sunrise.framework.i18n.I18nResolver;
+import com.commercetools.sunrise.framework.i18n.yaml.YamlI18nResolver;
 import org.junit.Test;
 
 import java.util.List;

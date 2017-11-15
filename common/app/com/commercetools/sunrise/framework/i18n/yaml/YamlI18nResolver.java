@@ -1,7 +1,7 @@
-package com.commercetools.sunrise.framework.template.i18n.yaml;
+package com.commercetools.sunrise.framework.i18n.yaml;
 
-import com.commercetools.sunrise.framework.template.i18n.I18nIdentifier;
-import com.commercetools.sunrise.framework.template.i18n.I18nResolver;
+import com.commercetools.sunrise.framework.i18n.I18nIdentifier;
+import com.commercetools.sunrise.framework.i18n.I18nResolver;
 import io.sphere.sdk.models.Base;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -24,6 +24,7 @@ import static java.util.Objects.requireNonNull;
  * For the plural message, a suffix {@code _plural} must be added to the message key.
  * Notice only pluralization forms similar to English are currently supported (1 is singular, the rest are plural).
  */
+@Deprecated
 public final class YamlI18nResolver extends Base implements I18nResolver {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(YamlI18nResolver.class);

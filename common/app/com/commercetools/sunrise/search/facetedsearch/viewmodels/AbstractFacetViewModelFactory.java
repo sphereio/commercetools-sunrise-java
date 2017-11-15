@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.search.facetedsearch.viewmodels;
 
-import com.commercetools.sunrise.framework.template.i18n.I18nIdentifierResolver;
+import com.commercetools.sunrise.framework.i18n.I18nIdentifierResolver;
 import com.commercetools.sunrise.framework.viewmodels.ViewModelFactory;
 import com.commercetools.sunrise.search.facetedsearch.ConfiguredFacetedSearchFormSettings;
 

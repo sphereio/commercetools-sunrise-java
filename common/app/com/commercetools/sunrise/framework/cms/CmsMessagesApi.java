@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.framework.template.cms;
+package com.commercetools.sunrise.framework.cms;
 
 import play.i18n.MessagesApi;
 
@@ -9,7 +9,7 @@ import javax.inject.Singleton;
 public class CmsMessagesApi extends MessagesApi {
 
     @Inject
-    public CmsMessagesApi(final com.commercetools.sunrise.framework.template.cms.api.CmsMessagesApi messages) {
+    CmsMessagesApi(final DefaultCmsMessagesApi messages) {
         super(messages);
     }
 }

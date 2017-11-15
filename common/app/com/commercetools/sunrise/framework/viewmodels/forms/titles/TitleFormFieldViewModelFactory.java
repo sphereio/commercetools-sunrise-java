@@ -3,7 +3,7 @@ package com.commercetools.sunrise.framework.viewmodels.forms.titles;
 import com.commercetools.sunrise.framework.viewmodels.forms.FormFieldWithOptions;
 import com.commercetools.sunrise.framework.viewmodels.forms.FormFieldViewModelFactory;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
-import com.commercetools.sunrise.framework.template.i18n.I18nIdentifierResolver;
+import com.commercetools.sunrise.framework.i18n.I18nIdentifierResolver;
 import play.Configuration;
 import play.data.Form;
 

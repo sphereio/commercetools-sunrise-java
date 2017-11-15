@@ -1,13 +1,14 @@
-package com.commercetools.sunrise.framework.template.i18n;
+package com.commercetools.sunrise.framework.i18n;
 
 import com.commercetools.sunrise.play.configuration.SunriseConfigurationException;
 import com.commercetools.sunrise.ctp.project.ProjectContext;
-import com.commercetools.sunrise.framework.template.i18n.composite.CompositeI18nResolverFactory;
+import com.commercetools.sunrise.framework.i18n.composite.CompositeI18nResolverFactory;
 import com.google.inject.Provider;
 import play.Configuration;
 
 import javax.inject.Inject;
 
+@Deprecated
 public final class ConfigurableI18nResolverProvider implements Provider<I18nResolver> {
 
     private static final String CONFIG_I18N = "application.i18n";

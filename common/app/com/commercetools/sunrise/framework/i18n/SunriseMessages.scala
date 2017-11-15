@@ -1,9 +1,10 @@
-package com.commercetools.sunrise.framework.template.i18n
+package com.commercetools.sunrise.framework.i18n
 
 import java.net.URL
 import java.util.Map.Entry
 import javax.inject.{Inject, Singleton}
 
+import com.commercetools.sunrise.ctp.project.ProjectContext
 import play.api.i18n._
 import play.api.inject.Module
 import play.api.{Configuration, Environment}
@@ -12,7 +13,7 @@ import play.ext.i18n.MessagesLoaders.YamlFileLoader
 import play.utils.Resources
 
 @Singleton
-class YamlMessagesApi @Inject()(environment: Environment, configuration: Configuration, langs: Langs) extends DefaultMessagesApi(environment, configuration, langs) {
+class SunriseMessagesApi @Inject()(environment: Environment, configuration: Configuration, langs: Langs) extends DefaultMessagesApi(environment, configuration, langs) {
 
   protected lazy val overridePath: Option[String] = configuration.getString("play.i18n.overridePath")
 
@@ -46,7 +47,7 @@ class YamlMessagesApi @Inject()(environment: Environment, configuration: Configu
   override def translate(key: String, args: Seq[Any])(implicit lang: Lang): Option[String] = {
 
     def filterHashArgsEntries(args: Seq[Any]): Seq[Entry[String, Any]] = {
-      def isHashArgsEntry(entry: Any) = entry.isInstanceOf[Entry[Any, Any]] && entry.asInstanceOf[Entry[Any, Any]].getKey.isInstanceOf[String]
+      def isHashArgsEntry(entry: Any) = entry.isInstanceOf[Entry[_, _]] && entry.asInstanceOf[Entry[_, _]].getKey.isInstanceOf[String]
       args.filter(isHashArgsEntry)
         .map(_.asInstanceOf[Entry[String, Any]])
     }
@@ -76,11 +77,16 @@ class YamlMessagesApi @Inject()(environment: Environment, configuration: Configu
   }
 }
 
+class SunriseLangs @Inject()(configuration: Configuration, projectContext: ProjectContext) extends DefaultLangs(configuration) {
+  import scala.collection.JavaConversions._
+  override val availables: Seq[Lang] = projectContext.locales().toList.map(Lang.apply)
+}
+
 class MessagesModule extends Module {
   def bindings(environment: Environment, configuration: Configuration) = {
     Seq(
-      bind[Langs].to[DefaultLangs],
-      bind[MessagesApi].to[YamlMessagesApi]
+      bind[Langs].to[SunriseLangs],
+      bind[MessagesApi].to[SunriseMessagesApi]
     )
   }
 }

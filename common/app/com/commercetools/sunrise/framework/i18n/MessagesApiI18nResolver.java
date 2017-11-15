@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.framework.template.i18n;
+package com.commercetools.sunrise.framework.i18n;
 
 import play.i18n.Lang;
 import play.i18n.MessagesApi;

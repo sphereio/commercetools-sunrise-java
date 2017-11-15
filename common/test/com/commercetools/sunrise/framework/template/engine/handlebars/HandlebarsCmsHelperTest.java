@@ -4,7 +4,7 @@ import com.commercetools.sunrise.cms.CmsPage;
 import com.commercetools.sunrise.framework.viewmodels.PageData;
 import com.commercetools.sunrise.framework.template.engine.TemplateContext;
 import com.commercetools.sunrise.framework.template.engine.TemplateEngine;
-import com.commercetools.sunrise.framework.template.i18n.I18nIdentifierFactory;
+import com.commercetools.sunrise.framework.i18n.I18nIdentifierFactory;
 import com.commercetools.sunrise.framework.template.i18n.TestableI18nResolver;
 import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.io.ClassPathTemplateLoader;

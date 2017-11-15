@@ -1,7 +1,9 @@
 package com.commercetools.sunrise.framework.controllers;
 
+import com.commercetools.sunrise.framework.i18n.ChangeLang;
 import com.commercetools.sunrise.framework.template.engine.ContentRenderer;
 
+@ChangeLang
 public abstract class SunriseContentController extends SunriseController {
 
     private final ContentRenderer contentRenderer;

@@ -1,8 +1,8 @@
-package com.commercetools.sunrise.framework.template.cms.filebased;
+package com.commercetools.sunrise.framework.cms.filebased;
 
 import com.commercetools.sunrise.cms.CmsPage;
-import com.commercetools.sunrise.framework.template.cms.CmsMessagesApi;
-import com.commercetools.sunrise.framework.template.i18n.I18nIdentifier;
+import com.commercetools.sunrise.framework.cms.CmsMessagesApi;
+import com.commercetools.sunrise.framework.i18n.I18nIdentifier;
 import play.i18n.Lang;
 
 import java.util.List;

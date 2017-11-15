@@ -1,8 +1,8 @@
-package com.commercetools.sunrise.framework.template.i18n.composite;
+package com.commercetools.sunrise.framework.i18n.composite;
 
-import com.commercetools.sunrise.framework.template.i18n.I18nResolver;
-import com.commercetools.sunrise.framework.template.i18n.I18nResolverInitializationException;
-import com.commercetools.sunrise.framework.template.i18n.yaml.YamlI18nResolver;
+import com.commercetools.sunrise.framework.i18n.I18nResolver;
+import com.commercetools.sunrise.framework.i18n.I18nResolverInitializationException;
+import com.commercetools.sunrise.framework.i18n.yaml.YamlI18nResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import play.Configuration;

@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.framework.template.i18n;
+package com.commercetools.sunrise.framework.i18n;
 
 public class I18nResolverInitializationException extends RuntimeException {
 

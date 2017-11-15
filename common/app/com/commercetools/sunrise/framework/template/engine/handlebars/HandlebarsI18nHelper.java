@@ -1,9 +1,9 @@
 package com.commercetools.sunrise.framework.template.engine.handlebars;
 
 import com.commercetools.sunrise.framework.SunriseModel;
-import com.commercetools.sunrise.framework.template.i18n.I18nIdentifier;
-import com.commercetools.sunrise.framework.template.i18n.I18nIdentifierFactory;
-import com.commercetools.sunrise.framework.template.i18n.I18nResolver;
+import com.commercetools.sunrise.framework.i18n.I18nIdentifier;
+import com.commercetools.sunrise.framework.i18n.I18nIdentifierFactory;
+import com.commercetools.sunrise.framework.i18n.I18nResolver;
 import com.github.jknack.handlebars.Context;
 import com.github.jknack.handlebars.Helper;
 import com.github.jknack.handlebars.Options;

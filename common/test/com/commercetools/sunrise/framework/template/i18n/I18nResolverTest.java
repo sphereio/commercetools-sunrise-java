@@ -1,5 +1,8 @@
 package com.commercetools.sunrise.framework.template.i18n;
 
+import com.commercetools.sunrise.framework.i18n.I18nIdentifier;
+import com.commercetools.sunrise.framework.i18n.I18nIdentifierFactory;
+import com.commercetools.sunrise.framework.i18n.I18nResolver;
 import org.junit.Test;
 
 import java.util.Locale;

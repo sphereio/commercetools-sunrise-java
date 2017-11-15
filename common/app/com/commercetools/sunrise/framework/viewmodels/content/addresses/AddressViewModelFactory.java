@@ -2,7 +2,7 @@ package com.commercetools.sunrise.framework.viewmodels.content.addresses;
 
 import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
-import com.commercetools.sunrise.framework.template.i18n.I18nIdentifierResolver;
+import com.commercetools.sunrise.framework.i18n.I18nIdentifierResolver;
 import io.sphere.sdk.models.Address;
 
 import javax.annotation.Nullable;

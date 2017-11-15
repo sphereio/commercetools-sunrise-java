@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.framework.template.i18n;
+package com.commercetools.sunrise.framework.i18n;
 
 import com.commercetools.sunrise.framework.localization.UserLanguage;
 import com.commercetools.sunrise.framework.injection.RequestScoped;

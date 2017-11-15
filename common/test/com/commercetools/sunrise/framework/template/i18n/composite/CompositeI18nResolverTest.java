@@ -1,7 +1,8 @@
 package com.commercetools.sunrise.framework.template.i18n.composite;
 
-import com.commercetools.sunrise.framework.template.i18n.I18nIdentifier;
-import com.commercetools.sunrise.framework.template.i18n.I18nResolver;
+import com.commercetools.sunrise.framework.i18n.I18nIdentifier;
+import com.commercetools.sunrise.framework.i18n.I18nResolver;
+import com.commercetools.sunrise.framework.i18n.composite.CompositeI18nResolver;
 import org.junit.Test;
 
 import java.util.List;

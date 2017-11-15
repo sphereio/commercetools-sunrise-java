@@ -1,6 +1,7 @@
 package com.commercetools.sunrise.framework.template.i18n.yaml;
 
-import com.commercetools.sunrise.framework.template.i18n.I18nIdentifier;
+import com.commercetools.sunrise.framework.i18n.I18nIdentifier;
+import com.commercetools.sunrise.framework.i18n.yaml.YamlI18nResolver;
 import org.junit.Test;
 
 import java.util.*;
