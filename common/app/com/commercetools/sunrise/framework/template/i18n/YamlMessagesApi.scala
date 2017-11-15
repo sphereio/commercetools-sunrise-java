@@ -1,11 +1,13 @@
-package play.ext.i18n
+package com.commercetools.sunrise.framework.template.i18n
 
+import java.net.URL
 import java.util.Map.Entry
 import javax.inject.{Inject, Singleton}
 
 import play.api.i18n._
 import play.api.inject.Module
 import play.api.{Configuration, Environment}
+import play.ext.i18n.MessagesLoader
 import play.ext.i18n.MessagesLoaders.YamlFileLoader
 import play.utils.Resources
 
@@ -15,22 +17,30 @@ class YamlMessagesApi @Inject()(environment: Environment, configuration: Configu
 //  private val config = PlayConfig(configuration)
 //  protected val fileNames: Seq[String] = config.get[Seq[String]]("play.i18n.files")
 
+  protected lazy val overridePath: Option[String] = configuration.getString("play.i18n.overridePath")
 
   override protected def loadMessages(file: String): Map[String, String] = {
 
     def loadMessages(file: String, loader: MessagesLoader): Map[String, String] = {
       import scala.collection.JavaConverters._
 
-      def joinPaths(first: Option[String], second: String) = first match {
-        case Some(parent) => new java.io.File(parent, second).getPath
-        case None => second
+      def loadFiles(path: Option[String]) = {
+        def joinPaths(first: Option[String], second: String) = first match {
+          case Some(parent) => new java.io.File(parent, second).getPath
+          case None => second
+        }
+        environment.classLoader.getResources(joinPaths(path, file)).asScala.toList
       }
 
-      environment.classLoader.getResources(joinPaths(messagesPrefix, file)).asScala.toList
-        .filterNot(url => Resources.isDirectory(environment.classLoader, url)).reverse
-        .map { messageFile =>
-          loader(Messages.UrlMessageSource(messageFile), messageFile.toString).fold(e => throw e, identity)
-        }.foldLeft(Map.empty[String, String]) { _ ++ _ }
+      def parseFile(messageFile: URL): Map[String, String] = loader(Messages.UrlMessageSource(messageFile), messageFile.toString).fold(e => throw e, identity)
+
+      def overridenFiles = if (overridePath.isDefined) loadFiles(overridePath) else List()
+
+      (overridenFiles ++ loadFiles(messagesPrefix))
+        .filterNot(Resources.isDirectory(environment.classLoader, _))
+        .reverse
+        .map(parseFile)
+        .foldLeft(Map.empty[String, String]) { _ ++ _ }
     }
 
     loadMessages(s"$file.yaml", YamlFileLoader)
@@ -44,7 +54,7 @@ class YamlMessagesApi @Inject()(environment: Environment, configuration: Configu
         .map(_.asInstanceOf[Entry[String, Any]])
     }
 
-    def findAppliedKey(key: String, args: Seq[Entry[String, Any]]): String = {
+    def genAppliedKey(key: String, args: Seq[Entry[String, Any]]): String = {
       def isPluralMessage(args: Seq[Entry[String, Any]]) = {
         args.filter(_.getKey == "count")
           .map(_.getValue)
@@ -62,7 +72,7 @@ class YamlMessagesApi @Inject()(environment: Environment, configuration: Configu
 
     val codesToTry = Seq(lang.code, lang.language, "default", "default.play")
     val hashArgs = filterHashArgsEntries(args)
-    val appliedKey = findAppliedKey(key, hashArgs)
+    val appliedKey = genAppliedKey(key, hashArgs)
     val pattern: Option[String] = codesToTry.foldLeft[Option[String]](None)((res, code) =>
       res.orElse(messages.get(code).flatMap(_.get(appliedKey))))
     pattern.map(pattern => replaceParameters(pattern, hashArgs))
