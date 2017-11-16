@@ -83,11 +83,11 @@ public class DefaultRecoverPasswordMessageEditorProvider implements RecoverPassw
 
     @Nullable
     private String createFromField() {
-        return messagesResolver.get("myAccount.forgotPassword.email.from").orElse(null);
+        return messagesResolver.get("my-account:forgotPassword.email.from").orElse(null);
     }
 
     @Nullable
     private String createSubjectField() {
-        return messagesResolver.get("myAccount.forgotPassword.email.subject").orElse(null);
+        return messagesResolver.get("my-account:forgotPassword.email.subject").orElse(null);
     }
 }

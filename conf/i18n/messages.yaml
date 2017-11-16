@@ -298,13 +298,13 @@ checkout:
     emailSentToEnd: as a copy of this confirmation purchase
     yourOrderDetails: Your order details
 
-mixMatch:
+mix-match:
   mixMatch:
     title: Mix &amp; Match
     description: Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.
     addProduct: Add Product
 
-myAccount:
+my-account:
   myAccount:
     title: My Account
   myAccountSidebar:
@@ -426,7 +426,7 @@ myAccount:
       bannerText: Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem
       bottomTextTwo: Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id, mattis vel, nisi. Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Nullam mollis. Ut justo. Suspendisse potenti. Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing, commodo quis, gravida id, est. Sed lectus.
 
-myAccountLogin:
+my-account-login:
   pageTitle: Customer Sign In
   loginBox:
     title: Returning Customer Sign In
@@ -456,7 +456,7 @@ myAccountLogin:
     privacyPolicy: Privacy Policy
     registerNow: Register Now
 
-noSearchResult:
+no-search-result:
   searchNotFound:
     title: Search Results
     notFound: Not Found

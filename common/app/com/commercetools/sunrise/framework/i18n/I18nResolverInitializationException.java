@@ -1,5 +1,6 @@
 package com.commercetools.sunrise.framework.i18n;
 
+@Deprecated
 public class I18nResolverInitializationException extends RuntimeException {
 
     public I18nResolverInitializationException(final String message) {

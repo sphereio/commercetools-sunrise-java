@@ -1,15 +1,15 @@
 package com.commercetools.sunrise.framework.i18n;
 
+import com.commercetools.sunrise.framework.injection.RequestScoped;
 import play.i18n.Lang;
 import play.i18n.MessagesApi;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
-@Singleton
+@RequestScoped
 final class MessagesResolverImpl implements MessagesResolver {
 
     private final MessagesApi messagesApi;
