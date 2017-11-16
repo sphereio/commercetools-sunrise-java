@@ -2,22 +2,23 @@ package com.commercetools.sunrise.framework.template.engine.handlebars;
 
 import com.commercetools.sunrise.framework.viewmodels.ViewModel;
 import com.github.jknack.handlebars.ValueResolver;
+import com.github.jknack.handlebars.context.JavaBeanValueResolver;
 import io.sphere.sdk.models.LocalizedString;
 
 import javax.annotation.Nullable;
-import java.util.List;
+import javax.inject.Inject;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
 public final class SunriseJavaBeanValueResolver implements ValueResolver {
 
-    private final ValueResolver delegate;
-    private final List<Locale> locales;
+    private final ValueResolver delegate = JavaBeanValueResolver.INSTANCE;
+    private final Locale locale;
 
-    public SunriseJavaBeanValueResolver(final ValueResolver delegate, final List<Locale> locales) {
-        this.delegate = delegate;
-        this.locales = locales;
+    @Inject
+    SunriseJavaBeanValueResolver(final Locale locale) {
+        this.locale = locale;
     }
 
     @Override
@@ -32,7 +33,7 @@ public final class SunriseJavaBeanValueResolver implements ValueResolver {
     }
 
     private Object resolveLocalizedString(final LocalizedString localizedString) {
-        return localizedString.find(locales).orElse("");
+        return localizedString.find(locale).orElse("");
     }
 
     @Nullable

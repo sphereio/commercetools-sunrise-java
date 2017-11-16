@@ -18,7 +18,7 @@ import java.util.function.Consumer;
 import static java.util.Collections.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class HandlebarsCmsHelperTest {
+public class CmsHandlebarsHelperTest {
 
     @Test
     public void resolvesMessage() throws Exception {

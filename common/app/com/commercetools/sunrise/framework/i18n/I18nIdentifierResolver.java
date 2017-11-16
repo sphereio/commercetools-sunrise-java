@@ -6,6 +6,7 @@ import java.util.Optional;
 
 @ImplementedBy(I18nIdentifierResolverImpl.class)
 @FunctionalInterface
+@Deprecated
 public interface I18nIdentifierResolver {
 
     Optional<String> resolve(final String i18nIdentifier);

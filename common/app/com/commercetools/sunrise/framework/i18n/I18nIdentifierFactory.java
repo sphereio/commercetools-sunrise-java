@@ -6,6 +6,7 @@ import javax.annotation.Nullable;
 
 import static org.apache.commons.lang3.StringUtils.split;
 
+@Deprecated
 public class I18nIdentifierFactory extends Base {
 
     private static final String DEFAULT_BUNDLE = "main";

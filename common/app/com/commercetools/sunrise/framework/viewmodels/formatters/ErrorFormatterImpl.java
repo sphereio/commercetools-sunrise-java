@@ -1,22 +1,22 @@
 package com.commercetools.sunrise.framework.viewmodels.formatters;
 
+import com.commercetools.sunrise.framework.i18n.MessagesResolver;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
-import com.commercetools.sunrise.framework.i18n.I18nIdentifierResolver;
 
 import javax.inject.Inject;
 
 @RequestScoped
 final class ErrorFormatterImpl implements ErrorFormatter {
 
-    private final I18nIdentifierResolver i18nIdentifierResolver;
+    private final MessagesResolver messagesResolver;
 
     @Inject
-    ErrorFormatterImpl(final I18nIdentifierResolver i18nIdentifierResolver) {
-        this.i18nIdentifierResolver = i18nIdentifierResolver;
+    ErrorFormatterImpl(final MessagesResolver messagesResolver) {
+        this.messagesResolver = messagesResolver;
     }
 
     @Override
     public String format(final String messageKey) {
-        return i18nIdentifierResolver.resolveOrKey(messageKey);
+        return messagesResolver.getOrKey(messageKey);
     }
 }

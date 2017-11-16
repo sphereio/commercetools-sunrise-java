@@ -5,11 +5,13 @@ import play.mvc.Http;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
+import javax.inject.Singleton;
 import java.util.Locale;
 
 /**
  * Provides the {@link Locale} instance extracted from the URL using {@code languageTag} as the route variable name.
  */
+@Singleton
 public final class LocaleFromUrlProvider implements Provider<Locale> {
 
     private final Langs langs;

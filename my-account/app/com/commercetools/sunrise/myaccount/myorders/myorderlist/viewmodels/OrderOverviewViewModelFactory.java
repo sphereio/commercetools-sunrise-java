@@ -1,10 +1,10 @@
 package com.commercetools.sunrise.myaccount.myorders.myorderlist.viewmodels;
 
-import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
-import com.commercetools.sunrise.framework.viewmodels.formatters.PriceFormatter;
+import com.commercetools.sunrise.framework.i18n.MessagesResolver;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
 import com.commercetools.sunrise.framework.reverserouters.myaccount.myorders.MyOrdersReverseRouter;
-import com.commercetools.sunrise.framework.i18n.I18nIdentifierResolver;
+import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
+import com.commercetools.sunrise.framework.viewmodels.formatters.PriceFormatter;
 import io.sphere.sdk.orders.Order;
 import play.mvc.Call;
 
@@ -12,28 +12,28 @@ import javax.inject.Inject;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
-import static com.commercetools.sunrise.framework.viewmodels.content.carts.CartPriceUtils.calculateTotalPrice;
 import static com.commercetools.sunrise.ctp.CtpEnumUtils.enumToCamelCase;
+import static com.commercetools.sunrise.framework.viewmodels.content.carts.CartPriceUtils.calculateTotalPrice;
 
 @RequestScoped
 public class OrderOverviewViewModelFactory extends SimpleViewModelFactory<OrderOverviewViewModel, Order> {
 
-    private final I18nIdentifierResolver i18nIdentifierResolver;
+    private final MessagesResolver messagesResolver;
     private final PriceFormatter priceFormatter;
     private final DateTimeFormatter dateTimeFormatter;
     private final MyOrdersReverseRouter myOrdersReverseRouter;
 
     @Inject
-    public OrderOverviewViewModelFactory(final I18nIdentifierResolver i18nIdentifierResolver, final PriceFormatter priceFormatter,
+    public OrderOverviewViewModelFactory(final MessagesResolver messagesResolver, final PriceFormatter priceFormatter,
                                          final DateTimeFormatter dateTimeFormatter, final MyOrdersReverseRouter myOrdersReverseRouter) {
-        this.i18nIdentifierResolver = i18nIdentifierResolver;
+        this.messagesResolver = messagesResolver;
         this.priceFormatter = priceFormatter;
         this.dateTimeFormatter = dateTimeFormatter;
         this.myOrdersReverseRouter = myOrdersReverseRouter;
     }
 
-    protected final I18nIdentifierResolver getI18nIdentifierResolver() {
-        return i18nIdentifierResolver;
+    protected final MessagesResolver getMessagesResolver() {
+        return messagesResolver;
     }
 
     protected final PriceFormatter getPriceFormatter() {
@@ -90,7 +90,7 @@ public class OrderOverviewViewModelFactory extends SimpleViewModelFactory<OrderO
         viewModel.setShipping(Optional.ofNullable(order.getShipmentState())
                 .map(state -> {
                     final String stateName = state.name();
-                    return i18nIdentifierResolver.resolve("main:order.shippingStatus." + enumToCamelCase(stateName))
+                    return messagesResolver.get("main.order.shippingStatus." + enumToCamelCase(stateName))
                             .orElse(stateName);
                 }).orElse("-"));
     }
@@ -99,7 +99,7 @@ public class OrderOverviewViewModelFactory extends SimpleViewModelFactory<OrderO
         viewModel.setPaymentStatus(Optional.ofNullable(order.getPaymentState())
                 .map(state -> {
                     final String stateName = state.name();
-                    return i18nIdentifierResolver.resolve("main:order.paymentStatus." + enumToCamelCase(stateName))
+                    return messagesResolver.get("main.order.paymentStatus." + enumToCamelCase(stateName))
                             .orElse(stateName);
                 }).orElse("-"));
     }

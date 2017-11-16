@@ -21,7 +21,7 @@ import static java.util.Locale.ENGLISH;
 import static java.util.Locale.GERMAN;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class HandlebarsI18nHelperTest {
+public class HandlebarsI18NHelperImplTest {
 
     private static final TemplateLoader DEFAULT_LOADER = new ClassPathTemplateLoader("/templates/i18nHelper");
 

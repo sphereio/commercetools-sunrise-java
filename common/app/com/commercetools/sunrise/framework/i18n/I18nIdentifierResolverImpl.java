@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import java.util.Optional;
 
 @RequestScoped
+@Deprecated
 final class I18nIdentifierResolverImpl implements I18nIdentifierResolver {
 
     private final UserLanguage userLanguage;

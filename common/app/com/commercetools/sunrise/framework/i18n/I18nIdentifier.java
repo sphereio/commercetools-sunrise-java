@@ -10,6 +10,7 @@ import io.sphere.sdk.models.Base;
  *
  * @see I18nIdentifier
  */
+@Deprecated
 public final class I18nIdentifier extends Base {
 
     private final String bundle;

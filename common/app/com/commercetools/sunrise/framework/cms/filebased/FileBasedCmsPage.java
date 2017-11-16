@@ -2,7 +2,6 @@ package com.commercetools.sunrise.framework.cms.filebased;
 
 import com.commercetools.sunrise.cms.CmsPage;
 import com.commercetools.sunrise.framework.cms.CmsMessagesApi;
-import com.commercetools.sunrise.framework.i18n.I18nIdentifier;
 import play.i18n.Lang;
 
 import java.util.List;
@@ -26,8 +25,7 @@ public final class FileBasedCmsPage implements CmsPage {
 
     @Override
     public Optional<String> field(final String fieldName) {
-        final I18nIdentifier i18nIdentifier = I18nIdentifier.of(pageKey, fieldName);
-        final String messageKey = buildMessageKey(i18nIdentifier);
+        final String messageKey = pageKey + "." + fieldName;
         return locales.stream()
                 .map(locale -> translate(locale, messageKey))
                 .filter(Optional::isPresent)
@@ -41,9 +39,5 @@ public final class FileBasedCmsPage implements CmsPage {
             return Optional.of(cmsMessagesApi.get(lang, messageKey));
         }
         return Optional.empty();
-    }
-
-    private String buildMessageKey(final I18nIdentifier i18nIdentifier) {
-        return String.format("%s.%s", i18nIdentifier.getBundle(), i18nIdentifier.getMessageKey());
     }
 }

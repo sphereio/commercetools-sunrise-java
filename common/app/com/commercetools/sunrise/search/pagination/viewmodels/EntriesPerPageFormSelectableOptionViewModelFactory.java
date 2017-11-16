@@ -1,8 +1,8 @@
 package com.commercetools.sunrise.search.pagination.viewmodels;
 
-import com.commercetools.sunrise.framework.viewmodels.forms.SelectableViewModelFactory;
+import com.commercetools.sunrise.framework.i18n.MessagesResolver;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
-import com.commercetools.sunrise.framework.i18n.I18nIdentifierResolver;
+import com.commercetools.sunrise.framework.viewmodels.forms.SelectableViewModelFactory;
 import com.commercetools.sunrise.search.pagination.EntriesPerPageFormOption;
 
 import javax.annotation.Nullable;
@@ -11,15 +11,15 @@ import javax.inject.Inject;
 @RequestScoped
 public class EntriesPerPageFormSelectableOptionViewModelFactory extends SelectableViewModelFactory<EntriesPerPageFormSelectableOptionViewModel, EntriesPerPageFormOption, String> {
 
-    private final I18nIdentifierResolver i18nIdentifierResolver;
+    private final MessagesResolver messagesResolver;
 
     @Inject
-    public EntriesPerPageFormSelectableOptionViewModelFactory(final I18nIdentifierResolver i18nIdentifierResolver) {
-        this.i18nIdentifierResolver = i18nIdentifierResolver;
+    public EntriesPerPageFormSelectableOptionViewModelFactory(final MessagesResolver messagesResolver) {
+        this.messagesResolver = messagesResolver;
     }
 
-    protected final I18nIdentifierResolver getI18nIdentifierResolver() {
-        return i18nIdentifierResolver;
+    protected final MessagesResolver getMessagesResolver() {
+        return messagesResolver;
     }
 
     @Override
@@ -40,7 +40,7 @@ public class EntriesPerPageFormSelectableOptionViewModelFactory extends Selectab
     }
 
     protected void fillLabel(final EntriesPerPageFormSelectableOptionViewModel viewModel, final EntriesPerPageFormOption option, @Nullable final String selectedOptionValue) {
-        viewModel.setLabel(i18nIdentifierResolver.resolveOrKey(option.getFieldLabel()));
+        viewModel.setLabel(messagesResolver.getOrKey(option.getFieldLabel()));
     }
 
     protected void fillValue(final EntriesPerPageFormSelectableOptionViewModel viewModel, final EntriesPerPageFormOption option, @Nullable final String selectedOptionValue) {

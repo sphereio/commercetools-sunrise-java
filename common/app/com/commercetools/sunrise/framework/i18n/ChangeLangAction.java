@@ -25,11 +25,7 @@ final class ChangeLangAction extends Action.Simple {
 
     private void changeLanguage(final Http.Context ctx, final String languageTag) {
         if (!ctx.changeLang(languageTag)) {
-            System.out.println("not changed to " + languageTag);
             LOGGER.warn("Could not change language to '{}'", languageTag);
-        } else {
-            System.out.println("changed to " + languageTag);
-            LOGGER.info("Changed language to {}", languageTag);
         }
     }
 

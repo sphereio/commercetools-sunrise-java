@@ -1,19 +1,19 @@
 package com.commercetools.sunrise.search.facetedsearch.viewmodels;
 
-import com.commercetools.sunrise.framework.i18n.I18nIdentifierResolver;
+import com.commercetools.sunrise.framework.i18n.MessagesResolver;
 import com.commercetools.sunrise.framework.viewmodels.ViewModelFactory;
 import com.commercetools.sunrise.search.facetedsearch.ConfiguredFacetedSearchFormSettings;
 
 public abstract class AbstractFacetViewModelFactory<M extends FacetViewModel, T extends ConfiguredFacetedSearchFormSettings, F> extends ViewModelFactory {
 
-    private final I18nIdentifierResolver i18nIdentifierResolver;
+    private final MessagesResolver messagesResolver;
 
-    protected AbstractFacetViewModelFactory(final I18nIdentifierResolver i18nIdentifierResolver) {
-        this.i18nIdentifierResolver = i18nIdentifierResolver;
+    protected AbstractFacetViewModelFactory(final MessagesResolver messagesResolver) {
+        this.messagesResolver = messagesResolver;
     }
 
-    protected final I18nIdentifierResolver getI18nIdentifierResolver() {
-        return i18nIdentifierResolver;
+    protected final MessagesResolver getMessagesResolver() {
+        return messagesResolver;
     }
 
     protected abstract M newViewModelInstance(final T settings, final F facetResult);
@@ -31,7 +31,7 @@ public abstract class AbstractFacetViewModelFactory<M extends FacetViewModel, T 
     }
 
     protected void fillLabel(final M viewModel, final T settings, final F facetResult) {
-        viewModel.setLabel(i18nIdentifierResolver.resolveOrKey(settings.getFieldLabel()));
+        viewModel.setLabel(messagesResolver.getOrKey(settings.getFieldLabel()));
     }
 
     protected void fillCountHidden(final M viewModel, final T settings, final F facetResult) {

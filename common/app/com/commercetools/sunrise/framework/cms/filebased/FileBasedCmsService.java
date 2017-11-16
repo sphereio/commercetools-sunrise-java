@@ -3,7 +3,6 @@ package com.commercetools.sunrise.framework.cms.filebased;
 import com.commercetools.sunrise.cms.CmsPage;
 import com.commercetools.sunrise.cms.CmsService;
 import com.commercetools.sunrise.framework.cms.CmsMessagesApi;
-import com.commercetools.sunrise.framework.i18n.I18nResolver;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -17,7 +16,7 @@ import static java.util.concurrent.CompletableFuture.completedFuture;
  * Service that provides content data from i18n files that can be found in a local file.
  * Internally it uses a I18nResolver to resolve the requested messages.
  *
- * The mapping of the {@link CmsService} parameters to {@link I18nResolver} parameters goes as follows:
+ * The mapping of the {@link CmsService} parameters to {@link CmsMessagesApi} parameters goes as follows:
  *
  * - {@code bundle} = {@code entryType} (e.g. banner)
  * - {@code messageKey} = {@code entryKey.fieldName} (e.g. homeTopLeft.subtitle.text)

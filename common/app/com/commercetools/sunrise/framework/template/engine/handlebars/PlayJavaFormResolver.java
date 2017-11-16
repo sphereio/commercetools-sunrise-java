@@ -24,7 +24,7 @@ public final class PlayJavaFormResolver implements ValueResolver {
     private final ErrorFormatter errorFormatter;
 
     @Inject
-    public PlayJavaFormResolver(final ErrorFormatter errorFormatter) {
+    PlayJavaFormResolver(final ErrorFormatter errorFormatter) {
         this.errorFormatter = errorFormatter;
     }
 

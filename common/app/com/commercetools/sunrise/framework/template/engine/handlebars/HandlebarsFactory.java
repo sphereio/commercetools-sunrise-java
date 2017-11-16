@@ -1,9 +1,6 @@
 package com.commercetools.sunrise.framework.template.engine.handlebars;
 
-import com.commercetools.sunrise.framework.i18n.I18nResolver;
 import com.commercetools.sunrise.play.configuration.SunriseConfigurationException;
-import com.commercetools.sunrise.framework.SunriseModel;
-import com.commercetools.sunrise.framework.i18n.I18nIdentifierFactory;
 import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.cache.HighConcurrencyTemplateCache;
 import com.github.jknack.handlebars.io.ClassPathTemplateLoader;
@@ -20,43 +17,43 @@ import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 
-public class HandlebarsFactory extends SunriseModel {
+public class HandlebarsFactory {
 
-    private static final Logger logger = LoggerFactory.getLogger(HandlebarsFactory.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(HandlebarsFactory.class);
     private static final String CONFIG_TEMPLATE_LOADERS = "templateLoaders";
     private static final String CLASSPATH_TYPE = "classpath";
     private static final String FILE_TYPE = "file";
     private static final String TYPE_ATTR = "type";
     private static final String PATH_ATTR = "path";
 
-    private final I18nResolver i18NResolver;
-    private final I18nIdentifierFactory i18nIdentifierFactory;
+    private final I18nHandlebarsHelper i18nHandlebarsHelper;
+    private final CmsHandlebarsHelper cmsHandlebarsHelper;
 
     @Inject
-    public HandlebarsFactory(final I18nResolver i18NResolver, final I18nIdentifierFactory i18nIdentifierFactory) {
-        this.i18NResolver = i18NResolver;
-        this.i18nIdentifierFactory = i18nIdentifierFactory;
+    protected HandlebarsFactory(final I18nHandlebarsHelper i18nHandlebarsHelper, final CmsHandlebarsHelper cmsHandlebarsHelper) {
+        this.i18nHandlebarsHelper = i18nHandlebarsHelper;
+        this.cmsHandlebarsHelper = cmsHandlebarsHelper;
     }
 
     public Handlebars create(final Configuration configuration) {
         final List<TemplateLoader> templateLoaders = initializeTemplateLoaders(configuration, CONFIG_TEMPLATE_LOADERS);
-        return create(templateLoaders, i18NResolver, i18nIdentifierFactory);
+        return create(templateLoaders);
     }
 
     //for testing package scope
-    static Handlebars create(final List<TemplateLoader> templateLoaders, final I18nResolver i18NResolver, final I18nIdentifierFactory i18nIdentifierFactory) {
+    Handlebars create(final List<TemplateLoader> templateLoaders) {
         if (templateLoaders.isEmpty()) {
             throw new SunriseConfigurationException("Could not initialize Handlebars due to missing template loaders configuration", CONFIG_TEMPLATE_LOADERS);
         }
-        logger.info("Provide Handlebars: template loaders [{}]]",
+        LOGGER.info("Provide Handlebars: template loaders [{}]]",
                 templateLoaders.stream().map(TemplateLoader::getPrefix).collect(joining(", ")));
         final TemplateLoader[] loaders = templateLoaders.toArray(new TemplateLoader[templateLoaders.size()]);
         final Handlebars handlebars = new Handlebars()
                 .with(loaders)
                 .with(new HighConcurrencyTemplateCache())
                 .infiniteLoops(true);
-        handlebars.registerHelper("i18n", new HandlebarsI18nHelper(i18NResolver, i18nIdentifierFactory));
-        handlebars.registerHelper("cms", new HandlebarsCmsHelper());
+        handlebars.registerHelper("i18n", i18nHandlebarsHelper);
+        handlebars.registerHelper("cms", cmsHandlebarsHelper);
         handlebars.registerHelper("json", new HandlebarsJsonHelper<>());
         return handlebars;
     }

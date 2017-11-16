@@ -1,8 +1,8 @@
 package com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch.categorytree.viewmodels;
 
 import com.commercetools.sunrise.ctp.categories.NavigationCategoryTree;
+import com.commercetools.sunrise.framework.i18n.MessagesResolver;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
-import com.commercetools.sunrise.framework.i18n.I18nIdentifierResolver;
 import com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch.categorytree.CategoryTreeFacetedSearchFormSettings;
 import com.commercetools.sunrise.search.facetedsearch.terms.viewmodels.AbstractTermFacetViewModelFactory;
 import com.commercetools.sunrise.search.facetedsearch.viewmodels.FacetOptionViewModel;
@@ -27,10 +27,10 @@ public final class CategoryTreeFacetViewModelFactory extends AbstractTermFacetVi
     private final CategoryTreeFacetOptionViewModelFactory categoryTreeFacetOptionViewModelFactory;
 
     @Inject
-    public CategoryTreeFacetViewModelFactory(final I18nIdentifierResolver i18nIdentifierResolver,
+    public CategoryTreeFacetViewModelFactory(final MessagesResolver messagesResolver,
                                              @NavigationCategoryTree final CategoryTree categoryTree,
                                              final CategoryTreeFacetOptionViewModelFactory categoryTreeFacetOptionViewModelFactory) {
-        super(i18nIdentifierResolver);
+        super(messagesResolver);
         this.categoryTree = categoryTree;
         this.categoryTreeFacetOptionViewModelFactory = categoryTreeFacetOptionViewModelFactory;
     }
