@@ -1,12 +1,13 @@
 package com.commercetools.sunrise.ctp.project;
 
+import com.commercetools.sunrise.framework.i18n.NoLocaleFoundException;
 import com.commercetools.sunrise.framework.localization.NoCountryFoundException;
 import com.commercetools.sunrise.framework.localization.NoCurrencyFoundException;
-import com.commercetools.sunrise.framework.localization.NoLocaleFoundException;
 import com.google.inject.ImplementedBy;
 import com.neovisionaries.i18n.CountryCode;
 import io.sphere.sdk.projects.Project;
 import play.Configuration;
+import play.i18n.Langs;
 
 import javax.money.CurrencyUnit;
 import java.util.List;
@@ -23,6 +24,7 @@ public interface ProjectContext {
      * Locales associated to the project.
      * @return the list of locales
      */
+    @Deprecated
     List<Locale> locales();
 
     /**
@@ -37,6 +39,7 @@ public interface ProjectContext {
      */
     List<CurrencyUnit> currencies();
 
+    @Deprecated
     default Locale defaultLocale() {
         return locales().stream()
                 .filter(Objects::nonNull)
@@ -58,6 +61,7 @@ public interface ProjectContext {
                 .orElseThrow(() -> new NoCurrencyFoundException("Project does not have any valid currency unit associated"));
     }
 
+    @Deprecated
     default boolean isLocaleSupported(final Locale locale) {
         return locales().contains(locale);
     }
@@ -70,7 +74,7 @@ public interface ProjectContext {
         return currencies().contains(currency);
     }
 
-    static ProjectContext of(final Configuration globalConfig, final String configPath, final Project project) {
-        return new ProjectContextImpl(globalConfig, configPath, project);
+    static ProjectContext of(final Configuration globalConfig, final String configPath, final Project project, final Langs langs) {
+        return new ProjectContextImpl(globalConfig, configPath, project, langs);
     }
 }

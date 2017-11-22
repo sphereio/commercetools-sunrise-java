@@ -20,6 +20,7 @@ import static java.util.stream.Collectors.toList;
  * Languages not supported by the {@link ProjectContext} are discarded.
  */
 @RequestScoped
+@Deprecated
 final class UserLanguageImpl extends Base implements UserLanguage {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserLanguage.class);

@@ -1,12 +1,14 @@
 package com.commercetools.sunrise.ctp.project;
 
+import com.commercetools.sunrise.framework.i18n.NoLocaleFoundException;
 import com.commercetools.sunrise.framework.localization.NoCountryFoundException;
 import com.commercetools.sunrise.framework.localization.NoCurrencyFoundException;
-import com.commercetools.sunrise.framework.localization.NoLocaleFoundException;
 import com.neovisionaries.i18n.CountryCode;
 import io.sphere.sdk.projects.Project;
 import org.junit.Test;
 import play.Configuration;
+import play.i18n.Lang;
+import play.i18n.Langs;
 
 import javax.money.CurrencyUnit;
 import javax.money.Monetary;
@@ -19,9 +21,11 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonMap;
 import static java.util.Locale.*;
+import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class ProjectContextTest {
 
@@ -117,17 +121,29 @@ public class ProjectContextTest {
 
     @Test
     public void createsInstanceWithStaticConstructor() throws Exception {
-        final Map<String, Object> map = new HashMap<>();
-        map.put("languages", asList("de", "en-US"));
-        map.put("countries", asList("DE", "US"));
-        map.put("currencies", asList("EUR", "USD"));
-        final Configuration configuration = new Configuration(singletonMap("foo", map));
-
-        final Project dummyProject = mock(Project.class);
-        final ProjectContext projectContext = ProjectContext.of(configuration, "foo", dummyProject);
+        final String configPath = "foo";
+        final Langs langs = mockLangsWith(asList(Locale.GERMAN, Locale.US));
+        final Configuration configuration = configurationWith(configPath, asList(CountryCode.DE, CountryCode.US), asList(EUR, USD));
+        final ProjectContext projectContext = ProjectContext.of(configuration, configPath, mock(Project.class), langs);
         assertThat(projectContext.locales()).containsExactly(Locale.GERMAN, Locale.US);
         assertThat(projectContext.countries()).containsExactly(CountryCode.DE, CountryCode.US);
         assertThat(projectContext.currencies()).containsExactly(EUR, USD);
+    }
+
+    private Configuration configurationWith(final String configPath, final List<CountryCode> countries, final List<CurrencyUnit> currencies) {
+        final Map<String, Object> map = new HashMap<>();
+        map.put("countries", countries.stream().map(CountryCode::getAlpha2).collect(toList()));
+        map.put("currencies", currencies.stream().map(CurrencyUnit::getCurrencyCode).collect(toList()));
+        return new Configuration(singletonMap(configPath, map));
+    }
+
+    private Langs mockLangsWith(final List<Locale> languages) {
+        final Langs langs = mock(Langs.class);
+        final List<Lang> availableLangs = languages.stream()
+                .map(Lang::new)
+                .collect(toList());
+        when(langs.availables()).thenReturn(availableLangs);
+        return langs;
     }
 
     private static ProjectContext createProjectContext(final List<Locale> locales, final List<CountryCode> countries,

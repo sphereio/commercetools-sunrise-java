@@ -9,6 +9,7 @@ import java.util.Locale;
  * Contains information about the user's supported locales.
  */
 @ImplementedBy(UserLanguageImpl.class)
+@Deprecated
 public interface UserLanguage {
 
     /**

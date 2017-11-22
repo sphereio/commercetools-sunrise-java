@@ -3,7 +3,6 @@ package com.commercetools.sunrise.framework.template.engine;
 import com.commercetools.sunrise.cms.CmsService;
 import com.commercetools.sunrise.framework.hooks.RequestHookRunner;
 import com.commercetools.sunrise.framework.hooks.application.PageDataReadyHook;
-import com.commercetools.sunrise.framework.localization.UserLanguage;
 import com.commercetools.sunrise.framework.viewmodels.PageData;
 import com.commercetools.sunrise.framework.viewmodels.PageDataFactory;
 import com.commercetools.sunrise.framework.viewmodels.content.PageContent;
@@ -23,6 +22,7 @@ import play.twirl.api.Content;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 import java.io.IOException;
+import java.util.Locale;
 import java.util.concurrent.CompletionStage;
 
 final class PageHtmlContentRenderer extends AbstractHtmlContentRenderer implements ContentRenderer {
@@ -34,9 +34,9 @@ final class PageHtmlContentRenderer extends AbstractHtmlContentRenderer implemen
     private final RequestHookRunner hookRunner;
 
     @Inject
-    PageHtmlContentRenderer(final UserLanguage userLanguage, final TemplateEngine templateEngine, final CmsService cmsService,
+    PageHtmlContentRenderer(final Locale locale, final TemplateEngine templateEngine, final CmsService cmsService,
                             final PageDataFactory pageDataFactory, final RequestHookRunner hookRunner) {
-        super(userLanguage, templateEngine, cmsService);
+        super(locale, templateEngine, cmsService);
         this.pageDataFactory = pageDataFactory;
         this.hookRunner = hookRunner;
     }

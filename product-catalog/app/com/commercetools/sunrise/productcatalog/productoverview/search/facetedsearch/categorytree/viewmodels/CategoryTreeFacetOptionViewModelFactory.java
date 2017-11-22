@@ -2,7 +2,6 @@ package com.commercetools.sunrise.productcatalog.productoverview.search.faceteds
 
 import com.commercetools.sunrise.ctp.categories.NavigationCategoryTree;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
-import com.commercetools.sunrise.framework.localization.UserLanguage;
 import com.commercetools.sunrise.framework.reverserouters.productcatalog.product.ProductReverseRouter;
 import com.commercetools.sunrise.search.facetedsearch.viewmodels.AbstractFacetOptionViewModelFactory;
 import com.commercetools.sunrise.search.facetedsearch.viewmodels.FacetOptionViewModel;
@@ -22,21 +21,21 @@ import static com.commercetools.sunrise.framework.viewmodels.forms.QueryStringUt
 @RequestScoped
 public class CategoryTreeFacetOptionViewModelFactory extends AbstractFacetOptionViewModelFactory<TermFacetResult, Category, Category> {
 
-    private final List<Locale> locales;
+    private final Locale locale;
     private final CategoryTree categoryTree;
     private final ProductReverseRouter productReverseRouter;
     private static final Set<String> IGNORED_PARAMS = Collections.singleton("page");
 
     @Inject
-    public CategoryTreeFacetOptionViewModelFactory(final UserLanguage userLanguage, @NavigationCategoryTree final CategoryTree categoryTree,
+    public CategoryTreeFacetOptionViewModelFactory(final Locale locale, @NavigationCategoryTree final CategoryTree categoryTree,
                                                    final ProductReverseRouter productReverseRouter) {
-        this.locales = userLanguage.locales();
+        this.locale = locale;
         this.categoryTree = categoryTree;
         this.productReverseRouter = productReverseRouter;
     }
 
-    protected final List<Locale> getLocales() {
-        return locales;
+    protected final Locale getLocale() {
+        return locale;
     }
 
     protected final CategoryTree getCategoryTree() {
@@ -60,7 +59,7 @@ public class CategoryTreeFacetOptionViewModelFactory extends AbstractFacetOption
 
     @Override
     protected void fillLabel(final FacetOptionViewModel viewModel, final TermFacetResult stats, final Category category, @Nullable final Category selectedValue) {
-        viewModel.setLabel(category.getName().find(locales).orElseGet(category::getId));
+        viewModel.setLabel(category.getName().find(locale).orElseGet(category::getId));
     }
 
     @Override

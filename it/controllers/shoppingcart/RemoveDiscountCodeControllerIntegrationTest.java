@@ -9,7 +9,6 @@ import io.sphere.sdk.carts.CartDraftBuilder;
 import io.sphere.sdk.carts.LineItemDraft;
 import io.sphere.sdk.carts.commands.CartUpdateCommand;
 import io.sphere.sdk.carts.commands.updateactions.AddDiscountCode;
-import io.sphere.sdk.client.BlockingSphereClient;
 import io.sphere.sdk.client.SphereClient;
 import io.sphere.sdk.discountcodes.DiscountCode;
 import io.sphere.sdk.discountcodes.DiscountCodeDraft;
@@ -34,7 +33,10 @@ import play.mvc.Http;
 import play.mvc.Result;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 
 import static com.commercetools.sunrise.it.CartDiscountTestFixtures.deleteCartDiscountAndDiscountCodes;
@@ -46,6 +48,7 @@ import static com.commercetools.sunrise.it.ProductTypeTestFixtures.productTypeDr
 import static com.commercetools.sunrise.it.ProductTypeTestFixtures.withProductType;
 import static com.commercetools.sunrise.it.TaxCategoryTestFixtures.withTaxCategory;
 import static com.commercetools.sunrise.it.TestFixtures.randomString;
+import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 import static play.inject.Bindings.bind;
@@ -72,8 +75,8 @@ public class RemoveDiscountCodeControllerIntegrationTest extends WithSphereClien
 
     @Test
     public void shouldRemoveDiscountCode() throws Exception {
-        withCartDiscountAndDiscountCode(sphereClient, discountCode -> {
-            withTaxedFilledAndDiscountedCart(sphereClient, discountCode, cart -> {
+        withCartDiscountAndDiscountCode(discountCode -> {
+            withTaxedFilledAndDiscountedCart(discountCode, cart -> {
                 when(cartInSession.findCartId()).thenReturn(Optional.of(cart.getId()));
 
                 final Map<String, String> bodyForm = new HashMap<>();
@@ -95,12 +98,12 @@ public class RemoveDiscountCodeControllerIntegrationTest extends WithSphereClien
         });
     }
 
-    private static void withTaxedFilledAndDiscountedCart(final BlockingSphereClient client, final DiscountCode discountCode, final Function<Cart, Cart> test) {
+    private static void withTaxedFilledAndDiscountedCart(final DiscountCode discountCode, final Function<Cart, Cart> test) {
         final TaxCategoryDraft taxCategoryDraft =
                 TaxCategoryDraftBuilder.of(randomString(), Collections.emptyList(), null)
                         .build();
-        withTaxCategory(client, taxCategoryDraft, taxCategory -> {
-            withProductType(client, productTypeDraft(), productType -> {
+        withTaxCategory(sphereClient, taxCategoryDraft, taxCategory -> {
+            withProductType(sphereClient, productTypeDraft(), productType -> {
                 final ProductVariantDraft productVariantDraft = ProductVariantDraftBuilder.of()
                         .price(PriceDraft.of(BigDecimal.TEN, DefaultCurrencyUnits.EUR))
                         .build();
@@ -109,12 +112,12 @@ public class RemoveDiscountCodeControllerIntegrationTest extends WithSphereClien
                         .taxCategory(taxCategory)
                         .masterVariant(productVariantDraft)
                         .build();
-                withProduct(client, productDraft, product -> {
+                withProduct(sphereClient, productDraft, product -> {
                     final LineItemDraft lineItemDraft = LineItemDraft.of(product, 1, 1L);
                     final CartDraft cartDraft = CartDraftBuilder.of(DefaultCurrencyUnits.EUR)
-                            .lineItems(Arrays.asList(lineItemDraft))
+                            .lineItems(singletonList(lineItemDraft))
                             .build();
-                    withCart(client, cartDraft, cart -> {
+                    withCart(sphereClient, cartDraft, cart -> {
                         final Cart discountedCart = sphereClient.executeBlocking(CartUpdateCommand.of(cart, AddDiscountCode.of(discountCode.getCode())));
 
                         return test.apply(discountedCart);
@@ -128,7 +131,7 @@ public class RemoveDiscountCodeControllerIntegrationTest extends WithSphereClien
         });
     }
 
-    private static void withCartDiscountAndDiscountCode(final BlockingSphereClient client, final Function<DiscountCode, DiscountCode> test) {
+    private static void withCartDiscountAndDiscountCode(final Function<DiscountCode, DiscountCode> test) {
         final CartDiscountValue discountValue = AbsoluteCartDiscountValue.of(MoneyImpl.ofCents(100, DefaultCurrencyUnits.EUR));
         final CartDiscountTarget cartDiscountTarget = LineItemsTarget.of("1=1");
         final CartDiscountDraft cartDiscountDraft =

@@ -1,6 +1,5 @@
 package com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch.categorytree.viewmodels;
 
-import com.commercetools.sunrise.framework.localization.UserLanguage;
 import com.commercetools.sunrise.framework.reverserouters.productcatalog.product.ProductReverseRouter;
 import com.commercetools.sunrise.framework.viewmodels.forms.FormSelectableOptionViewModel;
 import com.commercetools.sunrise.search.facetedsearch.viewmodels.FacetOptionViewModel;
@@ -17,12 +16,12 @@ import play.test.WithApplication;
 
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.Locale;
 import java.util.function.Consumer;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
+import static java.util.Locale.ENGLISH;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
@@ -140,9 +139,7 @@ public class CategoryTreeFacetOptionViewModelFactoryTest extends WithApplication
     }
 
     private void test(final Category category, final CategoryTree categoryTree, final List<TermStats> termStats, final Consumer<FacetOptionViewModel> test) {
-        final UserLanguage userLanguage = mock(UserLanguage.class);
-        when(userLanguage.locales()).thenReturn(singletonList(Locale.ENGLISH));
-        final CategoryTreeFacetOptionViewModelFactory factory = new CategoryTreeFacetOptionViewModelFactory(userLanguage, categoryTree, reverseRouter());
+        final CategoryTreeFacetOptionViewModelFactory factory = new CategoryTreeFacetOptionViewModelFactory(ENGLISH, categoryTree, reverseRouter());
         final TermFacetResult termFacetResult = TermFacetResult.of(0L, 0L, 0L, termStats);
         test.accept(factory.create(termFacetResult, category, CAT_C));
     }
@@ -160,7 +157,7 @@ public class CategoryTreeFacetOptionViewModelFactoryTest extends WithApplication
         final ProductReverseRouter productReverseRouter = mock(ProductReverseRouter.class);
         when(productReverseRouter.productOverviewPageCall(any(Category.class)))
                 .then(invocation -> ((Category) invocation.getArgument(0)).getSlug()
-                        .find(Locale.ENGLISH)
+                        .find(ENGLISH)
                         .map(TestableCall::new));
         return productReverseRouter;
     }
