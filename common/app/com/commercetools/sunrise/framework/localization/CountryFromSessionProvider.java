@@ -1,6 +1,5 @@
 package com.commercetools.sunrise.framework.localization;
 
-import com.commercetools.sunrise.ctp.project.ProjectContext;
 import com.commercetools.sunrise.sessions.country.CountryInSession;
 import com.neovisionaries.i18n.CountryCode;
 
@@ -14,20 +13,20 @@ import java.util.Optional;
  */
 public final class CountryFromSessionProvider implements Provider<CountryCode> {
 
-    private final ProjectContext projectContext;
+    private final ProjectLocalization projectLocalization;
     private final CountryInSession countryInSession;
 
     @Inject
-    CountryFromSessionProvider(final ProjectContext projectContext, final CountryInSession countryInSession) {
-        this.projectContext = projectContext;
+    CountryFromSessionProvider(final ProjectLocalization projectLocalization, final CountryInSession countryInSession) {
+        this.projectLocalization = projectLocalization;
         this.countryInSession = countryInSession;
     }
 
     @Override
     public CountryCode get() {
         return findCurrentCountry()
-                .filter(projectContext::isCountrySupported)
-                .orElseGet(projectContext::defaultCountry);
+                .filter(projectLocalization::isCountrySupported)
+                .orElseGet(projectLocalization::defaultCountry);
     }
 
 

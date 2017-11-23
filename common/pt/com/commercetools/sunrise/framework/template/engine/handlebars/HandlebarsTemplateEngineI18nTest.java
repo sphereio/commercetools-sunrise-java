@@ -6,7 +6,6 @@ import com.commercetools.sunrise.framework.viewmodels.PageData;
 import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.io.ClassPathTemplateLoader;
 import com.github.jknack.handlebars.io.TemplateLoader;
-import io.sphere.sdk.projects.Project;
 import org.junit.Test;
 import play.Application;
 import play.inject.guice.GuiceApplicationBuilder;
@@ -21,8 +20,6 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 import static java.util.Locale.*;
 import static org.assertj.core.api.Java6Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static play.inject.Bindings.bind;
 import static play.test.Helpers.fakeRequest;
 import static play.test.Helpers.invokeWithContext;
 
@@ -34,7 +31,6 @@ public class HandlebarsTemplateEngineI18nTest extends WithApplication {
     @Override
     protected Application provideApplication() {
         return new GuiceApplicationBuilder()
-                .overrides(bind(Project.class).toInstance(mock(Project.class)))
                 .configure("play.i18n.langs", asList("en", "de"))
                 .configure("play.i18n.path", FILES_PATH)
                 .build();

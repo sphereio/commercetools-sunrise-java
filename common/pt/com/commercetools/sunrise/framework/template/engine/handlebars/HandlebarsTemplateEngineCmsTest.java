@@ -7,14 +7,11 @@ import com.commercetools.sunrise.framework.viewmodels.PageData;
 import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.io.ClassPathTemplateLoader;
 import com.github.jknack.handlebars.io.TemplateLoader;
-import io.sphere.sdk.projects.Project;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import play.Application;
-import play.inject.guice.GuiceApplicationBuilder;
 import play.test.WithApplication;
 
 import java.util.List;
@@ -22,9 +19,7 @@ import java.util.function.Consumer;
 
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static play.inject.Bindings.bind;
 
 @RunWith(MockitoJUnitRunner.class)
 public class HandlebarsTemplateEngineCmsTest extends WithApplication {
@@ -33,14 +28,6 @@ public class HandlebarsTemplateEngineCmsTest extends WithApplication {
 
     @Mock
     private CmsPage cmsPageThatReturnsSomething;
-
-    @Override
-    protected Application provideApplication() {
-        return new GuiceApplicationBuilder()
-                .overrides(bind(Project.class).toInstance(mock(Project.class)))
-                .configure("play.i18n.langs", singletonList("en"))
-                .build();
-    }
 
     @Before
     public void setUp() throws Exception {

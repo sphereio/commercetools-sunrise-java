@@ -2,9 +2,10 @@ package com.commercetools.sunrise.framework.i18n
 
 import java.net.URL
 import java.util.Map.Entry
-import javax.inject.{Inject, Singleton}
+import javax.inject.{Inject, Provider, Singleton}
 
 import com.commercetools.sunrise.play.configuration.SunriseConfigurationException
+import com.google.inject.ProvisionException
 import io.sphere.sdk.projects.Project
 import play.api.i18n._
 import play.api.{Configuration, Environment}
@@ -78,15 +79,19 @@ class SunriseMessagesApi @Inject()(environment: Environment, configuration: Conf
 }
 
 @Singleton
-class SunriseLangs @Inject()(configuration: Configuration, project: Project) extends DefaultLangs(configuration) {
+class SunriseLangs @Inject()(configuration: Configuration, projectProvider: Provider[Project]) extends DefaultLangs(configuration) {
   import scala.collection.JavaConversions._
 
   override val availables: Seq[Lang] = configuredLangs match {
-    case None | Some(Nil) => defaultLangs
+    case None | Some(Nil) =>
+      try { projectLangs }
+      catch {
+        case pe: ProvisionException => Seq(Lang.defaultLang)
+      }
     case Some(langs) => langs.map(Lang.apply)
   }
 
-  private lazy val defaultLangs: Seq[Lang] = project.getLanguages.seq match {
+  private lazy val projectLangs: Seq[Lang] = projectProvider.get.getLanguages.seq match {
     case Seq() => throw new SunriseConfigurationException("CTP project has no languages defined")
     case langs => langs.map(Lang.apply)
   }

@@ -2,7 +2,6 @@ package com.commercetools.sunrise.framework.cms.filebased;
 
 import com.commercetools.sunrise.cms.CmsPage;
 import com.commercetools.sunrise.framework.cms.CmsMessagesApi;
-import io.sphere.sdk.projects.Project;
 import org.junit.Before;
 import org.junit.Test;
 import play.Application;
@@ -16,8 +15,6 @@ import java.util.function.Consumer;
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static play.inject.Bindings.bind;
 
 public class FileBasedCmsPageTest extends WithApplication {
 
@@ -29,7 +26,6 @@ public class FileBasedCmsPageTest extends WithApplication {
     @Override
     protected Application provideApplication() {
         return new GuiceApplicationBuilder()
-                .overrides(bind(Project.class).toInstance(mock(Project.class)))
                 .configure("play.i18n.path", "cms")
                 .configure("play.i18n.langs", asList("de", "de-AT"))
                 .build();

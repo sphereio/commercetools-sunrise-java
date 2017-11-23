@@ -1,6 +1,5 @@
 package com.commercetools.sunrise.framework.localization;
 
-import com.commercetools.sunrise.ctp.project.ProjectContext;
 import com.neovisionaries.i18n.CountryCode;
 
 import javax.inject.Inject;
@@ -15,19 +14,19 @@ import java.util.Optional;
 public final class CurrencyFromCountryProvider implements Provider<CurrencyUnit> {
 
     private final CountryCode country;
-    private final ProjectContext projectContext;
+    private final ProjectLocalization projectLocalization;
 
     @Inject
-    CurrencyFromCountryProvider(final CountryCode country, final ProjectContext projectContext) {
+    CurrencyFromCountryProvider(final CountryCode country, final ProjectLocalization projectLocalization) {
         this.country = country;
-        this.projectContext = projectContext;
+        this.projectLocalization = projectLocalization;
     }
 
     @Override
     public CurrencyUnit get() {
         return findCurrentCurrency()
-                .filter(projectContext::isCurrencySupported)
-                .orElseGet(projectContext::defaultCurrency);
+                .filter(projectLocalization::isCurrencySupported)
+                .orElseGet(projectLocalization::defaultCurrency);
     }
 
     private Optional<CurrencyUnit> findCurrentCurrency() {

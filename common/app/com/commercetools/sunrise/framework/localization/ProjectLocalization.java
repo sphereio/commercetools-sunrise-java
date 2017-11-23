@@ -1,28 +1,14 @@
-package com.commercetools.sunrise.ctp.project;
+package com.commercetools.sunrise.framework.localization;
 
-import com.commercetools.sunrise.framework.i18n.NoLocaleFoundException;
-import com.commercetools.sunrise.framework.localization.NoCountryFoundException;
-import com.commercetools.sunrise.framework.localization.NoCurrencyFoundException;
 import com.google.inject.ImplementedBy;
 import com.neovisionaries.i18n.CountryCode;
 
 import javax.money.CurrencyUnit;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 
-/**
- * A container for all information related to the project, such as supported countries, languages or currencies.
- */
-@ImplementedBy(ProjectContextImpl.class)
-@Deprecated
-public interface ProjectContext {
-
-    /**
-     * Locales associated to the project.
-     * @return the list of locales
-     */
-    List<Locale> locales();
+@ImplementedBy(ProjectLocalizationImpl.class)
+public interface ProjectLocalization {
 
     /**
      * Countries associated to the project.
@@ -36,13 +22,6 @@ public interface ProjectContext {
      */
     List<CurrencyUnit> currencies();
 
-    default Locale defaultLocale() {
-        return locales().stream()
-                .filter(Objects::nonNull)
-                .findFirst()
-                .orElseThrow(() -> new NoLocaleFoundException("Project does not have any valid locale associated"));
-    }
-
     default CountryCode defaultCountry() {
         return countries().stream()
                 .filter(Objects::nonNull)
@@ -55,10 +34,6 @@ public interface ProjectContext {
                 .filter(Objects::nonNull)
                 .findFirst()
                 .orElseThrow(() -> new NoCurrencyFoundException("Project does not have any valid currency unit associated"));
-    }
-
-    default boolean isLocaleSupported(final Locale locale) {
-        return locales().contains(locale);
     }
 
     default boolean isCountrySupported(final CountryCode countryCode) {
