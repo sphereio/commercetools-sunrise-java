@@ -13,6 +13,8 @@ import play.ext.i18n.MessagesLoader
 import play.ext.i18n.MessagesLoaders.YamlFileLoader
 import play.utils.Resources
 
+import scala.collection.mutable
+
 @Singleton
 class SunriseMessagesApi @Inject()(environment: Environment, configuration: Configuration, langs: Langs) extends DefaultMessagesApi(environment, configuration, langs) {
 
@@ -91,9 +93,13 @@ class SunriseLangs @Inject()(configuration: Configuration, projectProvider: Prov
     case Some(langs) => langs.map(Lang.apply)
   }
 
-  private lazy val projectLangs: Seq[Lang] = projectProvider.get.getLanguages.seq match {
-    case Seq() => throw new SunriseConfigurationException("CTP project has no languages defined")
-    case langs => langs.map(Lang.apply)
+  lazy val projectLangs: Seq[Lang] = loadProjectLangs
+
+  def loadProjectLangs: Seq[Lang] = {
+    projectProvider.get.getLanguages.seq match {
+      case Seq() => throw new SunriseConfigurationException("CTP project has no languages defined")
+      case langs => langs.map(Lang.apply)
+    }
   }
 
   private def configuredLangs: Option[Seq[String]] = {
