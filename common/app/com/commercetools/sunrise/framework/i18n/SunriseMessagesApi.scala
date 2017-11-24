@@ -91,8 +91,11 @@ class SunriseLangs @Inject()(configuration: Configuration, projectProvider: Prov
   private lazy val systemDefaultLangs = Seq(Lang.defaultLang)
 
   def configuredLangs: Option[Seq[String]] = {
-    configuration.getStringSeq("play.i18n.langs").orElse {
-      configuration.getStringSeq("sunrise.ctp.project.languages")
+    configuration.getStringSeq("sunrise.ctp.project.languages") map { langs =>
+      Logger.warn("sunrise.ctp.project.languages is deprecated, use play.i18n.langs instead")
+      langs
+    } orElse {
+      configuration.getStringSeq("play.i18n.langs")
     }
   }
 
