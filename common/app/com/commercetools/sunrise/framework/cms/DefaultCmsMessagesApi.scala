@@ -9,7 +9,7 @@ import play.api.{Configuration, Environment}
 @Singleton
 private[cms] class DefaultCmsMessagesApi @Inject()(environment: Environment, configuration: Configuration, langs: Langs) extends SunriseMessagesApi(environment, configuration, langs) {
 
-  private val filename = "cms"
+  private lazy val filename = "cms"
 
   override protected def loadAllMessages: Map[String, Map[String, String]] = {
     langs.availables.map(_.code).map { lang =>
