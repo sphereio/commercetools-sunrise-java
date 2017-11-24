@@ -4,16 +4,13 @@ import java.net.URL
 import java.util.Map.Entry
 import javax.inject.{Inject, Provider, Singleton}
 
-import com.commercetools.sunrise.play.configuration.SunriseConfigurationException
 import com.google.inject.ProvisionException
 import io.sphere.sdk.projects.Project
 import play.api.i18n._
-import play.api.{Configuration, Environment}
+import play.api.{Configuration, Environment, Logger}
 import play.ext.i18n.MessagesLoader
 import play.ext.i18n.MessagesLoaders.YamlFileLoader
 import play.utils.Resources
-
-import scala.collection.mutable
 
 @Singleton
 class SunriseMessagesApi @Inject()(environment: Environment, configuration: Configuration, langs: Langs) extends DefaultMessagesApi(environment, configuration, langs) {
@@ -85,24 +82,28 @@ class SunriseLangs @Inject()(configuration: Configuration, projectProvider: Prov
   import scala.collection.JavaConversions._
 
   override val availables: Seq[Lang] = configuredLangs match {
-    case None | Some(Nil) =>
-      try { projectLangs }
-      catch {
-        case pe: ProvisionException => Seq(Lang.defaultLang)
-      }
+    case None | Some(Nil) => fallbackLangs
     case Some(langs) => langs.map(Lang.apply)
   }
 
-  lazy val projectLangs: Seq[Lang] = loadProjectLangs
+  lazy val fallbackLangs: Seq[Lang] = loadFallbackLangs
 
-  def loadProjectLangs: Seq[Lang] = {
-    projectProvider.get.getLanguages.seq match {
-      case Seq() => throw new SunriseConfigurationException("CTP project has no languages defined")
-      case langs => langs.map(Lang.apply)
+  private lazy val systemDefaultLangs = Seq(Lang.defaultLang)
+
+  def configuredLangs: Option[Seq[String]] = {
+    configuration.getStringSeq("play.i18n.langs").orElse {
+      configuration.getStringSeq("sunrise.ctp.project.languages")
     }
   }
 
-  private def configuredLangs: Option[Seq[String]] = {
-    configuration.getStringSeq("play.i18n.langs").orElse(configuration.getStringSeq("sunrise.ctp.project.languages"))
+  def loadFallbackLangs: Seq[Lang] = {
+    try {
+      val projectLangs = projectProvider.get.getLanguages.map(Lang.apply)
+      if (projectLangs.isEmpty) systemDefaultLangs else projectLangs
+    } catch {
+      case pe: ProvisionException =>
+        Logger.warn("Languages from CTP could not be provided, falling back to default locale")
+        systemDefaultLangs
+    }
   }
 }
