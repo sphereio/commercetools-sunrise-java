@@ -25,7 +25,7 @@ import static play.test.Helpers.invokeWithContext;
 
 public class HandlebarsTemplateEngineI18nTest extends WithApplication {
 
-    private static final String FILES_PATH = "handlebars/i18n";
+    private static final String FILES_PATH = "handlebars/template/i18n";
     private static final List<TemplateLoader> TEMPLATE_LOADERS = singletonList(new ClassPathTemplateLoader("/" + FILES_PATH));
 
     @Override

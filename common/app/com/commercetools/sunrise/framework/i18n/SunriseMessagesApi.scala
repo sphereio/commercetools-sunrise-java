@@ -1,7 +1,6 @@
 package com.commercetools.sunrise.framework.i18n
 
 import java.net.URL
-import java.util.Map.Entry
 import javax.inject.{Inject, Provider, Singleton}
 
 import com.google.inject.ProvisionException
@@ -46,16 +45,16 @@ class SunriseMessagesApi @Inject()(environment: Environment, configuration: Conf
 
   override def translate(key: String, args: Seq[Any])(implicit lang: Lang): Option[String] = {
 
-    def filterHashArgsEntries(args: Seq[Any]): Seq[Entry[String, Any]] = {
-      def isHashArgsEntry(entry: Any) = entry.isInstanceOf[Entry[_, _]] && entry.asInstanceOf[Entry[_, _]].getKey.isInstanceOf[String]
+    def filterHashArgsEntries(args: Seq[Any]): Seq[(String, Any)] = {
+      def isHashArgsEntry(entry: Any) = entry.isInstanceOf[(_, _)] && entry.asInstanceOf[(_, _)]._1.isInstanceOf[String]
       args.filter(isHashArgsEntry)
-        .map(_.asInstanceOf[Entry[String, Any]])
+        .map(_.asInstanceOf[(String, Any)])
     }
 
-    def generateAppliedKey(key: String, args: Seq[Entry[String, Any]]): String = {
-      def isPluralMessage(args: Seq[Entry[String, Any]]) = {
-        args.filter(_.getKey == "count")
-          .map(_.getValue)
+    def generateSpecificKey(key: String, args: Seq[(String, Any)]): String = {
+      def isPluralMessage(args: Seq[(String, Any)]) = {
+        args.filter(_._1 == "count")
+          .map(_._2)
           .filter(_.isInstanceOf[Number])
           .exists(_.asInstanceOf[Number].doubleValue != 1)
       }
@@ -63,16 +62,16 @@ class SunriseMessagesApi @Inject()(environment: Environment, configuration: Conf
       if (isPluralMessage(args)) pluralizeKey(key) else key
     }
 
-    def replaceParameters(pattern: String, args: Seq[Entry[String, Any]]): String = {
-      args.filter(_.getValue != null)
-        .foldLeft(pattern)((acc, entry) => acc.replace("__" + entry.getKey + "__", entry.getValue.toString))
+    def replaceParameters(pattern: String, args: Seq[(String, Any)]): String = {
+      args.filter(_._2 != null)
+        .foldLeft(pattern)((acc, entry) => acc.replace("__" + entry._1 + "__", entry._2.toString))
     }
 
     val codesToTry = Seq(lang.code, lang.language, "default", "default.play")
     val hashArgs = filterHashArgsEntries(args)
-    val appliedKey = generateAppliedKey(key, hashArgs)
+    val specificKey = generateSpecificKey(key, hashArgs)
     val pattern: Option[String] = codesToTry.foldLeft[Option[String]](None)((res, code) =>
-      res.orElse(messages.get(code).flatMap(_.get(appliedKey))))
+      res.orElse(messages.get(code).flatMap(codeMessages => codeMessages.get(specificKey).orElse(codeMessages.get(key)))))
     pattern.map(pattern => replaceParameters(pattern, hashArgs))
   }
 }

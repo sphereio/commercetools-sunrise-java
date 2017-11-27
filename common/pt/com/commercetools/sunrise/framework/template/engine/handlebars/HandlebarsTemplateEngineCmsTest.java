@@ -24,7 +24,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class HandlebarsTemplateEngineCmsTest extends WithApplication {
 
-    private static final List<TemplateLoader> TEMPLATE_LOADERS = singletonList(new ClassPathTemplateLoader("/handlebars/cms"));
+    private static final List<TemplateLoader> TEMPLATE_LOADERS = singletonList(new ClassPathTemplateLoader("/handlebars/template/cms"));
 
     @Mock
     private CmsPage cmsPageThatReturnsSomething;
