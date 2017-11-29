@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.framework.i18n
+package com.commercetools.sunrise.framework.i18n.api
 
 import java.io.File
 
@@ -21,7 +21,8 @@ class SunriseMessagesApiSpec extends PlaySpec {
           "args" -> "Hello __firstName__ __lastName__!",
           "count" -> "__count__ item",
           "count_plural" -> "__count__ items",
-          "noplural" -> "__count__ items"),
+          "noplural" -> "__count__ items",
+          "fallback" -> "Hello {0} {1}!"),
         "fr" -> Map(
           "title" -> "Titre francais",
           "foo" -> "foo francais"),
@@ -65,6 +66,16 @@ class SunriseMessagesApiSpec extends PlaySpec {
       translate("args", "en", "", Seq("firstName" -> "John", "lastName" -> "Doe")) mustBe Some("Hello John Doe!")
       translate("args", "en", "", Seq("lastName" -> "Doe")) mustBe Some("Hello __firstName__ Doe!")
       translate("args", "en", "") mustBe Some("Hello __firstName__ __lastName__!")
+    }
+
+    "fall back to default argument substitution" in {
+      translate("fallback", "en", "", Seq("Jane", "Doe")) mustBe Some("Hello Jane Doe!")
+      translate("fallback", "en", "", Seq("Jane")) mustBe Some("Hello Jane {1}!")
+      translate("fallback", "en", "") mustBe Some("Hello {0} {1}!")
+
+      // Wrong named arguments
+      translate("fallback", "en", "", Seq("firstName" -> "Jane", 1 -> "Doe")) mustBe Some("Hello (firstName,Jane) (1,Doe)!")
+      translate("fallback", "en", "", Seq("Jane", 1 -> "Doe")) mustBe Some("Hello Jane (1,Doe)!")
     }
 
     "resolve pluralization" in {

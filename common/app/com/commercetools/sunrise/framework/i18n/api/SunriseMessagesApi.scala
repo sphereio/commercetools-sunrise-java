@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.framework.i18n
+package com.commercetools.sunrise.framework.i18n.api
 
 import java.net.URL
 import javax.inject.{Inject, Provider, Singleton}
@@ -45,34 +45,35 @@ class SunriseMessagesApi @Inject()(environment: Environment, configuration: Conf
 
   override def translate(key: String, args: Seq[Any])(implicit lang: Lang): Option[String] = {
 
-    def filterHashArgsEntries(args: Seq[Any]): Seq[(String, Any)] = {
-      def isHashArgsEntry(entry: Any) = entry.isInstanceOf[(_, _)] && entry.asInstanceOf[(_, _)]._1.isInstanceOf[String]
-      args.filter(isHashArgsEntry)
-        .map(_.asInstanceOf[(String, Any)])
+    def extractNamedArgs: Option[Seq[(Any, Any)]] = {
+      val isNamedArgs = args.forall(arg => arg.isInstanceOf[(_, _)] && arg.asInstanceOf[(_, _)]._1.isInstanceOf[String])
+      if (isNamedArgs) Some(args.map(arg => arg.asInstanceOf[(String, _)])) else None
     }
 
-    def generateSpecificKey(key: String, args: Seq[(String, Any)]): String = {
-      def isPluralMessage(args: Seq[(String, Any)]) = {
-        args.filter(_._1 == "count")
-          .map(_._2)
-          .filter(_.isInstanceOf[Number])
-          .exists(_.asInstanceOf[Number].doubleValue != 1)
-      }
-      def pluralizeKey(key: String): String = key + "_plural"
-      if (isPluralMessage(args)) pluralizeKey(key) else key
-    }
-
-    def replaceParameters(pattern: String, args: Seq[(String, Any)]): String = {
-      args.filter(_._2 != null)
+    def translate(genericKey: String, namedArgs: Seq[(Any, Any)]): Option[String] = {
+      def format(pattern: String): String = namedArgs.filter(_._2 != null)
         .foldLeft(pattern)((acc, entry) => acc.replace("__" + entry._1 + "__", entry._2.toString))
+
+      def generateSpecificKey(key: String): String = {
+        def pluralizeKey(key: String): String = key + "_plural"
+        def isPluralMessage = namedArgs
+          .filter(tuple => tuple._1 == "count" && tuple._2.isInstanceOf[Number])
+          .exists(_._2.asInstanceOf[Number].doubleValue != 1)
+
+        if (isPluralMessage) pluralizeKey(key) else key
+      }
+
+      val codesToTry = Seq(lang.code, lang.language, "default", "default.play")
+      val specificKey = generateSpecificKey(genericKey)
+      codesToTry.foldLeft[Option[String]](None)((res, code) => res.orElse(messages.get(code)
+        .flatMap(codeMessages => codeMessages.get(specificKey).orElse(codeMessages.get(genericKey)))))
+        .map(pattern => format(pattern))
     }
 
-    val codesToTry = Seq(lang.code, lang.language, "default", "default.play")
-    val hashArgs = filterHashArgsEntries(args)
-    val specificKey = generateSpecificKey(key, hashArgs)
-    val pattern: Option[String] = codesToTry.foldLeft[Option[String]](None)((res, code) =>
-      res.orElse(messages.get(code).flatMap(codeMessages => codeMessages.get(specificKey).orElse(codeMessages.get(key)))))
-    pattern.map(pattern => replaceParameters(pattern, hashArgs))
+    extractNamedArgs match {
+      case None => super.translate(key, args)
+      case Some(namedArgs) => translate(key, namedArgs)
+    }
   }
 }
 

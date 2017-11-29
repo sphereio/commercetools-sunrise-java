@@ -35,7 +35,7 @@ final class MessagesResolverImpl implements MessagesResolver {
 
     private Optional<String> translate(final Lang lang, final String messageKey, final Map<String, Object> args) {
         if (messagesApi.isDefinedAt(lang, messageKey)) {
-            return Optional.of(messagesApi.get(lang, messageKey, args.entrySet().toArray()));
+            return Optional.of(messagesApi.get(lang, messageKey, args));
         }
         return Optional.empty();
     }

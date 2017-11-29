@@ -2,7 +2,7 @@ package com.commercetools.sunrise.framework.cms
 
 import javax.inject.{Inject, Singleton}
 
-import com.commercetools.sunrise.framework.i18n.SunriseMessagesApi
+import com.commercetools.sunrise.framework.i18n.api.SunriseMessagesApi
 import play.api.i18n._
 import play.api.{Configuration, Environment}
 
