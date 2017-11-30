@@ -15,6 +15,8 @@ import java.util.Objects;
 
 /**
  * A container for all information related to the project, such as supported countries, languages or currencies.
+ * @deprecated use {@link play.i18n.Langs}, {@link com.commercetools.sunrise.framework.localization.Countries} and
+ * {@link com.commercetools.sunrise.framework.localization.Currencies} instead.
  */
 @ImplementedBy(ProjectContextImpl.class)
 @Deprecated
