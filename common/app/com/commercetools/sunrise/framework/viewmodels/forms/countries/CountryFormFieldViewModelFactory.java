@@ -1,7 +1,7 @@
 package com.commercetools.sunrise.framework.viewmodels.forms.countries;
 
-import com.commercetools.sunrise.ctp.project.ProjectContext;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
+import com.commercetools.sunrise.framework.localization.ProjectLocalization;
 import com.commercetools.sunrise.framework.viewmodels.forms.FormFieldViewModelFactory;
 import com.commercetools.sunrise.framework.viewmodels.forms.FormFieldWithOptions;
 import com.neovisionaries.i18n.CountryCode;
@@ -15,17 +15,26 @@ import static java.util.stream.Collectors.toList;
 @RequestScoped
 public class CountryFormFieldViewModelFactory extends FormFieldViewModelFactory<CountryFormFieldViewModel, CountryCode> {
 
-    private final List<CountryCode> defaultCountries;
+    private final List<CountryCode> availableCountries;
     private final CountryFormSelectableOptionViewModelFactory countryFormSelectableOptionViewModelFactory;
 
     @Inject
-    public CountryFormFieldViewModelFactory(final ProjectContext projectContext, final CountryFormSelectableOptionViewModelFactory countryFormSelectableOptionViewModelFactory) {
-        this.defaultCountries = projectContext.countries();
+    public CountryFormFieldViewModelFactory(final ProjectLocalization projectLocalization, final CountryFormSelectableOptionViewModelFactory countryFormSelectableOptionViewModelFactory) {
+        this.availableCountries = projectLocalization.countries();
         this.countryFormSelectableOptionViewModelFactory = countryFormSelectableOptionViewModelFactory;
     }
 
+    protected final List<CountryCode> getAvailableCountries() {
+        return availableCountries;
+    }
+
+    /**
+     * @return list of available countries
+     * @deprecated use {@link #getAvailableCountries()} instead
+     */
+    @Deprecated
     protected final List<CountryCode> getDefaultCountries() {
-        return defaultCountries;
+        return availableCountries;
     }
 
     protected final CountryFormSelectableOptionViewModelFactory getCountryFormSelectableOptionViewModelFactory() {
@@ -39,7 +48,7 @@ public class CountryFormFieldViewModelFactory extends FormFieldViewModelFactory<
 
     @Override
     protected List<CountryCode> defaultOptions() {
-        return defaultCountries;
+        return availableCountries;
     }
 
     @Override

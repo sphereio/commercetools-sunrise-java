@@ -1,6 +1,5 @@
 package com.commercetools.sunrise.shoppingcart.checkout.payment;
 
-import com.commercetools.sunrise.ctp.project.ProjectContext;
 import com.commercetools.sunrise.framework.i18n.MessagesResolver;
 import io.sphere.sdk.carts.Cart;
 import io.sphere.sdk.models.LocalizedString;
@@ -8,6 +7,8 @@ import io.sphere.sdk.models.LocalizedStringEntry;
 import io.sphere.sdk.payments.PaymentMethodInfo;
 import io.sphere.sdk.payments.PaymentMethodInfoBuilder;
 import play.Configuration;
+import play.i18n.Lang;
+import play.i18n.Langs;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -30,11 +31,11 @@ final class PaymentSettingsImpl implements PaymentSettings {
     private final List<PaymentMethodInfo> paymentMethods;
 
     @Inject
-    PaymentSettingsImpl(final Configuration configuration, final ProjectContext projectContext, final MessagesResolver messagesResolver) {
+    PaymentSettingsImpl(final Configuration configuration, final Langs langs, final MessagesResolver messagesResolver) {
         this.paymentMethods = configuration.getConfigList(CONFIG_PAYMENT_KEY, emptyList()).stream()
                 .map(paymentConfig -> {
                     final LocalizedString name = Optional.ofNullable(paymentConfig.getString(CONFIG_NAME_FIELD_KEY))
-                            .map(messageKey -> buildLocalizedName(messageKey, messagesResolver, projectContext))
+                            .map(messageKey -> buildLocalizedName(messageKey, messagesResolver, langs))
                             .orElse(null);
                     return PaymentMethodInfoBuilder.of()
                             .name(name)
@@ -52,8 +53,9 @@ final class PaymentSettingsImpl implements PaymentSettings {
 
     private static LocalizedString buildLocalizedName(final String messageKey,
                                                       final MessagesResolver messagesResolver,
-                                                      final ProjectContext projectContext) {
-        return projectContext.locales().stream()
+                                                      final Langs langs) {
+        return langs.availables().stream()
+                .map(Lang::toLocale)
                 .map(locale -> LocalizedStringEntry.of(locale, messagesResolver.get(locale, messageKey).orElse(messageKey)))
                 .collect(LocalizedString.streamCollector());
     }
