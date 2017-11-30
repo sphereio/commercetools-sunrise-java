@@ -1,6 +1,7 @@
 package com.commercetools.sunrise.ctp.project;
 
-import com.commercetools.sunrise.framework.localization.ProjectLocalization;
+import com.commercetools.sunrise.framework.localization.Countries;
+import com.commercetools.sunrise.framework.localization.Currencies;
 import com.neovisionaries.i18n.CountryCode;
 import io.sphere.sdk.models.Base;
 import play.i18n.Lang;
@@ -23,12 +24,14 @@ import static java.util.stream.Collectors.toList;
 @Deprecated
 final class ProjectContextImpl extends Base implements ProjectContext {
 
-    private final ProjectLocalization projectLocalization;
     private final Langs langs;
+    private final Countries countries;
+    private final Currencies currencies;
 
     @Inject
-    ProjectContextImpl(final ProjectLocalization projectLocalization, final Langs langs) {
-        this.projectLocalization = projectLocalization;
+    ProjectContextImpl(final Langs langs, final Countries countries, final Currencies currencies) {
+        this.countries = countries;
+        this.currencies = currencies;
         this.langs = langs;
     }
 
@@ -41,16 +44,26 @@ final class ProjectContextImpl extends Base implements ProjectContext {
 
     @Override
     public List<CountryCode> countries() {
-        return projectLocalization.countries();
+        return countries.availables();
     }
 
     @Override
     public List<CurrencyUnit> currencies() {
-        return projectLocalization.currencies();
+        return currencies.availables();
     }
 
     @Override
     public Locale defaultLocale() {
         return langs.preferred(langs.availables()).toLocale();
+    }
+
+    @Override
+    public CountryCode defaultCountry() {
+        return countries.preferred(countries.availables());
+    }
+
+    @Override
+    public CurrencyUnit defaultCurrency() {
+        return currencies.preferred(currencies.availables());
     }
 }

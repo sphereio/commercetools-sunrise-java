@@ -88,8 +88,6 @@ class SunriseLangs @Inject()(configuration: Configuration, projectProvider: Prov
 
   lazy val fallbackLangs: Seq[Lang] = loadFallbackLangs
 
-  private lazy val systemDefaultLangs = Seq(Lang.defaultLang)
-
   def configuredLangs: Option[Seq[String]] = {
     configuration.getStringSeq("sunrise.ctp.project.languages") map { langs =>
       Logger.warn("sunrise.ctp.project.languages is deprecated, use play.i18n.langs instead")
@@ -102,11 +100,11 @@ class SunriseLangs @Inject()(configuration: Configuration, projectProvider: Prov
   def loadFallbackLangs: Seq[Lang] = {
     try {
       val projectLangs = projectProvider.get.getLanguages.map(Lang.apply)
-      if (projectLangs.isEmpty) systemDefaultLangs else projectLangs
+      if (projectLangs.isEmpty) Seq(Lang.defaultLang) else projectLangs
     } catch {
       case pe: ProvisionException =>
         Logger.warn("Languages from CTP could not be provided, falling back to default locale")
-        systemDefaultLangs
+        Seq(Lang.defaultLang)
     }
   }
 }

@@ -21,7 +21,7 @@ public class SessionCookieStrategy implements SessionStrategy {
      */
     @Override
     public Optional<String> findValueByKey(final String key) {
-        final Optional<String> value = Optional.ofNullable(session().get(key));
+        final Optional<String> value = session().flatMap(session -> Optional.ofNullable(session.get(key)));
         if (value.isPresent()) {
             logger.debug("Loaded from session \"{}\" = {}", key, value.get());
         } else {
@@ -36,8 +36,10 @@ public class SessionCookieStrategy implements SessionStrategy {
     @Override
     public void overwriteValueByKey(final String key, @Nullable final String value) {
         if (value != null) {
-            session().put(key, value);
-            logger.debug("Saved in session \"{}\" = {}", key, value);
+            session().ifPresent(session -> {
+                session.put(key, value);
+                logger.debug("Saved in session \"{}\" = {}", key, value);
+            });
         } else {
             removeValueByKey(key);
         }
@@ -48,11 +50,13 @@ public class SessionCookieStrategy implements SessionStrategy {
      */
     @Override
     public void removeValueByKey(final String key) {
-        final String oldValue = session().remove(key);
-        logger.debug("Removed from session \"{}\" = {}", key, oldValue);
+        session().ifPresent(session -> {
+            final String oldValue = session.remove(key);
+            logger.debug("Removed from session \"{}\" = {}", key, oldValue);
+        });
     }
 
-    private Http.Session session() {
-        return Http.Context.current().session();
+    private Optional<Http.Session> session() {
+        return Optional.ofNullable(Http.Context.current.get()).map(Http.Context::session);
     }
 }

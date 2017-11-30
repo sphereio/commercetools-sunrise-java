@@ -1,7 +1,7 @@
 package com.commercetools.sunrise.common.localization;
 
 import com.commercetools.sunrise.framework.injection.RequestScoped;
-import com.commercetools.sunrise.framework.localization.ProjectLocalization;
+import com.commercetools.sunrise.framework.localization.Countries;
 import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
 import com.commercetools.sunrise.framework.viewmodels.forms.countries.CountryFormSelectableOptionViewModel;
 import com.commercetools.sunrise.framework.viewmodels.forms.countries.CountryFormSelectableOptionViewModelFactory;
@@ -10,7 +10,6 @@ import com.commercetools.sunrise.framework.viewmodels.forms.languages.LanguageFo
 import com.neovisionaries.i18n.CountryCode;
 import play.i18n.Lang;
 import play.i18n.Langs;
-import play.mvc.Http;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -20,51 +19,39 @@ import java.util.Locale;
 @RequestScoped
 public class LocalizationSelectorViewModelFactory extends SimpleViewModelFactory<LocalizationSelectorViewModel, Void> {
 
-    private final CountryCode currentCountry;
-    private final List<Lang> availableLanguages;
-    private final List<CountryCode> availableCountries;
+    private final Locale locale;
+    private final CountryCode country;
+    private final Langs langs;
+    private final Countries countries;
     private final CountryFormSelectableOptionViewModelFactory countryFormSelectableOptionViewModelFactory;
     private final LanguageFormSelectableOptionViewModelFactory languageFormSelectableOptionViewModelFactory;
 
     @Inject
-    public LocalizationSelectorViewModelFactory(final Langs langs, final CountryCode currentCountry, final ProjectLocalization projectLocalization,
+    public LocalizationSelectorViewModelFactory(final Locale locale, final CountryCode country, final Langs langs, final Countries countries,
                                                 final CountryFormSelectableOptionViewModelFactory countryFormSelectableOptionViewModelFactory,
                                                 final LanguageFormSelectableOptionViewModelFactory languageFormSelectableOptionViewModelFactory) {
-        this.availableLanguages = langs.availables();
-        this.currentCountry = currentCountry;
-        this.availableCountries = projectLocalization.countries();
+        this.locale = locale;
+        this.country = country;
+        this.langs = langs;
+        this.countries = countries;
         this.countryFormSelectableOptionViewModelFactory = countryFormSelectableOptionViewModelFactory;
         this.languageFormSelectableOptionViewModelFactory = languageFormSelectableOptionViewModelFactory;
     }
 
-    protected final CountryCode getCurrentCountry() {
-        return currentCountry;
-    }
-
-    protected final List<CountryCode> getAvailableCountries() {
-        return availableCountries;
-    }
-
-    protected final List<Lang> getAvailableLanguages() {
-        return availableLanguages;
-    }
-
-    /**
-     * @return the current language
-     * @deprecated use {@link Http.Context} instead to obtain current language
-     */
-    @Deprecated
     protected final Locale getLocale() {
-        return Http.Context.current().lang().toLocale();
+        return locale;
     }
 
-    /**
-     * @return current country
-     * @deprecated use {@link #getCurrentCountry()} instead
-     */
-    @Deprecated
     protected final CountryCode getCountry() {
-        return getCurrentCountry();
+        return country;
+    }
+
+    protected final Langs getLangs() {
+        return langs;
+    }
+
+    protected final Countries getCountries() {
+        return countries;
     }
 
     protected final CountryFormSelectableOptionViewModelFactory getCountryFormSelectableOptionViewModelFactory() {
@@ -97,20 +84,20 @@ public class LocalizationSelectorViewModelFactory extends SimpleViewModelFactory
 
     protected void fillCountry(final LocalizationSelectorViewModel viewModel) {
         final List<CountryFormSelectableOptionViewModel> options = new ArrayList<>();
-        if (availableCountries.size() > 1) {
-            availableCountries.forEach(country ->
-                    options.add(countryFormSelectableOptionViewModelFactory.create(country, this.currentCountry)));
+        final List<CountryCode> availables = countries.availables();
+        if (availables.size() > 1) {
+            availables.forEach(country ->
+                    options.add(countryFormSelectableOptionViewModelFactory.create(country, this.country)));
         }
         viewModel.setCountry(options);
     }
 
     protected void fillLanguage(final LocalizationSelectorViewModel viewModel) {
         final List<LanguageFormSelectableOptionViewModel> options = new ArrayList<>();
-        if (availableLanguages.size() > 1) {
-            availableLanguages.forEach(lang -> {
-                final Locale currentLocale = Http.Context.current().lang().toLocale();
-                options.add(languageFormSelectableOptionViewModelFactory.create(lang.toLocale(), currentLocale));
-            });
+        final List<Lang> availables = langs.availables();
+        if (availables.size() > 1) {
+            availables.forEach(lang ->
+                    options.add(languageFormSelectableOptionViewModelFactory.create(lang.toLocale(), this.locale)));
         }
         viewModel.setLanguage(options);
     }

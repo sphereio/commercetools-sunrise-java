@@ -25,7 +25,7 @@ public final class MessagesModule extends AbstractModule {
                 .in(Singleton.class);
 
         bind(Locale.class)
-                .toProvider(LocaleFromUrlProvider.class)
+                .toProvider(LocaleFromRequestProvider.class)
                 .in(RequestScoped.class);
     }
 }

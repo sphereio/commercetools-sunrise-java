@@ -5,32 +5,32 @@ import com.neovisionaries.i18n.CountryCode;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
-import java.util.Optional;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Provides the {@link CountryCode} instance of the country saved in the user's session.
- * If not set, it provides the default country from the project.
+ * If not set, it provides the preferred country of the project.
  */
 public final class CountryFromSessionProvider implements Provider<CountryCode> {
 
-    private final ProjectLocalization projectLocalization;
+    private final Countries countries;
     private final CountryInSession countryInSession;
 
     @Inject
-    CountryFromSessionProvider(final ProjectLocalization projectLocalization, final CountryInSession countryInSession) {
-        this.projectLocalization = projectLocalization;
+    CountryFromSessionProvider(final Countries countries, final CountryInSession countryInSession) {
+        this.countries = countries;
         this.countryInSession = countryInSession;
     }
 
     @Override
     public CountryCode get() {
-        return findCurrentCountry()
-                .filter(projectLocalization::isCountrySupported)
-                .orElseGet(projectLocalization::defaultCountry);
+        return countries.preferred(candidates());
     }
 
-
-    private Optional<CountryCode> findCurrentCountry() {
-        return countryInSession.findCountry();
+    private List<CountryCode> candidates() {
+        return countryInSession.findCountry()
+                .map(Collections::singletonList)
+                .orElseGet(Collections::emptyList);
     }
 }

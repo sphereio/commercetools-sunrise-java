@@ -10,6 +10,7 @@ import java.util.Optional;
 /**
  * Keeps the current language in session.
  */
+@Deprecated
 @ImplementedBy(DefaultLanguageInSession.class)
 public interface LanguageInSession extends ResourceStoringOperations<Locale> {
 

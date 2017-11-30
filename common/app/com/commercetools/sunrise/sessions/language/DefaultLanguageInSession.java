@@ -15,6 +15,7 @@ import java.util.Optional;
 /**
  * Keeps the current language in session.
  */
+@Deprecated
 @Singleton
 public class DefaultLanguageInSession extends DataFromResourceStoringOperations<Locale> implements LanguageInSession {
 

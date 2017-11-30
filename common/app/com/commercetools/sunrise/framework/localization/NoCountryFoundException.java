@@ -1,5 +1,6 @@
 package com.commercetools.sunrise.framework.localization;
 
+@Deprecated
 public class NoCountryFoundException extends RuntimeException {
 
     public NoCountryFoundException(final String message) {

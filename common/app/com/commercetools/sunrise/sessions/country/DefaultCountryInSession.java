@@ -19,14 +19,17 @@ import java.util.Optional;
 public class DefaultCountryInSession extends DataFromResourceStoringOperations<CountryCode> implements CountryInSession {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CountryInSession.class);
-    private static final String DEFAULT_COUNTRY_SESSION_KEY = "sunrise-country";
 
-    private final String countrySessionKey;
+    private final String countryCookieName;
     private final SessionStrategy session;
 
     @Inject
     public DefaultCountryInSession(final SessionStrategy session, final Configuration configuration) {
-        this.countrySessionKey = configuration.getString("session.country", DEFAULT_COUNTRY_SESSION_KEY);
+        this.countryCookieName = Optional.ofNullable(configuration.getString("session.country"))
+                .map(cookieName -> {
+                    LOGGER.warn("session.country is deprecated, use sunrise.localization.countryCookieName instead");
+                    return cookieName;
+                }).orElseGet(() -> configuration.getString("sunrise.localization.countryCookieName"));
         this.session = session;
     }
 
@@ -35,8 +38,17 @@ public class DefaultCountryInSession extends DataFromResourceStoringOperations<C
         return LOGGER;
     }
 
+    /**
+     * @return cookie name to store the country
+     * @deprecated use {@link #getCountryCookieName()} instead
+     */
+    @Deprecated
     protected final String getCountrySessionKey() {
-        return countrySessionKey;
+        return getCountryCookieName();
+    }
+
+    protected final String getCountryCookieName() {
+        return countryCookieName;
     }
 
     protected final SessionStrategy getSession() {
@@ -45,7 +57,7 @@ public class DefaultCountryInSession extends DataFromResourceStoringOperations<C
 
     @Override
     public Optional<CountryCode> findCountry() {
-        return session.findValueByKey(countrySessionKey).map(CountryCode::getByCode);
+        return session.findValueByKey(countryCookieName).map(CountryCode::getByCode);
     }
 
     @Override
@@ -60,11 +72,11 @@ public class DefaultCountryInSession extends DataFromResourceStoringOperations<C
 
     @Override
     protected void storeAssociatedData(final CountryCode countryCode) {
-        session.overwriteValueByKey(countrySessionKey, countryCode.getAlpha2());
+        session.overwriteValueByKey(countryCookieName, countryCode.getAlpha2());
     }
 
     @Override
     protected void removeAssociatedData() {
-        session.removeValueByKey(countrySessionKey);
+        session.removeValueByKey(countryCookieName);
     }
 }

@@ -1,5 +1,6 @@
 package com.commercetools.sunrise.framework.localization;
 
+@Deprecated
 public class NoCurrencyFoundException extends RuntimeException {
 
     public NoCurrencyFoundException(final String message) {
