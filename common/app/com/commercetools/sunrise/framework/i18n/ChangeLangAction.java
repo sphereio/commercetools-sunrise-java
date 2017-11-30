@@ -19,7 +19,9 @@ final class ChangeLangAction extends Action.Simple {
 
     @Override
     public CompletionStage<Result> call(final Http.Context ctx) {
-        findCurrentLanguage().ifPresent(languageTag -> changeLanguage(ctx, languageTag));
+        findCurrentLanguage(ctx)
+                .filter(languageTag -> isDifferentLanguage(ctx, languageTag))
+                .ifPresent(languageTag -> changeLanguage(ctx, languageTag));
         return delegate.call(ctx);
     }
 
@@ -29,19 +31,22 @@ final class ChangeLangAction extends Action.Simple {
         }
     }
 
-    private Optional<String> findCurrentLanguage() {
-        return Optional.ofNullable(Http.Context.current.get())
-                .flatMap(httpContext -> indexOfLanguageTagInRoutePattern(httpContext)
-                        .map(index -> httpContext.request().path().split("/")[index]));
+    private Optional<String> findCurrentLanguage(final Http.Context ctx) {
+        return indexOfLanguageTagInRoutePattern(ctx)
+                .map(index -> ctx.request().path().split("/")[index]);
     }
 
-    private Optional<Integer> indexOfLanguageTagInRoutePattern(final Http.Context httpContext) {
-        return Optional.ofNullable(httpContext.args.get("ROUTE_PATTERN"))
+    private Optional<Integer> indexOfLanguageTagInRoutePattern(final Http.Context ctx) {
+        return Optional.ofNullable(ctx.args.get("ROUTE_PATTERN"))
                 .map(routePattern -> routePattern.toString().replaceAll("<[^>]+>", "")) // Remove regex because splitting '$languageTag<[^/]+>' with '/' would create more words
                 .map(routePattern -> {
                     final List<String> paths = asList(routePattern.split("/"));
                     return paths.indexOf("$" + ROUTE_LANGUAGE_VAR);
                 })
                 .filter(index -> index >= 0);
+    }
+
+    private boolean isDifferentLanguage(final Http.Context ctx, final String languageTag) {
+        return !languageTag.equals(ctx.lang().code());
     }
 }
