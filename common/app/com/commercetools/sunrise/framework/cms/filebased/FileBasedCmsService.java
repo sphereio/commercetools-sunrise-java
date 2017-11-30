@@ -14,12 +14,11 @@ import static java.util.concurrent.CompletableFuture.completedFuture;
 
 /**
  * Service that provides content data from i18n files that can be found in a local file.
- * Internally it uses a I18nResolver to resolve the requested messages.
+ * Internally it uses the {@link CmsMessagesApi} to resolve the requested messages.
  *
- * The mapping of the {@link CmsService} parameters to {@link CmsMessagesApi} parameters goes as follows:
- *
- * - {@code bundle} = {@code entryType} (e.g. banner)
- * - {@code messageKey} = {@code entryKey.fieldName} (e.g. homeTopLeft.subtitle.text)
+ * The message key for the {@link CmsMessagesApi} is built as follows: {@code pageKey.fieldName}
+ * For example, for a page key {@code home} and a field name {@code banners[0].title}, the message key
+ * obtained would be {@code home.banners[0].title}
  */
 public final class FileBasedCmsService implements CmsService {
 
