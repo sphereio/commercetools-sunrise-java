@@ -15,14 +15,14 @@ import java.util.UUID;
  * For more information: <a href="https://www.playframework.com/documentation/2.5.x/JavaSessionFlash">Session in Play Framework</a>
  */
 @Singleton
-public final class CacheableObjectStoringSessionCookieStrategy extends SessionCookieStrategy implements ObjectStoringSessionStrategy {
+public final class CacheableObjectStoringSessionStrategy extends DefaultSessionStrategy implements ObjectStoringSessionStrategy {
 
     private static final String DEFAULT_SESSION_ID_KEY = "sunrise-session-id";
     private final String sessionIdKey;
     private final CacheApi cacheApi;
 
     @Inject
-    public CacheableObjectStoringSessionCookieStrategy(final CacheApi cacheApi, final Configuration configuration) {
+    CacheableObjectStoringSessionStrategy(final CacheApi cacheApi, final Configuration configuration) {
         this.cacheApi = cacheApi;
         this.sessionIdKey = configuration.getString("session.idKey", DEFAULT_SESSION_ID_KEY);
     }

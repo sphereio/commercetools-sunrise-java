@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static play.test.Helpers.fakeRequest;
 import static play.test.Helpers.invokeWithContext;
 
-public class CacheableObjectStoringSessionCookieStrategyTest extends WithApplication {
+public class CacheableObjectStoringSessionStrategyTest extends WithApplication {
 
     private static final SomeObject SOME_OBJECT = new SomeObject("hello", 2);
     private static final SomeObject SOME_OTHER_OBJECT = new SomeObject("world", 4);
@@ -134,7 +134,7 @@ public class CacheableObjectStoringSessionCookieStrategyTest extends WithApplica
 
     private ObjectStoringSessionStrategy strategy(final CacheApi cacheApi) {
         final Configuration config = new Configuration(emptyMap());
-        return new CacheableObjectStoringSessionCookieStrategy(cacheApi, config);
+        return new CacheableObjectStoringSessionStrategy(cacheApi, config);
     }
 
     private static class SomeObject extends Base {

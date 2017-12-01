@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static play.test.Helpers.fakeRequest;
 import static play.test.Helpers.invokeWithContext;
 
-public class SessionCookieStrategyTest extends WithApplication {
+public class DefaultSessionStrategyTest extends WithApplication {
 
     @Test
     public void findsWhenInSession() throws Exception {
@@ -26,7 +26,7 @@ public class SessionCookieStrategyTest extends WithApplication {
     @Test
     public void createsWhenNotFound() throws Exception {
         invokeWithContext(fakeRequest(), () -> {
-            final SessionCookieStrategy strategy = strategy();
+            final DefaultSessionStrategy strategy = strategy();
             assertThat(strategy.findValueByKey("some-key")).isEmpty();
             strategy.overwriteValueByKey("some-key", "some-value");
             assertThat(strategy.findValueByKey("some-key")).contains("some-value");
@@ -37,7 +37,7 @@ public class SessionCookieStrategyTest extends WithApplication {
     @Test
     public void replacesValue() throws Exception {
         invokeWithContext(fakeRequest().session(singletonMap("some-key", "some-value")), () -> {
-            final SessionCookieStrategy strategy = strategy();
+            final DefaultSessionStrategy strategy = strategy();
             assertThat(strategy.findValueByKey("some-key")).contains("some-value");
             strategy.overwriteValueByKey("some-key", "some-other-value");
             assertThat(strategy.findValueByKey("some-key")).contains("some-other-value");
@@ -48,7 +48,7 @@ public class SessionCookieStrategyTest extends WithApplication {
     @Test
     public void removesKeyOnNullValue() throws Exception {
         invokeWithContext(fakeRequest().session(singletonMap("some-key", "some-value")), () -> {
-            final SessionCookieStrategy strategy = strategy();
+            final DefaultSessionStrategy strategy = strategy();
             assertThat(strategy.findValueByKey("some-key")).contains("some-value");
             strategy.overwriteValueByKey("some-key", null);
             assertThat(strategy.findValueByKey("some-key")).isEmpty();
@@ -59,7 +59,7 @@ public class SessionCookieStrategyTest extends WithApplication {
     @Test
     public void removesValue() throws Exception {
         invokeWithContext(fakeRequest().session(singletonMap("some-key", "some-value")), () -> {
-            final SessionCookieStrategy strategy = strategy();
+            final DefaultSessionStrategy strategy = strategy();
             assertThat(strategy.findValueByKey("some-key")).contains("some-value");
             strategy.removeValueByKey("some-key");
             assertThat(strategy.findValueByKey("some-key")).isEmpty();
@@ -68,7 +68,7 @@ public class SessionCookieStrategyTest extends WithApplication {
         });
     }
 
-    private SessionCookieStrategy strategy() {
-        return new SessionCookieStrategy();
+    private DefaultSessionStrategy strategy() {
+        return new DefaultSessionStrategy();
     }
 }

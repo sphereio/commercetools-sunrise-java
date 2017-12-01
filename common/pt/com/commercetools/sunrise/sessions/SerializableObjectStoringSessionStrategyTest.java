@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static play.test.Helpers.fakeRequest;
 import static play.test.Helpers.invokeWithContext;
 
-public class SerializableObjectStoringSessionCookieStrategyTest extends WithApplication {
+public class SerializableObjectStoringSessionStrategyTest extends WithApplication {
 
     private static final SomeObject SOME_OBJECT = new SomeObject("hello", 2);
     private static final SomeObject SOME_OTHER_OBJECT = new SomeObject("world", 4);
@@ -82,7 +82,7 @@ public class SerializableObjectStoringSessionCookieStrategyTest extends WithAppl
     }
 
     private ObjectStoringSessionStrategy strategy() {
-        return new SerializableObjectStoringSessionCookieStrategy();
+        return new SerializableObjectStoringSessionStrategy();
     }
 
     private static class SomeObject extends Base {

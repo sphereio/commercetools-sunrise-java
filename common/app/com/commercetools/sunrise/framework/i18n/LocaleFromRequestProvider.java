@@ -11,9 +11,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.stream.Stream;
-
-import static java.util.stream.Collectors.toList;
 
 /**
  * Provides the {@link Locale} instance from the language saved in context and the accepted languages from the user.
@@ -35,7 +32,8 @@ public final class LocaleFromRequestProvider implements Provider<Locale> {
 
     private static List<Lang> candidates() {
         return Optional.ofNullable(Http.Context.current.get())
-                .map(context -> Stream.concat(Stream.of(context.lang()), context.request().acceptLanguages().stream()).collect(toList()))
+                .map(Http.Context::lang)
+                .map(Collections::singletonList)
                 .orElseGet(Collections::emptyList);
     }
 }

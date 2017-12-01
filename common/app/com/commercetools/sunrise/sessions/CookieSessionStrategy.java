@@ -2,7 +2,9 @@ package com.commercetools.sunrise.sessions;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import play.api.mvc.Session;
 import play.mvc.Http;
+import scala.Option;
 
 import javax.annotation.Nullable;
 import javax.inject.Singleton;
@@ -12,7 +14,7 @@ import java.util.Optional;
  * Uses a session cookie to store information about the user.
  */
 @Singleton
-public class SessionCookieStrategy implements SessionStrategy {
+public class CookieSessionStrategy implements SessionStrategy {
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -21,7 +23,9 @@ public class SessionCookieStrategy implements SessionStrategy {
      */
     @Override
     public Optional<String> findValueByKey(final String key) {
-        final Optional<String> value = session().flatMap(session -> Optional.ofNullable(session.get(key)));
+        final Optional<String> value = context()
+                .flatMap(ctx -> Optional.ofNullable(ctx.request().cookie(key))
+                        .map(Http.Cookie::value));
         if (value.isPresent()) {
             logger.debug("Loaded from session \"{}\" = {}", key, value.get());
         } else {
@@ -36,8 +40,13 @@ public class SessionCookieStrategy implements SessionStrategy {
     @Override
     public void overwriteValueByKey(final String key, @Nullable final String value) {
         if (value != null) {
-            session().ifPresent(session -> {
-                session.put(key, value);
+            context().ifPresent(ctx -> {
+                final Http.Cookie cookie = Http.Cookie.builder(key, value)
+                        .withPath(cookiePath())
+                        .withDomain(cookieDomain())
+                        .withSecure(false)
+                        .build();
+                ctx.response().setCookie(cookie);
                 logger.debug("Saved in session \"{}\" = {}", key, value);
             });
         } else {
@@ -50,13 +59,22 @@ public class SessionCookieStrategy implements SessionStrategy {
      */
     @Override
     public void removeValueByKey(final String key) {
-        session().ifPresent(session -> {
-            final String oldValue = session.remove(key);
-            logger.debug("Removed from session \"{}\" = {}", key, oldValue);
+        context().ifPresent(ctx -> {
+            ctx.response().discardCookie(key, cookiePath(), cookieDomain(), false);
+            logger.debug("Removed cookie \"{}\"", key);
         });
     }
 
-    private Optional<Http.Session> session() {
-        return Optional.ofNullable(Http.Context.current.get()).map(Http.Context::session);
+    private Optional<Http.Context> context() {
+        return Optional.ofNullable(Http.Context.current.get());
+    }
+
+    private static String cookiePath() {
+        return Session.path();
+    }
+
+    private static String cookieDomain() {
+        final Option<String> domain = Session.domain();
+        return domain.isDefined() ? domain.get() : null;
     }
 }

@@ -12,7 +12,7 @@ import java.util.concurrent.CompletionStage;
 
 import static java.util.Arrays.asList;
 
-final class ChangeLangAction extends Action.Simple {
+public class ChangeLangAction extends Action.Simple {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ChangeLang.class);
     private static final String ROUTE_LANGUAGE_VAR = "languageTag";
@@ -25,15 +25,15 @@ final class ChangeLangAction extends Action.Simple {
         return delegate.call(ctx);
     }
 
+    protected Optional<String> findCurrentLanguage(final Http.Context ctx) {
+        return indexOfLanguageTagInRoutePattern(ctx)
+                .map(index -> ctx.request().path().split("/")[index]);
+    }
+
     private void changeLanguage(final Http.Context ctx, final String languageTag) {
         if (!ctx.changeLang(languageTag)) {
             LOGGER.debug("Could not change language to '{}'", languageTag);
         }
-    }
-
-    private Optional<String> findCurrentLanguage(final Http.Context ctx) {
-        return indexOfLanguageTagInRoutePattern(ctx)
-                .map(index -> ctx.request().path().split("/")[index]);
     }
 
     private Optional<Integer> indexOfLanguageTagInRoutePattern(final Http.Context ctx) {

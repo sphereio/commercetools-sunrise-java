@@ -1,5 +1,6 @@
 package com.commercetools.sunrise.sessions.country;
 
+import com.commercetools.sunrise.sessions.CookieSessionStrategy;
 import com.commercetools.sunrise.sessions.DataFromResourceStoringOperations;
 import com.commercetools.sunrise.sessions.SessionStrategy;
 import com.neovisionaries.i18n.CountryCode;
@@ -16,7 +17,7 @@ import java.util.Optional;
  * Keeps the current country in session.
  */
 @Singleton
-public class DefaultCountryInSession extends DataFromResourceStoringOperations<CountryCode> implements CountryInSession {
+public final class DefaultCountryInSession extends DataFromResourceStoringOperations<CountryCode> implements CountryInSession {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CountryInSession.class);
 
@@ -24,7 +25,7 @@ public class DefaultCountryInSession extends DataFromResourceStoringOperations<C
     private final SessionStrategy session;
 
     @Inject
-    public DefaultCountryInSession(final SessionStrategy session, final Configuration configuration) {
+    DefaultCountryInSession(final CookieSessionStrategy session, final Configuration configuration) {
         this.countryCookieName = Optional.ofNullable(configuration.getString("session.country"))
                 .map(cookieName -> {
                     LOGGER.warn("session.country is deprecated, use sunrise.localization.countryCookieName instead");
@@ -34,25 +35,8 @@ public class DefaultCountryInSession extends DataFromResourceStoringOperations<C
     }
 
     @Override
-    protected final Logger getLogger() {
+    protected Logger getLogger() {
         return LOGGER;
-    }
-
-    /**
-     * @return cookie name to store the country
-     * @deprecated use {@link #getCountryCookieName()} instead
-     */
-    @Deprecated
-    protected final String getCountrySessionKey() {
-        return getCountryCookieName();
-    }
-
-    protected final String getCountryCookieName() {
-        return countryCookieName;
-    }
-
-    protected final SessionStrategy getSession() {
-        return session;
     }
 
     @Override

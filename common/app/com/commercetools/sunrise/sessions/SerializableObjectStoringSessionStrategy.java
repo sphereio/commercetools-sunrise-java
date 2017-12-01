@@ -13,7 +13,7 @@ import java.util.Optional;
  * Notice that cookies have a very limited space, so do not use this strategy to store a large amount of data.
  */
 @Singleton
-public final class SerializableObjectStoringSessionCookieStrategy extends SessionCookieStrategy implements ObjectStoringSessionStrategy {
+public final class SerializableObjectStoringSessionStrategy extends DefaultSessionStrategy implements ObjectStoringSessionStrategy {
 
     /**
      * {@inheritDoc}
