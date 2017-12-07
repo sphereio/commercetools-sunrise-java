@@ -125,7 +125,7 @@ public abstract class AbstractPaginationViewModelFactory extends ViewModelFactor
         if (pagedResult.isLast()) {
             return currentPage;
         } else if (pagedResult.getCount() > 0) {
-            final Double totalPages = Math.ceil(pagedResult.getTotal().doubleValue() / pagedResult.getCount().doubleValue());
+            final Double totalPages = Math.ceil(pagedResult.getTotal() / pagedResult.getCount().doubleValue());
             return totalPages.longValue();
         } else {
             return 0;
