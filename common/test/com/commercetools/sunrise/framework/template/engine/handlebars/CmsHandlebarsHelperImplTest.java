@@ -1,6 +1,7 @@
 package com.commercetools.sunrise.framework.template.engine.handlebars;
 
 import com.commercetools.sunrise.cms.CmsPage;
+import com.commercetools.sunrise.framework.i18n.MessagesResolver;
 import com.github.jknack.handlebars.Context;
 import com.github.jknack.handlebars.Options;
 import org.junit.Before;
@@ -13,7 +14,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.util.Map;
 import java.util.Optional;
 
-import static com.commercetools.sunrise.framework.template.engine.handlebars.CmsHandlebarsHelper.CMS_PAGE_IN_CONTEXT_KEY;
+import static com.commercetools.sunrise.framework.template.engine.handlebars.HandlebarsTemplateEngine.CMS_PAGE_IN_CONTEXT_KEY;
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.singletonMap;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -28,32 +29,33 @@ public class CmsHandlebarsHelperImplTest {
 
     @Mock
     private CmsPage fakeCmsPage;
+    @Mock
+    private MessagesResolver dummyMessagesResolver;
 
     @InjectMocks
-    private CmsHandlebarsHelperImpl cmsHandlebarsHelper;
+    private DefaultHandlebarsHelperSource helperSource;
 
     @Before
     public void setUp() throws Exception {
         when(fakeCmsPage.field(eq(MESSAGE_KEY))).thenReturn(Optional.of(MESSAGE_KEY_ANSWER));
-        when(fakeCmsPage.fieldOrEmpty(anyString())).thenCallRealMethod();
     }
 
     @Test
     public void returnsCmsContent() throws Exception {
-        assertThat(cmsHandlebarsHelper.apply(MESSAGE_KEY, optionsWithCmsPage())).isEqualTo(MESSAGE_KEY_ANSWER);
-        verify(fakeCmsPage).fieldOrEmpty(MESSAGE_KEY);
+        assertThat(helperSource.cms(MESSAGE_KEY, optionsWithCmsPage())).isEqualTo(MESSAGE_KEY_ANSWER);
+        verify(fakeCmsPage).field(MESSAGE_KEY);
     }
 
     @Test
     public void returnsEmptyOnUndefinedMessage() throws Exception {
-        assertThat(cmsHandlebarsHelper.apply("unknown", optionsWithCmsPage())).isEmpty();
-        verify(fakeCmsPage).fieldOrEmpty("unknown");
+        assertThat(helperSource.cms("unknown", optionsWithCmsPage())).isEmpty();
+        verify(fakeCmsPage).field("unknown");
     }
 
     @Test
     public void returnsEmptyOnMissingCmsPage() throws Exception {
-        assertThat(cmsHandlebarsHelper.apply(MESSAGE_KEY, optionsWithoutCmsPage())).isEmpty();
-        verify(fakeCmsPage, never()).fieldOrEmpty(MESSAGE_KEY);
+        assertThat(helperSource.cms(MESSAGE_KEY, optionsWithoutCmsPage())).isEmpty();
+        verify(fakeCmsPage, never()).field(MESSAGE_KEY);
     }
 
     private Options optionsWithCmsPage() {

@@ -1,5 +1,6 @@
 package com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch.categorytree.viewmodels;
 
+import com.commercetools.sunrise.framework.i18n.MessagesResolver;
 import com.commercetools.sunrise.framework.reverserouters.productcatalog.product.ProductReverseRouter;
 import com.commercetools.sunrise.framework.viewmodels.forms.FormSelectableOptionViewModel;
 import com.commercetools.sunrise.search.facetedsearch.viewmodels.FacetOptionViewModel;
@@ -11,22 +12,24 @@ import io.sphere.sdk.search.TermFacetResult;
 import io.sphere.sdk.search.TermStats;
 import org.junit.Test;
 import play.Application;
+import play.inject.guice.GuiceApplicationBuilder;
 import play.mvc.Http;
 import play.test.WithApplication;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Locale;
 import java.util.function.Consumer;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
-import static java.util.Locale.ENGLISH;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static play.test.Helpers.fakeRequest;
+import static play.test.Helpers.invokeWithContext;
 
 public class CategoryTreeFacetOptionViewModelFactoryTest extends WithApplication {
 
@@ -56,9 +59,9 @@ public class CategoryTreeFacetOptionViewModelFactoryTest extends WithApplication
 
     @Override
     protected Application provideApplication() {
-        final Application application = super.provideApplication();
-        Http.Context.current.set(new Http.Context(fakeRequest()));
-        return application;
+        return new GuiceApplicationBuilder()
+                .configure("play.i18n.langs", singletonList("en"))
+                .build();
     }
 
     @Test
@@ -139,9 +142,14 @@ public class CategoryTreeFacetOptionViewModelFactoryTest extends WithApplication
     }
 
     private void test(final Category category, final CategoryTree categoryTree, final List<TermStats> termStats, final Consumer<FacetOptionViewModel> test) {
-        final CategoryTreeFacetOptionViewModelFactory factory = new CategoryTreeFacetOptionViewModelFactory(ENGLISH, categoryTree, reverseRouter());
-        final TermFacetResult termFacetResult = TermFacetResult.of(0L, 0L, 0L, termStats);
-        test.accept(factory.create(termFacetResult, category, CAT_C));
+        invokeWithContext(fakeRequest(), () -> {
+            Http.Context.current().changeLang("en");
+            final MessagesResolver messagesResolver = app.injector().instanceOf(MessagesResolver.class);
+            final CategoryTreeFacetOptionViewModelFactory factory = new CategoryTreeFacetOptionViewModelFactory(messagesResolver, categoryTree, reverseRouter());
+            final TermFacetResult termFacetResult = TermFacetResult.of(0L, 0L, 0L, termStats);
+            test.accept(factory.create(termFacetResult, category, CAT_C));
+            return null;
+        });
     }
 
     private static Category category(final String id, @Nullable final String parentId, final String name) {
@@ -157,7 +165,7 @@ public class CategoryTreeFacetOptionViewModelFactoryTest extends WithApplication
         final ProductReverseRouter productReverseRouter = mock(ProductReverseRouter.class);
         when(productReverseRouter.productOverviewPageCall(any(Category.class)))
                 .then(invocation -> ((Category) invocation.getArgument(0)).getSlug()
-                        .find(ENGLISH)
+                        .find(Locale.ENGLISH)
                         .map(TestableCall::new));
         return productReverseRouter;
     }

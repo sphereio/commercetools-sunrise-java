@@ -7,7 +7,8 @@ import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.io.TemplateLoader;
 
 import java.util.List;
-import java.util.Locale;
+
+import static java.util.Arrays.asList;
 
 final class TestableHandlebarsTemplateEngine implements TemplateEngine {
 
@@ -23,19 +24,20 @@ final class TestableHandlebarsTemplateEngine implements TemplateEngine {
     }
 
     private TemplateEngine handlebarsTemplateEngine(final List<TemplateLoader> templateLoaders, final MessagesResolver messagesResolver) {
-        final Handlebars handlebars = handlebarsFactory(messagesResolver).create(templateLoaders);
-        return HandlebarsTemplateEngine.of(handlebars, handlebarsContextFactory());
+        final Handlebars handlebars = handlebars(templateLoaders, messagesResolver);
+        final HandlebarsValueResolvers handlebarsValueResolvers = valueResolvers(messagesResolver);
+        return new HandlebarsTemplateEngine(handlebars, handlebarsValueResolvers);
     }
 
-    private HandlebarsContextFactory handlebarsContextFactory() {
+    private HandlebarsValueResolvers valueResolvers(final MessagesResolver messagesResolver) {
         final PlayJavaFormResolver playJavaFormResolver = new PlayJavaFormResolver(msg -> msg);
-        final SunriseJavaBeanValueResolver sunriseJavaBeanValueResolver = new SunriseJavaBeanValueResolver(Locale.ENGLISH);
-        return new HandlebarsContextFactory(playJavaFormResolver, sunriseJavaBeanValueResolver);
+        final SunriseJavaBeanValueResolver sunriseJavaBeanValueResolver = new SunriseJavaBeanValueResolver(messagesResolver);
+        return () -> asList(playJavaFormResolver, sunriseJavaBeanValueResolver);
     }
 
-    private static HandlebarsProvider handlebarsFactory(final MessagesResolver messagesResolver) {
-        final I18nHandlebarsHelper i18nHandlebarsHelper = new I18nHandlebarsHelperImpl(messagesResolver);
-        final CmsHandlebarsHelper cmsHandlebarsHelper = new CmsHandlebarsHelperImpl();
-        return new HandlebarsProvider(i18nHandlebarsHelper, cmsHandlebarsHelper);
+    private static Handlebars handlebars(final List<TemplateLoader> templateLoaders, final MessagesResolver messagesResolver) {
+        final DefaultHandlebarsHelperSource helperSource = new DefaultHandlebarsHelperSource(messagesResolver);
+        final HandlebarsSettings settings = () -> templateLoaders;
+        return new HandlebarsProvider(settings, helperSource).get();
     }
 }

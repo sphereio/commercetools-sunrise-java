@@ -31,7 +31,7 @@ public class I18nHandlebarsHelperImplTest {
     private MessagesResolver fakeMessagesResolver;
 
     @InjectMocks
-    private I18nHandlebarsHelperImpl i18nHandlebarsHelper;
+    private DefaultHandlebarsHelperSource helperSource;
 
     @Before
     public void setUp() throws Exception {
@@ -41,19 +41,19 @@ public class I18nHandlebarsHelperImplTest {
 
     @Test
     public void translatesMessage() throws Exception {
-        assertThat(i18nHandlebarsHelper.apply(MESSAGE_KEY, optionsWithoutArgs())).isEqualTo(MESSAGE_KEY_ANSWER);
+        assertThat(helperSource.i18n(MESSAGE_KEY, optionsWithoutArgs())).isEqualTo(MESSAGE_KEY_ANSWER);
         verify(fakeMessagesResolver).getOrEmpty(MESSAGE_KEY, emptyMap());
     }
 
     @Test
     public void returnsEmptyOnUndefinedMessage() throws Exception {
-        assertThat(i18nHandlebarsHelper.apply("unknown", optionsWithoutArgs())).isEmpty();
+        assertThat(helperSource.i18n("unknown", optionsWithoutArgs())).isEmpty();
         verify(fakeMessagesResolver).getOrEmpty("unknown", emptyMap());
     }
 
     @Test
     public void translatesMessageWithArgs() throws Exception {
-        assertThat(i18nHandlebarsHelper.apply(MESSAGE_KEY, optionsWithArgs())).isEqualTo(MESSAGE_KEY_ANSWER);
+        assertThat(helperSource.i18n(MESSAGE_KEY, optionsWithArgs())).isEqualTo(MESSAGE_KEY_ANSWER);
         verify(fakeMessagesResolver).getOrEmpty(MESSAGE_KEY, ARGS);
     }
 
