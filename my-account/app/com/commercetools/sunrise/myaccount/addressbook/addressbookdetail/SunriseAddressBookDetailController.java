@@ -37,7 +37,7 @@ public abstract class SunriseAddressBookDetailController extends SunriseContentC
 
     @EnableHooks
     @SunriseRoute(AddressBookReverseRouter.ADDRESS_BOOK_DETAIL_PAGE)
-    public CompletionStage<Result> show(final String languageTag) {
+    public CompletionStage<Result> show() {
         return requireCustomer(this::showPage);
     }
 

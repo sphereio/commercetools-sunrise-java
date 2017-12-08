@@ -47,7 +47,7 @@ public abstract class SunriseProductDetailController extends SunriseContentContr
 
     @EnableHooks
     @SunriseRoute(ProductReverseRouter.PRODUCT_DETAIL_PAGE)
-    public CompletionStage<Result> show(final String languageTag, final String productIdentifier, final String productVariantIdentifier) {
+    public CompletionStage<Result> show(final String productIdentifier, final String productVariantIdentifier) {
         return requireProduct(productIdentifier, product ->
                 requireProductVariant(product, productVariantIdentifier, variant ->
                         showPage(ProductWithVariant.of(product, variant))));

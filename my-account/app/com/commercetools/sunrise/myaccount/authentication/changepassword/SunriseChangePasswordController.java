@@ -42,13 +42,13 @@ public abstract class SunriseChangePasswordController extends SunriseContentForm
 
     @EnableHooks
     @SunriseRoute(ChangePasswordReverseRouter.CHANGE_PASSWORD_PAGE)
-    public CompletionStage<Result> show(final String languageTag) {
+    public CompletionStage<Result> show() {
         return showFormPage(null, formData);
     }
 
     @EnableHooks
     @SunriseRoute(ChangePasswordReverseRouter.CHANGE_PASSWORD_PROCESS)
-    public CompletionStage<Result> process(final String languageTag) {
+    public CompletionStage<Result> process() {
         return requireCustomer(this::processForm);
     }
 

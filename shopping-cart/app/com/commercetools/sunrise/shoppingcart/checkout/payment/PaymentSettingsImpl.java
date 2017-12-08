@@ -17,6 +17,7 @@ import java.util.Optional;
 import java.util.concurrent.CompletionStage;
 
 import static java.util.Collections.emptyList;
+import static java.util.Collections.emptyMap;
 import static java.util.concurrent.CompletableFuture.completedFuture;
 import static java.util.stream.Collectors.toList;
 
@@ -56,7 +57,7 @@ final class PaymentSettingsImpl implements PaymentSettings {
                                                       final Langs langs) {
         return langs.availables().stream()
                 .map(Lang::toLocale)
-                .map(locale -> LocalizedStringEntry.of(locale, messagesResolver.get(locale, messageKey).orElse(messageKey)))
+                .map(locale -> LocalizedStringEntry.of(locale, messagesResolver.get(locale, messageKey, emptyMap()).orElse(messageKey)))
                 .collect(LocalizedString.streamCollector());
     }
 }

@@ -2,15 +2,17 @@ package com.commercetools.sunrise.framework.template.engine.handlebars;
 
 import com.commercetools.sunrise.framework.template.engine.TemplateContext;
 import com.github.jknack.handlebars.Context;
-import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.ValueResolver;
 import com.github.jknack.handlebars.context.MapValueResolver;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.util.List;
 
+import static com.commercetools.sunrise.framework.template.engine.handlebars.HandlebarsTemplateEngine.CMS_PAGE_IN_CONTEXT_KEY;
 import static java.util.Arrays.asList;
 
+@Singleton
 public class HandlebarsContextFactory {
 
     private final PlayJavaFormResolver playJavaFormResolver;
@@ -23,7 +25,7 @@ public class HandlebarsContextFactory {
         this.sunriseJavaBeanValueResolver = sunriseJavaBeanValueResolver;
     }
 
-    public Context create(final Handlebars handlebars, final String templateName, final TemplateContext templateContext) {
+    public Context create(final String templateName, final TemplateContext templateContext) {
         final Context.Builder contextBuilder = Context.newBuilder(templateContext.pageData());
         final Context context = buildContextBuilder(contextBuilder, templateContext).build();
         return contextWithCmsPage(context, templateContext);
@@ -40,7 +42,7 @@ public class HandlebarsContextFactory {
 
     protected final Context contextWithCmsPage(final Context context, final TemplateContext templateContext) {
         return templateContext.cmsPage()
-                .map(cmsPage -> context.data(CmsHandlebarsHelper.CMS_PAGE_IN_CONTEXT_KEY, cmsPage))
+                .map(cmsPage -> context.data(CMS_PAGE_IN_CONTEXT_KEY, cmsPage))
                 .orElse(context);
     }
 }

@@ -49,7 +49,7 @@ public class SunriseMessagesApi extends MessagesApi {
         return (Map<Object, Object>) arg;
     }
 
-    private static List<Object> convertToListOfScalaTuples(final Map<?, ?> map) {
+    private static List<Object> convertToListOfScalaTuples(final Map<Object, Object> map) {
         return map.entrySet().stream()
                 .map(entry -> new Tuple2<>(entry.getKey(), entry.getValue()))
                 .collect(toList());

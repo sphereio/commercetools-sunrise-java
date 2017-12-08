@@ -35,7 +35,7 @@ public abstract class SunriseCartContentController extends SunriseContentControl
 
     @EnableHooks
     @SunriseRoute(CartReverseRouter.CART_DETAIL_PAGE)
-    public CompletionStage<Result> show(final String languageTag) {
+    public CompletionStage<Result> show() {
         return requireCart(this::showPage);
     }
 

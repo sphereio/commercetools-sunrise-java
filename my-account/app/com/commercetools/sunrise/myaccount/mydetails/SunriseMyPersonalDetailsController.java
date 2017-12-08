@@ -49,13 +49,13 @@ public abstract class SunriseMyPersonalDetailsController extends SunriseContentF
 
     @EnableHooks
     @SunriseRoute(MyPersonalDetailsReverseRouter.MY_PERSONAL_DETAILS_PAGE)
-    public CompletionStage<Result> show(final String languageTag) {
+    public CompletionStage<Result> show() {
         return requireCustomer(customer -> showFormPage(customer, formData));
     }
 
     @EnableHooks
     @SunriseRoute(MyPersonalDetailsReverseRouter.MY_PERSONAL_DETAILS_PROCESS)
-    public CompletionStage<Result> process(final String languageTag) {
+    public CompletionStage<Result> process() {
         return requireCustomer(this::processForm);
     }
 

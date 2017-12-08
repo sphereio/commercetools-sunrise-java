@@ -27,7 +27,7 @@ public abstract class SunriseHomeController extends SunriseContentController imp
 
     @EnableHooks
     @SunriseRoute(HomeReverseRouter.HOME_PAGE)
-    public CompletionStage<Result> show(final String languageTag) {
+    public CompletionStage<Result> show() {
         return showPage(null);
     }
 

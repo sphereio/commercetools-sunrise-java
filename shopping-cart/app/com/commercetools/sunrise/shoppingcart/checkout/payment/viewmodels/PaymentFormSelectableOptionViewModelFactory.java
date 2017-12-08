@@ -1,26 +1,26 @@
 package com.commercetools.sunrise.shoppingcart.checkout.payment.viewmodels;
 
-import com.commercetools.sunrise.framework.injection.RequestScoped;
+import com.commercetools.sunrise.framework.i18n.MessagesResolver;
 import com.commercetools.sunrise.framework.viewmodels.forms.SelectableViewModelFactory;
 import io.sphere.sdk.payments.PaymentMethodInfo;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
-import java.util.Locale;
+import javax.inject.Singleton;
 import java.util.Optional;
 
-@RequestScoped
+@Singleton
 public class PaymentFormSelectableOptionViewModelFactory extends SelectableViewModelFactory<PaymentFormSelectableOptionViewModel, PaymentMethodInfo, String> {
 
-    private final Locale locale;
+    private final MessagesResolver messagesResolver;
 
     @Inject
-    public PaymentFormSelectableOptionViewModelFactory(final Locale locale) {
-        this.locale = locale;
+    public PaymentFormSelectableOptionViewModelFactory(final MessagesResolver messagesResolver) {
+        this.messagesResolver = messagesResolver;
     }
 
-    protected final Locale getLocale() {
-        return locale;
+    protected final MessagesResolver getMessagesResolver() {
+        return messagesResolver;
     }
 
     @Override
@@ -42,7 +42,7 @@ public class PaymentFormSelectableOptionViewModelFactory extends SelectableViewM
 
     protected void fillLabel(final PaymentFormSelectableOptionViewModel viewModel, final PaymentMethodInfo option, @Nullable final String selectedValue) {
         final String label = Optional.ofNullable(option.getName())
-                .flatMap(name -> name.find(locale))
+                .flatMap(messagesResolver::get)
                 .orElseGet(option::getMethod);
         viewModel.setLabel(label);
     }

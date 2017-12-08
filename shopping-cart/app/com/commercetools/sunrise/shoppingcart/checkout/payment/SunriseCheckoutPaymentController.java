@@ -61,7 +61,7 @@ public abstract class SunriseCheckoutPaymentController extends SunriseContentFor
 
     @EnableHooks
     @SunriseRoute(CheckoutReverseRouter.CHECKOUT_PAYMENT_PAGE)
-    public CompletionStage<Result> show(final String languageTag) {
+    public CompletionStage<Result> show() {
         return requireNonEmptyCart(cart ->
                 findPaymentMethods(cart, paymentMethods ->
                         showFormPage(PaymentMethodsWithCart.of(paymentMethods, cart), formData)));
@@ -69,7 +69,7 @@ public abstract class SunriseCheckoutPaymentController extends SunriseContentFor
 
     @EnableHooks
     @SunriseRoute(CheckoutReverseRouter.CHECKOUT_PAYMENT_PROCESS)
-    public CompletionStage<Result> process(final String languageTag) {
+    public CompletionStage<Result> process() {
         return requireNonEmptyCart(cart ->
                 findPaymentMethods(cart, paymentMethods ->
                         processForm(PaymentMethodsWithCart.of(paymentMethods, cart))));

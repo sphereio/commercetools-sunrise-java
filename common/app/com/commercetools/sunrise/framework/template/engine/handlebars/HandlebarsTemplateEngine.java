@@ -10,15 +10,19 @@ import com.github.jknack.handlebars.Template;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.inject.Inject;
 import java.io.IOException;
 
 public final class HandlebarsTemplateEngine implements TemplateEngine {
 
+    public static final String CMS_PAGE_IN_CONTEXT_KEY = "context-cms-page";
     private static final Logger LOGGER = LoggerFactory.getLogger(TemplateEngine.class);
+
     private final Handlebars handlebars;
     private final HandlebarsContextFactory contextFactory;
 
-    private HandlebarsTemplateEngine(final Handlebars handlebars, final HandlebarsContextFactory contextFactory) {
+    @Inject
+    HandlebarsTemplateEngine(final Handlebars handlebars, final HandlebarsContextFactory contextFactory) {
         this.handlebars = handlebars;
         this.contextFactory = contextFactory;
     }
@@ -26,7 +30,7 @@ public final class HandlebarsTemplateEngine implements TemplateEngine {
     @Override
     public String render(final String templateName, final TemplateContext templateContext) {
         final Template template = compileTemplate(templateName);
-        final Context context = contextFactory.create(handlebars, templateName, templateContext);
+        final Context context = contextFactory.create(templateName, templateContext);
         try {
             LOGGER.debug("Rendering template " + templateName);
             return template.apply(context);

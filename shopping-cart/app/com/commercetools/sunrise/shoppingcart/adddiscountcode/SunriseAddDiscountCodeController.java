@@ -52,7 +52,7 @@ public abstract class SunriseAddDiscountCodeController extends SunriseContentFor
 
     @EnableHooks
     @SunriseRoute(CartReverseRouter.ADD_DISCOUNT_CODE_PROCESS)
-    public CompletionStage<Result> process(final String languageTag) {
+    public CompletionStage<Result> process() {
         return requireNonEmptyCart(this::processForm);
     }
 
@@ -66,8 +66,7 @@ public abstract class SunriseAddDiscountCodeController extends SunriseContentFor
 
     @Override
     public PageContent createPageContent(final Cart cart, final Form<? extends AddDiscountCodeFormData> form) {
-        final CartPageContent cartPageContent = pageContentFactory.create(cart, form);
-        return cartPageContent;
+        return pageContentFactory.create(cart, form);
     }
 
     @Override

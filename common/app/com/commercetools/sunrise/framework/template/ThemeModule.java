@@ -1,20 +1,20 @@
 package com.commercetools.sunrise.framework.template;
 
-import com.commercetools.sunrise.framework.template.engine.HandlebarsTemplateEngineProvider;
-import com.commercetools.sunrise.framework.template.engine.TemplateEngine;
+import com.commercetools.sunrise.framework.template.engine.handlebars.HandlebarsProvider;
+import com.github.jknack.handlebars.Handlebars;
 import com.google.inject.AbstractModule;
 
 import javax.inject.Singleton;
 
 /**
- * Module that allows to inject theme related classes, such as CMS, i18n Resolver and Template Engine.
+ * Module that allows to inject the Template Engine related classes.
  */
 public final class ThemeModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        bind(TemplateEngine.class)
-                .toProvider(HandlebarsTemplateEngineProvider.class)
+        bind(Handlebars.class)
+                .toProvider(HandlebarsProvider.class)
                 .in(Singleton.class);
     }
 }

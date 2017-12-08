@@ -49,13 +49,13 @@ public abstract class SunriseCheckoutConfirmationController extends SunriseConte
 
     @EnableHooks
     @SunriseRoute(CheckoutReverseRouter.CHECKOUT_CONFIRMATION_PAGE)
-    public CompletionStage<Result> show(final String languageTag) {
+    public CompletionStage<Result> show() {
         return requireNonEmptyCart(cart -> showFormPage(cart, formData));
     }
 
     @EnableHooks
     @SunriseRoute(CheckoutReverseRouter.CHECKOUT_CONFIRMATION_PROCESS)
-    public CompletionStage<Result> process(final String languageTag) {
+    public CompletionStage<Result> process() {
         return requireNonEmptyCart(this::processForm);
     }
 

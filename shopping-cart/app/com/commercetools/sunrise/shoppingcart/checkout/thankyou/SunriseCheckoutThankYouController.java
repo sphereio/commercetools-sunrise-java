@@ -37,7 +37,7 @@ public abstract class SunriseCheckoutThankYouController extends SunriseContentCo
 
     @EnableHooks
     @SunriseRoute(CheckoutReverseRouter.CHECKOUT_THANK_YOU_PAGE)
-    public CompletionStage<Result> show(final String languageTag) {
+    public CompletionStage<Result> show() {
         return requireOrderCreated(this::showPage);
     }
 

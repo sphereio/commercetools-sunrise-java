@@ -75,7 +75,7 @@ public class HandlebarsTemplateEngineI18nTest extends WithApplication {
         final String html = invokeWithContext(fakeRequest(), () -> {
             Http.Context.current().changeLang(locale.toLanguageTag());
             final TemplateContext templateContext = new TemplateContext(new PageData(), null);
-            final Handlebars handlebars = app.injector().instanceOf(HandlebarsFactory.class).create(TEMPLATE_LOADERS);
+            final Handlebars handlebars = app.injector().instanceOf(HandlebarsProvider.class).create(TEMPLATE_LOADERS);
             final HandlebarsContextFactory handlebarsContextFactory = app.injector().instanceOf(HandlebarsContextFactory.class);
             final TemplateEngine templateEngine = HandlebarsTemplateEngine.of(handlebars, handlebarsContextFactory);
             return templateEngine.render(templateName, templateContext);

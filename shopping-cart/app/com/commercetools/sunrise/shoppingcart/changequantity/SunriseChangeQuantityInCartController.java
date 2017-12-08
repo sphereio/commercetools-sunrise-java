@@ -48,7 +48,7 @@ public abstract class SunriseChangeQuantityInCartController extends SunriseConte
 
     @EnableHooks
     @SunriseRoute(CartReverseRouter.CHANGE_LINE_ITEM_QUANTITY_PROCESS)
-    public CompletionStage<Result> process(final String languageTag) {
+    public CompletionStage<Result> process() {
         return requireNonEmptyCart(this::processForm);
     }
 

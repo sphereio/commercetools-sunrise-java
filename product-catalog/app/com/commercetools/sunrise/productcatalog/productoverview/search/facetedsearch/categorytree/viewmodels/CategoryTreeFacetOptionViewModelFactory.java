@@ -1,6 +1,7 @@
 package com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch.categorytree.viewmodels;
 
 import com.commercetools.sunrise.ctp.categories.NavigationCategoryTree;
+import com.commercetools.sunrise.framework.i18n.MessagesResolver;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
 import com.commercetools.sunrise.framework.reverserouters.productcatalog.product.ProductReverseRouter;
 import com.commercetools.sunrise.search.facetedsearch.viewmodels.AbstractFacetOptionViewModelFactory;
@@ -21,21 +22,22 @@ import static com.commercetools.sunrise.framework.viewmodels.forms.QueryStringUt
 @RequestScoped
 public class CategoryTreeFacetOptionViewModelFactory extends AbstractFacetOptionViewModelFactory<TermFacetResult, Category, Category> {
 
-    private final Locale locale;
+    private final MessagesResolver messagesResolver;
     private final CategoryTree categoryTree;
     private final ProductReverseRouter productReverseRouter;
     private static final Set<String> IGNORED_PARAMS = Collections.singleton("page");
 
     @Inject
-    public CategoryTreeFacetOptionViewModelFactory(final Locale locale, @NavigationCategoryTree final CategoryTree categoryTree,
+    public CategoryTreeFacetOptionViewModelFactory(final MessagesResolver messagesResolver,
+                                                   @NavigationCategoryTree final CategoryTree categoryTree,
                                                    final ProductReverseRouter productReverseRouter) {
-        this.locale = locale;
+        this.messagesResolver = messagesResolver;
         this.categoryTree = categoryTree;
         this.productReverseRouter = productReverseRouter;
     }
 
-    protected final Locale getLocale() {
-        return locale;
+    protected final MessagesResolver getMessagesResolver() {
+        return messagesResolver;
     }
 
     protected final CategoryTree getCategoryTree() {
@@ -59,14 +61,13 @@ public class CategoryTreeFacetOptionViewModelFactory extends AbstractFacetOption
 
     @Override
     protected void fillLabel(final FacetOptionViewModel viewModel, final TermFacetResult stats, final Category category, @Nullable final Category selectedValue) {
-        viewModel.setLabel(category.getName().find(locale).orElseGet(category::getId));
+        viewModel.setLabel(messagesResolver.get(category.getName()).orElseGet(category::getId));
     }
 
     @Override
     protected void fillValue(final FacetOptionViewModel viewModel, final TermFacetResult stats, final Category category, @Nullable final Category selectedValue) {
-        productReverseRouter.productOverviewPageCall(category).ifPresent(call -> {
-            viewModel.setValue(buildUri(call.url(), extractQueryString(Http.Context.current().request(), IGNORED_PARAMS)));
-        });
+        productReverseRouter.productOverviewPageCall(category).ifPresent(call ->
+                viewModel.setValue(buildUri(call.url(), extractQueryString(Http.Context.current().request(), IGNORED_PARAMS))));
     }
 
     @Override

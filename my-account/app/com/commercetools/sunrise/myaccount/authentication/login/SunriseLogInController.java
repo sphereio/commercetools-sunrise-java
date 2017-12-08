@@ -42,13 +42,13 @@ public abstract class SunriseLogInController extends SunriseContentFormControlle
 
     @EnableHooks
     @SunriseRoute(AuthenticationReverseRouter.LOG_IN_PAGE)
-    public CompletionStage<Result> show(final String languageTag) {
+    public CompletionStage<Result> show() {
         return showFormPage(null, formData);
     }
 
     @EnableHooks
     @SunriseRoute(AuthenticationReverseRouter.LOG_IN_PROCESS)
-    public CompletionStage<Result> process(final String languageTag) {
+    public CompletionStage<Result> process() {
         return processForm(null);
     }
 

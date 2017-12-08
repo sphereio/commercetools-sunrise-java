@@ -46,13 +46,13 @@ public abstract class SunriseRecoverPasswordController extends SunriseContentFor
 
     @EnableHooks
     @SunriseRoute(RecoverPasswordReverseRouter.REQUEST_RECOVERY_EMAIL_PAGE)
-    public CompletionStage<Result> show(final String languageTag) {
+    public CompletionStage<Result> show() {
         return showFormPage(null, formData);
     }
 
     @EnableHooks
     @SunriseRoute(RecoverPasswordReverseRouter.REQUEST_RECOVERY_EMAIL_PROCESS)
-    public CompletionStage<Result> process(final String languageTag) {
+    public CompletionStage<Result> process() {
         return processForm(null);
     }
 

@@ -43,7 +43,7 @@ public abstract class SunriseMyOrderListController extends SunriseContentControl
 
     @EnableHooks
     @SunriseRoute(MyOrdersReverseRouter.MY_ORDER_LIST_PAGE)
-    public CompletionStage<Result> show(final String languageTag) {
+    public CompletionStage<Result> show() {
         return requireCustomer(customer ->
                 findMyOrderList(customer, orders ->
                         showPage(OrderListWithCustomer.of(orders, customer))));

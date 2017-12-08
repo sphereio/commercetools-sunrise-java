@@ -57,7 +57,7 @@ public abstract class SunriseAddToCartController extends SunriseContentFormContr
 
     @EnableHooks
     @SunriseRoute(CartReverseRouter.ADD_LINE_ITEM_PROCESS)
-    public CompletionStage<Result> process(final String languageTag) {
+    public CompletionStage<Result> process() {
         return requireCart(this::processForm);
     }
 

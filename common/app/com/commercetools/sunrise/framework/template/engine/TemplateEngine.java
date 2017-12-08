@@ -1,8 +1,12 @@
 package com.commercetools.sunrise.framework.template.engine;
 
+import com.commercetools.sunrise.framework.template.engine.handlebars.HandlebarsTemplateEngine;
+import com.google.inject.ImplementedBy;
+
 /**
  * Service that provides HTML pages, using some sort of template engine.
  */
+@ImplementedBy(HandlebarsTemplateEngine.class)
 @FunctionalInterface
 public interface TemplateEngine {
 

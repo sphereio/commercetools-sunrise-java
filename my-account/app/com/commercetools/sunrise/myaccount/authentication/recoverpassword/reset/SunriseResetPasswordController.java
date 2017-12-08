@@ -44,13 +44,13 @@ public abstract class SunriseResetPasswordController extends SunriseContentFormC
 
     @EnableHooks
     @SunriseRoute(RecoverPasswordReverseRouter.RESET_PASSWORD_PAGE)
-    public CompletionStage<Result> show(final String languageTag, final String resetToken) {
+    public CompletionStage<Result> show(final String resetToken) {
         return showFormPage(resetToken, formData);
     }
 
     @EnableHooks
     @SunriseRoute(RecoverPasswordReverseRouter.RESET_PASSWORD_PROCESS)
-    public CompletionStage<Result> process(final String languageTag, final String resetToken) {
+    public CompletionStage<Result> process(final String resetToken) {
         return processForm(resetToken);
     }
 

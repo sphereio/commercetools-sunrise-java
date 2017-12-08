@@ -60,7 +60,7 @@ public abstract class SunriseRemoveAddressController extends SunriseContentFormC
 
     @EnableHooks
     @SunriseRoute(AddressBookReverseRouter.REMOVE_ADDRESS_PROCESS)
-    public CompletionStage<Result> process(final String languageTag, final String addressIdentifier) {
+    public CompletionStage<Result> process(final String addressIdentifier) {
         return requireCustomer(customer ->
                 requireAddress(customer, addressIdentifier,
                         address -> processForm(AddressWithCustomer.of(address, customer))));

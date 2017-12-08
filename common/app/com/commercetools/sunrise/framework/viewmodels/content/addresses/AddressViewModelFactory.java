@@ -1,14 +1,14 @@
 package com.commercetools.sunrise.framework.viewmodels.content.addresses;
 
 import com.commercetools.sunrise.framework.i18n.MessagesResolver;
-import com.commercetools.sunrise.framework.injection.RequestScoped;
 import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
 import io.sphere.sdk.models.Address;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
-@RequestScoped
+@Singleton
 public class AddressViewModelFactory extends SimpleViewModelFactory<AddressViewModel, Address> {
 
     private final MessagesResolver messagesResolver;

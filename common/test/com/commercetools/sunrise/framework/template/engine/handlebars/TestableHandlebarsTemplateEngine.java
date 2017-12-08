@@ -33,9 +33,9 @@ final class TestableHandlebarsTemplateEngine implements TemplateEngine {
         return new HandlebarsContextFactory(playJavaFormResolver, sunriseJavaBeanValueResolver);
     }
 
-    private static HandlebarsFactory handlebarsFactory(final MessagesResolver messagesResolver) {
+    private static HandlebarsProvider handlebarsFactory(final MessagesResolver messagesResolver) {
         final I18nHandlebarsHelper i18nHandlebarsHelper = new I18nHandlebarsHelperImpl(messagesResolver);
         final CmsHandlebarsHelper cmsHandlebarsHelper = new CmsHandlebarsHelperImpl();
-        return new HandlebarsFactory(i18nHandlebarsHelper, cmsHandlebarsHelper);
+        return new HandlebarsProvider(i18nHandlebarsHelper, cmsHandlebarsHelper);
     }
 }

@@ -1,7 +1,6 @@
 package com.commercetools.sunrise.framework.template.engine.handlebars;
 
 import com.commercetools.sunrise.framework.viewmodels.formatters.ErrorFormatter;
-import com.commercetools.sunrise.framework.injection.RequestScoped;
 import com.commercetools.sunrise.framework.viewmodels.forms.ErrorViewModel;
 import com.commercetools.sunrise.framework.viewmodels.forms.ErrorsViewModel;
 import com.github.jknack.handlebars.ValueResolver;
@@ -11,6 +10,7 @@ import play.data.validation.ValidationError;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.util.*;
 
 import static org.apache.commons.lang3.ObjectUtils.firstNonNull;
@@ -18,7 +18,7 @@ import static org.apache.commons.lang3.ObjectUtils.firstNonNull;
 /**
  * Resolves the values form a {@link Form} instance.
  */
-@RequestScoped
+@Singleton
 public final class PlayJavaFormResolver implements ValueResolver {
 
     private final ErrorFormatter errorFormatter;

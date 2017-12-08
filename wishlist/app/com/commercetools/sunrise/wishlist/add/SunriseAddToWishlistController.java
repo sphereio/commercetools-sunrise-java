@@ -55,7 +55,7 @@ public abstract class SunriseAddToWishlistController extends SunriseContentFormC
 
     @EnableHooks
     @SunriseRoute(WishlistReverseRouter.ADD_TO_WISHLIST_PROCESS)
-    public CompletionStage<Result> process(final String languageTag) {
+    public CompletionStage<Result> process() {
         return requireWishlist(this::processForm);
     }
 

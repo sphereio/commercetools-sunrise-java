@@ -1,6 +1,7 @@
 package com.commercetools.sunrise.framework.i18n;
 
 import com.google.inject.ImplementedBy;
+import io.sphere.sdk.models.LocalizedString;
 
 import java.util.Locale;
 import java.util.Map;
@@ -17,6 +18,14 @@ public interface MessagesResolver {
     Locale currentLanguage();
 
     /**
+     * Resolves a {@link LocalizedString} for the given locale.
+     * @param locale the locale used to select the translation of the localized string
+     * @param localizedString string with multiple translations
+     * @return the resolved message, or absent if it could not be resolved
+     */
+    Optional<String> get(final Locale locale, final LocalizedString localizedString);
+
+    /**
      * Resolves i18n message for the given locale.
      * @param locale the locale used to translate the message
      * @param messageKey identifier of the i18n message
@@ -26,13 +35,12 @@ public interface MessagesResolver {
     Optional<String> get(final Locale locale, final String messageKey, final Map<String, Object> args);
 
     /**
-     * Resolves i18n message for the given locale.
-     * @param locale the locale used to translate the message
-     * @param messageKey identifier of the i18n message
-     * @return the resolved message, or absent if it could not be found
+     * Resolves a {@link LocalizedString} for the current language.
+     * @param localizedString string with multiple translations
+     * @return the resolved message, or absent if it could not be resolved
      */
-    default Optional<String> get(final Locale locale, final String messageKey) {
-        return get(locale, messageKey, emptyMap());
+    default Optional<String> get(final LocalizedString localizedString) {
+        return get(currentLanguage(), localizedString);
     }
 
     /**

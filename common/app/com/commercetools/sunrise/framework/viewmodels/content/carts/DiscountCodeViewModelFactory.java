@@ -1,25 +1,25 @@
 package com.commercetools.sunrise.framework.viewmodels.content.carts;
 
-import com.commercetools.sunrise.framework.injection.RequestScoped;
+import com.commercetools.sunrise.framework.i18n.MessagesResolver;
 import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
 import com.google.inject.Inject;
 import io.sphere.sdk.discountcodes.DiscountCode;
 
-import java.util.Locale;
+import javax.inject.Singleton;
 import java.util.Optional;
 
-@RequestScoped
+@Singleton
 public class DiscountCodeViewModelFactory extends SimpleViewModelFactory<DiscountCodeViewModel, DiscountCode> {
 
-    private final Locale locale;
+    private final MessagesResolver messagesResolver;
 
     @Inject
-    public DiscountCodeViewModelFactory(final Locale locale) {
-        this.locale = locale;
+    DiscountCodeViewModelFactory(final MessagesResolver messagesResolver) {
+        this.messagesResolver = messagesResolver;
     }
 
-    protected final Locale getLocale() {
-        return locale;
+    protected final MessagesResolver getMessagesResolver() {
+        return messagesResolver;
     }
 
     @Override
@@ -40,7 +40,7 @@ public class DiscountCodeViewModelFactory extends SimpleViewModelFactory<Discoun
 
     protected void fillName(final DiscountCodeViewModel viewModel, final DiscountCode discountCode) {
         final String displayName = Optional.ofNullable(discountCode.getName())
-                .flatMap(name -> name.find(locale))
+                .flatMap(messagesResolver::get)
                 .orElseGet(discountCode::getCode);
         viewModel.setName(displayName);
     }

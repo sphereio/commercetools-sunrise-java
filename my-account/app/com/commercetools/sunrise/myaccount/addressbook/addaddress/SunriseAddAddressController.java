@@ -55,13 +55,13 @@ public abstract class SunriseAddAddressController extends SunriseContentFormCont
 
     @EnableHooks
     @SunriseRoute(AddressBookReverseRouter.ADD_ADDRESS_PAGE)
-    public CompletionStage<Result> show(final String languageTag) {
+    public CompletionStage<Result> show() {
         return requireCustomer(customer -> showFormPage(customer, formData));
     }
 
     @EnableHooks
     @SunriseRoute(AddressBookReverseRouter.ADD_ADDRESS_PROCESS)
-    public CompletionStage<Result> process(final String languageTag) {
+    public CompletionStage<Result> process() {
         return requireCustomer(this::processForm);
     }
 

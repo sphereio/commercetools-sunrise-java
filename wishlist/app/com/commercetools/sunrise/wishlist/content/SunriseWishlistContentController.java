@@ -40,7 +40,7 @@ public abstract class SunriseWishlistContentController extends SunriseContentCon
 
     @EnableHooks
     @SunriseRoute(WishlistReverseRouter.WISHLIST_PAGE)
-    public CompletionStage<Result> show(final String languageTag) {
+    public CompletionStage<Result> show() {
         return requireWishlist(this::showPage);
     }
 

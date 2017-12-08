@@ -50,7 +50,7 @@ public abstract class SunriseRemoveFromWishlistController extends SunriseContent
 
     @EnableHooks
     @SunriseRoute(WishlistReverseRouter.REMOVE_FROM_WISHLIST_PROCESS)
-    public CompletionStage<Result> process(final String languageTag) {
+    public CompletionStage<Result> process() {
         return requireWishlist(this::processForm);
     }
 

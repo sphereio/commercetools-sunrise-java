@@ -49,13 +49,13 @@ public abstract class SunriseCheckoutAddressController extends SunriseContentFor
 
     @EnableHooks
     @SunriseRoute(CheckoutReverseRouter.CHECKOUT_ADDRESS_PAGE)
-    public CompletionStage<Result> show(final String languageTag) {
+    public CompletionStage<Result> show() {
         return requireNonEmptyCart(cart -> showFormPage(cart, formData));
     }
 
     @EnableHooks
     @SunriseRoute(CheckoutReverseRouter.CHECKOUT_ADDRESS_PROCESS)
-    public CompletionStage<Result> process(final String languageTag) {
+    public CompletionStage<Result> process() {
         return requireNonEmptyCart(this::processForm);
     }
 

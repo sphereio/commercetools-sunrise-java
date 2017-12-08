@@ -51,7 +51,7 @@ public class HandlebarsTemplateEngineCmsTest extends WithApplication {
 
     private void testTemplate(final String templateName, final Consumer<String> test) {
         final TemplateContext templateContext = new TemplateContext(new PageData(), cmsPageThatReturnsSomething);
-        final Handlebars handlebars = app.injector().instanceOf(HandlebarsFactory.class).create(TEMPLATE_LOADERS);
+        final Handlebars handlebars = app.injector().instanceOf(HandlebarsProvider.class).create(TEMPLATE_LOADERS);
         final HandlebarsContextFactory handlebarsContextFactory = app.injector().instanceOf(HandlebarsContextFactory.class);
         final TemplateEngine templateEngine = HandlebarsTemplateEngine.of(handlebars, handlebarsContextFactory);
         final String html = templateEngine.render(templateName, templateContext);

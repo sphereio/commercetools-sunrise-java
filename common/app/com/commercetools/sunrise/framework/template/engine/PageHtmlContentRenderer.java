@@ -55,8 +55,7 @@ final class PageHtmlContentRenderer extends AbstractHtmlContentRenderer implemen
     private static void logFinalPageData(final PageData pageData) {
         if (PAGE_DATA_LOGGER_AS_JSON.isDebugEnabled()) {
             try {
-                final ObjectWriter objectWriter = objectMapper.writer()
-                        .withDefaultPrettyPrinter();
+                final ObjectWriter objectWriter = objectMapper.writer().withDefaultPrettyPrinter();
                 final String formatted = objectWriter.writeValueAsString(pageData);
                 PAGE_DATA_LOGGER_AS_JSON.debug(formatted);
             } catch (final Exception e) {
