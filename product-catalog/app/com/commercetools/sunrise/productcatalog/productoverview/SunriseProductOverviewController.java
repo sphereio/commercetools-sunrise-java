@@ -42,7 +42,7 @@ public abstract class SunriseProductOverviewController extends SunriseContentCon
 
     @EnableHooks
     @SunriseRoute(ProductReverseRouter.PRODUCT_OVERVIEW_PAGE)
-    public CompletionStage<Result> process(final String categoryIdentifier) {
+    public CompletionStage<Result> show(final String categoryIdentifier) {
         return requireCategory(categoryIdentifier, category ->
                 findProducts(category, products ->
                         showPage(ProductsWithCategory.of(products, category))));

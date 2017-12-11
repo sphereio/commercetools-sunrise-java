@@ -169,4 +169,4 @@ GET         /:productIdentifier-$variantIdentifier<[^-]+>.html                  
 # ~~~~~
 
 # Shows the product overview page for this category
-GET         /:categoryIdentifier                                                    @controllers.productcatalog.ProductOverviewController.process(categoryIdentifier: String)
+GET         /:categoryIdentifier                                                    @controllers.productcatalog.ProductOverviewController.show(categoryIdentifier: String)
