@@ -39,25 +39,29 @@ public class LocaleFromRequestProviderTest extends WithApplication {
 
     @Test
     public void addsAcceptedLanguages() throws Exception {
-        testWithHttpContext(ENGLISH, asList(GERMAN, US), () ->
+        final List<Locale> acceptedLangs = asList(GERMAN, US);
+        testWithHttpContext(ENGLISH, acceptedLangs, () ->
                 assertThat(localeProvider.get()).isEqualTo(ENGLISH));
     }
 
     @Test
     public void discardsNotSupportedByProject() throws Exception {
-        testWithHttpContext(null, asList(ITALIAN, US), () ->
+        final List<Locale> acceptedLangs = asList(ITALIAN, US);
+        testWithHttpContext(null, acceptedLangs, () ->
                 assertThat(localeProvider.get()).isEqualTo(US));
     }
 
     @Test
     public void ignoresEmptyAcceptedLanguages() throws Exception {
-        testWithHttpContext(null, emptyList(), () ->
+        final List<Locale> acceptedLangs = emptyList();
+        testWithHttpContext(null, acceptedLangs, () ->
                 assertThat(localeProvider.get()).isEqualTo(ENGLISH));
     }
 
     @Test
     public void ignoresNotSupportedCurrentLanguage() throws Exception {
-        testWithHttpContext(ITALIAN, asList(GERMAN, US), () ->
+        final List<Locale> acceptedLangs = asList(GERMAN, US);
+        testWithHttpContext(ITALIAN, acceptedLangs, () ->
                 assertThat(localeProvider.get()).isEqualTo(GERMAN));
     }
 
