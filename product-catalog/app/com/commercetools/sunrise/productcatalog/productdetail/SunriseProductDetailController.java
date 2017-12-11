@@ -5,7 +5,7 @@ import com.commercetools.sunrise.framework.controllers.WithQueryFlow;
 import com.commercetools.sunrise.framework.hooks.EnableHooks;
 import com.commercetools.sunrise.framework.reverserouters.SunriseRoute;
 import com.commercetools.sunrise.framework.reverserouters.productcatalog.product.ProductReverseRouter;
-import com.commercetools.sunrise.framework.template.engine.ContentRenderer;
+import com.commercetools.sunrise.framework.renderers.ContentRenderer;
 import com.commercetools.sunrise.framework.viewmodels.content.PageContent;
 import com.commercetools.sunrise.framework.viewmodels.content.products.ProductWithVariant;
 import com.commercetools.sunrise.productcatalog.productdetail.viewmodels.ProductDetailPageContentFactory;

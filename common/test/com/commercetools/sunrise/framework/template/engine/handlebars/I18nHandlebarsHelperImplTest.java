@@ -1,6 +1,7 @@
 package com.commercetools.sunrise.framework.template.engine.handlebars;
 
 import com.commercetools.sunrise.framework.i18n.I18nResolver;
+import com.commercetools.sunrise.framework.renderers.handlebars.DefaultHandlebarsHelperSource;
 import com.github.jknack.handlebars.Options;
 import org.junit.Before;
 import org.junit.Test;

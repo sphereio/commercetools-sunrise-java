@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.framework.template.engine.handlebars;
+package com.commercetools.sunrise.framework.renderers.handlebars;
 
 import com.github.jknack.handlebars.ValueResolver;
 import com.github.jknack.handlebars.context.MapValueResolver;

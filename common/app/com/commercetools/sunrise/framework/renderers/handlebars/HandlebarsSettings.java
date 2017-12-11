@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.framework.template.engine.handlebars;
+package com.commercetools.sunrise.framework.renderers.handlebars;
 
 import com.github.jknack.handlebars.io.TemplateLoader;
 import com.google.inject.ImplementedBy;

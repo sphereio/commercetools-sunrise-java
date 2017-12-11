@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.framework.template.engine;
+package com.commercetools.sunrise.framework.renderers;
 
 public class TemplateRenderException extends RuntimeException {
 

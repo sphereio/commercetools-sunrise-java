@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.shoppingcart.checkout.shipping;
 
-import com.commercetools.sunrise.framework.template.engine.ContentRenderer;
+import com.commercetools.sunrise.framework.renderers.ContentRenderer;
 import com.commercetools.sunrise.framework.viewmodels.content.PageContent;
 import com.commercetools.sunrise.shoppingcart.CartFinder;
 import com.commercetools.sunrise.shoppingcart.WithRequiredCart;

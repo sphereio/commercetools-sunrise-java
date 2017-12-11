@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.framework.template.engine.handlebars;
+package com.commercetools.sunrise.framework.renderers.handlebars;
 
 import com.commercetools.sunrise.cms.CmsPage;
 import com.commercetools.sunrise.framework.i18n.I18nResolver;
@@ -11,7 +11,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.Optional;
 
-import static com.commercetools.sunrise.framework.template.engine.handlebars.HandlebarsTemplateEngine.CMS_PAGE_IN_CONTEXT_KEY;
+import static com.commercetools.sunrise.framework.renderers.handlebars.HandlebarsTemplateEngine.CMS_PAGE_IN_CONTEXT_KEY;
 
 @Singleton
 public class DefaultHandlebarsHelperSource implements HandlebarsHelperSource {

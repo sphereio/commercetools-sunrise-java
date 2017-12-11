@@ -1,6 +1,5 @@
-package com.commercetools.sunrise.framework.template;
+package com.commercetools.sunrise.framework.renderers.handlebars;
 
-import com.commercetools.sunrise.framework.template.engine.handlebars.HandlebarsProvider;
 import com.github.jknack.handlebars.Handlebars;
 import com.google.inject.AbstractModule;
 
@@ -9,7 +8,7 @@ import javax.inject.Singleton;
 /**
  * Module that allows to inject the Template Engine related classes.
  */
-public final class ThemeModule extends AbstractModule {
+public final class HandlebarsModule extends AbstractModule {
 
     @Override
     protected void configure() {

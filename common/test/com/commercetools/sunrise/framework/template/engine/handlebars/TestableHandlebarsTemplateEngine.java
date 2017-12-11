@@ -1,8 +1,9 @@
 package com.commercetools.sunrise.framework.template.engine.handlebars;
 
 import com.commercetools.sunrise.framework.i18n.I18nResolver;
-import com.commercetools.sunrise.framework.template.engine.TemplateContext;
-import com.commercetools.sunrise.framework.template.engine.TemplateEngine;
+import com.commercetools.sunrise.framework.renderers.TemplateContext;
+import com.commercetools.sunrise.framework.renderers.TemplateEngine;
+import com.commercetools.sunrise.framework.renderers.handlebars.*;
 import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.io.TemplateLoader;
 

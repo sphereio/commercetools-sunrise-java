@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.framework.template.engine.handlebars;
+package com.commercetools.sunrise.framework.renderers.handlebars;
 
 import com.commercetools.sunrise.framework.i18n.I18nResolver;
 import com.commercetools.sunrise.framework.viewmodels.ViewModel;

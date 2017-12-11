@@ -9,7 +9,7 @@ import com.commercetools.sunrise.framework.controllers.WithContentFormFlow;
 import com.commercetools.sunrise.framework.hooks.EnableHooks;
 import com.commercetools.sunrise.framework.reverserouters.SunriseRoute;
 import com.commercetools.sunrise.framework.reverserouters.shoppingcart.cart.CartReverseRouter;
-import com.commercetools.sunrise.framework.template.engine.ContentRenderer;
+import com.commercetools.sunrise.framework.renderers.ContentRenderer;
 import io.sphere.sdk.carts.Cart;
 import play.data.Form;
 import play.data.FormFactory;

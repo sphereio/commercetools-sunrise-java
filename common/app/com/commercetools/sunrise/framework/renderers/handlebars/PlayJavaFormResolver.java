@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.framework.template.engine.handlebars;
+package com.commercetools.sunrise.framework.renderers.handlebars;
 
 import com.commercetools.sunrise.framework.viewmodels.formatters.ErrorFormatter;
 import com.commercetools.sunrise.framework.viewmodels.forms.ErrorViewModel;

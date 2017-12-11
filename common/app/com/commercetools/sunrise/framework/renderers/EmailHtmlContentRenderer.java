@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.framework.template.engine;
+package com.commercetools.sunrise.framework.renderers;
 
 import com.commercetools.sunrise.cms.CmsService;
 import com.commercetools.sunrise.framework.viewmodels.PageData;

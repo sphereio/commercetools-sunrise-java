@@ -1,6 +1,6 @@
-package com.commercetools.sunrise.framework.template.engine;
+package com.commercetools.sunrise.framework.renderers;
 
-import com.commercetools.sunrise.framework.template.engine.handlebars.HandlebarsTemplateEngine;
+import com.commercetools.sunrise.framework.renderers.handlebars.HandlebarsTemplateEngine;
 import com.google.inject.ImplementedBy;
 
 /**

@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.framework.template;
+package com.commercetools.sunrise.framework.renderers;
 
 import com.commercetools.sunrise.framework.components.controllers.ControllerComponent;
 import com.commercetools.sunrise.framework.components.controllers.ControllerComponentSupplier;

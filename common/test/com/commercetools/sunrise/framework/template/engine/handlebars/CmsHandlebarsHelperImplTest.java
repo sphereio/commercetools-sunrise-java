@@ -2,6 +2,7 @@ package com.commercetools.sunrise.framework.template.engine.handlebars;
 
 import com.commercetools.sunrise.cms.CmsPage;
 import com.commercetools.sunrise.framework.i18n.I18nResolver;
+import com.commercetools.sunrise.framework.renderers.handlebars.DefaultHandlebarsHelperSource;
 import com.github.jknack.handlebars.Context;
 import com.github.jknack.handlebars.Options;
 import org.junit.Before;
@@ -14,7 +15,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.util.Map;
 import java.util.Optional;
 
-import static com.commercetools.sunrise.framework.template.engine.handlebars.HandlebarsTemplateEngine.CMS_PAGE_IN_CONTEXT_KEY;
+import static com.commercetools.sunrise.framework.renderers.handlebars.HandlebarsTemplateEngine.CMS_PAGE_IN_CONTEXT_KEY;
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.singletonMap;
 import static org.assertj.core.api.Assertions.assertThat;

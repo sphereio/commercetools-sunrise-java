@@ -1,9 +1,9 @@
-package com.commercetools.sunrise.framework.template.engine.handlebars;
+package com.commercetools.sunrise.framework.renderers.handlebars;
 
-import com.commercetools.sunrise.framework.template.engine.TemplateContext;
-import com.commercetools.sunrise.framework.template.engine.TemplateEngine;
-import com.commercetools.sunrise.framework.template.engine.TemplateNotFoundException;
-import com.commercetools.sunrise.framework.template.engine.TemplateRenderException;
+import com.commercetools.sunrise.framework.renderers.TemplateContext;
+import com.commercetools.sunrise.framework.renderers.TemplateEngine;
+import com.commercetools.sunrise.framework.renderers.TemplateNotFoundException;
+import com.commercetools.sunrise.framework.renderers.TemplateRenderException;
 import com.github.jknack.handlebars.Context;
 import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.Template;

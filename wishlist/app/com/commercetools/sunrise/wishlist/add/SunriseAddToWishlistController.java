@@ -5,7 +5,7 @@ import com.commercetools.sunrise.framework.controllers.WithContentFormFlow;
 import com.commercetools.sunrise.framework.hooks.EnableHooks;
 import com.commercetools.sunrise.framework.reverserouters.SunriseRoute;
 import com.commercetools.sunrise.framework.reverserouters.wishlist.WishlistReverseRouter;
-import com.commercetools.sunrise.framework.template.engine.ContentRenderer;
+import com.commercetools.sunrise.framework.renderers.ContentRenderer;
 import com.commercetools.sunrise.framework.viewmodels.content.PageContent;
 import com.commercetools.sunrise.wishlist.WishlistCreator;
 import com.commercetools.sunrise.wishlist.WishlistFinder;
