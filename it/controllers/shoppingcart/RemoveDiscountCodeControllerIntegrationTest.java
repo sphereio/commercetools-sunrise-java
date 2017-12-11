@@ -70,7 +70,7 @@ public class RemoveDiscountCodeControllerIntegrationTest extends WithSphereClien
 
     @Before
     public void deleteExistingCartDiscountAndDiscountCodes() {
-        deleteCartDiscountAndDiscountCodes(sphereClient, "CartDiscountValue", "0.6");
+        deleteCartDiscountAndDiscountCodes(sphereClient, "CartDiscount", "0.6");
     }
 
     @Test
@@ -82,14 +82,14 @@ public class RemoveDiscountCodeControllerIntegrationTest extends WithSphereClien
                 final Map<String, String> bodyForm = new HashMap<>();
                 bodyForm.put("discountCodeId", discountCode.getId());
                 final Result result = route(new Http.RequestBuilder()
-                        .uri("/en/cart/discount/remove")
+                        .uri("/cart/discount/remove")
                         .method(POST)
                         .bodyForm(bodyForm));
 
                 assertThat(result.status()).isEqualTo(SEE_OTHER);
                 assertThat(result.redirectLocation())
                         .isPresent()
-                        .hasValue("/en/cart");
+                        .hasValue("/cart");
 
                 return cart;
             });

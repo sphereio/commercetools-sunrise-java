@@ -84,7 +84,7 @@ public class AddDiscountCodeControllerIntegrationTest extends WithSphereClient {
             final Map<String, String> bodyForm = new HashMap<>();
             bodyForm.put("code", "NON");
             final Result result = route(new Http.RequestBuilder()
-                    .uri("/en/cart/discount/add")
+                    .uri("/cart/discount/add")
                     .method(POST)
                     .bodyForm(bodyForm));
 
@@ -104,14 +104,14 @@ public class AddDiscountCodeControllerIntegrationTest extends WithSphereClient {
                 final Map<String, String> bodyForm = new HashMap<>();
                 bodyForm.put("code", discountCode.getCode());
                 final Result result = route(new Http.RequestBuilder()
-                        .uri("/en/cart/discount/add")
+                        .uri("/cart/discount/add")
                         .method(POST)
                         .bodyForm(bodyForm));
 
                 assertThat(result.status()).isEqualTo(SEE_OTHER);
                 assertThat(result.redirectLocation())
                         .isPresent()
-                        .hasValue("/en/cart");
+                        .hasValue("/cart");
 
                 return cart;
             });

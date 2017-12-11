@@ -55,12 +55,12 @@ public class RecoverPasswordControllerIntegrationTest extends WithSphereClient {
     @Test
     public void showsForm() throws Exception {
         final Result result = route(new Http.RequestBuilder()
-                .uri("/en/password/recovery"));
+                .uri("/password/recovery"));
 
         assertThat(result.status()).isEqualTo(OK);
         assertThat(contentAsString(result))
                 .containsOnlyOnce("id=\"form-forgot-password\"")
-                .contains("action=\"/en/password/recovery\"")
+                .contains("action=\"/password/recovery\"")
                 .contains("name=\"email\"");
     }
 
@@ -72,19 +72,19 @@ public class RecoverPasswordControllerIntegrationTest extends WithSphereClient {
             final String email = customerSignInResult.getCustomer().getEmail();
 
             final Result result = route(new Http.RequestBuilder()
-                    .uri("/en/password/recovery")
+                    .uri("/password/recovery")
                     .method(POST)
                     .bodyForm(singletonMap("email", email)));
 
             assertThat(result.status()).isEqualTo(SEE_OTHER);
-            assertThat(result.header(LOCATION)).contains("/en/password/recovery");
+            assertThat(result.header(LOCATION)).contains("/password/recovery");
 
             try {
                 final MimeMessage message = blankMimeMessage();
                 messageEditorCaptor.getValue().edit(message);
 
                 assertThat(message.getAllRecipients()).containsOnly(addressOf(email));
-                assertThat((String) message.getContent()).containsPattern("en\\/password\\/reset\\/[\\w]+");
+                assertThat((String) message.getContent()).containsPattern("\\/password\\/reset\\/[\\w]+");
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -96,7 +96,7 @@ public class RecoverPasswordControllerIntegrationTest extends WithSphereClient {
     @Test
     public void showsErrorOnNonExistentEmail() throws Exception {
         final Result result = route(new Http.RequestBuilder()
-                .uri("/en/password/recovery")
+                .uri("/password/recovery")
                 .method(POST)
                 .bodyForm(singletonMap("email", "non-existent-email@wrong.com")));
 
@@ -112,7 +112,7 @@ public class RecoverPasswordControllerIntegrationTest extends WithSphereClient {
             final String email = customerSignInResult.getCustomer().getEmail();
 
             final Result result = route(new Http.RequestBuilder()
-                    .uri("/en/password/recovery")
+                    .uri("/password/recovery")
                     .method(POST)
                     .bodyForm(singletonMap("email", email)));
 
