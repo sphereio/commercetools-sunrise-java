@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.sessions.country;
+package com.commercetools.sunrise.framework.localization;
 
 import com.commercetools.sunrise.sessions.ResourceStoringOperations;
 import com.google.inject.ImplementedBy;

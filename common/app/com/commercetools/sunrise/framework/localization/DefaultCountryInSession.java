@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.sessions.country;
+package com.commercetools.sunrise.framework.localization;
 
 import com.commercetools.sunrise.sessions.CookieSessionStrategy;
 import com.commercetools.sunrise.sessions.DataFromResourceStoringOperations;

@@ -24,15 +24,6 @@ public class CountryFormFieldViewModelFactory extends FormFieldViewModelFactory<
         this.countryFormSelectableOptionViewModelFactory = countryFormSelectableOptionViewModelFactory;
     }
 
-    /**
-     * @return list of available countries
-     * @deprecated use {@link #getCountries()} instead
-     */
-    @Deprecated
-    protected final List<CountryCode> getDefaultCountries() {
-        return countries.availables();
-    }
-
     protected final Countries getCountries() {
         return countries;
     }
