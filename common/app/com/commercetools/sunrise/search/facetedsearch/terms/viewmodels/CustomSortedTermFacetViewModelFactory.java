@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.search.facetedsearch.terms.viewmodels;
 
-import com.commercetools.sunrise.framework.i18n.MessagesResolver;
+import com.commercetools.sunrise.framework.i18n.I18nResolver;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
 import com.commercetools.sunrise.search.facetedsearch.terms.TermFacetedSearchFormSettings;
 import com.commercetools.sunrise.search.facetedsearch.viewmodels.FacetOptionViewModel;
@@ -20,9 +20,9 @@ import static java.util.stream.Collectors.toList;
 public final class CustomSortedTermFacetViewModelFactory extends TermFacetViewModelFactory {
 
     @Inject
-    public CustomSortedTermFacetViewModelFactory(final MessagesResolver messagesResolver,
+    public CustomSortedTermFacetViewModelFactory(final I18nResolver i18nResolver,
                                                  final TermFacetOptionViewModelFactory termFacetOptionViewModelFactory) {
-        super(messagesResolver, termFacetOptionViewModelFactory);
+        super(i18nResolver, termFacetOptionViewModelFactory);
     }
 
     @Override

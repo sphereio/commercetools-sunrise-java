@@ -1,7 +1,6 @@
 package com.commercetools.sunrise.framework.cms.filebased;
 
 import com.commercetools.sunrise.cms.CmsPage;
-import com.commercetools.sunrise.framework.cms.CmsMessagesApi;
 import org.junit.Before;
 import org.junit.Test;
 import play.Application;

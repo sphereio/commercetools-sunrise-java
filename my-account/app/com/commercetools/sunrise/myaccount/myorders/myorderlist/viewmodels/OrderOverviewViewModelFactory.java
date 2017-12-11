@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.myaccount.myorders.myorderlist.viewmodels;
 
-import com.commercetools.sunrise.framework.i18n.MessagesResolver;
+import com.commercetools.sunrise.framework.i18n.I18nResolver;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
 import com.commercetools.sunrise.framework.reverserouters.myaccount.myorders.MyOrdersReverseRouter;
 import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
@@ -18,22 +18,22 @@ import static com.commercetools.sunrise.framework.viewmodels.content.carts.CartP
 @RequestScoped
 public class OrderOverviewViewModelFactory extends SimpleViewModelFactory<OrderOverviewViewModel, Order> {
 
-    private final MessagesResolver messagesResolver;
+    private final I18nResolver i18nResolver;
     private final PriceFormatter priceFormatter;
     private final DateTimeFormatter dateTimeFormatter;
     private final MyOrdersReverseRouter myOrdersReverseRouter;
 
     @Inject
-    public OrderOverviewViewModelFactory(final MessagesResolver messagesResolver, final PriceFormatter priceFormatter,
+    public OrderOverviewViewModelFactory(final I18nResolver i18nResolver, final PriceFormatter priceFormatter,
                                          final DateTimeFormatter dateTimeFormatter, final MyOrdersReverseRouter myOrdersReverseRouter) {
-        this.messagesResolver = messagesResolver;
+        this.i18nResolver = i18nResolver;
         this.priceFormatter = priceFormatter;
         this.dateTimeFormatter = dateTimeFormatter;
         this.myOrdersReverseRouter = myOrdersReverseRouter;
     }
 
-    protected final MessagesResolver getMessagesResolver() {
-        return messagesResolver;
+    protected final I18nResolver getI18nResolver() {
+        return i18nResolver;
     }
 
     protected final PriceFormatter getPriceFormatter() {
@@ -90,7 +90,7 @@ public class OrderOverviewViewModelFactory extends SimpleViewModelFactory<OrderO
         viewModel.setShipping(Optional.ofNullable(order.getShipmentState())
                 .map(state -> {
                     final String stateName = state.name();
-                    return messagesResolver.get("main:order.shippingStatus." + enumToCamelCase(stateName))
+                    return i18nResolver.get("main:order.shippingStatus." + enumToCamelCase(stateName))
                             .orElse(stateName);
                 }).orElse("-"));
     }
@@ -99,7 +99,7 @@ public class OrderOverviewViewModelFactory extends SimpleViewModelFactory<OrderO
         viewModel.setPaymentStatus(Optional.ofNullable(order.getPaymentState())
                 .map(state -> {
                     final String stateName = state.name();
-                    return messagesResolver.get("main:order.paymentStatus." + enumToCamelCase(stateName))
+                    return i18nResolver.get("main:order.paymentStatus." + enumToCamelCase(stateName))
                             .orElse(stateName);
                 }).orElse("-"));
     }

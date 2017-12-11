@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.framework.viewmodels;
 
-import com.commercetools.sunrise.framework.i18n.MessagesResolver;
+import com.commercetools.sunrise.framework.i18n.I18nResolver;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -9,15 +9,15 @@ import java.util.Optional;
 @Singleton
 final class PageTitleResolverImpl implements PageTitleResolver {
 
-    private final MessagesResolver messagesResolver;
+    private final I18nResolver i18nResolver;
 
     @Inject
-    PageTitleResolverImpl(final MessagesResolver messagesResolver) {
-        this.messagesResolver = messagesResolver;
+    PageTitleResolverImpl(final I18nResolver i18nResolver) {
+        this.i18nResolver = i18nResolver;
     }
 
     @Override
     public Optional<String> find(final String key) {
-        return messagesResolver.get(key);
+        return i18nResolver.get(key);
     }
 }

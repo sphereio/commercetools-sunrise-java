@@ -15,24 +15,29 @@ import javax.money.Monetary;
 import java.util.List;
 import java.util.Optional;
 
+import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
 import static java.util.stream.Collectors.toList;
 
 @Singleton
-public class DefaultCurrencies implements Currencies {
+public final class DefaultCurrencies implements Currencies {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Countries.class);
     private static final CurrencyUnit SYSTEM_DEFAULT_CURRENCY = Monetary.getCurrency(Lang.defaultLang().toLocale());
 
     private final List<CurrencyUnit> availables;
 
+    DefaultCurrencies(final List<CurrencyUnit> availables) {
+        this.availables = availables;
+    }
+
     @Inject
     DefaultCurrencies(final Configuration configuration, final Provider<Project> projectProvider) {
-        this.availables = configuredCurrencies(configuration)
+        this(configuredCurrencies(configuration)
                 .map(countries -> countries.stream()
                         .map(Monetary::getCurrency)
                         .collect(toList()))
-                .orElseGet(() -> loadFallbackCurrencies(projectProvider));
+                .orElseGet(() -> loadFallbackCurrencies(projectProvider)));
     }
 
     @Override
@@ -51,11 +56,8 @@ public class DefaultCurrencies implements Currencies {
     }
 
     private static Optional<List<String>> configuredCurrencies(final Configuration configuration) {
-        return Optional.ofNullable(configuration.getStringList("sunrise.ctp.project.currencies"))
-                .map(countries -> {
-                    LOGGER.warn("sunrise.ctp.project.currencies is deprecated, use sunrise.localization.currencies instead");
-                    return Optional.of(countries);
-                }).orElseGet(() -> Optional.ofNullable(configuration.getStringList("sunrise.localization.currencies")));
+        final List<String> currencies = configuration.getStringList("sunrise.localization.currencies", emptyList());
+        return currencies.isEmpty() ? Optional.empty() : Optional.of(currencies);
     }
 
     private static List<CurrencyUnit> loadFallbackCurrencies(final Provider<Project> projectProvider) {

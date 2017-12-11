@@ -1,7 +1,7 @@
 package com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover;
 
 import com.commercetools.sunrise.email.MessageEditor;
-import com.commercetools.sunrise.framework.i18n.MessagesResolver;
+import com.commercetools.sunrise.framework.i18n.I18nResolver;
 import com.commercetools.sunrise.framework.template.engine.EmailContentRenderer;
 import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover.viewmodels.RecoverPasswordEmailContent;
 import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover.viewmodels.RecoverPasswordEmailContentFactory;
@@ -37,7 +37,7 @@ public class DefaultRecoverPasswordMessageEditorProviderTest {
     private static final String CONTENT_FIELD = "Some email content";
 
     @Mock
-    private MessagesResolver messagesResolver;
+    private I18nResolver i18nResolver;
     @Mock
     private EmailContentRenderer emailContentRendererWithSomeContent;
     @Mock
@@ -115,19 +115,19 @@ public class DefaultRecoverPasswordMessageEditorProviderTest {
     }
 
     private void mockI18nResolverThatFindsFromAndSubjectFields() {
-        when(messagesResolver.get(eq("my-account:forgotPassword.email.from")))
+        when(i18nResolver.get(eq("my-account:forgotPassword.email.from")))
                 .thenReturn(Optional.of(FROM_FIELD));
-        when(messagesResolver.get(eq("my-account:forgotPassword.email.subject")))
+        when(i18nResolver.get(eq("my-account:forgotPassword.email.subject")))
                 .thenReturn(Optional.of(SUBJECT_FIELD));
     }
 
     private static class CustomRecoverPasswordMessageEditorProvider extends DefaultRecoverPasswordMessageEditorProvider {
 
         @Inject
-        public CustomRecoverPasswordMessageEditorProvider(final MessagesResolver messagesResolver,
+        public CustomRecoverPasswordMessageEditorProvider(final I18nResolver i18nResolver,
                                                           final EmailContentRenderer emailContentRenderer,
                                                           final RecoverPasswordEmailContentFactory recoverPasswordEmailContentFactory) {
-            super(messagesResolver, emailContentRenderer, recoverPasswordEmailContentFactory);
+            super(i18nResolver, emailContentRenderer, recoverPasswordEmailContentFactory);
         }
 
         @Override

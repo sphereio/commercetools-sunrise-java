@@ -1,7 +1,7 @@
 package com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch.categorytree.viewmodels;
 
 import com.commercetools.sunrise.ctp.categories.NavigationCategoryTree;
-import com.commercetools.sunrise.framework.i18n.MessagesResolver;
+import com.commercetools.sunrise.framework.i18n.I18nResolver;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
 import com.commercetools.sunrise.framework.reverserouters.productcatalog.product.ProductReverseRouter;
 import com.commercetools.sunrise.search.facetedsearch.viewmodels.AbstractFacetOptionViewModelFactory;
@@ -22,22 +22,22 @@ import static com.commercetools.sunrise.framework.viewmodels.forms.QueryStringUt
 @RequestScoped
 public class CategoryTreeFacetOptionViewModelFactory extends AbstractFacetOptionViewModelFactory<TermFacetResult, Category, Category> {
 
-    private final MessagesResolver messagesResolver;
+    private final I18nResolver i18nResolver;
     private final CategoryTree categoryTree;
     private final ProductReverseRouter productReverseRouter;
     private static final Set<String> IGNORED_PARAMS = Collections.singleton("page");
 
     @Inject
-    public CategoryTreeFacetOptionViewModelFactory(final MessagesResolver messagesResolver,
+    public CategoryTreeFacetOptionViewModelFactory(final I18nResolver i18nResolver,
                                                    @NavigationCategoryTree final CategoryTree categoryTree,
                                                    final ProductReverseRouter productReverseRouter) {
-        this.messagesResolver = messagesResolver;
+        this.i18nResolver = i18nResolver;
         this.categoryTree = categoryTree;
         this.productReverseRouter = productReverseRouter;
     }
 
-    protected final MessagesResolver getMessagesResolver() {
-        return messagesResolver;
+    protected final I18nResolver getI18nResolver() {
+        return i18nResolver;
     }
 
     protected final CategoryTree getCategoryTree() {
@@ -61,7 +61,7 @@ public class CategoryTreeFacetOptionViewModelFactory extends AbstractFacetOption
 
     @Override
     protected void fillLabel(final FacetOptionViewModel viewModel, final TermFacetResult stats, final Category category, @Nullable final Category selectedValue) {
-        viewModel.setLabel(messagesResolver.get(category.getName()).orElseGet(category::getId));
+        viewModel.setLabel(i18nResolver.get(category.getName()).orElseGet(category::getId));
     }
 
     @Override

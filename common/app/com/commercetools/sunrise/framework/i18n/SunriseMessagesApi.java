@@ -32,7 +32,7 @@ public class SunriseMessagesApi extends MessagesApi {
     }
 
     /**
-     * Converts a the provided args to a list of scala {@link Tuple2}, if the args correspond to a {@link Map}.
+     * Converts the provided args to a list of scala {@link Tuple2}, if the args correspond to a {@link Map}.
      * @param args the message arguments
      * @return the list of scala tuples or the given args if it is not a map
      */

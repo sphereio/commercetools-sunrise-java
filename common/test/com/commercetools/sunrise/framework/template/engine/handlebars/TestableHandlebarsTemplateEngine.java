@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.framework.template.engine.handlebars;
 
-import com.commercetools.sunrise.framework.i18n.MessagesResolver;
+import com.commercetools.sunrise.framework.i18n.I18nResolver;
 import com.commercetools.sunrise.framework.template.engine.TemplateContext;
 import com.commercetools.sunrise.framework.template.engine.TemplateEngine;
 import com.github.jknack.handlebars.Handlebars;
@@ -14,8 +14,8 @@ final class TestableHandlebarsTemplateEngine implements TemplateEngine {
 
     private final TemplateEngine delegate;
 
-    TestableHandlebarsTemplateEngine(final List<TemplateLoader> templateLoaders, final MessagesResolver messagesResolver) {
-        this.delegate = handlebarsTemplateEngine(templateLoaders, messagesResolver);
+    TestableHandlebarsTemplateEngine(final List<TemplateLoader> templateLoaders, final I18nResolver i18nResolver) {
+        this.delegate = handlebarsTemplateEngine(templateLoaders, i18nResolver);
     }
 
     @Override
@@ -23,20 +23,20 @@ final class TestableHandlebarsTemplateEngine implements TemplateEngine {
         return delegate.render(templateName, templateContext);
     }
 
-    private TemplateEngine handlebarsTemplateEngine(final List<TemplateLoader> templateLoaders, final MessagesResolver messagesResolver) {
-        final Handlebars handlebars = handlebars(templateLoaders, messagesResolver);
-        final HandlebarsValueResolvers handlebarsValueResolvers = valueResolvers(messagesResolver);
+    private TemplateEngine handlebarsTemplateEngine(final List<TemplateLoader> templateLoaders, final I18nResolver i18nResolver) {
+        final Handlebars handlebars = handlebars(templateLoaders, i18nResolver);
+        final HandlebarsValueResolvers handlebarsValueResolvers = valueResolvers(i18nResolver);
         return new HandlebarsTemplateEngine(handlebars, handlebarsValueResolvers);
     }
 
-    private HandlebarsValueResolvers valueResolvers(final MessagesResolver messagesResolver) {
+    private HandlebarsValueResolvers valueResolvers(final I18nResolver i18nResolver) {
         final PlayJavaFormResolver playJavaFormResolver = new PlayJavaFormResolver(msg -> msg);
-        final SunriseJavaBeanValueResolver sunriseJavaBeanValueResolver = new SunriseJavaBeanValueResolver(messagesResolver);
+        final SunriseJavaBeanValueResolver sunriseJavaBeanValueResolver = new SunriseJavaBeanValueResolver(i18nResolver);
         return () -> asList(playJavaFormResolver, sunriseJavaBeanValueResolver);
     }
 
-    private static Handlebars handlebars(final List<TemplateLoader> templateLoaders, final MessagesResolver messagesResolver) {
-        final DefaultHandlebarsHelperSource helperSource = new DefaultHandlebarsHelperSource(messagesResolver);
+    private static Handlebars handlebars(final List<TemplateLoader> templateLoaders, final I18nResolver i18nResolver) {
+        final DefaultHandlebarsHelperSource helperSource = new DefaultHandlebarsHelperSource(i18nResolver);
         final HandlebarsSettings settings = () -> templateLoaders;
         return new HandlebarsProvider(settings, helperSource).get();
     }

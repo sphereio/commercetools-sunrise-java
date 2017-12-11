@@ -1,7 +1,6 @@
 package com.commercetools.sunrise.framework.cms.filebased;
 
 import com.commercetools.sunrise.cms.CmsPage;
-import com.commercetools.sunrise.framework.cms.CmsMessagesApi;
 import play.i18n.Lang;
 
 import java.util.List;

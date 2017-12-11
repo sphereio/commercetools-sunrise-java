@@ -1,7 +1,7 @@
 package com.commercetools.sunrise.framework.template.engine.handlebars;
 
 import com.commercetools.sunrise.cms.CmsPage;
-import com.commercetools.sunrise.framework.i18n.MessagesResolver;
+import com.commercetools.sunrise.framework.i18n.I18nResolver;
 import com.github.jknack.handlebars.Context;
 import com.github.jknack.handlebars.Options;
 import org.junit.Before;
@@ -30,7 +30,7 @@ public class CmsHandlebarsHelperImplTest {
     @Mock
     private CmsPage fakeCmsPage;
     @Mock
-    private MessagesResolver dummyMessagesResolver;
+    private I18nResolver dummyI18nResolver;
 
     @InjectMocks
     private DefaultHandlebarsHelperSource helperSource;

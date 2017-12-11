@@ -14,24 +14,29 @@ import javax.inject.Singleton;
 import java.util.List;
 import java.util.Optional;
 
+import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
 import static java.util.stream.Collectors.toList;
 
 @Singleton
-public class DefaultCountries implements Countries {
+public final class DefaultCountries implements Countries {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Countries.class);
     private static final CountryCode SYSTEM_DEFAULT_COUNTRY = CountryCode.getByLocale(Lang.defaultLang().toLocale());
 
     private final List<CountryCode> availables;
 
+    DefaultCountries(final List<CountryCode> availables) {
+        this.availables = availables;
+    }
+
     @Inject
     DefaultCountries(final Configuration configuration, final Provider<Project> projectProvider) {
-        this.availables = configuredCountries(configuration)
+        this(configuredCountries(configuration)
                 .map(countries -> countries.stream()
                         .map(CountryCode::getByCodeIgnoreCase)
                         .collect(toList()))
-                .orElseGet(() -> loadFallbackCountries(projectProvider));
+                .orElseGet(() -> loadFallbackCountries(projectProvider)));
     }
 
     @Override
@@ -50,11 +55,8 @@ public class DefaultCountries implements Countries {
     }
 
     private static Optional<List<String>> configuredCountries(final Configuration configuration) {
-        return Optional.ofNullable(configuration.getStringList("sunrise.ctp.project.countries"))
-                .map(countries -> {
-                    LOGGER.warn("sunrise.ctp.project.countries is deprecated, use sunrise.localization.countries instead");
-                    return Optional.of(countries);
-                }).orElseGet(() -> Optional.ofNullable(configuration.getStringList("sunrise.localization.countries")));
+        final List<String> countries = configuration.getStringList("sunrise.localization.countries", emptyList());
+        return countries.isEmpty() ? Optional.empty() : Optional.of(countries);
     }
 
     private static List<CountryCode> loadFallbackCountries(final Provider<Project> projectProvider) {

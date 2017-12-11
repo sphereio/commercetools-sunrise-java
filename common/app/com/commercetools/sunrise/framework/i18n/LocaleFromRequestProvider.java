@@ -1,5 +1,6 @@
 package com.commercetools.sunrise.framework.i18n;
 
+import play.i18n.Lang;
 import play.i18n.Langs;
 import play.mvc.Http;
 
@@ -17,18 +18,18 @@ import static java.util.Collections.emptyList;
 @Singleton
 public final class LocaleFromRequestProvider implements Provider<Locale> {
 
-    private final Langs langs;
+    private final Lang defaultLang;
 
     @Inject
     LocaleFromRequestProvider(final Langs langs) {
-        this.langs = langs;
+        this.defaultLang = langs.preferred(emptyList());
     }
 
     @Override
     public Locale get() {
         return Optional.ofNullable(Http.Context.current.get())
                 .map(Http.Context::lang)
-                .orElseGet(() -> langs.preferred(emptyList()))
+                .orElse(defaultLang)
                 .toLocale();
     }
 }

@@ -1,7 +1,7 @@
 package com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover;
 
 import com.commercetools.sunrise.email.MessageEditor;
-import com.commercetools.sunrise.framework.i18n.MessagesResolver;
+import com.commercetools.sunrise.framework.i18n.I18nResolver;
 import com.commercetools.sunrise.framework.template.engine.EmailContentRenderer;
 import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover.viewmodels.RecoverPasswordEmailContent;
 import com.commercetools.sunrise.myaccount.authentication.recoverpassword.recover.viewmodels.RecoverPasswordEmailContentFactory;
@@ -39,21 +39,21 @@ import java.util.concurrent.CompletionStage;
  */
 public class DefaultRecoverPasswordMessageEditorProvider implements RecoverPasswordMessageEditorProvider {
 
-    private final MessagesResolver messagesResolver;
+    private final I18nResolver i18nResolver;
     private final EmailContentRenderer emailContentRenderer;
     private final RecoverPasswordEmailContentFactory recoverPasswordEmailContentFactory;
 
     @Inject
-    protected DefaultRecoverPasswordMessageEditorProvider(final MessagesResolver messagesResolver,
+    protected DefaultRecoverPasswordMessageEditorProvider(final I18nResolver i18nResolver,
                                                           final EmailContentRenderer emailContentRenderer,
                                                           final RecoverPasswordEmailContentFactory recoverPasswordEmailContentFactory) {
-        this.messagesResolver = messagesResolver;
+        this.i18nResolver = i18nResolver;
         this.emailContentRenderer = emailContentRenderer;
         this.recoverPasswordEmailContentFactory = recoverPasswordEmailContentFactory;
     }
 
-    protected final MessagesResolver getMessagesResolver() {
-        return messagesResolver;
+    protected final I18nResolver getI18nResolver() {
+        return i18nResolver;
     }
 
     protected final EmailContentRenderer getEmailContentRenderer() {
@@ -83,11 +83,11 @@ public class DefaultRecoverPasswordMessageEditorProvider implements RecoverPassw
 
     @Nullable
     private String createFromField() {
-        return messagesResolver.get("my-account:forgotPassword.email.from").orElse(null);
+        return i18nResolver.get("my-account:forgotPassword.email.from").orElse(null);
     }
 
     @Nullable
     private String createSubjectField() {
-        return messagesResolver.get("my-account:forgotPassword.email.subject").orElse(null);
+        return i18nResolver.get("my-account:forgotPassword.email.subject").orElse(null);
     }
 }

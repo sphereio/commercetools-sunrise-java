@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.shoppingcart.checkout.payment.viewmodels;
 
-import com.commercetools.sunrise.framework.i18n.MessagesResolver;
+import com.commercetools.sunrise.framework.i18n.I18nResolver;
 import com.commercetools.sunrise.framework.viewmodels.forms.SelectableViewModelFactory;
 import io.sphere.sdk.payments.PaymentMethodInfo;
 
@@ -12,15 +12,15 @@ import java.util.Optional;
 @Singleton
 public class PaymentFormSelectableOptionViewModelFactory extends SelectableViewModelFactory<PaymentFormSelectableOptionViewModel, PaymentMethodInfo, String> {
 
-    private final MessagesResolver messagesResolver;
+    private final I18nResolver i18nResolver;
 
     @Inject
-    public PaymentFormSelectableOptionViewModelFactory(final MessagesResolver messagesResolver) {
-        this.messagesResolver = messagesResolver;
+    public PaymentFormSelectableOptionViewModelFactory(final I18nResolver i18nResolver) {
+        this.i18nResolver = i18nResolver;
     }
 
-    protected final MessagesResolver getMessagesResolver() {
-        return messagesResolver;
+    protected final I18nResolver getI18nResolver() {
+        return i18nResolver;
     }
 
     @Override
@@ -42,7 +42,7 @@ public class PaymentFormSelectableOptionViewModelFactory extends SelectableViewM
 
     protected void fillLabel(final PaymentFormSelectableOptionViewModel viewModel, final PaymentMethodInfo option, @Nullable final String selectedValue) {
         final String label = Optional.ofNullable(option.getName())
-                .flatMap(messagesResolver::get)
+                .flatMap(i18nResolver::get)
                 .orElseGet(option::getMethod);
         viewModel.setLabel(label);
     }

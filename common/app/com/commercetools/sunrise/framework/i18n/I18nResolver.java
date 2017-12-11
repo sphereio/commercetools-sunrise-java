@@ -1,77 +1,102 @@
 package com.commercetools.sunrise.framework.i18n;
 
-import java.util.List;
+import com.google.inject.ImplementedBy;
+import io.sphere.sdk.models.LocalizedString;
+
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
 import static java.util.Collections.emptyMap;
 
-/**
- * Resolves i18n messages.
- */
-@FunctionalInterface
-@Deprecated
+@ImplementedBy(I18nResolverImpl.class)
 public interface I18nResolver {
 
     /**
-     * Resolves i18n message identified by a bundle and a key for the first found given locale.
-     * @param locales the list of locales used to translate the message
-     * @param i18nIdentifier identifier of the i18n message
-     * @param hashArgs list of hash arguments
-     * @return the resolved message in the first found given language, or absent if it could not be found
+     * @return the current language
      */
-    Optional<String> get(final List<Locale> locales, final I18nIdentifier i18nIdentifier, final Map<String, Object> hashArgs);
+    Locale currentLanguage();
 
     /**
-     * Resolves i18n message identified by a bundle and a key for the first found given locale.
-     * @param locales the list of locales used to translate the message
-     * @param i18nIdentifier identifier of the i18n message
-     * @return the resolved message in the first found given language, or absent if it could not be found
+     * Resolves a {@link LocalizedString} for the given locale.
+     * @param locale the locale used to select the translation of the localized string
+     * @param localizedString string with multiple translations
+     * @return the resolved message, or absent if it could not be resolved
      */
-    default Optional<String> get(final List<Locale> locales, final I18nIdentifier i18nIdentifier) {
-        return get(locales, i18nIdentifier, emptyMap());
+    Optional<String> get(final Locale locale, final LocalizedString localizedString);
+
+    /**
+     * Resolves i18n message for the given locale.
+     * @param locale the locale used to translate the message
+     * @param messageKey identifier of the i18n message
+     * @param args list of arguments
+     * @return the resolved message, or absent if it could not be found
+     */
+    Optional<String> get(final Locale locale, final String messageKey, final Map<String, Object> args);
+
+    /**
+     * Resolves a {@link LocalizedString} for the current language.
+     * @param localizedString string with multiple translations
+     * @return the resolved message, or absent if it could not be resolved
+     */
+    default Optional<String> get(final LocalizedString localizedString) {
+        return get(currentLanguage(), localizedString);
     }
 
     /**
-     * Resolves i18n message identified by a bundle and a key for the first found given locale.
-     * @param locales the list of locales used to translate the message
-     * @param i18nIdentifier identifier of the i18n message
-     * @param hashArgs list of hash arguments
-     * @return the resolved message in the first found given language, or empty string if it could not be found
+     * Resolves i18n message for the current language.
+     * @param messageKey identifier of the i18n message
+     * @param args list of arguments
+     * @return the resolved message, or absent if it could not be found
      */
-    default String getOrEmpty(final List<Locale> locales, final I18nIdentifier i18nIdentifier, final Map<String, Object> hashArgs) {
-        return get(locales, i18nIdentifier, hashArgs).orElse("");
+    default Optional<String> get(final String messageKey, final Map<String, Object> args) {
+        return get(currentLanguage(), messageKey, args);
     }
 
     /**
-     * Resolves i18n message identified by a bundle and a key for the first found given locale.
-     * @param locales the list of locales used to translate the message
-     * @param i18nIdentifier identifier of the i18n message
-     * @return the resolved message in the any of the given languages, or empty string if it could not be found
+     * Resolves i18n message for the current language.
+     * @param messageKey identifier of the i18n message
+     * @return the resolved message, or absent if it could not be found
      */
-    default String getOrEmpty(final List<Locale> locales, final I18nIdentifier i18nIdentifier) {
-        return get(locales, i18nIdentifier).orElse("");
+    default Optional<String> get(final String messageKey) {
+        return get(messageKey, emptyMap());
     }
 
     /**
-     * Resolves i18n message identified by a bundle and a key for the first found given locale.
-     * @param locales the list of locales used to translate the message
-     * @param i18nIdentifier identifier of the i18n message
-     * @param hashArgs list of hash arguments
-     * @return the resolved message in the first found given language, or the message key if it could not be found
+     * Resolves i18n message for the current language.
+     * @param messageKey identifier of the i18n message
+     * @param args list of hash arguments
+     * @return the resolved message, or empty string if it could not be found
      */
-    default String getOrKey(final List<Locale> locales, final I18nIdentifier i18nIdentifier, final Map<String, Object> hashArgs) {
-        return get(locales, i18nIdentifier, hashArgs).orElse(i18nIdentifier.getMessageKey());
+    default String getOrEmpty(final String messageKey, final Map<String, Object> args) {
+        return get(messageKey, args).orElse("");
     }
 
     /**
-     * Resolves i18n message identified by a bundle and a key for the first found given locale.
-     * @param locales the list of locales used to translate the message
-     * @param i18nIdentifier identifier of the i18n message
-     * @return the resolved message in the any of the given languages, or the message key if it could not be found
+     * Resolves i18n message for the current language.
+     * @param messageKey identifier of the i18n message
+     * @return the resolved message, or empty string if it could not be found
      */
-    default String getOrKey(final List<Locale> locales, final I18nIdentifier i18nIdentifier) {
-        return get(locales, i18nIdentifier).orElse(i18nIdentifier.getMessageKey());
+    default String getOrEmpty(final String messageKey) {
+        return get(messageKey).orElse("");
+    }
+
+    /**
+     * Resolves i18n message for the current language.
+     * @param messageKey identifier of the i18n message
+     * @param args list of hash arguments
+     * @return the resolved message, or the message key if it could not be found
+     */
+    default String getOrKey(final String messageKey, final Map<String, Object> args) {
+        return get(messageKey, args).orElse(messageKey);
+    }
+
+    /**
+     * Resolves i18n message for the current language.
+     * @param messageKey identifier of the i18n message
+     * @return the resolved message, or the message key if it could not be found
+     */
+    default String getOrKey(final String messageKey) {
+        return get(messageKey).orElse(messageKey);
     }
 }

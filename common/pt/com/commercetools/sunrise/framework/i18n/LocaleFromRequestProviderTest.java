@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.framework.localization;
+package com.commercetools.sunrise.framework.i18n;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -8,7 +8,7 @@ import play.inject.guice.GuiceApplicationBuilder;
 import play.mvc.Http;
 import play.test.WithApplication;
 
-import java.util.Collections;
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
@@ -21,9 +21,9 @@ import static play.mvc.Http.HeaderNames.ACCEPT_LANGUAGE;
 import static play.test.Helpers.fakeRequest;
 import static play.test.Helpers.invokeWithContext;
 
-public class UserLanguageImplTest extends WithApplication {
+public class LocaleFromRequestProviderTest extends WithApplication {
 
-    private UserLanguage userLanguage;
+    private LocaleFromRequestProvider localeProvider;
 
     @Override
     protected Application provideApplication() {
@@ -34,49 +34,45 @@ public class UserLanguageImplTest extends WithApplication {
 
     @Before
     public void setUp() throws Exception {
-        userLanguage = app.injector().instanceOf(UserLanguageImpl.class);
+        localeProvider = app.injector().instanceOf(LocaleFromRequestProvider.class);
     }
 
     @Test
     public void addsAcceptedLanguages() throws Exception {
         testWithHttpContext(ENGLISH, asList(GERMAN, US), () ->
-                assertThat(userLanguage.locales()).containsExactly(ENGLISH, GERMAN, US));
-    }
-
-    @Test
-    public void discardsDuplicated() throws Exception {
-        testWithHttpContext(ENGLISH, asList(GERMAN, ENGLISH, US), () ->
-                assertThat(userLanguage.locales()).containsExactly(ENGLISH, GERMAN, US));
+                assertThat(localeProvider.get()).isEqualTo(ENGLISH));
     }
 
     @Test
     public void discardsNotSupportedByProject() throws Exception {
-        testWithHttpContext(ENGLISH, asList(ITALIAN, US), () ->
-                assertThat(userLanguage.locales()).containsExactly(ENGLISH, US));
+        testWithHttpContext(null, asList(ITALIAN, US), () ->
+                assertThat(localeProvider.get()).isEqualTo(US));
     }
 
     @Test
     public void ignoresEmptyAcceptedLanguages() throws Exception {
-        testWithHttpContext(ENGLISH, emptyList(), () ->
-                assertThat(userLanguage.locales()).containsExactly(ENGLISH));
+        testWithHttpContext(null, emptyList(), () ->
+                assertThat(localeProvider.get()).isEqualTo(ENGLISH));
     }
 
     @Test
     public void ignoresNotSupportedCurrentLanguage() throws Exception {
         testWithHttpContext(ITALIAN, asList(GERMAN, US), () ->
-                assertThat(userLanguage.locales()).containsExactly(GERMAN, US));
+                assertThat(localeProvider.get()).isEqualTo(GERMAN));
     }
 
     @Test
     public void doesNotFailOnHttpContextNotAvailable() throws Exception {
-        assertThat(userLanguage.locales()).containsExactly(ENGLISH);
+        assertThat(localeProvider.get()).isEqualTo(ENGLISH);
     }
 
-    private void testWithHttpContext(final Locale currentLang, final List<Locale> acceptedLangs, final Runnable test) {
+    private void testWithHttpContext(@Nullable final Locale currentLang, final List<Locale> acceptedLangs, final Runnable test) {
         final Http.RequestBuilder requestWithAcceptLanguage = fakeRequest()
                 .header(ACCEPT_LANGUAGE, toAcceptLanguageHeader(acceptedLangs));
-         invokeWithContext(requestWithAcceptLanguage, () -> {
-            Http.Context.current().changeLang(Lang.forCode(currentLang.toLanguageTag()));
+        invokeWithContext(requestWithAcceptLanguage, () -> {
+            if (currentLang != null) {
+                Http.Context.current().changeLang(Lang.forCode(currentLang.toLanguageTag()));
+            }
             test.run();
             return null;
         });

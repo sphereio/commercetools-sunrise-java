@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.framework.template.engine.handlebars;
 
-import com.commercetools.sunrise.framework.i18n.MessagesResolver;
+import com.commercetools.sunrise.framework.i18n.I18nResolver;
 import com.github.jknack.handlebars.Options;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,33 +28,33 @@ public class I18nHandlebarsHelperImplTest {
     private static final Map<String, Object> ARGS = singletonMap("name", "John");
 
     @Mock
-    private MessagesResolver fakeMessagesResolver;
+    private I18nResolver fakeI18nResolver;
 
     @InjectMocks
     private DefaultHandlebarsHelperSource helperSource;
 
     @Before
     public void setUp() throws Exception {
-        when(fakeMessagesResolver.get(eq(MESSAGE_KEY), any())).thenReturn(Optional.of(MESSAGE_KEY_ANSWER));
-        when(fakeMessagesResolver.getOrEmpty(any(), any())).thenCallRealMethod();
+        when(fakeI18nResolver.get(eq(MESSAGE_KEY), any())).thenReturn(Optional.of(MESSAGE_KEY_ANSWER));
+        when(fakeI18nResolver.getOrEmpty(any(), any())).thenCallRealMethod();
     }
 
     @Test
     public void translatesMessage() throws Exception {
         assertThat(helperSource.i18n(MESSAGE_KEY, optionsWithoutArgs())).isEqualTo(MESSAGE_KEY_ANSWER);
-        verify(fakeMessagesResolver).getOrEmpty(MESSAGE_KEY, emptyMap());
+        verify(fakeI18nResolver).getOrEmpty(MESSAGE_KEY, emptyMap());
     }
 
     @Test
     public void returnsEmptyOnUndefinedMessage() throws Exception {
         assertThat(helperSource.i18n("unknown", optionsWithoutArgs())).isEmpty();
-        verify(fakeMessagesResolver).getOrEmpty("unknown", emptyMap());
+        verify(fakeI18nResolver).getOrEmpty("unknown", emptyMap());
     }
 
     @Test
     public void translatesMessageWithArgs() throws Exception {
         assertThat(helperSource.i18n(MESSAGE_KEY, optionsWithArgs())).isEqualTo(MESSAGE_KEY_ANSWER);
-        verify(fakeMessagesResolver).getOrEmpty(MESSAGE_KEY, ARGS);
+        verify(fakeI18nResolver).getOrEmpty(MESSAGE_KEY, ARGS);
     }
 
     private Options optionsWithoutArgs() {

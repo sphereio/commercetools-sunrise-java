@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.framework.template.engine.handlebars;
 
-import com.commercetools.sunrise.framework.i18n.MessagesResolver;
+import com.commercetools.sunrise.framework.i18n.I18nResolver;
 import com.commercetools.sunrise.framework.template.engine.TemplateContext;
 import com.commercetools.sunrise.framework.template.engine.TemplateEngine;
 import com.commercetools.sunrise.framework.template.engine.TemplateNotFoundException;
@@ -27,7 +27,7 @@ public class HandlebarsTemplateEngineLoadersTest {
     private static final TemplateLoader OVERRIDE_LOADER = new ClassPathTemplateLoader("/templates/loaders/override");
 
     @Mock
-    private MessagesResolver dummyMessagesResolver;
+    private I18nResolver dummyI18nResolver;
 
     @Test
     public void rendersTemplateWithPartial() throws Exception {
@@ -65,11 +65,11 @@ public class HandlebarsTemplateEngineLoadersTest {
     }
 
     private TemplateEngine defaultHandlebars() {
-        return new TestableHandlebarsTemplateEngine(singletonList(DEFAULT_LOADER), dummyMessagesResolver);
+        return new TestableHandlebarsTemplateEngine(singletonList(DEFAULT_LOADER), dummyI18nResolver);
     }
 
     private TemplateEngine handlebarsWithOverride() {
-        return new TestableHandlebarsTemplateEngine(asList(OVERRIDE_LOADER, DEFAULT_LOADER), dummyMessagesResolver);
+        return new TestableHandlebarsTemplateEngine(asList(OVERRIDE_LOADER, DEFAULT_LOADER), dummyI18nResolver);
     }
 
     private static void testTemplate(final String templateName, final TemplateEngine templateEngine, final Consumer<String> test) {

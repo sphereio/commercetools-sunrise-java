@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.search.facetedsearch.terms.viewmodels;
 
-import com.commercetools.sunrise.framework.i18n.MessagesResolver;
+import com.commercetools.sunrise.framework.i18n.I18nResolver;
 import com.commercetools.sunrise.search.facetedsearch.terms.ConfiguredTermFacetedSearchFormSettings;
 import com.commercetools.sunrise.search.facetedsearch.terms.TermFacetMapperSettings;
 import com.commercetools.sunrise.search.facetedsearch.terms.TermFacetedSearchFormSettings;
@@ -30,7 +30,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class CustomSortedTermFacetViewModelFactoryTest extends WithApplication {
 
     @Mock
-    private MessagesResolver dummyMessagesResolver;
+    private I18nResolver dummyI18nResolver;
 
     @Test
     public void sortsOptionsAsGivenList() throws Exception {
@@ -99,7 +99,7 @@ public class CustomSortedTermFacetViewModelFactoryTest extends WithApplication {
                 .map(term -> TermStats.of(term, 0L))
                 .collect(toList());
         Http.Context.current.set(new Http.Context(Helpers.fakeRequest()));
-        final List<FacetOptionViewModel> options = new CustomSortedTermFacetViewModelFactory(dummyMessagesResolver, new TermFacetOptionViewModelFactory())
+        final List<FacetOptionViewModel> options = new CustomSortedTermFacetViewModelFactory(dummyI18nResolver, new TermFacetOptionViewModelFactory())
                 .createOptions(settings, TermFacetResult.of(0L, 0L, 0L, termStats));
         test.accept(options.stream()
                 .map(FacetOptionViewModel::getValue)

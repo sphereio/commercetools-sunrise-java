@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.framework.template.engine.handlebars;
 
-import com.commercetools.sunrise.framework.i18n.MessagesResolver;
+import com.commercetools.sunrise.framework.i18n.I18nResolver;
 import com.commercetools.sunrise.framework.viewmodels.ViewModel;
 import com.github.jknack.handlebars.ValueResolver;
 import com.github.jknack.handlebars.context.JavaBeanValueResolver;
@@ -16,11 +16,11 @@ import java.util.Set;
 public final class SunriseJavaBeanValueResolver implements ValueResolver {
 
     private final ValueResolver delegate = JavaBeanValueResolver.INSTANCE;
-    private final MessagesResolver messagesResolver;
+    private final I18nResolver i18nResolver;
 
     @Inject
-    SunriseJavaBeanValueResolver(final MessagesResolver messagesResolver) {
-        this.messagesResolver = messagesResolver;
+    SunriseJavaBeanValueResolver(final I18nResolver i18nResolver) {
+        this.i18nResolver = i18nResolver;
     }
 
     @Override
@@ -51,6 +51,6 @@ public final class SunriseJavaBeanValueResolver implements ValueResolver {
     }
 
     private String resolveLocalizedString(final LocalizedString localizedString) {
-        return messagesResolver.get(localizedString).orElse("");
+        return i18nResolver.get(localizedString).orElse("");
     }
 }

@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.productcatalog.productoverview.search.facetedsearch.categorytree.viewmodels;
 
-import com.commercetools.sunrise.framework.i18n.MessagesResolver;
+import com.commercetools.sunrise.framework.i18n.I18nResolver;
 import com.commercetools.sunrise.framework.reverserouters.productcatalog.product.ProductReverseRouter;
 import com.commercetools.sunrise.framework.viewmodels.forms.FormSelectableOptionViewModel;
 import com.commercetools.sunrise.search.facetedsearch.viewmodels.FacetOptionViewModel;
@@ -144,8 +144,8 @@ public class CategoryTreeFacetOptionViewModelFactoryTest extends WithApplication
     private void test(final Category category, final CategoryTree categoryTree, final List<TermStats> termStats, final Consumer<FacetOptionViewModel> test) {
         invokeWithContext(fakeRequest(), () -> {
             Http.Context.current().changeLang("en");
-            final MessagesResolver messagesResolver = app.injector().instanceOf(MessagesResolver.class);
-            final CategoryTreeFacetOptionViewModelFactory factory = new CategoryTreeFacetOptionViewModelFactory(messagesResolver, categoryTree, reverseRouter());
+            final I18nResolver i18nResolver = app.injector().instanceOf(I18nResolver.class);
+            final CategoryTreeFacetOptionViewModelFactory factory = new CategoryTreeFacetOptionViewModelFactory(i18nResolver, categoryTree, reverseRouter());
             final TermFacetResult termFacetResult = TermFacetResult.of(0L, 0L, 0L, termStats);
             test.accept(factory.create(termFacetResult, category, CAT_C));
             return null;

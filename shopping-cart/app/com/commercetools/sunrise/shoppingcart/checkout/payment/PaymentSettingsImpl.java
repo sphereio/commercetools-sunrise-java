@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.shoppingcart.checkout.payment;
 
-import com.commercetools.sunrise.framework.i18n.MessagesResolver;
+import com.commercetools.sunrise.framework.i18n.I18nResolver;
 import io.sphere.sdk.carts.Cart;
 import io.sphere.sdk.models.LocalizedString;
 import io.sphere.sdk.models.LocalizedStringEntry;
@@ -32,11 +32,11 @@ final class PaymentSettingsImpl implements PaymentSettings {
     private final List<PaymentMethodInfo> paymentMethods;
 
     @Inject
-    PaymentSettingsImpl(final Configuration configuration, final Langs langs, final MessagesResolver messagesResolver) {
+    PaymentSettingsImpl(final Configuration configuration, final Langs langs, final I18nResolver i18nResolver) {
         this.paymentMethods = configuration.getConfigList(CONFIG_PAYMENT_KEY, emptyList()).stream()
                 .map(paymentConfig -> {
                     final LocalizedString name = Optional.ofNullable(paymentConfig.getString(CONFIG_NAME_FIELD_KEY))
-                            .map(messageKey -> buildLocalizedName(messageKey, messagesResolver, langs))
+                            .map(messageKey -> buildLocalizedName(messageKey, i18nResolver, langs))
                             .orElse(null);
                     return PaymentMethodInfoBuilder.of()
                             .name(name)
@@ -53,11 +53,11 @@ final class PaymentSettingsImpl implements PaymentSettings {
     }
 
     private static LocalizedString buildLocalizedName(final String messageKey,
-                                                      final MessagesResolver messagesResolver,
+                                                      final I18nResolver i18nResolver,
                                                       final Langs langs) {
         return langs.availables().stream()
                 .map(Lang::toLocale)
-                .map(locale -> LocalizedStringEntry.of(locale, messagesResolver.get(locale, messageKey, emptyMap()).orElse(messageKey)))
+                .map(locale -> LocalizedStringEntry.of(locale, i18nResolver.get(locale, messageKey, emptyMap()).orElse(messageKey)))
                 .collect(LocalizedString.streamCollector());
     }
 }

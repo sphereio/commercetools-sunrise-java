@@ -16,14 +16,14 @@ import java.util.Optional;
 import static java.util.stream.Collectors.toList;
 
 @Singleton
-final class MessagesResolverImpl implements MessagesResolver {
+final class I18nResolverImpl implements I18nResolver {
 
     private final MessagesApi messagesApi;
     private final Provider<Locale> localeProvider;
     private final Langs langs;
 
     @Inject
-    MessagesResolverImpl(final MessagesApi messagesApi, final Provider<Locale> localeProvider, final Langs langs) {
+    I18nResolverImpl(final MessagesApi messagesApi, final Provider<Locale> localeProvider, final Langs langs) {
         this.messagesApi = messagesApi;
         this.localeProvider = localeProvider;
         this.langs = langs;

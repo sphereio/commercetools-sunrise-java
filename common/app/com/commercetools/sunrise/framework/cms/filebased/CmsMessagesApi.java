@@ -1,4 +1,4 @@
-package com.commercetools.sunrise.framework.cms;
+package com.commercetools.sunrise.framework.cms.filebased;
 
 import play.i18n.MessagesApi;
 

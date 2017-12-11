@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.framework.viewmodels.formatters;
 
-import com.commercetools.sunrise.framework.i18n.MessagesResolver;
+import com.commercetools.sunrise.framework.i18n.I18nResolver;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -8,15 +8,15 @@ import javax.inject.Singleton;
 @Singleton
 final class ErrorFormatterImpl implements ErrorFormatter {
 
-    private final MessagesResolver messagesResolver;
+    private final I18nResolver i18nResolver;
 
     @Inject
-    ErrorFormatterImpl(final MessagesResolver messagesResolver) {
-        this.messagesResolver = messagesResolver;
+    ErrorFormatterImpl(final I18nResolver i18nResolver) {
+        this.i18nResolver = i18nResolver;
     }
 
     @Override
     public String format(final String messageKey) {
-        return messagesResolver.getOrKey(messageKey);
+        return i18nResolver.getOrKey(messageKey);
     }
 }

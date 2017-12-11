@@ -2,7 +2,6 @@ package com.commercetools.sunrise.framework.cms.filebased;
 
 import com.commercetools.sunrise.cms.CmsPage;
 import com.commercetools.sunrise.cms.CmsService;
-import com.commercetools.sunrise.framework.cms.CmsMessagesApi;
 
 import javax.inject.Inject;
 import java.util.List;

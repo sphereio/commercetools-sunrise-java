@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.search.facetedsearch.bucketranges.viewmodels;
 
-import com.commercetools.sunrise.framework.i18n.MessagesResolver;
+import com.commercetools.sunrise.framework.i18n.I18nResolver;
 import com.commercetools.sunrise.framework.injection.RequestScoped;
 import com.commercetools.sunrise.framework.viewmodels.forms.FormOption;
 import com.commercetools.sunrise.search.facetedsearch.bucketranges.BucketRangeFacetedSearchFormSettings;
@@ -25,9 +25,9 @@ public class BucketRangeFacetViewModelFactory extends AbstractFacetWithOptionsVi
     private final BucketRangeFacetOptionViewModelFactory bucketRangeFacetOptionViewModelFactory;
 
     @Inject
-    public BucketRangeFacetViewModelFactory(final MessagesResolver messagesResolver,
+    public BucketRangeFacetViewModelFactory(final I18nResolver i18nResolver,
                                             final BucketRangeFacetOptionViewModelFactory bucketRangeFacetOptionViewModelFactory) {
-        super(messagesResolver);
+        super(i18nResolver);
         this.bucketRangeFacetOptionViewModelFactory = bucketRangeFacetOptionViewModelFactory;
     }
 

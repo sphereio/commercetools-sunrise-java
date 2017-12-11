@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.framework.viewmodels.content.carts;
 
-import com.commercetools.sunrise.framework.i18n.MessagesResolver;
+import com.commercetools.sunrise.framework.i18n.I18nResolver;
 import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
 import com.google.inject.Inject;
 import io.sphere.sdk.discountcodes.DiscountCode;
@@ -11,15 +11,15 @@ import java.util.Optional;
 @Singleton
 public class DiscountCodeViewModelFactory extends SimpleViewModelFactory<DiscountCodeViewModel, DiscountCode> {
 
-    private final MessagesResolver messagesResolver;
+    private final I18nResolver i18nResolver;
 
     @Inject
-    DiscountCodeViewModelFactory(final MessagesResolver messagesResolver) {
-        this.messagesResolver = messagesResolver;
+    DiscountCodeViewModelFactory(final I18nResolver i18nResolver) {
+        this.i18nResolver = i18nResolver;
     }
 
-    protected final MessagesResolver getMessagesResolver() {
-        return messagesResolver;
+    protected final I18nResolver getI18nResolver() {
+        return i18nResolver;
     }
 
     @Override
@@ -40,7 +40,7 @@ public class DiscountCodeViewModelFactory extends SimpleViewModelFactory<Discoun
 
     protected void fillName(final DiscountCodeViewModel viewModel, final DiscountCode discountCode) {
         final String displayName = Optional.ofNullable(discountCode.getName())
-                .flatMap(messagesResolver::get)
+                .flatMap(i18nResolver::get)
                 .orElseGet(discountCode::getCode);
         viewModel.setName(displayName);
     }

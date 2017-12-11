@@ -1,7 +1,7 @@
 package com.commercetools.sunrise.framework.template.engine.handlebars;
 
 import com.commercetools.sunrise.cms.CmsPage;
-import com.commercetools.sunrise.framework.i18n.MessagesResolver;
+import com.commercetools.sunrise.framework.i18n.I18nResolver;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.jknack.handlebars.Context;
@@ -16,11 +16,11 @@ import static com.commercetools.sunrise.framework.template.engine.handlebars.Han
 @Singleton
 public class DefaultHandlebarsHelperSource implements HandlebarsHelperSource {
 
-    private final MessagesResolver messagesResolver;
+    private final I18nResolver i18nResolver;
 
     @Inject
-    protected DefaultHandlebarsHelperSource(final MessagesResolver messagesResolver) {
-        this.messagesResolver = messagesResolver;
+    protected DefaultHandlebarsHelperSource(final I18nResolver i18nResolver) {
+        this.i18nResolver = i18nResolver;
     }
 
     /**
@@ -30,7 +30,7 @@ public class DefaultHandlebarsHelperSource implements HandlebarsHelperSource {
      * @return the translated message
      */
     public CharSequence i18n(final String messageKey, final Options options) {
-        return messagesResolver.getOrEmpty(messageKey, options.hash);
+        return i18nResolver.getOrEmpty(messageKey, options.hash);
     }
 
     /**

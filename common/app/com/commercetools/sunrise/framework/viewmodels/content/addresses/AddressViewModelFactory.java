@@ -1,6 +1,6 @@
 package com.commercetools.sunrise.framework.viewmodels.content.addresses;
 
-import com.commercetools.sunrise.framework.i18n.MessagesResolver;
+import com.commercetools.sunrise.framework.i18n.I18nResolver;
 import com.commercetools.sunrise.framework.viewmodels.SimpleViewModelFactory;
 import io.sphere.sdk.models.Address;
 
@@ -11,15 +11,15 @@ import javax.inject.Singleton;
 @Singleton
 public class AddressViewModelFactory extends SimpleViewModelFactory<AddressViewModel, Address> {
 
-    private final MessagesResolver messagesResolver;
+    private final I18nResolver i18nResolver;
 
     @Inject
-    public AddressViewModelFactory(final MessagesResolver messagesResolver) {
-        this.messagesResolver = messagesResolver;
+    public AddressViewModelFactory(final I18nResolver i18nResolver) {
+        this.i18nResolver = i18nResolver;
     }
 
-    public final MessagesResolver getMessagesResolver() {
-        return messagesResolver;
+    public final I18nResolver getI18nResolver() {
+        return i18nResolver;
     }
 
     @Override
@@ -49,7 +49,7 @@ public class AddressViewModelFactory extends SimpleViewModelFactory<AddressViewM
 
     protected void fillTitle(final AddressViewModel viewModel, @Nullable final Address address) {
         if (address != null && address.getTitle() != null) {
-            viewModel.setTitle(messagesResolver.getOrKey(address.getTitle()));
+            viewModel.setTitle(i18nResolver.getOrKey(address.getTitle()));
         }
     }
 
@@ -109,7 +109,7 @@ public class AddressViewModelFactory extends SimpleViewModelFactory<AddressViewM
 
     protected void fillCountry(final AddressViewModel viewModel, @Nullable final Address address) {
         if (address != null) {
-            viewModel.setCountry(address.getCountry().toLocale().getDisplayCountry(messagesResolver.currentLanguage()));
+            viewModel.setCountry(address.getCountry().toLocale().getDisplayCountry(i18nResolver.currentLanguage()));
         }
     }
 }
