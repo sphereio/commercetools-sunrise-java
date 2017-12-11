@@ -24,7 +24,7 @@ public class CookieSessionStrategy implements SessionStrategy {
     @Override
     public Optional<String> findValueByKey(final String key) {
         final Optional<String> value = context()
-                .flatMap(ctx -> Optional.ofNullable(ctx.request().cookie(key))
+                .flatMap(ctx -> findValueInHttpContext(key, ctx)
                         .map(Http.Cookie::value));
         if (value.isPresent()) {
             logger.debug("Loaded from session \"{}\" = {}", key, value.get());
@@ -32,6 +32,17 @@ public class CookieSessionStrategy implements SessionStrategy {
             logger.debug("Not found in session \"{}\"", key);
         }
         return value;
+    }
+
+    private Optional<Http.Cookie> findValueInHttpContext(final String key, final Http.Context ctx) {
+        final Http.Cookie nullableCookie = ctx.response().cookie(key)
+                .filter(this::isCookieValid)
+                .orElseGet(() -> ctx.request().cookie(key));
+        return Optional.ofNullable(nullableCookie);
+    }
+
+    private boolean isCookieValid(final Http.Cookie cookie) {
+        return !Integer.valueOf(play.api.mvc.Cookie.DiscardedMaxAge()).equals(cookie.maxAge());
     }
 
     /**
