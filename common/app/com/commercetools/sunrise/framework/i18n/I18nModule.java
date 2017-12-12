@@ -6,7 +6,7 @@ import com.google.inject.AbstractModule;
 import javax.inject.Singleton;
 import java.util.Locale;
 
-public final class MessagesModule extends AbstractModule {
+public final class I18nModule extends AbstractModule {
 
     @Override
     protected void configure() {
