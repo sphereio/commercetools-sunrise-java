@@ -56,6 +56,9 @@ import static play.test.Helpers.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RemoveDiscountCodeControllerIntegrationTest extends WithSphereClient {
+
+    private static final String CART_DISCOUNT_NAME = "CartDiscount";
+
     @Mock
     private CartInSession cartInSession;
 
@@ -70,7 +73,7 @@ public class RemoveDiscountCodeControllerIntegrationTest extends WithSphereClien
 
     @Before
     public void deleteExistingCartDiscountAndDiscountCodes() {
-        deleteCartDiscountAndDiscountCodes(sphereClient, "CartDiscount", "0.6");
+        deleteCartDiscountAndDiscountCodes(sphereClient, CART_DISCOUNT_NAME, "0.6");
     }
 
     @Test
@@ -136,7 +139,7 @@ public class RemoveDiscountCodeControllerIntegrationTest extends WithSphereClien
         final CartDiscountTarget cartDiscountTarget = LineItemsTarget.of("1=1");
         final CartDiscountDraft cartDiscountDraft =
                 CartDiscountDraftBuilder
-                        .of("1=1", LocalizedString.ofEnglish("CartDiscount"), true, "0.6", cartDiscountTarget, discountValue)
+                        .of("1=1", LocalizedString.ofEnglish(CART_DISCOUNT_NAME), true, "0.6", cartDiscountTarget, discountValue)
                         .build();
         withCartDiscount(sphereClient, cartDiscountDraft, cartDiscount -> {
             final DiscountCodeDraft discountCodeDraft =
