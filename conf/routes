@@ -9,12 +9,12 @@ GET         /*path/                                                             
 # ~~~~~
 
 # Shows the deployed version, artifactId and GIT SHA
-GET         /version                                                                @controllers.common.VersionController.show()
+GET         /version                                                                @controllers.common.VersionController.show
 # Shows if the application is healthy
-GET         /health                                                                 @controllers.common.HealthCheckController.show()
+GET         /health                                                                 @controllers.common.HealthCheckController.show
 
 # Endpoint to manually refresh category tree (otherwise an app restart is required)
-GET         /categories/refresh                                                     @com.commercetools.sunrise.common.categorytree.CategoryTreeRefreshController.refresh()
+GET         /categories/refresh                                                     @com.commercetools.sunrise.common.categorytree.CategoryTreeRefreshController.refresh
 
 
 # WEB ASSETS
