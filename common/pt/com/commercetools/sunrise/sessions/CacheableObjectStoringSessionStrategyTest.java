@@ -22,40 +22,42 @@ public class CacheableObjectStoringSessionStrategyTest extends WithApplication {
 
     private static final SomeObject SOME_OBJECT = new SomeObject("hello", 2);
     private static final SomeObject SOME_OTHER_OBJECT = new SomeObject("world", 4);
+    private static final String SOME_CACHE_KEY = "some-cache-key";
+    private static final String SOME_KEY = "some-key";
 
     @Test
     public void findsWhenInCacheAndSession() throws Exception {
-        final CacheApi cache = buildCache(singletonMap("some-cache-key", SOME_OBJECT));
-        invokeWithContext(fakeRequest().session(singletonMap("some-key", "some-cache-key")), () ->
-                assertThat(strategy(cache).findObjectByKey("some-key", SomeObject.class)).contains(SOME_OBJECT));
+        final CacheApi cache = buildCache(singletonMap(SOME_CACHE_KEY, SOME_OBJECT));
+        invokeWithContext(fakeRequest().session(singletonMap(SOME_KEY, SOME_CACHE_KEY)), () ->
+                assertThat(strategy(cache).findObjectByKey(SOME_KEY, SomeObject.class)).contains(SOME_OBJECT));
     }
 
     @Test
     public void doesNotFindWhenNotInCache() throws Exception {
         final CacheApi cache = buildCache(emptyMap());
-        invokeWithContext(fakeRequest().session(singletonMap("some-key", "some-cache-key")), () ->
-                assertThat(strategy(cache).findObjectByKey("some-key", SomeObject.class)).isEmpty());
+        invokeWithContext(fakeRequest().session(singletonMap(SOME_KEY, SOME_CACHE_KEY)), () ->
+                assertThat(strategy(cache).findObjectByKey(SOME_KEY, SomeObject.class)).isEmpty());
     }
 
     @Test
     public void doesNotFindWhenNotInSession() throws Exception {
-        final CacheApi cache = buildCache(singletonMap("some-cache-key", SOME_OBJECT));
+        final CacheApi cache = buildCache(singletonMap(SOME_CACHE_KEY, SOME_OBJECT));
         invokeWithContext(fakeRequest(), () ->
-                assertThat(strategy(cache).findObjectByKey("some-key", SomeObject.class)).isEmpty());
+                assertThat(strategy(cache).findObjectByKey(SOME_KEY, SomeObject.class)).isEmpty());
     }
 
     @Test
     public void doesNotFindWhenNeitherInSessionNorInCache() throws Exception {
         final CacheApi cache = buildCache(emptyMap());
         invokeWithContext(fakeRequest(), () ->
-                assertThat(strategy(cache).findObjectByKey("some-key", SomeObject.class)).isEmpty());
+                assertThat(strategy(cache).findObjectByKey(SOME_KEY, SomeObject.class)).isEmpty());
     }
 
     @Test
     public void doesNotFindWhenDifferentClassFound() throws Exception {
-        final CacheApi cache = buildCache(singletonMap("some-cache-key", SOME_OBJECT));
-        invokeWithContext(fakeRequest().session(singletonMap("some-key", "some-cache-key")), () ->
-                assertThat(strategy(cache).findObjectByKey("some-key", Long.class)).isEmpty());
+        final CacheApi cache = buildCache(singletonMap(SOME_CACHE_KEY, SOME_OBJECT));
+        invokeWithContext(fakeRequest().session(singletonMap(SOME_KEY, SOME_CACHE_KEY)), () ->
+                assertThat(strategy(cache).findObjectByKey(SOME_KEY, Long.class)).isEmpty());
     }
 
     @Test
@@ -63,21 +65,21 @@ public class CacheableObjectStoringSessionStrategyTest extends WithApplication {
         final CacheApi cache = buildCache(emptyMap());
         invokeWithContext(fakeRequest(), () -> {
             final ObjectStoringSessionStrategy strategy = strategy(cache);
-            assertThat(strategy.findObjectByKey("some-key", SomeObject.class)).isEmpty();
-            strategy.overwriteObjectByKey("some-key", SOME_OBJECT);
-            assertThat(strategy.findObjectByKey("some-key", SomeObject.class)).contains(SOME_OBJECT);
+            assertThat(strategy.findObjectByKey(SOME_KEY, SomeObject.class)).isEmpty();
+            strategy.overwriteObjectByKey(SOME_KEY, SOME_OBJECT);
+            assertThat(strategy.findObjectByKey(SOME_KEY, SomeObject.class)).contains(SOME_OBJECT);
             return strategy;
         });
     }
 
     @Test
     public void createsWhenNotInSession() throws Exception {
-        final CacheApi cache = buildCache(singletonMap("some-cache-key", SOME_OBJECT));
+        final CacheApi cache = buildCache(singletonMap(SOME_CACHE_KEY, SOME_OBJECT));
         invokeWithContext(fakeRequest(), () -> {
             final ObjectStoringSessionStrategy strategy = strategy(cache);
-            assertThat(strategy.findObjectByKey("some-key", SomeObject.class)).isEmpty();
-            strategy.overwriteObjectByKey("some-key", SOME_OBJECT);
-            assertThat(strategy.findObjectByKey("some-key", SomeObject.class)).contains(SOME_OBJECT);
+            assertThat(strategy.findObjectByKey(SOME_KEY, SomeObject.class)).isEmpty();
+            strategy.overwriteObjectByKey(SOME_KEY, SOME_OBJECT);
+            assertThat(strategy.findObjectByKey(SOME_KEY, SomeObject.class)).contains(SOME_OBJECT);
             return strategy;
         });
     }
@@ -85,49 +87,49 @@ public class CacheableObjectStoringSessionStrategyTest extends WithApplication {
     @Test
     public void createsWhenNotInCache() throws Exception {
         final CacheApi cache = buildCache(emptyMap());
-        invokeWithContext(fakeRequest().session(singletonMap("some-key", "some-cache-key")), () -> {
+        invokeWithContext(fakeRequest().session(singletonMap(SOME_KEY, SOME_CACHE_KEY)), () -> {
             final ObjectStoringSessionStrategy strategy = strategy(cache);
-            assertThat(strategy.findObjectByKey("some-key", SomeObject.class)).isEmpty();
-            strategy.overwriteObjectByKey("some-key", SOME_OBJECT);
-            assertThat(strategy.findObjectByKey("some-key", SomeObject.class)).contains(SOME_OBJECT);
+            assertThat(strategy.findObjectByKey(SOME_KEY, SomeObject.class)).isEmpty();
+            strategy.overwriteObjectByKey(SOME_KEY, SOME_OBJECT);
+            assertThat(strategy.findObjectByKey(SOME_KEY, SomeObject.class)).contains(SOME_OBJECT);
             return strategy;
         });
     }
 
     @Test
     public void replacesValue() throws Exception {
-        final CacheApi cache = buildCache(singletonMap("some-cache-key", SOME_OBJECT));
-        invokeWithContext(fakeRequest().session(singletonMap("some-key", "some-cache-key")), () -> {
+        final CacheApi cache = buildCache(singletonMap(SOME_CACHE_KEY, SOME_OBJECT));
+        invokeWithContext(fakeRequest().session(singletonMap(SOME_KEY, SOME_CACHE_KEY)), () -> {
             final ObjectStoringSessionStrategy strategy = strategy(cache);
-            assertThat(strategy.findObjectByKey("some-key", SomeObject.class)).contains(SOME_OBJECT);
-            strategy.overwriteObjectByKey("some-key", SOME_OTHER_OBJECT);
-            assertThat(strategy.findObjectByKey("some-key", SomeObject.class)).contains(SOME_OTHER_OBJECT);
+            assertThat(strategy.findObjectByKey(SOME_KEY, SomeObject.class)).contains(SOME_OBJECT);
+            strategy.overwriteObjectByKey(SOME_KEY, SOME_OTHER_OBJECT);
+            assertThat(strategy.findObjectByKey(SOME_KEY, SomeObject.class)).contains(SOME_OTHER_OBJECT);
             return strategy;
         });
     }
 
     @Test
     public void removesKeyOnNullValue() throws Exception {
-        final CacheApi cache = buildCache(singletonMap("some-cache-key", SOME_OBJECT));
-        invokeWithContext(fakeRequest().session(singletonMap("some-key", "some-cache-key")), () -> {
+        final CacheApi cache = buildCache(singletonMap(SOME_CACHE_KEY, SOME_OBJECT));
+        invokeWithContext(fakeRequest().session(singletonMap(SOME_KEY, SOME_CACHE_KEY)), () -> {
             final ObjectStoringSessionStrategy strategy = strategy(cache);
-            assertThat(strategy.findObjectByKey("some-key", SomeObject.class)).contains(SOME_OBJECT);
-            strategy.overwriteObjectByKey("some-key", null);
-            assertThat(strategy.findObjectByKey("some-key", SomeObject.class)).isEmpty();
+            assertThat(strategy.findObjectByKey(SOME_KEY, SomeObject.class)).contains(SOME_OBJECT);
+            strategy.overwriteObjectByKey(SOME_KEY, null);
+            assertThat(strategy.findObjectByKey(SOME_KEY, SomeObject.class)).isEmpty();
             return strategy;
         });
     }
 
     @Test
     public void removesValue() throws Exception {
-        final CacheApi cache = buildCache(singletonMap("some-cache-key", SOME_OBJECT));
-        invokeWithContext(fakeRequest().session(singletonMap("some-key", "some-cache-key")), () -> {
+        final CacheApi cache = buildCache(singletonMap(SOME_CACHE_KEY, SOME_OBJECT));
+        invokeWithContext(fakeRequest().session(singletonMap(SOME_KEY, SOME_CACHE_KEY)), () -> {
             final ObjectStoringSessionStrategy strategy = strategy(cache);
-            assertThat(strategy.findObjectByKey("some-key", SomeObject.class)).contains(SOME_OBJECT);
-            strategy.removeObjectByKey("some-key");
-            assertThat(strategy.findObjectByKey("some-key", SomeObject.class)).isEmpty();
-            assertThat(Http.Context.current().session().containsKey("some-key")).isFalse();
-            assertThat(Optional.ofNullable(cache.get("some-key"))).isEmpty();
+            assertThat(strategy.findObjectByKey(SOME_KEY, SomeObject.class)).contains(SOME_OBJECT);
+            strategy.removeObjectByKey(SOME_KEY);
+            assertThat(strategy.findObjectByKey(SOME_KEY, SomeObject.class)).isEmpty();
+            assertThat(Http.Context.current().session().containsKey(SOME_KEY)).isFalse();
+            assertThat(Optional.ofNullable(cache.get(SOME_KEY))).isEmpty();
             return strategy;
         });
     }
