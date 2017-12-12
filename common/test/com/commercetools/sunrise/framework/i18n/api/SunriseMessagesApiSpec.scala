@@ -102,7 +102,7 @@ class SunriseMessagesApiSpec extends PlaySpec {
     val api: SunriseMessagesApi = new SunriseMessagesApi(new Environment(new File("."), this.getClass.getClassLoader, Mode.Dev),
       Configuration.reference ++ Configuration.from(Map(
         "play.i18n.path" -> "i18n",
-        "play.i18n.overridePath" -> "i18n/override"
+        "play.i18n.fallbackPath" -> "i18n/fallback"
       )), new DefaultLangs(Configuration.reference ++ Configuration.from(Map(
         "play.i18n.langs" -> Seq("en", "de")))))
 
@@ -113,9 +113,18 @@ class SunriseMessagesApiSpec extends PlaySpec {
       findMessage("de", "foo.bar") mustBe Some("etwas")
     }
 
-    "override YAML messages" in {
+    "fall back to YAML messages" in {
       findMessage("default", "hello") mustBe Some("bye")
       findMessage("de", "hello") mustBe Some("tschüß")
+    }
+
+    "load localized properties messages" in {
+      findMessage("default", "foo.bar.qux") mustBe Some("other")
+      findMessage("de", "foo.bar.qux") mustBe Some("andere")
+    }
+
+    "prioritize YAML messages over properties" in {
+      findMessage("default", "repeated") mustBe Some("yaml")
     }
   }
 }

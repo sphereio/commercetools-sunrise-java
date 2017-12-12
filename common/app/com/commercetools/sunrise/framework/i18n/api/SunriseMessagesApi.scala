@@ -14,7 +14,7 @@ import play.utils.Resources
 @Singleton
 class SunriseMessagesApi @Inject()(environment: Environment, configuration: Configuration, langs: Langs) extends DefaultMessagesApi(environment, configuration, langs) {
 
-  protected lazy val overridePath: Option[String] = configuration.getString("play.i18n.overridePath")
+  protected lazy val fallbackPath: Option[String] = configuration.getString("play.i18n.fallbackPath")
 
   override protected def loadMessages(file: String): Map[String, String] = {
 
@@ -31,16 +31,16 @@ class SunriseMessagesApi @Inject()(environment: Environment, configuration: Conf
 
       def parseFile(messageFile: URL): Map[String, String] = loader(Messages.UrlMessageSource(messageFile), messageFile.toString).fold(e => throw e, identity)
 
-      def overridenFiles = if (overridePath.isDefined) loadFiles(overridePath) else List()
+      def fallbackFiles = if (fallbackPath.isDefined) loadFiles(fallbackPath) else List()
 
-      (overridenFiles ++ loadFiles(messagesPrefix))
+      (loadFiles(messagesPrefix) ++ fallbackFiles)
         .filterNot(Resources.isDirectory(environment.classLoader, _))
         .reverse
         .map(parseFile)
         .foldLeft(Map.empty[String, String]) { _ ++ _ }
     }
 
-    loadMessages(s"$file.yaml", YamlFileLoader)
+    super.loadMessages(file) ++ loadMessages(s"$file.yaml", YamlFileLoader)
   }
 
   override def translate(key: String, args: Seq[Any])(implicit lang: Lang): Option[String] = {

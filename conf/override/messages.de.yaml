@@ -1,5 +1,0 @@
-main:
-  header:
-    stores: Overridden Stores
-    help: Overridden Help
-    callUs: Overridden Call us on __phoneNumber__
