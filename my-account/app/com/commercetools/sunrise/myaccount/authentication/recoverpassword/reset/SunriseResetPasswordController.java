@@ -21,10 +21,10 @@ import java.util.concurrent.CompletionStage;
 /**
  * This controller performs the reset of a customer's password.
  *
- * It shows a form to enter and confirm the new password {@link #show(String, String)}.
+ * It shows a form to enter and confirm the new password {@link #show(String)}.
  *
  * It processes the form and sends a password reset command to the commercetools platform
- * {@link #process(String, String)}.
+ * {@link #process(String)}.
  */
 public abstract class SunriseResetPasswordController extends SunriseContentFormController
         implements MyAccountController, WithContentFormFlow<String, Customer, ResetPasswordFormData> {
