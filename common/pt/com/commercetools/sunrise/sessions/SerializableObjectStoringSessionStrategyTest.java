@@ -88,8 +88,8 @@ public class SerializableObjectStoringSessionStrategyTest extends WithApplicatio
 
     private static class SomeObject extends Base {
 
-        String text;
-        int amount;
+        public String text;
+        public int amount;
 
         public SomeObject() {
         }
