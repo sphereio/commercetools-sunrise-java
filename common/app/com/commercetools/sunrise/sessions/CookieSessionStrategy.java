@@ -36,9 +36,9 @@ public class CookieSessionStrategy implements SessionStrategy {
 
     private Optional<Http.Cookie> findValueInHttpContext(final String key, final Http.Context ctx) {
         final Http.Cookie nullableCookie = ctx.response().cookie(key)
-                .filter(this::isCookieValid)
                 .orElseGet(() -> ctx.request().cookie(key));
-        return Optional.ofNullable(nullableCookie);
+        return Optional.ofNullable(nullableCookie)
+                .filter(this::isCookieValid);
     }
 
     private boolean isCookieValid(final Http.Cookie cookie) {
