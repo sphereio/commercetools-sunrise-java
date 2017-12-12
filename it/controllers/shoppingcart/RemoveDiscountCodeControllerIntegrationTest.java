@@ -58,6 +58,7 @@ import static play.test.Helpers.*;
 public class RemoveDiscountCodeControllerIntegrationTest extends WithSphereClient {
 
     private static final String CART_DISCOUNT_NAME = "CartDiscount";
+    private static final String CART_DISCOUNT_SORT_ORDER = "0.6";
 
     @Mock
     private CartInSession cartInSession;
@@ -73,7 +74,7 @@ public class RemoveDiscountCodeControllerIntegrationTest extends WithSphereClien
 
     @Before
     public void deleteExistingCartDiscountAndDiscountCodes() {
-        deleteCartDiscountAndDiscountCodes(sphereClient, CART_DISCOUNT_NAME, "0.6");
+        deleteCartDiscountAndDiscountCodes(sphereClient, CART_DISCOUNT_NAME, CART_DISCOUNT_SORT_ORDER);
     }
 
     @Test
@@ -139,7 +140,7 @@ public class RemoveDiscountCodeControllerIntegrationTest extends WithSphereClien
         final CartDiscountTarget cartDiscountTarget = LineItemsTarget.of("1=1");
         final CartDiscountDraft cartDiscountDraft =
                 CartDiscountDraftBuilder
-                        .of("1=1", LocalizedString.ofEnglish(CART_DISCOUNT_NAME), true, "0.6", cartDiscountTarget, discountValue)
+                        .of("1=1", LocalizedString.ofEnglish(CART_DISCOUNT_NAME), true, CART_DISCOUNT_SORT_ORDER, cartDiscountTarget, discountValue)
                         .build();
         withCartDiscount(sphereClient, cartDiscountDraft, cartDiscount -> {
             final DiscountCodeDraft discountCodeDraft =
