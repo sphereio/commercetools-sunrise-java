@@ -11,14 +11,14 @@ import java.util.List;
 import static java.util.Arrays.asList;
 
 @Singleton
-public class HandlebarsValueResolversImpl implements HandlebarsValueResolvers {
+public class DefaultHandlebarsValueResolvers implements HandlebarsValueResolvers {
 
     private final PlayJavaFormResolver playJavaFormResolver;
     private final SunriseJavaBeanValueResolver sunriseJavaBeanValueResolver;
 
     @Inject
-    protected HandlebarsValueResolversImpl(final PlayJavaFormResolver playJavaFormResolver,
-                                           final SunriseJavaBeanValueResolver sunriseJavaBeanValueResolver) {
+    protected DefaultHandlebarsValueResolvers(final PlayJavaFormResolver playJavaFormResolver,
+                                              final SunriseJavaBeanValueResolver sunriseJavaBeanValueResolver) {
         this.playJavaFormResolver = playJavaFormResolver;
         this.sunriseJavaBeanValueResolver = sunriseJavaBeanValueResolver;
     }

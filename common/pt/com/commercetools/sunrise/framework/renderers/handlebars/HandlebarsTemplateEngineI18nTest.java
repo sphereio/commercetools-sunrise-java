@@ -1,8 +1,6 @@
-package com.commercetools.sunrise.framework.template.engine.handlebars;
+package com.commercetools.sunrise.framework.renderers.handlebars;
 
 import com.commercetools.sunrise.framework.renderers.TemplateContext;
-import com.commercetools.sunrise.framework.renderers.handlebars.HandlebarsSettings;
-import com.commercetools.sunrise.framework.renderers.handlebars.HandlebarsTemplateEngine;
 import com.commercetools.sunrise.framework.viewmodels.PageData;
 import com.github.jknack.handlebars.io.ClassPathTemplateLoader;
 import com.github.jknack.handlebars.io.TemplateLoader;

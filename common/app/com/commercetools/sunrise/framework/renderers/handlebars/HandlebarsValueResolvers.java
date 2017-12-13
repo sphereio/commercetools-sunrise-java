@@ -5,7 +5,7 @@ import com.google.inject.ImplementedBy;
 
 import java.util.List;
 
-@ImplementedBy(HandlebarsValueResolversImpl.class)
+@ImplementedBy(DefaultHandlebarsValueResolvers.class)
 public interface HandlebarsValueResolvers {
 
     List<ValueResolver> valueResolvers();
