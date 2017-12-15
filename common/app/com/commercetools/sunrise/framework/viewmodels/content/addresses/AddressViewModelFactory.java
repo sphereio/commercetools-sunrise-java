@@ -18,7 +18,7 @@ public class AddressViewModelFactory extends SimpleViewModelFactory<AddressViewM
         this.i18nResolver = i18nResolver;
     }
 
-    public final I18nResolver getI18nResolver() {
+    protected final I18nResolver getI18nResolver() {
         return i18nResolver;
     }
 
