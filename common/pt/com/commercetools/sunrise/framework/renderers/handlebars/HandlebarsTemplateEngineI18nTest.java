@@ -38,7 +38,7 @@ public class HandlebarsTemplateEngineI18nTest extends WithApplication {
 
     @Test
     public void resolvesMessage() throws Exception {
-        testTemplate(ENGLISH,"simple", html -> assertThat(html).contains("something"));
+        testTemplate(ENGLISH, "simple", html -> assertThat(html).contains("something"));
     }
 
     @Test
@@ -48,12 +48,12 @@ public class HandlebarsTemplateEngineI18nTest extends WithApplication {
 
     @Test
     public void resolvesMessageWithBundle() throws Exception {
-        testTemplate(ENGLISH,"bundle", html -> assertThat(html).contains("something"));
+        testTemplate(ENGLISH, "bundle", html -> assertThat(html).contains("something"));
     }
 
     @Test
     public void resolvesMessageWithParameters() throws Exception {
-        testTemplate(ENGLISH,"parameter", html -> assertThat(html).contains("Hello John Doe!"));
+        testTemplate(ENGLISH, "parameter", html -> assertThat(html).contains("Hello John Doe!"));
     }
 
     @Test
